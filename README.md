@@ -2,9 +2,9 @@
 Repository contenente il progetto di Ingegneria del Software dell'Università di Camerino
 
 ## Made by
-Francesco Chiocchi
-Matteo Toma
-Lorenzo Caporossi
+Francesco Chiocchi <br>
+Matteo Toma <br>
+Lorenzo Caporossi <br>
 
 ## Iterazione 1
 11-04-22 / 25-04-22
