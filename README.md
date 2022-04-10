@@ -1,6 +1,11 @@
 # casottoFML
 Repository contenente il progetto di Ingegneria del Software dell'Università di Camerino
 
+## Made by
+Francesco Chiocchi
+Matteo Toma
+Lorenzo Caporossi
+
 ## Iterazione 1
 11-04-22 / 25-04-22
 
@@ -13,3 +18,4 @@ Repository contenente il progetto di Ingegneria del Software dell'Università di
 ## Iterazione 4
 23-05-22
 14-06-22
+
