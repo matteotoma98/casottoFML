@@ -130,7 +130,7 @@ CREATE TABLE `chalet` (
   `quantita_ombrelloni` int NOT NULL,
   `quantita_lettini` int NOT NULL,
   `quantita_ombrelloni_disponibili` int NOT NULL,
-  `quantita_lettini_disponibile` int NOT NULL
+  `quantita_lettini_disponibili` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -259,7 +259,8 @@ CREATE TABLE `ordinazionebar` (
   `id_ordinazione` int NOT NULL AUTO_INCREMENT,
   `quantita` int DEFAULT NULL,
   PRIMARY KEY (`id_ordinazione`,`id_ombrellone`),
-  KEY `id_ombrellone_fk3_idx` (`id_ombrellone`),
+  KEY `id_ombrellone_fk3_idx` (`id_ombrellone`) /*!80000 INVISIBLE */,
+  KEY `data_ordinazione` (`data_ordinazione`),
   CONSTRAINT `id_ombrellone_fk3` FOREIGN KEY (`id_ombrellone`) REFERENCES `cliente` (`id_ombrellone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -271,30 +272,6 @@ CREATE TABLE `ordinazionebar` (
 LOCK TABLES `ordinazionebar` WRITE;
 /*!40000 ALTER TABLE `ordinazionebar` DISABLE KEYS */;
 /*!40000 ALTER TABLE `ordinazionebar` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `people`
---
-
-DROP TABLE IF EXISTS `people`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `people` (
-  `id` int NOT NULL,
-  `firstname` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `people`
---
-
-LOCK TABLES `people` WRITE;
-/*!40000 ALTER TABLE `people` DISABLE KEYS */;
-INSERT INTO `people` VALUES (0,'tom'),(1,'mike'),(2,'johnson');
-/*!40000 ALTER TABLE `people` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -403,6 +380,35 @@ LOCK TABLES `prodottibar` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `scontrino`
+--
+
+DROP TABLE IF EXISTS `scontrino`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `scontrino` (
+  `id_scontrino` int NOT NULL,
+  `data_scontrino` date NOT NULL,
+  `id_ombrellone` int NOT NULL,
+  `prezzo_totale` double NOT NULL,
+  PRIMARY KEY (`id_scontrino`),
+  UNIQUE KEY `id_ombrellone_UNIQUE` (`id_ombrellone`),
+  KEY `data_scontrino_idx` (`data_scontrino`),
+  CONSTRAINT `data_scontrino_fk` FOREIGN KEY (`data_scontrino`) REFERENCES `ordinazionebar` (`data_ordinazione`),
+  CONSTRAINT `id_ombrellone_fk_4` FOREIGN KEY (`id_ombrellone`) REFERENCES `ordinazionebar` (`id_ombrellone`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `scontrino`
+--
+
+LOCK TABLES `scontrino` WRITE;
+/*!40000 ALTER TABLE `scontrino` DISABLE KEYS */;
+/*!40000 ALTER TABLE `scontrino` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tariffaprezzi`
 --
 
@@ -471,4 +477,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-21 12:10:08
+-- Dump completed on 2022-04-21 18:07:20
