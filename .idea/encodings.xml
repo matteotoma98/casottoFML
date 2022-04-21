@@ -2,6 +2,11 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/casotto/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/casotto/src/main/java/com/unicam/cs/ids/casotto/Attrezzatura.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/casotto/src/main/java/com/unicam/cs/ids/casotto/Chalet.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/casotto/src/main/java/com/unicam/cs/ids/casotto/Lettino.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/casotto/src/main/java/com/unicam/cs/ids/casotto/Ordinazione_Bar.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/casotto/src/main/resources" charset="UTF-8" />
+    <file url="PROJECT" charset="windows-1252" />
   </component>
 </project>

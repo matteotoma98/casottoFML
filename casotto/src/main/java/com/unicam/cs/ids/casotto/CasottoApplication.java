@@ -12,10 +12,11 @@ import java.sql.Statement;
 public class CasottoApplication {
 
     public static void main(String[] args) {
+
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/casotto", "root", "casottofml");
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from people");
+            ResultSet resultSet = statement.executeQuery("select * from chalet ");
             while (resultSet.next()) {
                 System.out.println(resultSet.getString("firstname"));
             }
