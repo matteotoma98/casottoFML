@@ -30,6 +30,13 @@ public class Chalet {
 		this.quantita_lettini_disponibili = quantita_lettini_disponibili;
 	}
 
+	public Chalet() {
+		this.quantita_ombrelloni = quantita_ombrelloni;
+		this.quantita_lettini = quantita_lettini;
+		this.quantita_ombrelloni_disponibili = quantita_ombrelloni_disponibili;
+		this.quantita_lettini_disponibili = quantita_lettini_disponibili;
+	}
+
 	public int getQuantita_ombrelloni() {
 		return quantita_ombrelloni;
 	}

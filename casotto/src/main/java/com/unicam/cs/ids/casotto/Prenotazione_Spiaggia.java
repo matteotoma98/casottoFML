@@ -1,11 +1,11 @@
 package com.unicam.cs.ids.casotto;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Prenotazione_Spiaggia {
-    private Date data_finePrenotazione;
-    private Date datainizioPrenotazione;
+    private GregorianCalendar data_finePrenotazione;
+    private GregorianCalendar datainizioPrenotazione;
     private int num_fila_ombrellone;
     private int id_prenotazione;
     public Chalet unnamed_Chalet_;
@@ -61,6 +61,13 @@ public class Prenotazione_Spiaggia {
         throw new UnsupportedOperationException();
     }
 
+    public Prenotazione_Spiaggia(GregorianCalendar data_finePrenotazione, GregorianCalendar datainizioPrenotazione, int num_fila_ombrellone, int id_prenotazione) {
+        this.data_finePrenotazione = data_finePrenotazione;
+        this.datainizioPrenotazione = datainizioPrenotazione;
+        this.num_fila_ombrellone = num_fila_ombrellone;
+        this.id_prenotazione = id_prenotazione;
+    }
+
     public Prenotazione_Spiaggia() {
         this.data_finePrenotazione = data_finePrenotazione;
         this.datainizioPrenotazione = datainizioPrenotazione;
@@ -68,20 +75,20 @@ public class Prenotazione_Spiaggia {
         this.id_prenotazione = id_prenotazione;
     }
 
-    public Date getDatainizioPrenotazione() {
+    public GregorianCalendar getDatainizioPrenotazione() {
         return datainizioPrenotazione;
     }
 
-    public void setDatainizioPrenotazione(Date datainizioPrenotazione) {
+    public void setDatainizioPrenotazione(GregorianCalendar datainizioPrenotazione) {
         this.datainizioPrenotazione = datainizioPrenotazione;
     }
 
 
-    public Date getData_finePrenotazione() {
+    public GregorianCalendar getData_finePrenotazione() {
         return data_finePrenotazione;
     }
 
-    public void setData_finePrenotazione(Date data_finePrenotazione) {
+    public void setData_finePrenotazione(GregorianCalendar data_finePrenotazione) {
         this.data_finePrenotazione = data_finePrenotazione;
     }
 

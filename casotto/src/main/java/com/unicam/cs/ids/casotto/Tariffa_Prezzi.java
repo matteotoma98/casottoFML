@@ -1,6 +1,10 @@
 package com.unicam.cs.ids.casotto;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Tariffa_Prezzi {
     private int num_fila_ombrellone;
@@ -38,26 +42,71 @@ public class Tariffa_Prezzi {
         this.id_prodotto = id_prodotto;
     }
 
-    public double Imposta_Prezzi_Spiaggia(String fascia_oraria, int num_fila_ombrellone, Date data_inizio, Date data_fine) {
+    public double Imposta_Prezzi_Spiaggia(FasciaOraria fasciaOraria, int num_fila_ombrellone, GregorianCalendar data_inizio, GregorianCalendar data_fine) {
         double prezzo = 0;
         if (num_fila_ombrellone >= 1 && num_fila_ombrellone <= 3) prezzo = PREZZO_OMBRELLONE_VIP;
         if (num_fila_ombrellone >= 4 && num_fila_ombrellone <= 7) prezzo = PREZZO_OMBRELLONE_PREMIUM;
         if (num_fila_ombrellone >= 8 && num_fila_ombrellone <= 15) prezzo = PREZZO_OMBRELLONE_BASE;
-        if (num_fila_ombrellone > 15 || num_fila_ombrellone<=0){
+        if (num_fila_ombrellone > 15 || num_fila_ombrellone <= 0) {
             try {
                 throw new Exception("Errore: Seleziona fila da 1 a 15");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        String data_in= data_inizio.toString();
-        String[] dateParts = data_in.split("-");
-        String day = dateParts[0];
-        String month = dateParts[1];
-        String year= dateParts[2];
-        if (month=="6") prezzo= prezzo + 3;
-        if(month=="")
 
+        data_inizio.set(GregorianCalendar.YEAR, 2015);
+        data_inizio.set(GregorianCalendar.MONTH, 4);
+        data_inizio.set(GregorianCalendar.DATE, 20);
+        int month[] = {1,2,3,4,5,6,7,8,9,10,11,12};
+        String data_in = data_inizio.toString();
+      /*  System.out.print("Date: "
+                +data_inizio.set(GregorianCalendar.MONTH, 4) + " "
+                +  data_inizio.set(GregorianCalendar.DATE, 20)"" + " "
+                +  data_inizio.set(GregorianCalendar.YEAR, 2015) + "\n"); */
+        String[] dateParts_in = data_in.split("-");
+        int month_inizio =month[data_inizio.get(Calendar.MONTH)];
+        int day_i = data_inizio.get(Calendar.DATE);
+        int year_i = data_inizio.get(Calendar.YEAR) ;
+       // int month_inizio = Integer.parseInt(day_i);
+       // int month_inizio = Integer.parseInt(month_i);
+      //  int year_inizio = Integer.parseInt(year_i);
+        String data_f = data_fine.toString();
+        String[] dateParts_f = data_f.split("-");
+        int month_f =month[data_inizio.get(Calendar.MONTH)];
+        int day_f = data_inizio.get(Calendar.DATE);
+        int year_f = data_inizio.get(Calendar.YEAR) ;
+
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Date dfrom = null;
+        try {
+            dfrom = format.parse(data_inizio.toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date dto = null;
+        try {
+            dto = format.parse(data_fine.toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long diff = dto.getTime() - dfrom.getTime();
+        System.out.println(diff);
+        //  System.out.println("Hours: " + diff / (60 * 60 * 1000) % 24);
+        long num_giorni = (diff / (24 * 60 * 60 * 1000)) + 1;
+
+        if (((month_inizio >= 6 && month_inizio <= 8) && (month_f >= 6 && month_f <= 8))
+                && (month_inizio <= month_f)) { //controllo sui giorni
+            if (month_f == 6 && month_inizio == 6) prezzo = (num_giorni) * (prezzo + 3);
+            // if (month_f == 6 && month_inizio == 7) prezzo
+            if (month_f == 7 && month_inizio == 7) prezzo = (num_giorni) * (prezzo + 4);
+            if (month_f == 8 && month_inizio == 8) prezzo = (num_giorni) * (prezzo + 5);
+        }
+        if ((month_f >= 1 && month_inizio >= 1) ||
+                (month_f <= 5 && month_inizio <= 5) ||
+                (month_f >= 9 && month_inizio >= 9) && (month_f <= 12 && month_inizio <= 12))
+            throw new RuntimeException("Errore: in questi mesi lo chalet è chiuso.");
         return prezzo;
     }
 

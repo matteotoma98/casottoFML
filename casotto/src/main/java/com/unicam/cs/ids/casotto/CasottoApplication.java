@@ -7,12 +7,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.Scanner;
 
 @SpringBootApplication
 public class CasottoApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/casotto", "root", "casottofml");
@@ -26,8 +27,17 @@ public class CasottoApplication {
             System.out.println("Probabilmente non sei riuscito a connetterti al database. Assicurati di avere mysql installato e che tu sia collegato al database.");
         }
 
-        SpringApplication.run(CasottoApplication.class, args);
 
+        //SpringApplication.run(CasottoApplication.class, args);
+        String username= "prova";
+        String password="dd";
+        String ruolo="boh";
+        String nome= "matteo";
+        String cognome= "rossi";
+        String email= "matteorossi@gma.il";
+        int id_ombrellone= 10;
+        Cliente cliente= new Cliente(username,password,ruolo,nome,cognome,email,id_ombrellone);
+        cliente.PrenotazioneOmbrellone();
         /*Utente utente = new Utente();
         int scelta;
         do{

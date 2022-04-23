@@ -66,23 +66,24 @@ public class Cliente extends Utente implements ICliente {
 
     @Override
     public void PrenotazioneOmbrellone() throws ParseException {
-        double prezzo=0;
-        Tariffa_Prezzi tariffaPrezzi= new Tariffa_Prezzi();
+        double prezzo = 0;
+        Tariffa_Prezzi tariffaPrezzi = new Tariffa_Prezzi();
         Prenotazione_Spiaggia prenotazione_spiaggia = new Prenotazione_Spiaggia();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Inserisci il giorno d'inizio della prenotazione:\n");
+        System.out.println("Inserisci il giorno d'inizio della prenotazione:");
         String date_start = scanner.nextLine();
-        Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(date_start);
+        GregorianCalendar date1 = new GregorianCalendar();
         prenotazione_spiaggia.setDatainizioPrenotazione(date1);
         //  System.out.println(date1);
-        System.out.println("Inserisci il giorno di fine della prenotazione:\n");
+        System.out.println("Inserisci il giorno di fine della prenotazione:");
         String date_end = scanner.nextLine();
-        Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(date_end);
+        GregorianCalendar date2 = new GregorianCalendar();
         prenotazione_spiaggia.setData_finePrenotazione(date2);
-        System.out.println("Inserisci il giorno di fine della prenotazione:\n");
+        System.out.println("Inserisci il giorno di fine della prenotazione:");
         int scelta_fascia_oraria;
-        do {
-            System.out.println("Scegli in quale fascia oraria vuoi prenotare: ");
+        String fasciaOraria = null;
+
+            System.out.println("Scegli in quale fascia oraria vuoi prenotare:");
             System.out.println("1: Mattina ");
             System.out.println("2: Pomeriggio ");
             System.out.println("3: Giornata Intera ");
@@ -91,9 +92,8 @@ public class Cliente extends Utente implements ICliente {
 
             switch (scelta_fascia_oraria) {
                 case 1:
-                    String fasciaOraria = "";
+                    fasciaOraria = "";
                     fasciaOraria = String.valueOf(FasciaOraria.MATTINA);
-
                     break;
                 case 2:
                     fasciaOraria = String.valueOf(FasciaOraria.POMERIGGIO);
@@ -102,12 +102,11 @@ public class Cliente extends Utente implements ICliente {
                     fasciaOraria = String.valueOf(FasciaOraria.GIORNATA_INTERA);
                     break;
             }
-        }
-        while (scelta_fascia_oraria != 0);
+
 
         int scelta_tipologia;
-        do {
-            System.out.println("Scegli in quale fascia oraria vuoi prenotare: ");
+
+            System.out.println("Scegli quale tipologia di ombrellone vuoi prenotare: ");
             System.out.println("1: VIP ");
             System.out.println("2: PREMIUM ");
             System.out.println("3: BASE");
@@ -124,15 +123,13 @@ public class Cliente extends Utente implements ICliente {
                     tipologia = String.valueOf(Tipologia.BASE);
                     break;
             }
-        }
-        while (scelta_tipologia != 0);
 
 
         System.out.println("Inserisci la fila dell'ombrellone:\n");
         //querychemostra la lista delle file
-        int fila=0;
-        fila=  scanner.nextInt();
-        Ombrellone om= new Ombrellone();
+        int fila = 0;
+        fila = scanner.nextInt();
+        Ombrellone om = new Ombrellone();
         om.setNum_fila_ombrellone(fila);
 
         System.out.println("Inserisci l'id dell'ombrellone che vuoi prenotare");
@@ -140,14 +137,25 @@ public class Cliente extends Utente implements ICliente {
         int id = scanner.nextInt();
         om.setId_ombrellone(id);
 
-        prenotazione_spiaggia.(om.getId_ombrellone(),om.getNum_fila_ombrellone(),om.getData, data_fine);
-        prezzo= prezzo + tariffaPrezzi.Imposta_Prezzi_Spiaggia(fasciaOraria,"","","");
+        System.out.println("Inserisci il numero di lettini che vuoi prenotare");
+        //querychemostra la lista degli ombrelloni
+        int lettini = scanner.nextInt();
+        Chalet chalet = new Chalet();
+
+
+        //   prenotazione_spiaggia.(om.(),om.getNum_fila_ombrellone(),om.getData, data_fine);
+        prezzo = prezzo + tariffaPrezzi.Imposta_Prezzi_Spiaggia(FasciaOraria.valueOf(fasciaOraria), fila, date1, date2);
+
+
+        //ALLA FINE DELLA PRENOTAZIONE, AGGIORNARE I LETTINI DISPONIBILI E ANCHE CHE GLI OMBRELLONI DEVONO DIVENTARE OCCUPATI
+        // chalet.setQuantita_lettini(chalet.getQuantita_lettini_disponibili()-lettini);
         //connettore.setOmbrelloneOccupato(id);
-        List<Ombrellone> ombrelloni = co.getAvailableOmbrelloni(numero_ospiti);
+      /*   List<Ombrellone> ombrelloni = co.getAvailableOmbrelloni(numero_ospiti);
         for (Ombrellone ombrellone : ombrelloni) {
             System.out.println(ombrellone.toString());
         }
         System.out.println("Digita l'id dell'ombrellone che vuoi prenotare");
+
         String id = scanner.nextLine();
         co.setOmbrelloneOccupato(id);
         double prezzo = co.getPrezzo(id);
@@ -158,7 +166,7 @@ public class Cliente extends Utente implements ICliente {
             System.out.println("Totale : " + totale);
         } else
             System.out.println("Prenotazione non effettuata, riprova");
-
+          */
 
     }
 }
