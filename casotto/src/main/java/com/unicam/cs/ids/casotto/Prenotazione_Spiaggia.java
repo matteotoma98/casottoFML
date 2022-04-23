@@ -52,23 +52,20 @@ public class Prenotazione_Spiaggia {
         throw new UnsupportedOperationException();
     }
 
+    /*
+    public void aggiornaPrezzo(int id_ombrellone, int num_fila_ombrellone, Date data_inizio, Date data_fine ){
+        throw new UnsupportedOperationException();
+    } */
     public void sceltaFasciaOraria() {
+
         throw new UnsupportedOperationException();
     }
 
-    public Prenotazione_Spiaggia(Date data_finePrenotazione, Date datainizioPrenotazione, int num_fila_ombrellone, int id_prenotazione) {
+    public Prenotazione_Spiaggia() {
         this.data_finePrenotazione = data_finePrenotazione;
         this.datainizioPrenotazione = datainizioPrenotazione;
         this.num_fila_ombrellone = num_fila_ombrellone;
         this.id_prenotazione = id_prenotazione;
-    }
-
-    public Date getData_finePrenotazione() {
-        return data_finePrenotazione;
-    }
-
-    public void setData_finePrenotazione(Date data_finePrenotazione) {
-        this.data_finePrenotazione = data_finePrenotazione;
     }
 
     public Date getDatainizioPrenotazione() {
@@ -78,6 +75,17 @@ public class Prenotazione_Spiaggia {
     public void setDatainizioPrenotazione(Date datainizioPrenotazione) {
         this.datainizioPrenotazione = datainizioPrenotazione;
     }
+
+
+    public Date getData_finePrenotazione() {
+        return data_finePrenotazione;
+    }
+
+    public void setData_finePrenotazione(Date data_finePrenotazione) {
+        this.data_finePrenotazione = data_finePrenotazione;
+    }
+
+
 
     public int getNum_fila_ombrellone() {
         return num_fila_ombrellone;

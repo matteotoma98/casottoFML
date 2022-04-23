@@ -20,7 +20,7 @@ public class Ombrellone {
 		throw new UnsupportedOperationException();
 	}
 
-	public Ombrellone(int id_ombrellone, double prezzo, boolean disponibilita, Tariffa_Prezzi tariffaPrezzi, Tipologia tipologia, int num_fila_ombrellone) {
+	public Ombrellone() {
 		this.id_ombrellone = id_ombrellone;
 		this.prezzo = prezzo;
 		this.disponibilita = disponibilita;
