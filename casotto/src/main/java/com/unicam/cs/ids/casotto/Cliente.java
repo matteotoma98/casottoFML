@@ -73,6 +73,7 @@ public class Cliente extends Utente implements ICliente {
         System.out.println("Inserisci il giorno d'inizio della prenotazione:");
         String date_start = scanner.nextLine();
         GregorianCalendar date1 = new GregorianCalendar();
+        //System.out.println(date_start);
         prenotazione_spiaggia.setDatainizioPrenotazione(date1);
         //  System.out.println(date1);
         System.out.println("Inserisci il giorno di fine della prenotazione:");
@@ -144,7 +145,7 @@ public class Cliente extends Utente implements ICliente {
 
 
         //   prenotazione_spiaggia.(om.(),om.getNum_fila_ombrellone(),om.getData, data_fine);
-        prezzo = prezzo + tariffaPrezzi.Imposta_Prezzi_Spiaggia(FasciaOraria.valueOf(fasciaOraria), fila, date1, date2);
+        prezzo = prezzo + tariffaPrezzi.Imposta_Prezzi_Spiaggia(FasciaOraria.valueOf(fasciaOraria), fila, date_start, date_end);
 
 
         //ALLA FINE DELLA PRENOTAZIONE, AGGIORNARE I LETTINI DISPONIBILI E ANCHE CHE GLI OMBRELLONI DEVONO DIVENTARE OCCUPATI
