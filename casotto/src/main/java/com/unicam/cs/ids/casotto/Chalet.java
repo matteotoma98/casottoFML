@@ -5,21 +5,27 @@ public class Chalet {
 	private int quantita_lettini;
 	private int quantita_ombrelloni_disponibili;
 	private int quantita_lettini_disponibili;
+	private int id_ombrellone;
 	public Prenotazione_Spiaggia unnamed_Prenotazione_Spiaggia_;
 
-	public void decrementaQuantitaLettiniDisponibili() {
-		throw new UnsupportedOperationException();
+	public void decrementaQuantitaLettiniDisponibili(int quantita_lettini) {
+
+	//	throw new UnsupportedOperationException();
 	}
 
 	public void decrementaQuantitaOmbrelloniDisponibili() {
-		throw new UnsupportedOperationException();
+
+		//throw new UnsupportedOperationException();
 	}
 
 	public void incrementaQuantitaLettiniDisponibili() {
-		throw new UnsupportedOperationException();
+
+		//throw new UnsupportedOperationException();
 	}
 
 	public void incrementaQuantitaOmbrelloniDisponibili() {
+
+
 		throw new UnsupportedOperationException();
 	}
 

@@ -25,7 +25,7 @@ public class Cliente extends Utente implements ICliente {
     }
 
     public Cliente(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
-        super(username, password, ruolo);
+        super(email, username, password, ruolo);
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
@@ -126,7 +126,7 @@ public class Cliente extends Utente implements ICliente {
             }
 
 
-        System.out.println("Inserisci la fila dell'ombrellone:\n");
+        System.out.println("Inserisci la fila dell'ombrellone:");
         //querychemostra la lista delle file
         int fila = 0;
         fila = scanner.nextInt();
@@ -138,16 +138,26 @@ public class Cliente extends Utente implements ICliente {
         int id = scanner.nextInt();
         om.setId_ombrellone(id);
 
-        System.out.println("Inserisci il numero di lettini che vuoi prenotare");
+        System.out.println("Inserisci la quantità di lettini che vuoi prenotare");
         //querychemostra la lista degli ombrelloni
         int lettini = scanner.nextInt();
         Chalet chalet = new Chalet();
 
-
         //   prenotazione_spiaggia.(om.(),om.getNum_fila_ombrellone(),om.getData, data_fine);
-        prezzo = prezzo + tariffaPrezzi.Imposta_Prezzi_Spiaggia(FasciaOraria.valueOf(fasciaOraria), fila, date_start, date_end);
+        prezzo = prezzo + tariffaPrezzi.Imposta_Prezzi_Spiaggia(FasciaOraria.valueOf(fasciaOraria), fila, date_start, date_end, lettini);
 
-
+        System.out.println("Confermi la prenotazione per " + tariffaPrezzi.getNum_giorni() + " giorni al prezzo di "+ prezzo+ "€ ?\n");
+        System.out.println("1=Si/2=No");
+        int scelta = scanner.nextInt();
+        if (scelta == 1) {
+            chalet.decrementaQuantitaLettiniDisponibili(lettini);
+            chalet.decrementaQuantitaOmbrelloniDisponibili();
+            prenotazione_spiaggia.addPrenotazione(date_start,date_end);
+            System.out.println("Prenotazione effettuata!");
+        }
+        else{
+            //ritorna al menù;
+        }
         //ALLA FINE DELLA PRENOTAZIONE, AGGIORNARE I LETTINI DISPONIBILI E ANCHE CHE GLI OMBRELLONI DEVONO DIVENTARE OCCUPATI
         // chalet.setQuantita_lettini(chalet.getQuantita_lettini_disponibili()-lettini);
         //connettore.setOmbrelloneOccupato(id);

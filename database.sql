@@ -130,7 +130,11 @@ CREATE TABLE `chalet` (
   `quantita_ombrelloni` int NOT NULL,
   `quantita_lettini` int NOT NULL,
   `quantita_ombrelloni_disponibili` int NOT NULL,
-  `quantita_lettini_disponibili` int NOT NULL
+  `quantita_lettini_disponibili` int NOT NULL,
+  `id_ombrellone` int NOT NULL,
+  UNIQUE KEY `id_ombrellone_UNIQUE` (`id_ombrellone`),
+  KEY `id_ombrellone_fk_idx` (`id_ombrellone`),
+  CONSTRAINT `id_ombrellone_fk4` FOREIGN KEY (`id_ombrellone`) REFERENCES `ombrellone` (`id_ombrellone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -157,8 +161,7 @@ CREATE TABLE `cliente` (
   `id_ombrellone` int DEFAULT NULL,
   PRIMARY KEY (`email`),
   UNIQUE KEY `email_UNIQUE` (`email`),
-  KEY `id_ombrellone_fk_idx` (`id_ombrellone`),
-  CONSTRAINT `id_ombrellone_fk2` FOREIGN KEY (`id_ombrellone`) REFERENCES `ombrellone` (`id_ombrellone`)
+  KEY `id_ombrellone_fk_idx` (`id_ombrellone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -311,12 +314,16 @@ DROP TABLE IF EXISTS `prenotazionespiaggia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prenotazionespiaggia` (
-  `id_prenotazione` int NOT NULL,
+  `id_prenotazione` int NOT NULL AUTO_INCREMENT,
   `data_inizio_prenotazione` date NOT NULL,
   `data_fine_prenotazione` date NOT NULL,
   `num_fila_ombrellone` int NOT NULL,
+  `id_ombrellone` int NOT NULL,
   PRIMARY KEY (`id_prenotazione`),
+  UNIQUE KEY `id_ombrellone_UNIQUE` (`id_ombrellone`),
   KEY `num_fila_ombrellone_idx` (`num_fila_ombrellone`),
+  KEY `id_ombrellone_fk_idx` (`id_ombrellone`),
+  CONSTRAINT `id_ombrellone_fk5` FOREIGN KEY (`id_ombrellone`) REFERENCES `ombrellone` (`id_ombrellone`),
   CONSTRAINT `num_fila_ombrellone` FOREIGN KEY (`num_fila_ombrellone`) REFERENCES `ombrellone` (`id_ombrellone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -477,4 +484,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-21 18:07:20
+-- Dump completed on 2022-04-25 10:58:27

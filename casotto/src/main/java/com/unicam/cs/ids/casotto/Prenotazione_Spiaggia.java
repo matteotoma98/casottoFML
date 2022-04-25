@@ -40,8 +40,8 @@ public class Prenotazione_Spiaggia {
         throw new UnsupportedOperationException();
     }
 
-    public void addPrenotazione(Object aData_inizioPrenotazione, Object aData_finePrenotazione) {
-        throw new UnsupportedOperationException();
+    public void addPrenotazione(String data_inizioPrenotazione, String data_finePrenotazione) {
+        //throw new UnsupportedOperationException();
     }
 
     public void notificaAddettoSpiaggia(Object aNum_fila_ombrellone, Object aNum_lettini, Object aNum_ombrelloni) {
