@@ -24,14 +24,18 @@ DROP TABLE IF EXISTS `addettoattivita`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `addettoattivita` (
   `email` varchar(50) NOT NULL,
-  `nome` varchar(45) DEFAULT NULL,
-  `cognome` varchar(45) DEFAULT NULL,
+  `nome` varchar(45) NOT NULL,
+  `cognome` varchar(45) NOT NULL,
   `id_attivita` int NOT NULL,
   PRIMARY KEY (`email`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `id_attivita_fk_idx` (`id_attivita`),
+  KEY `nome_addetto_attivita_fk_idx` (`nome`) /*!80000 INVISIBLE */,
+  KEY `cognome_addetto_attivita_fk_idx` (`cognome`),
+  CONSTRAINT `cognome_addetto_attivita_fk` FOREIGN KEY (`cognome`) REFERENCES `utente` (`cognome`),
   CONSTRAINT `email_fk_addettoattivita` FOREIGN KEY (`email`) REFERENCES `utente` (`email`),
-  CONSTRAINT `id_attivita_fk` FOREIGN KEY (`id_attivita`) REFERENCES `attivita` (`id_attivita`)
+  CONSTRAINT `id_attivita_fk` FOREIGN KEY (`id_attivita`) REFERENCES `attivita` (`id_attivita`),
+  CONSTRAINT `nome_addetto_attivita_fk` FOREIGN KEY (`nome`) REFERENCES `utente` (`nome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,11 +59,15 @@ DROP TABLE IF EXISTS `addettobar`;
 CREATE TABLE `addettobar` (
   `id_addbar` int NOT NULL AUTO_INCREMENT,
   `email` varchar(50) DEFAULT NULL,
-  `nome` varchar(45) DEFAULT NULL,
-  `cognome` varchar(45) DEFAULT NULL,
+  `nome` varchar(45) NOT NULL,
+  `cognome` varchar(45) NOT NULL,
   PRIMARY KEY (`id_addbar`),
   UNIQUE KEY `email_UNIQUE` (`email`),
-  CONSTRAINT `email_fk_addettobar` FOREIGN KEY (`email`) REFERENCES `utente` (`email`)
+  KEY `nome_addettobar_fk_idx` (`nome`),
+  KEY `cognome_addettobar_fk_idx` (`cognome`),
+  CONSTRAINT `cognome_addettobar_fk` FOREIGN KEY (`cognome`) REFERENCES `utente` (`cognome`),
+  CONSTRAINT `email_fk_addettobar` FOREIGN KEY (`email`) REFERENCES `utente` (`email`),
+  CONSTRAINT `nome_addettobar_fk` FOREIGN KEY (`nome`) REFERENCES `utente` (`nome`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -83,11 +91,15 @@ DROP TABLE IF EXISTS `addettospiaggia`;
 CREATE TABLE `addettospiaggia` (
   `id_addspaggia` int NOT NULL AUTO_INCREMENT,
   `email` varchar(50) DEFAULT NULL,
-  `nome` varchar(45) DEFAULT NULL,
-  `cognome` varchar(45) DEFAULT NULL,
+  `nome` varchar(45) NOT NULL,
+  `cognome` varchar(45) NOT NULL,
   PRIMARY KEY (`id_addspaggia`),
   UNIQUE KEY `email_UNIQUE` (`email`),
-  CONSTRAINT `email_fk_addettospiaggia` FOREIGN KEY (`email`) REFERENCES `utente` (`email`)
+  KEY `nome_addettospiaggia_fk_idx` (`nome`),
+  KEY `cognome_addettospiaggia_fk_idx` (`cognome`),
+  CONSTRAINT `cognome_addettospiaggia_fk` FOREIGN KEY (`cognome`) REFERENCES `utente` (`cognome`),
+  CONSTRAINT `email_fk_addettospiaggia` FOREIGN KEY (`email`) REFERENCES `utente` (`email`),
+  CONSTRAINT `nome_addettospiaggia_fk` FOREIGN KEY (`nome`) REFERENCES `utente` (`nome`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -151,6 +163,7 @@ CREATE TABLE `chalet` (
 
 LOCK TABLES `chalet` WRITE;
 /*!40000 ALTER TABLE `chalet` DISABLE KEYS */;
+INSERT INTO `chalet` VALUES (150,300,150,300);
 /*!40000 ALTER TABLE `chalet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,11 +178,15 @@ CREATE TABLE `cliente` (
   `nome` varchar(30) NOT NULL,
   `cognome` varchar(45) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `id_ombrellone` int DEFAULT NULL,
-  PRIMARY KEY (`nome`,`email`),
+  `id_ombrellone` int NOT NULL,
+  PRIMARY KEY (`email`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `id_ombrellone` (`id_ombrellone`),
-  CONSTRAINT `email_fk_cliente` FOREIGN KEY (`email`) REFERENCES `utente` (`email`)
+  KEY `nome_cliente_fk_idx` (`nome`),
+  KEY `cognome_cliente_fk_idx` (`cognome`),
+  CONSTRAINT `cognome_cliente_fk` FOREIGN KEY (`cognome`) REFERENCES `utente` (`cognome`),
+  CONSTRAINT `email_fk_cliente` FOREIGN KEY (`email`) REFERENCES `utente` (`email`),
+  CONSTRAINT `nome_cliente_fk` FOREIGN KEY (`nome`) REFERENCES `utente` (`nome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -179,7 +196,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES ('Matteo','Toma','matteotoma98@hotmail.it',NULL);
+INSERT INTO `cliente` VALUES ('Matteo','T','matteotoma98@hotmail.it',1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,10 +210,13 @@ DROP TABLE IF EXISTS `gestore`;
 CREATE TABLE `gestore` (
   `nome` varchar(50) NOT NULL,
   `cognome` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
+  `email` varchar(45) NOT NULL,
   PRIMARY KEY (`email`),
   UNIQUE KEY `email_UNIQUE` (`email`),
-  CONSTRAINT `email_fk_gestore` FOREIGN KEY (`email`) REFERENCES `utente` (`email`)
+  KEY `nome_gestore_fk_idx` (`nome`),
+  KEY `cognome_gestore_fk_idx` (`cognome`),
+  CONSTRAINT `cognome_gestore_fk` FOREIGN KEY (`cognome`) REFERENCES `utente` (`cognome`),
+  CONSTRAINT `nome_gestore_fk` FOREIGN KEY (`nome`) REFERENCES `utente` (`nome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -206,7 +226,7 @@ CREATE TABLE `gestore` (
 
 LOCK TABLES `gestore` WRITE;
 /*!40000 ALTER TABLE `gestore` DISABLE KEYS */;
-INSERT INTO `gestore` VALUES ('Francessco ','Chiocchi','francesco.chiocchi@studenti.unicam.it'),('Lorenzo','Caporossi','lorenzo.caporossi@studenti.unicam.it'),('Matteo','Toma','matteo.toma@studenti.unicam.it');
+INSERT INTO `gestore` VALUES ('Francesco','Chiocchi','francesco.chiocchi@studenti.unicam.it'),('Lorenzo','Caporossi','lorenzo.caporossi@studenti.unicam.it'),('Matteo','Toma','matteo.toma@studenti.unicam.it');
 /*!40000 ALTER TABLE `gestore` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,6 +250,7 @@ CREATE TABLE `lettino` (
 
 LOCK TABLES `lettino` WRITE;
 /*!40000 ALTER TABLE `lettino` DISABLE KEYS */;
+INSERT INTO `lettino` VALUES (0,1),(1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1),(10,1),(11,1),(12,1),(13,1),(14,1),(15,1),(16,1),(17,1),(18,1),(19,1),(20,1),(21,1),(22,1),(23,1),(24,1),(25,1),(26,1),(27,1),(28,1),(29,1),(30,1),(31,1),(32,1),(33,1),(34,1),(35,1),(36,1),(37,1),(38,1),(39,1),(40,1),(41,1),(42,1),(43,1),(44,1),(45,1),(46,1),(47,1),(48,1),(49,1),(50,1),(51,1),(52,1),(53,1),(54,1),(55,1),(56,1),(57,1),(58,1),(59,1),(60,1),(61,1),(62,1),(63,1),(64,1),(65,1),(66,1),(67,1),(68,1),(69,1),(70,1),(71,1),(72,1),(73,1),(74,1),(75,1),(76,1),(77,1),(78,1),(79,1),(80,1),(81,1),(82,1),(83,1),(84,1),(85,1),(86,1),(87,1),(88,1),(89,1),(90,1),(91,1),(92,1),(93,1),(94,1),(95,1),(96,1),(97,1),(98,1),(99,1),(100,1),(101,1),(102,1),(103,1),(104,1),(105,1),(106,1),(107,1),(108,1),(109,1),(110,1),(111,1),(112,1),(113,1),(114,1),(115,1),(116,1),(117,1),(118,1),(119,1),(120,1),(121,1),(122,1),(123,1),(124,1),(125,1),(126,1),(127,1),(128,1),(129,1),(130,1),(131,1),(132,1),(133,1),(134,1),(135,1),(136,1),(137,1),(138,1),(139,1),(140,1),(141,1),(142,1),(143,1),(144,1),(145,1),(146,1),(147,1),(148,1),(149,1),(150,1),(151,1),(152,1),(153,1),(154,1),(155,1),(156,1),(157,1),(158,1),(159,1),(160,1),(161,1),(162,1),(163,1),(164,1),(165,1),(166,1),(167,1),(168,1),(169,1),(170,1),(171,1),(172,1),(173,1),(174,1),(175,1),(176,1),(177,1),(178,1),(179,1),(180,1),(181,1),(182,1),(183,1),(184,1),(185,1),(186,1),(187,1),(188,1),(189,1),(190,1),(191,1),(192,1),(193,1),(194,1),(195,1),(196,1),(197,1),(198,1),(199,1),(200,1),(201,1),(202,1),(203,1),(204,1),(205,1),(206,1),(207,1),(208,1),(209,1),(210,1),(211,1),(212,1),(213,1),(214,1),(215,1),(216,1),(217,1),(218,1),(219,1),(220,1),(221,1),(222,1),(223,1),(224,1),(225,1),(226,1),(227,1),(228,1),(229,1),(230,1),(231,1),(232,1),(233,1),(234,1),(235,1),(236,1),(237,1),(238,1),(239,1),(240,1),(241,1),(242,1),(243,1),(244,1),(245,1),(246,1),(247,1),(248,1),(249,1),(250,1),(251,1),(252,1),(253,1),(254,1),(255,1),(256,1),(257,1),(258,1),(259,1),(260,1),(261,1),(262,1),(263,1),(264,1),(265,1),(266,1),(267,1),(268,1),(269,1),(270,1),(271,1),(272,1),(273,1),(274,1),(275,1),(276,1),(277,1),(278,1),(279,1),(280,1),(281,1),(282,1),(283,1),(284,1),(285,1),(286,1),(287,1),(288,1),(289,1),(290,1),(291,1),(292,1),(293,1),(294,1),(295,1),(296,1),(297,1),(298,1),(299,1),(300,1);
 /*!40000 ALTER TABLE `lettino` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,11 +294,11 @@ CREATE TABLE `ordinazionebar` (
   `id_ombrellone` int NOT NULL,
   `id_ordinazione` int NOT NULL AUTO_INCREMENT,
   `quantita` int DEFAULT NULL,
-  PRIMARY KEY (`id_ordinazione`,`id_ombrellone`),
+  PRIMARY KEY (`id_ordinazione`),
   KEY `id_ombrellone_fk3_idx` (`id_ombrellone`) /*!80000 INVISIBLE */,
   KEY `data_ordinazione` (`data_ordinazione`),
-  CONSTRAINT `fk_id_ombrellone` FOREIGN KEY (`id_ordinazione`) REFERENCES `cliente` (`id_ombrellone`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `id_ombrellone_fk` FOREIGN KEY (`id_ombrellone`) REFERENCES `cliente` (`id_ombrellone`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -286,6 +307,7 @@ CREATE TABLE `ordinazionebar` (
 
 LOCK TABLES `ordinazionebar` WRITE;
 /*!40000 ALTER TABLE `ordinazionebar` DISABLE KEYS */;
+INSERT INTO `ordinazionebar` VALUES ('2022-05-22',1,1,10),('2022-05-22',1,2,12);
 /*!40000 ALTER TABLE `ordinazionebar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -303,6 +325,8 @@ CREATE TABLE `prenotazioneattivita` (
   `email` varchar(45) NOT NULL,
   PRIMARY KEY (`data_inizio`,`nome_attivita`,`data_fine`,`email`),
   KEY `nome_attivita_fk_idx` (`nome_attivita`) /*!80000 INVISIBLE */,
+  KEY `email_idx` (`email`),
+  CONSTRAINT `email` FOREIGN KEY (`email`) REFERENCES `cliente` (`email`),
   CONSTRAINT `nome_attivita_fk` FOREIGN KEY (`nome_attivita`) REFERENCES `attivita` (`nome_attivita`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -313,6 +337,7 @@ CREATE TABLE `prenotazioneattivita` (
 
 LOCK TABLES `prenotazioneattivita` WRITE;
 /*!40000 ALTER TABLE `prenotazioneattivita` DISABLE KEYS */;
+INSERT INTO `prenotazioneattivita` VALUES ('2005-02-22','2005-02-22','Calcio','matteotoma98@hotmail.it');
 /*!40000 ALTER TABLE `prenotazioneattivita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -324,16 +349,16 @@ DROP TABLE IF EXISTS `prenotazionespiaggia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prenotazionespiaggia` (
-  `id_prenotazione` int NOT NULL,
+  `id_prenotazione` int NOT NULL AUTO_INCREMENT,
   `data_inizio_prenotazione` date NOT NULL,
   `data_fine_prenotazione` date NOT NULL,
-  `num_fila_ombrellone` int NOT NULL AUTO_INCREMENT,
+  `num_fila_ombrellone` int NOT NULL,
   `id_ombrellone` int NOT NULL,
   PRIMARY KEY (`id_prenotazione`),
   KEY `num_fila_ombrellone_idx` (`num_fila_ombrellone`),
   KEY `id_ombrellone_fk_idx` (`id_ombrellone`),
   CONSTRAINT `id_fk_ombrellone` FOREIGN KEY (`id_ombrellone`) REFERENCES `ombrellone` (`id_ombrellone`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -342,6 +367,7 @@ CREATE TABLE `prenotazionespiaggia` (
 
 LOCK TABLES `prenotazionespiaggia` WRITE;
 /*!40000 ALTER TABLE `prenotazionespiaggia` DISABLE KEYS */;
+INSERT INTO `prenotazionespiaggia` VALUES (1,'2022-03-22','2022-03-22',1,1);
 /*!40000 ALTER TABLE `prenotazionespiaggia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -354,8 +380,7 @@ DROP TABLE IF EXISTS `preparazioneordine`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `preparazioneordine` (
   `ordine_pronto` tinyint(1) NOT NULL,
-  `id_ordinazione` int NOT NULL,
-  PRIMARY KEY (`id_ordinazione`)
+  `id_ordinazione` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -365,6 +390,7 @@ CREATE TABLE `preparazioneordine` (
 
 LOCK TABLES `preparazioneordine` WRITE;
 /*!40000 ALTER TABLE `preparazioneordine` DISABLE KEYS */;
+INSERT INTO `preparazioneordine` VALUES (1,1);
 /*!40000 ALTER TABLE `preparazioneordine` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -379,6 +405,7 @@ CREATE TABLE `prodottibar` (
   `id_prodotto` int NOT NULL,
   `nome_prodotto` varchar(45) NOT NULL,
   `prezzo` double NOT NULL,
+  `quantita` int DEFAULT NULL,
   PRIMARY KEY (`id_prodotto`),
   UNIQUE KEY `id_prodotto_UNIQUE` (`id_prodotto`),
   UNIQUE KEY `nome_prodotto_UNIQUE` (`nome_prodotto`)
@@ -391,6 +418,7 @@ CREATE TABLE `prodottibar` (
 
 LOCK TABLES `prodottibar` WRITE;
 /*!40000 ALTER TABLE `prodottibar` DISABLE KEYS */;
+INSERT INTO `prodottibar` VALUES (1,'Patatine San Carlo',1,15),(2,'Bruschettine',2,4),(3,'Tramezzini',3,5),(4,'Kinder Bueno',2,10),(5,'Spritz',4,20),(6,'Estathe Pesca',2,20),(7,'Estathe Limone',2,20),(8,'Acqua',1,50),(9,'Cono ',2,10),(10,'Ghiacciolo Menta',1.5,5),(11,'Giacciolo Limone',5,5);
 /*!40000 ALTER TABLE `prodottibar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -402,16 +430,14 @@ DROP TABLE IF EXISTS `scontrino`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `scontrino` (
-  `id_scontrino` int NOT NULL,
+  `id_scontrino` int NOT NULL AUTO_INCREMENT,
   `data_scontrino` date NOT NULL,
   `id_ombrellone` int NOT NULL,
   `prezzo_totale` double NOT NULL,
   PRIMARY KEY (`id_scontrino`),
   UNIQUE KEY `id_ombrellone_UNIQUE` (`id_ombrellone`),
-  KEY `data_scontrino_idx` (`data_scontrino`),
-  CONSTRAINT `data_scontrino_fk` FOREIGN KEY (`data_scontrino`) REFERENCES `ordinazionebar` (`data_ordinazione`),
   CONSTRAINT `id_ombrellone_fk_4` FOREIGN KEY (`id_ombrellone`) REFERENCES `ordinazionebar` (`id_ombrellone`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -420,6 +446,7 @@ CREATE TABLE `scontrino` (
 
 LOCK TABLES `scontrino` WRITE;
 /*!40000 ALTER TABLE `scontrino` DISABLE KEYS */;
+INSERT INTO `scontrino` VALUES (1,'2022-05-22',1,25);
 /*!40000 ALTER TABLE `scontrino` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -446,6 +473,7 @@ CREATE TABLE `tariffaprezzi` (
 
 LOCK TABLES `tariffaprezzi` WRITE;
 /*!40000 ALTER TABLE `tariffaprezzi` DISABLE KEYS */;
+INSERT INTO `tariffaprezzi` VALUES (1,2,12,'14'),(2,2,12,'14'),(3,2,12,'14'),(4,2,10,'12'),(5,2,10,'12'),(6,2,10,'12'),(7,2,10,'12'),(8,2,8,'10'),(9,2,8,'10'),(10,2,8,'10'),(11,2,8,'10'),(12,2,8,'10'),(13,2,8,'10'),(14,2,8,'10'),(15,2,8,'10');
 /*!40000 ALTER TABLE `tariffaprezzi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -461,9 +489,13 @@ CREATE TABLE `utente` (
   `password` varchar(45) NOT NULL,
   `ruolo` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
+  `nome` varchar(45) NOT NULL,
+  `cognome` varchar(45) NOT NULL,
   PRIMARY KEY (`username`,`password`),
   KEY `ruolo_fk` (`ruolo`),
-  KEY `email_fk` (`email`)
+  KEY `email_fk` (`email`),
+  KEY `nome_fk` (`nome`),
+  KEY `cognome_fk` (`cognome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -473,7 +505,7 @@ CREATE TABLE `utente` (
 
 LOCK TABLES `utente` WRITE;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
-INSERT INTO `utente` VALUES ('addettoattivita','addettoattivita','addetto_attivita','addettoattivita@studenti.unicam.it'),('addettobar','addettobar','addetto_bar','addettobar@studenti.unicam.it'),('addettospiaggia','addettospiaggia','addetto_spiaggia','addettospiaggia@studenti.unicam.it'),('fracs_xyz','casottoFML','gestore','francesco.chiocchi@studenti.unicam.it'),('lore_capo','casottoFML','gestore','lorenzo.caporossi@studenti.unicam.it'),('matteot','matteot','cliente','matteotoma98@hotmail.it'),('matteotoma_98','casottoFML','gestore','matteo.toma@studenti.unicam.it');
+INSERT INTO `utente` VALUES ('addettoattivita','addettoattivita','addetto_attivita','addettoattivita@studenti.unicam.it','Addetto','Attivita'),('addettobar','addettobar','addetto_bar','addettobar@studenti.unicam.it','Addetto','Bar'),('addettospiaggia','addettospiaggia','addetto_spiaggia','addettospiaggia@studenti.unicam.it','Addetto','Spiaggia'),('fracs_xyz','casottoFML','gestore','francesco.chiocchi@studenti.unicam.it','Francesco','Chiocchi'),('lore_capo','casottoFML','gestore','lorenzo.caporossi@studenti.unicam.it','Lorenzo','Caporossi'),('matteot','matteot','cliente','matteotoma98@hotmail.it','Matteo','T'),('matteotoma_98','casottoFML','gestore','matteo.toma@studenti.unicam.it','Matteo','Toma');
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -486,4 +518,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-25 19:36:30
+-- Dump completed on 2022-04-26 13:26:37
