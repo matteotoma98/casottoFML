@@ -126,6 +126,8 @@ CREATE TABLE `attivita` (
   `nome_attrezzatura` varchar(45) DEFAULT NULL,
   `quantita` int DEFAULT '0',
   `id_attivita` int NOT NULL,
+  `data_inizio_attivita` datetime DEFAULT NULL,
+  `data_fine_attivita` datetime DEFAULT NULL,
   PRIMARY KEY (`nome_attivita`),
   UNIQUE KEY `nome_UNIQUE` (`nome_attivita`),
   KEY `id_attivita` (`id_attivita`)
@@ -138,7 +140,7 @@ CREATE TABLE `attivita` (
 
 LOCK TABLES `attivita` WRITE;
 /*!40000 ALTER TABLE `attivita` DISABLE KEYS */;
-INSERT INTO `attivita` VALUES ('Beach Volley',2,'Pallone Beach',2,3),('Calcio',2,'Pallone Calcio',2,2),('Zumba',10,NULL,0,1);
+INSERT INTO `attivita` VALUES ('Beach Volley',2,'Pallone Beach',2,3,NULL,NULL),('Calcio',2,'Pallone Calcio',2,2,NULL,NULL),('Zumba',10,NULL,0,1,'2022-04-29 17:00:00','2022-04-29 19:00:00');
 /*!40000 ALTER TABLE `attivita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -295,7 +297,7 @@ CREATE TABLE `ordinazionebar` (
   `id_ordinazione` int NOT NULL AUTO_INCREMENT,
   `quantita` int DEFAULT NULL,
   PRIMARY KEY (`id_ordinazione`),
-  KEY `id_ombrellone_fk3_idx` (`id_ombrellone`) /*!80000 INVISIBLE */,
+  KEY `id_ombrellone_fk3_idx` (`id_ombrellone`),
   KEY `data_ordinazione` (`data_ordinazione`),
   CONSTRAINT `id_ombrellone_fk` FOREIGN KEY (`id_ombrellone`) REFERENCES `cliente` (`id_ombrellone`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -309,6 +311,36 @@ LOCK TABLES `ordinazionebar` WRITE;
 /*!40000 ALTER TABLE `ordinazionebar` DISABLE KEYS */;
 INSERT INTO `ordinazionebar` VALUES ('2022-05-22',1,1,10),('2022-05-22',1,2,12);
 /*!40000 ALTER TABLE `ordinazionebar` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pagamento`
+--
+
+DROP TABLE IF EXISTS `pagamento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pagamento` (
+  `tipologia_pagamento` varchar(50) NOT NULL DEFAULT 'app',
+  `id_prenotazione` int NOT NULL,
+  `id_ordinazione` int DEFAULT NULL,
+  `id_ombrellone` int DEFAULT NULL,
+  `data_pagamento` datetime NOT NULL,
+  KEY `id_ordinazione_fk_idx` (`id_ordinazione`),
+  KEY `id_prenotazione_fk_idx` (`id_prenotazione`),
+  CONSTRAINT `id_ordinazione_fk` FOREIGN KEY (`id_ordinazione`) REFERENCES `ordinazionebar` (`id_ordinazione`),
+  CONSTRAINT `id_prenotazione_fk` FOREIGN KEY (`id_prenotazione`) REFERENCES `prenotazionespiaggia` (`id_prenotazione`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pagamento`
+--
+
+LOCK TABLES `pagamento` WRITE;
+/*!40000 ALTER TABLE `pagamento` DISABLE KEYS */;
+INSERT INTO `pagamento` VALUES ('app',1,1,1,'2022-04-29 17:30:00'),('contanti',1,NULL,1,'2022-04-29 10:00:00'),('app',1,2,1,'2022-04-29 19:00:00');
+/*!40000 ALTER TABLE `pagamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -518,4 +550,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-26 13:26:37
+-- Dump completed on 2022-04-28 12:25:42
