@@ -1,51 +1,76 @@
 package com.unicam.cs.ids.casotto;
 
+import org.w3c.dom.Attr;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 public class Attivita {
-	private String nome_attivita;
-	private int num_posti;
-	private String nome_attrezzatira;
-	private int quantita;
-	public ArrayList<Prenotazione_Attivita> coinvolge = new ArrayList<Prenotazione_Attivita>();
+    private String nome_attivita;
+    private int num_posti;
+    private Attrezzatura attrezzatura;
 
-	public Attivita() {
-		throw new UnsupportedOperationException();
-	}
+    public int getId_attivita() {
+        return id_attivita;
+    }
 
-	public void Attrezzatura(Object aNome, Object aQuantita) {
-		throw new UnsupportedOperationException();
-	}
+    public void setId_attivita(int id_attivita) {
+        this.id_attivita = id_attivita;
+    }
 
-	public Attivita(String nome_attivita, int num_posti, String nome_attrezzatira, int quantita) {
-		this.nome_attivita = nome_attivita;
-		this.num_posti = num_posti;
-		this.nome_attrezzatira = nome_attrezzatira;
-		this.quantita = quantita;
-	}
+    public int id_attivita;
+    private Date data_inizio_attivita;
+    private Date data_fine_attivita;
+    public ArrayList<Prenotazione_Attivita> coinvolge = new ArrayList<Prenotazione_Attivita>();
 
-	public String getNome_attivita() {
-		return nome_attivita;
-	}
+    public Attivita() {
+        throw new UnsupportedOperationException();
+    }
 
-	public void setNome_attivita(String nome_attivita) {
-		this.nome_attivita = nome_attivita;
-	}
+    public void Attrezzatura(String Nome, int Quantita) {
+        throw new UnsupportedOperationException();
+    }
 
-	public int getNum_posti() {
-		return num_posti;
-	}
+    public List<String> getListaAttivita(String nome_attivita, Date data_inizio_attivita, Date data_fine_attivita, int num_posti) {
+        String a = "a";
+        List<String> lista_attivita = new ArrayList<>();
+        lista_attivita.add(a);
+        return Collections.singletonList(a);
+    }
 
-	public void setNum_posti(int num_posti) {
-		this.num_posti = num_posti;
-	}
 
-	public String getNome_attrezzatira() {
-		return nome_attrezzatira;
+    public Attivita(String nome_attivita, int num_posti, Attrezzatura attrezzatura) {
+        this.nome_attivita = nome_attivita;
+        this.num_posti = num_posti;
+        this.attrezzatura = attrezzatura;
+        attrezzatura.getNomeAttrezzatura();
+        attrezzatura.getQuantita();
+    }
+
+    public String getNome_attivita() {
+        return nome_attivita;
+    }
+
+    public void setNome_attivita(String nome_attivita) {
+        this.nome_attivita = nome_attivita;
+    }
+
+    public int getNum_posti() {
+        return num_posti;
+    }
+
+    public void setNum_posti(int num_posti) {
+        this.num_posti = num_posti;
+    }
+
+	/*public String getNome_attrezzatira() {
+		return nome_attrezzatura;
 	}
 
 	public void setNome_attrezzatira(String nome_attrezzatira) {
-		this.nome_attrezzatira = nome_attrezzatira;
+		this.nome_attrezzatura = nome_attrezzatura;
 	}
 
 	public int getQuantita() {
@@ -54,5 +79,5 @@ public class Attivita {
 
 	public void setQuantita(int quantita) {
 		this.quantita = quantita;
-	}
+	}*/
 }

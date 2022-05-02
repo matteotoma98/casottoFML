@@ -3,6 +3,7 @@ package com.unicam.cs.ids.casotto;
 import java.util.ArrayList;
 
 public class Addetto_attivita_Ludico_Sportive extends Utente {
+	private int id_addetto_attivita;
 	private int id_attivita;
 	private String email;
 	private String nome;
@@ -13,9 +14,9 @@ public class Addetto_attivita_Ludico_Sportive extends Utente {
 		throw new UnsupportedOperationException();
 	}
 
-	public Addetto_attivita_Ludico_Sportive(String username, String password, String ruolo, int id_attivita, String email, String nome, String cognome) {
-		super(username, password, ruolo);
-		this.id_attivita = id_attivita;
+	public Addetto_attivita_Ludico_Sportive(String username, String password, String ruolo, String email, String nome, String cognome) {
+		super(username, password, ruolo, email);
+		//this.id_attivita = id_attivita;
 		this.email = email;
 		this.nome = nome;
 		this.cognome = cognome;

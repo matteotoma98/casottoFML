@@ -11,7 +11,7 @@ public class Tariffa_Prezzi {
     private double prezzoOmbrelloneMezzaGiornata;
     private double prezzoOmbrelloneGiornataIntera;
     private int id_prodotto;
-    public Ombrellone apprartiene;
+    public Ombrellone appartiene;
     public Prodotti_Bar riferisce;
     public static final int PREZZO_LETTINO = 2;
     public static final int PREZZO_OMBRELLONE_BASE = 4;

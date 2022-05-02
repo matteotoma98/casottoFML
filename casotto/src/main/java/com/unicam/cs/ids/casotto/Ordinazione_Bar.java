@@ -1,42 +1,62 @@
 package com.unicam.cs.ids.casotto;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 
 
 public class Ordinazione_Bar {
-    private Date data_ordinazione;
+    private DateTimeFormatter data_ordinazione;
     private int quantita;
     private int id_ordinazione;
     private int id_ombrellone;
+    private int id_prodotto;
     public Cliente effettua;
     //public ArrayList<Preparazione_Ordine> effettua = new ArrayList<Preparazione_Ordine>();
 
-    public Ordinazione_Bar() {
+    public Ordinazione_Bar(DateTimeFormatter date, int quantita, int incremento, String scelta) {
+
+
         throw new UnsupportedOperationException();
     }
 
-    public void Ordinazione_Prodotto(String NomeProdotto, int Quantita) {
+
+    public void ordinazione_Prodotto(int idProdotto, int quantita) {
+
+
+    }
+
+    public int incremento(int id_ordinazione) {
+
+        this.id_ordinazione = id_ordinazione + 1;
+        return this.id_ordinazione;
+    }
+
+    private void decrementoProdotto(Prodotti_Bar id_prodotto) {
         throw new UnsupportedOperationException();
     }
 
-    private void decrementoProdotto() {
-        throw new UnsupportedOperationException();
-    }
-
-    public Ordinazione_Bar(Date data_ordinazione, int quantita, int id_ordinazione, int id_ombrellone) {
+    public Ordinazione_Bar(DateTimeFormatter data_ordinazione, int quantita, int id_ordinazione, int id_ombrellone, int id_prodotto) {
         this.data_ordinazione = data_ordinazione;
         this.quantita = quantita;
-        this.id_ordinazione = id_ordinazione;
+        this.id_ordinazione = incremento(id_ordinazione);
         this.id_ombrellone = id_ombrellone;
+        this.id_prodotto = id_prodotto;
     }
 
-    public Date getData_ordinazione() {
+    public int getId_prodotto() {
+        return id_prodotto;
+    }
+
+    public void setId_prodotto(int id_prodotto) {
+        this.id_prodotto = id_prodotto;
+    }
+
+    public DateTimeFormatter getData_ordinazione() {
         return data_ordinazione;
     }
 
-    public void setData_ordinazione(Date data_ordinazione) {
+    public DateTimeFormatter setData_ordinazione(DateTimeFormatter data_ordinazione) {
         this.data_ordinazione = data_ordinazione;
+        return null;
     }
 
     public int getQuantita() {
@@ -51,8 +71,9 @@ public class Ordinazione_Bar {
         return id_ordinazione;
     }
 
-    public void setId_ordinazione(int id_ordinazione) {
+    public int setId_ordinazione(int id_ordinazione) {
         this.id_ordinazione = id_ordinazione;
+        return id_ordinazione;
     }
 
     public int getId_ombrellone() {

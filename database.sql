@@ -26,15 +26,12 @@ CREATE TABLE `addettoattivita` (
   `email` varchar(50) NOT NULL,
   `nome` varchar(45) NOT NULL,
   `cognome` varchar(45) NOT NULL,
-  `id_attivita` int NOT NULL,
   PRIMARY KEY (`email`),
   UNIQUE KEY `email_UNIQUE` (`email`),
-  KEY `id_attivita_fk_idx` (`id_attivita`),
   KEY `nome_addetto_attivita_fk_idx` (`nome`) /*!80000 INVISIBLE */,
   KEY `cognome_addetto_attivita_fk_idx` (`cognome`),
   CONSTRAINT `cognome_addetto_attivita_fk` FOREIGN KEY (`cognome`) REFERENCES `utente` (`cognome`),
   CONSTRAINT `email_fk_addettoattivita` FOREIGN KEY (`email`) REFERENCES `utente` (`email`),
-  CONSTRAINT `id_attivita_fk` FOREIGN KEY (`id_attivita`) REFERENCES `attivita` (`id_attivita`),
   CONSTRAINT `nome_addetto_attivita_fk` FOREIGN KEY (`nome`) REFERENCES `utente` (`nome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -45,7 +42,7 @@ CREATE TABLE `addettoattivita` (
 
 LOCK TABLES `addettoattivita` WRITE;
 /*!40000 ALTER TABLE `addettoattivita` DISABLE KEYS */;
-INSERT INTO `addettoattivita` VALUES ('addettoattivita@studenti.unicam.it','Addetto','Attivita',1);
+INSERT INTO `addettoattivita` VALUES ('addettoattivita@studenti.unicam.it','Addetto','Attivita');
 /*!40000 ALTER TABLE `addettoattivita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,7 +127,8 @@ CREATE TABLE `attivita` (
   `data_fine_attivita` datetime DEFAULT NULL,
   PRIMARY KEY (`nome_attivita`),
   UNIQUE KEY `nome_UNIQUE` (`nome_attivita`),
-  KEY `id_attivita` (`id_attivita`)
+  KEY `id_attivita` (`id_attivita`),
+  KEY `nome_attrezzatura_fk_idx` (`nome_attrezzatura`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -142,6 +140,30 @@ LOCK TABLES `attivita` WRITE;
 /*!40000 ALTER TABLE `attivita` DISABLE KEYS */;
 INSERT INTO `attivita` VALUES ('Beach Volley',2,'Pallone Beach',2,3,NULL,NULL),('Calcio',2,'Pallone Calcio',2,2,NULL,NULL),('Zumba',10,NULL,0,1,'2022-04-29 17:00:00','2022-04-29 19:00:00');
 /*!40000 ALTER TABLE `attivita` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `attrezzatura`
+--
+
+DROP TABLE IF EXISTS `attrezzatura`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `attrezzatura` (
+  `nome_attrezzatura` varchar(30) NOT NULL,
+  `quantita` int DEFAULT NULL,
+  PRIMARY KEY (`nome_attrezzatura`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `attrezzatura`
+--
+
+LOCK TABLES `attrezzatura` WRITE;
+/*!40000 ALTER TABLE `attrezzatura` DISABLE KEYS */;
+INSERT INTO `attrezzatura` VALUES ('Carte',4),('Cassa',2),('Pallone Beach ',4),('Pallone Calcio',4);
+/*!40000 ALTER TABLE `attrezzatura` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -550,4 +572,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-28 12:25:42
+-- Dump completed on 2022-04-30 13:24:13

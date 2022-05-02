@@ -4,8 +4,9 @@ import java.text.ParseException;
 
 public interface ICliente {
 
-  void PrenotazioneOmbrellone( ) throws ParseException;
-
-
+  void PrenotazioneOmbrellone( ) ;
+  void ordinazioneBar();
+  void cancellazioneOmbrellone();
+  void iscrizione_Attivita(Attivita attivita);
 
 }

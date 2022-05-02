@@ -24,6 +24,10 @@ public class Prenotazione_Attivita {
 		throw new UnsupportedOperationException();
 	}
 
+	public void sceltaFasciaOraria(Date dataInizio, Date dateFine){
+
+	}
+
 	public Prenotazione_Attivita(Date dataInizio, Date dataFine, String nome_attivita, String email) {
 		this.dataInizio = dataInizio;
 		this.dataFine = dataFine;

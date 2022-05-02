@@ -1,9 +1,10 @@
 package com.unicam.cs.ids.casotto;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Ombrellone {
-	private int id_ombrellone;
+	public int id_ombrellone;
 	private double prezzo;
 	private boolean disponibilita;
 	private Tariffa_Prezzi tariffaPrezzi;
@@ -53,7 +54,7 @@ public class Ombrellone {
 		this.disponibilita = disponibilita;
 	}
 
-	public Tariffa_Prezzi getTariffaPrezzi() {
+	public Tariffa_Prezzi getTariffaPrezzi(Date data_inizio_prenotazione, Date data_fine_prenotazione) {
 		return tariffaPrezzi;
 	}
 

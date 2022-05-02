@@ -1,13 +1,15 @@
 package com.unicam.cs.ids.casotto;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Prenotazione_Spiaggia {
     private GregorianCalendar data_finePrenotazione;
-    private GregorianCalendar datainizioPrenotazione;
+    private GregorianCalendar data_inizioPrenotazione;
     private int num_fila_ombrellone;
     private int id_prenotazione;
+    private Ombrellone ombrellone;
     public Chalet unnamed_Chalet_;
     public Cliente effettua;
     public ArrayList<Ombrellone> riserva = new ArrayList<Ombrellone>();
@@ -36,7 +38,7 @@ public class Prenotazione_Spiaggia {
         throw new UnsupportedOperationException();
     }
 
-    public void cancellaPrenotazione(Object aId_prenotazione) {
+    public void cancellaPrenotazione(Data data_inizio_prenotazione, Data data_fine_prenotazione) {
         throw new UnsupportedOperationException();
     }
 
@@ -44,11 +46,15 @@ public class Prenotazione_Spiaggia {
         //throw new UnsupportedOperationException();
     }
 
-    public void notificaAddettoSpiaggia(Object aNum_fila_ombrellone, Object aNum_lettini, Object aNum_ombrelloni) {
+
+    public void notificaAddettoSpiaggia(int num_fila_ombrellone, int num_lettini, int num_ombrelloni) {
+        /*
+         VEDERE PATTERN OBSERVER
+         */
         throw new UnsupportedOperationException();
     }
 
-    public ArrayList<Ombrellone> scegliOmbrellone() {
+    public void sceltaOmbrellone(Ombrellone o) {
         throw new UnsupportedOperationException();
     }
 
@@ -56,31 +62,41 @@ public class Prenotazione_Spiaggia {
     public void aggiornaPrezzo(int id_ombrellone, int num_fila_ombrellone, Date data_inizio, Date data_fine ){
         throw new UnsupportedOperationException();
     } */
-    public void sceltaFasciaOraria() {
 
+
+    public void sceltaFasciaOraria(String fasciaOraria) {
+        if (fasciaOraria.equals(FasciaOraria.MATTINA)){
+            fasciaOraria= "Mattina";
+        }
+        if (fasciaOraria.equals(FasciaOraria.POMERIGGIO)){
+            fasciaOraria= "Pomeriggio";
+        }
+        if (fasciaOraria.equals(FasciaOraria.GIORNATA_INTERA)){
+            fasciaOraria= "Giornata Intera";
+        }
         throw new UnsupportedOperationException();
     }
 
     public Prenotazione_Spiaggia(GregorianCalendar data_finePrenotazione, GregorianCalendar datainizioPrenotazione, int num_fila_ombrellone, int id_prenotazione) {
         this.data_finePrenotazione = data_finePrenotazione;
-        this.datainizioPrenotazione = datainizioPrenotazione;
+        this.data_inizioPrenotazione = datainizioPrenotazione;
         this.num_fila_ombrellone = num_fila_ombrellone;
         this.id_prenotazione = id_prenotazione;
     }
 
     public Prenotazione_Spiaggia() {
         this.data_finePrenotazione = data_finePrenotazione;
-        this.datainizioPrenotazione = datainizioPrenotazione;
+        this.data_inizioPrenotazione = data_inizioPrenotazione;
         this.num_fila_ombrellone = num_fila_ombrellone;
         this.id_prenotazione = id_prenotazione;
     }
 
     public GregorianCalendar getDatainizioPrenotazione() {
-        return datainizioPrenotazione;
+        return data_inizioPrenotazione;
     }
 
     public void setDatainizioPrenotazione(GregorianCalendar datainizioPrenotazione) {
-        this.datainizioPrenotazione = datainizioPrenotazione;
+        this.data_inizioPrenotazione = datainizioPrenotazione;
     }
 
 

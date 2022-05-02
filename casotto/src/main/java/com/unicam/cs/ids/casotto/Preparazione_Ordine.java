@@ -14,7 +14,7 @@ public class Preparazione_Ordine {
 		throw new UnsupportedOperationException();
 	}
 
-	public void AddProdotto(String aNomeProdotto, int aQuantita, Object aId_Preparazione) {
+	public void AddProdotto(Prodotti_Bar p, int id_ordinazione) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -22,7 +22,7 @@ public class Preparazione_Ordine {
 		throw new UnsupportedOperationException();
 	}
 
-	public void aggiornaTotale() {
+	public void aggiornaTotale(double prezzo) {
 		throw new UnsupportedOperationException();
 	}
 

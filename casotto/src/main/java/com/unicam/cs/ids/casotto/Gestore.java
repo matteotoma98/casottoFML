@@ -1,25 +1,36 @@
 package com.unicam.cs.ids.casotto;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class Gestore extends Utente {
 	private String nome;
 	private String cognome;
 	private String email;
-	public Prodotti_Bar gestisce;
-	public Chalet unnamed_Chalet_;
+	/*
+	public Prodotti_Bar prodotti_bar;
+	public Chalet chalet;
+    */
+
 
 	public void definizioneProdotti() {
 		throw new UnsupportedOperationException();
 	}
 
-	public void definizioneStruttura(Object num_ombrelloni, Object num_lettini) {
+	public void definizioneStruttura(int num_ombrelloni, int num_lettini) {
 		throw new UnsupportedOperationException();
 	}
 
-	public void definizioneAttrezzatura() {
-		throw new UnsupportedOperationException();
+	public void definizioneAttrezzatura(List<Attrezzatura> attrezzatura) {
+		String nome_attrezzatura="";
+		int qta=0;
+		Attrezzatura a= new Attrezzatura(nome_attrezzatura,qta);
+        attrezzatura.add(a);
+	throw new UnsupportedOperationException();
 	}
 
-	public void definizioneAttivita() {
+	public void definizioneAttivita(Attivita attivita, String nome_attrezzatura, int quantita_attrezzatura ) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -28,7 +39,7 @@ public class Gestore extends Utente {
 	}
 
 	public Gestore(String username, String password, String ruolo, String nome, String cognome, String email) {
-		super(username, password, ruolo);
+		super(username, password, email, ruolo);
 		this.nome = nome;
 		this.cognome = cognome;
 		this.email = email;

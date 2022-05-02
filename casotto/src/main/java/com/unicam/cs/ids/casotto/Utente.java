@@ -1,49 +1,248 @@
 package com.unicam.cs.ids.casotto;
 
-import java.util.Date;
+import com.unicam.cs.ids.casotto.Connectors.ClienteConnector;
+import com.unicam.cs.ids.casotto.Connectors.OrdinazioneBarConnector;
+import com.unicam.cs.ids.casotto.Connectors.UtenteConnector;
 
-public class Utente {
-	private String username;
-	private String password;
-	private String email;
-	private String ruolo;
+import java.text.ParseException;
+import java.util.Scanner;
 
-	public Utente(String username, String password, String email, String ruolo) {
-		this.username = username;
-		this.password = password;
-		this.email= email;
-		this.ruolo = ruolo;
+public class Utente implements IUtente {
+    private String username;
+    private String password;
+    private String email;
+    private String ruolo;
+    ClienteConnector cc = new ClienteConnector();
+    UtenteConnector uc = new UtenteConnector();
+    OrdinazioneBarConnector ob = new OrdinazioneBarConnector(obc.getDate(), quantita, ob.incremento(id_ordinazione), scelta);
+
+    public Utente(String username, String password, String email, String ruolo) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.ruolo = ruolo;
+    }
+
+    public Utente() {
+    }
+
+    public Utente(String email, String password, String ruolo) {
+        this.username = username;
+        this.password = password;
+        this.ruolo = ruolo;
+    }
+
+    public boolean Login(String email, String password) {
+        return false;
+    }
+	/*public boolean Registrati(String email, String password){
+		return false;
+	}*/
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRuolo() {
+        return ruolo;
+    }
+
+    public void setRuolo(String ruolo) {
+        this.ruolo = ruolo;
+    }
+
+
+    public void registrazione(String nome, String cognome, String email, String username, String password, String ruolo) {
+        uc.registrazione(nome, cognome, email, username, password, ruolo);
+        Cliente cliente = new Cliente();
+        cc.addCliente(cliente);
+    }
+
+    @Override
+    public void registrazione(String email, String username, String password) {
+
+    }
+
+    @Override
+    public void login(String email, String password) {
+        Utente utente = uc.login(email, password);
+        String prova = getUsername();
+        System.out.println(prova);
+        switch (utente.getPrivileges()) {
+            case 1:
+                menu_cliente(username);
+                break;
+            case 2:
+                menu_addettoSpiaggia();
+                break;
+            case 3:
+                menu_cameriere();
+                break;
+            case 4:
+                menu_addettoAttivita(username);
+                break;
+            case 5:
+                menu_gestore();
+                break;
+        }
+    }
+ /*
+	private void menu_cameriere() {
 	}
 
-	public String getUsername() {
-		return username;
+	private void menu_addettoAttivita (String username) {
+		Addetto_attivita_Ludico_Sportive oe = new A();
+		int scelta;
+		do{
+			System.out.println("Scegli cosa vuoi fare: ");
+			System.out.println("1: Invia messaggio ");
+			System.out.println("2: Crea evento ");
+			System.out.println("3: Modifica evento ");
+			System.out.println("4: Cancella evento ");
+			System.out.println("0: Esci ");
+			Scanner scanner = new Scanner(System.in);
+			scelta = scanner.nextInt();
+			switch(scelta) {
+				case 1:
+					oe.invia_messaggio(username);
+					break;
+				case 2:
+					oe.crea_evento();
+					break;
+				case 3:
+					oe.modifica_evento();
+					break;
+				case 4:
+					oe.cancella_evento();
+					break;
+			}
+		}
+		while(scelta != 0);
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	private void menu_gestore() {
+		Gestore gestore = new Gestore();
+		int scelta;
+		do{
+			System.out.println("Scegli cosa vuoi fare: ");
+			System.out.println("1: Modifica prezzo ombrelloni ");
+			System.out.println("2: Assumi dipendente ");
+			System.out.println("3: Licenzia dipendente ");
+			System.out.println("4: Aggiungi ombrellone ");
+			System.out.println("0: Esci ");
+			Scanner scanner = new Scanner(System.in);
+			scelta = scanner.nextInt();
+			switch(scelta) {
+				case 1:
+					gestore.modifica_politica();
+					break;
+				case 2:
+					gestore.assumi_dipendente();
+					break;
+				case 3:
+					gestore.licenzia_dipendente();
+					break;
+				case 4:
+					gestore.aggiungi_ombrellone();
+					break;
+			}
+		}
+		while(scelta != 0);
 	}
 
-	public String getPassword() {
-		return password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	private void menu_addettoSpiaggia() {
+		Addetto_Spiaggia as = new Addetto_Spiaggia();
+		int scelta;
+		do{
+			System.out.println("Scegli cosa vuoi fare: ");
+			System.out.println("1: Stampa scontrino ");
+			System.out.println("2: Modifica prodotto ");
+			System.out.println("3: Aggiungi prodotto ");
+			System.out.println("4: Rimuovi prodotto ");
+			System.out.println("5: Modifica stato ombrellone ");
+			System.out.println("6: Leggi ordine ");
+			System.out.println("0: Esci ");
+			Scanner scanner = new Scanner(System.in);
+			scelta = scanner.nextInt();
+			switch(scelta) {
+				case 1:
+					as.stampa_scontrino();
+					break;
+				case 2:
+					as.modifica_prodotto();
+					break;
+				case 3:
+					as.aggiungi_prodotto();
+					break;
+				case 4:
+					as.rimuovi_prodotto();
+					break;
+				case 5:
+					as.modifica_stato_ombrellone();
+					break;
+				case 6:
+					as.leggi_ordine();
+					break;
+			}
+		}
+		while(scelta != 0);
 	}
+  */
 
-	public String getEmail() {
-		return email;
-	}
+    private void menu_cliente(String email) throws ParseException {
+        Cliente cliente = cc.getCliente(email);
+        Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar(obc.getDate(), quantita, ob.incremento(id_ordinazione), scelta);
+       // OrdinazioneBarConnector ob = ordinazione_bar.ordinazione_Prodotto("jn", 5);
+        Attivita attivita= new Attivita();
+        int scelta;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+        do {
+            System.out.println("Scegli cosa vuoi fare: ");
+            System.out.println("1: Prenota ombrellone ");
+            System.out.println("2: Cancella prenotazione ombrellone ");
+            System.out.println("3: Ordinazione bar ");
+            System.out.println("4: Iscrizione attività ");
+            System.out.println("0: Effettua il logout ");
+            Scanner scanner = new Scanner(System.in);
+            scelta = scanner.nextInt();
+            switch (scelta) {
+                case 1:
+                    cliente.PrenotazioneOmbrellone();
+                    break;
+                case 2:
+                    cliente.cancellazioneOmbrellone();
+                    break;
+                case 3:
+                    cliente.ordinazioneBar();
+                    break;
+                case 4:
+                   // cliente.iscrizione_Attivita(attivita.getId_attivita());
+                    break;
+            }
+        }
+        while (scelta != 0);
+    }
 
-	public String getRuolo() {
-		return ruolo;
-	}
 
-	public void setRuolo(String ruolo) {
-		this.ruolo = ruolo;
-	}
 }
