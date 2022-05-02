@@ -1,5 +1,7 @@
 package com.unicam.cs.ids.casotto;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.GregorianCalendar;
 
@@ -14,8 +16,12 @@ public class Cliente extends Utente implements ICliente {
     private String email;
     private int id_ombrellone;
     private Prodotti_BarConnector cp = new Prodotti_BarConnector();
-    private OrdinazioneBarConnector obc= new OrdinazioneBarConnector(obc.getDate(), quantita, ob.incremento(id_ordinazione), scelta);
-    private Ordinazione_Bar ob= new Ordinazione_Bar(obc.getDate(), quantita, ob.incremento(id_ordinazione), scelta);
+    private OrdinazioneBarConnector obc= new OrdinazioneBarConnector();
+    DateTimeFormatter data_ordinazione;
+    int quantita;
+    int id_ordinazione;
+    int id_prodotto;
+   // private Ordinazione_Bar ob= new Ordinazione_Bar(obc.getDate(), quantita, , id_ombrellone, id_prodotto);
     public ArrayList<Prenotazione_Spiaggia> effettua = new ArrayList<Prenotazione_Spiaggia>();
 
 
@@ -206,28 +212,36 @@ public class Cliente extends Utente implements ICliente {
         double totale;
         int continuaAcquisti;
         int id_ordinazione=0;
+        Ordinazione_Bar ob= new Ordinazione_Bar(obc.getDate(), quantita, 0 , id_ombrellone, id_prodotto);
         do {
             System.out.println("Inserisci l'id del prodotto che vuoi acquistare");
             scelta = scanner.nextLine();
             System.out.println("Inserisci la quantità che vuoi acquistare");
             int quantita = scanner2.nextInt();
-            obc.addOrdine(new Ordinazione_Bar(obc.getDate(), quantita, ob.incremento(id_ordinazione) , scelta)); //bis
+            obc.addOrdine(new Ordinazione_Bar(obc.getDate(), quantita, ob.setId_ordinazione(id_ordinazione) , scelta)); //bis
           //  (ob.getDate(), quantita, int id_ordinazione, int id_ombrellone, int id_prodotto) {// ognerebbe prendere il valore dell'ultima riga della tabella, e aggiungerci + 1
-            totale = +cp.getPrezzoOrdine(scelta, quantita);
+          //  totale = +cp.getTotaleOrdine(scelta, quantita);
             System.out.println("vuoi aggiungere altri prodotti all'ordine ancora? 1-si 0-no");
             continuaAcquisti = scanner2.nextInt();
         } while (continuaAcquisti != 0);
-        System.out.println("Totale:" + totale);
+      //  System.out.println("Totale:" + totale);
         System.out.println("Confermi il pagamento? Si/No");
         scelta = scanner.nextLine();
         if (scelta.equals("Si")) {
-            System.out.println("Inserisci QRCode:");
-            scelta = scanner.nextLine();
+           DateTimeFormatter prova= obc.getDate();
+            prova.format(LocalDateTime.now());
+            System.out.println(  prova.format(LocalDateTime.now()));
+            Ordinazione_Bar ordinazione_bar= new Ordinazione_Bar(obc.getDate(), 0, ob.incremento(id_ordinazione), 1,10);
+            //DateTimeFormatter data_ordinazione, int quantita, int id_ordinazione, int id_ombrellone, int id_prodotto
+            //DECREMENTA QUANTITA , ECC
+           obc.addOrdine(ordinazione_bar);
+         System.out.println("prova");
+          if(obc.addOrdine(ordinazione_bar)) System.out.println("andata");
         }
 
 
-        Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar(obc.getDate(), quantita, ob.incremento(id_ordinazione), scelta);
-        ordinazione_bar.ordinazione_Prodotto(id_prodotto, quantita);
+       //Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar(obc.getDate(), quantita, ob.incremento(id_ordinazione), scelta);
+        // ordinazione_bar.ordinazione_Prodotto(id_prodotto, quantita);
     }
 
 

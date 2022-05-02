@@ -18,10 +18,18 @@ public class CasottoApplication {
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/casotto", "root", "casottofml");
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from chalet ");
+
+            Cliente cliente = new Cliente();
+            Utente utente= new Utente();
+            utente.menu_cliente("matteotoma98@hotmail.it");
+           // cliente.ordinazioneBar();
+
+            /*ResultSet resultSet = statement.executeQuery("select * from chalet ");
             while (resultSet.next()) {
-                System.out.println(resultSet.getString("firstname"));
-            }
+                System.out.println(resultSet.getString("quantita_lettini"));
+            } */
+
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Probabilmente non sei riuscito a connetterti al database. Assicurati di avere mysql installato e che tu sia collegato al database.");
@@ -37,7 +45,7 @@ public class CasottoApplication {
         String email= "matteorossi@gma.il";
         int id_ombrellone= 10;
         Cliente cliente= new Cliente(username,password,ruolo,nome,cognome,email,id_ombrellone);
-        cliente.PrenotazioneOmbrellone();
+        //cliente.PrenotazioneOmbrellone();
         /*Utente utente = new Utente();
         int scelta;
         do{

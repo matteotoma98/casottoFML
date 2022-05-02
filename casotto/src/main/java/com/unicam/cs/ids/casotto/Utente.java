@@ -14,7 +14,8 @@ public class Utente implements IUtente {
     private String ruolo;
     ClienteConnector cc = new ClienteConnector();
     UtenteConnector uc = new UtenteConnector();
-    OrdinazioneBarConnector ob = new OrdinazioneBarConnector(obc.getDate(), quantita, ob.incremento(id_ordinazione), scelta);
+    //Ordinazione_Bar ob= new Ordinazione_Bar();
+   // OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
 
     public Utente(String username, String password, String email, String ruolo) {
         this.username = username;
@@ -84,7 +85,8 @@ public class Utente implements IUtente {
     }
 
     @Override
-    public void login(String email, String password) {
+    public void login(String username, String password) {
+        /*
         Utente utente = uc.login(email, password);
         String prova = getUsername();
         System.out.println(prova);
@@ -105,7 +107,9 @@ public class Utente implements IUtente {
                 menu_gestore();
                 break;
         }
+    */
     }
+
  /*
 	private void menu_cameriere() {
 	}
@@ -210,11 +214,11 @@ public class Utente implements IUtente {
 	}
   */
 
-    private void menu_cliente(String email) throws ParseException {
+    public void menu_cliente(String email) throws ParseException {
         Cliente cliente = cc.getCliente(email);
-        Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar(obc.getDate(), quantita, ob.incremento(id_ordinazione), scelta);
+       // Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar(obc.getDate(), quantita, ob.incremento(id_ordinazione) , scelta);
        // OrdinazioneBarConnector ob = ordinazione_bar.ordinazione_Prodotto("jn", 5);
-        Attivita attivita= new Attivita();
+      //  Attivita attivita= new Attivita();
         int scelta;
 
         do {

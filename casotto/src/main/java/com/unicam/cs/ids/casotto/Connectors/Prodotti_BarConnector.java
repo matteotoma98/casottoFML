@@ -50,6 +50,23 @@ public class Prodotti_BarConnector {
         String nome_prodotto = result.getString("nome_prodotto");
         return new Prodotti_Bar(prezzo, id_prodotto, quantita, nome_prodotto);
     }
+
+
+    public double getTotaleOrdine(String id, int quantita) {
+        ResultSet result;
+        Prodotti_Bar prodotto = new Prodotti_Bar();
+        try {
+            result = connection.createStatement().executeQuery("SELECT * FROM prodotti WHERE id = " + id);
+
+            while (result.next()) {
+                prodotto = convertiRisultatoInProdotto(result);
+            }
+        } catch (Exception e)
+        { System.out.println(e); }
+        //add exception here
+        return prodotto.getPrezzo()*quantita;
+    }
+
     /*
     public boolean updateProdotto(Prodotto prodotto) {
         boolean result = true;
@@ -118,20 +135,7 @@ public class Prodotti_BarConnector {
         return result;
     }
 
-    public double getPrezzoOrdine(String id, int quantita) {
-        ResultSet result;
-        Prodotto prodotto = null;
-        try {
-            result = connection.createStatement().executeQuery("SELECT * FROM products WHERE id = " + id);
 
-            while (result.next()) {
-                prodotto = convertiRisultatoInProdotto(result);
-            }
-        } catch (Exception e)
-        { System.out.println(e); }
-        //add exception here
-        return prodotto.getPrezzo()*quantita;
-    }
     */
 
 }

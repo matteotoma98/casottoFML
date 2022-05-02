@@ -2,9 +2,11 @@ package com.unicam.cs.ids.casotto.Connectors;
 
 import com.unicam.cs.ids.casotto.Ordinazione_Bar;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrdinazioneBarConnector {
 
@@ -19,9 +21,14 @@ public class OrdinazioneBarConnector {
         } //add exception here
     }
 
+    public OrdinazioneBarConnector() {
+
+    }
+
     public DateTimeFormatter getDate() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        //    System.out.println("yyyy/MM/dd HH:mm:ss-> "+dtf.format(LocalDateTime.now()));
+       // System.out.println("yyyy/MM/dd HH:mm:ss-> "+dtf.format(LocalDateTime.now()));
+
         return dtf;
     }
 
@@ -40,14 +47,14 @@ public class OrdinazioneBarConnector {
         return formatDateTime;
     }
     */
-    public boolean addOrdine(Ordinazione_Bar ordinazione_bar) {
+        public boolean addOrdine(Ordinazione_Bar ordinazione_bar) {
         int i = 0;
         boolean result;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO ordini VALUES ( ?,?,?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO ordinazionebar VALUES ( ?,?,?,?,?)");
             preparedStatement.setInt(1, ordinazione_bar.getId_prodotto());
             preparedStatement.setInt(2, ordinazione_bar.setId_ordinazione(i + 1));
-            preparedStatement.setDate(3, ordinazione_bar.setData_ordinazione(ordinazione_bar.getData_ordinazione()Date()));
+            preparedStatement.setDate(3, ordinazione_bar.setData_ordinazione(getDate()));
             preparedStatement.setInt(4, ordinazione_bar.getId_ombrellone());
             preparedStatement.setInt(5, ordinazione_bar.getQuantita());
 
@@ -57,6 +64,38 @@ public class OrdinazioneBarConnector {
         }
         return result;
     }
+/*
+    public List<Ordinazione_Bar> getOrdini() {
+        ResultSet result;
+        List<Ordinazione_Bar> resultList = new ArrayList<Ordinazione_Bar>();
+        try {
+            result = connection.createStatement().executeQuery("SELECT * FROM ordinazionebar");
+
+            while (result.next()) {
+                resultList.add(convertiRisultatoInOrdine(result));
+            }
+        } catch (Exception e)
+        { System.out.println(e); } //add exception here
+
+        //error checking
+        if (resultList.isEmpty())
+            System.out.println("Empty result");
+
+        return resultList;
+    }
+
+   private Ordinazione_Bar convertiRisultatoInOrdine(ResultSet result)throws SQLException
+    {
+        Date data_ordinazione= result.getDate("data_ordinazione");
+        int quantita= result.getInt("quantita");
+        int id_ordinazione= result.getInt("id_ordinazione");
+        int id_ombrellone= result.getInt("id_ombrellone")
+        int id_prodotto = result.getInt("id_prodotto");
+
+
+       // DateTimeFormatter data_ordinazione, int quantita, int id_ordinazione, int id_ombrellone, int id_prodotto
+      //  return new Ordinazione_Bar(data_ordinazione, quantita, id_ordinazione, id_ombrellone, id_prodotto);
+    } */
 
         /*
 
@@ -64,7 +103,7 @@ public class OrdinazioneBarConnector {
             ResultSet result;
             Cliente cliente = new Cliente();
             try {
-                result = connection.createStatement().executeQuery("SELECT * FROM clienti WHERE email = '" + email + "'");
+                result = connection.createStatement().executeQuery("SELECT * FROM cliente WHERE email = '" + email + "'");
                 while (result.next()) {
 
                     cliente = convertiRisultatoInCliente(result);

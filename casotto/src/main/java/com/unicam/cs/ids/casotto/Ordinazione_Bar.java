@@ -1,27 +1,22 @@
 package com.unicam.cs.ids.casotto;
 
+import java.sql.Date;
 import java.time.format.DateTimeFormatter;
 
 
 public class Ordinazione_Bar {
     private DateTimeFormatter data_ordinazione;
     private int quantita;
-    private int id_ordinazione;
+    private static int id_ordinazione;
     private int id_ombrellone;
     private int id_prodotto;
     public Cliente effettua;
-    //public ArrayList<Preparazione_Ordine> effettua = new ArrayList<Preparazione_Ordine>();
 
     public Ordinazione_Bar(DateTimeFormatter date, int quantita, int incremento, String scelta) {
-
-
-        throw new UnsupportedOperationException();
     }
 
 
     public void ordinazione_Prodotto(int idProdotto, int quantita) {
-
-
     }
 
     public int incremento(int id_ordinazione) {
@@ -47,14 +42,14 @@ public class Ordinazione_Bar {
     }
 
     public void setId_prodotto(int id_prodotto) {
-        this.id_prodotto = id_prodotto;
+        this.id_prodotto = id_prodotto+1;
     }
 
     public DateTimeFormatter getData_ordinazione() {
         return data_ordinazione;
     }
 
-    public DateTimeFormatter setData_ordinazione(DateTimeFormatter data_ordinazione) {
+    public Date setData_ordinazione(DateTimeFormatter data_ordinazione) {
         this.data_ordinazione = data_ordinazione;
         return null;
     }
