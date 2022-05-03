@@ -64,9 +64,9 @@ public class CasottoApplication {
            // Utente utente = new Utente();
             //Cliente cliente= new Cliente("matteottt","tt","matteo@toma.com",1);
             // clienteConnector.addCliente(cliente);
-            utenteConnector.registrazione("matteo", "matteo", "cliente", "matteo", "toma", "matteo@toma.com", 3);
-            //  utenteConnector.login("lorecapo","loreacapo");
-
+            //utenteConnector.registrazione("matteo", "matteo", "cliente", "matteo", "toma", "matteo@toma.com", 3);
+            utenteConnector.login("matteo","matteo");
+            //utenteConnector.getListaUtenti("gestore");
 
         } catch (Exception e) {
             e.printStackTrace();

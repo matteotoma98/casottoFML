@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UtenteConnector {
 
@@ -57,17 +59,57 @@ public class UtenteConnector {
         try {
             result = connection.createStatement().executeQuery("SELECT * FROM utente WHERE email ='" + email + "' AND password = '" + password + "'");
 
+            //   System.out.println(result.getString(email));
             while (result.next()) {
                 utente = UtenteConverter(result);
-                System.out.println("Sei loggato correttamente");
+                email = result.getString("email");
+                password = result.getString("password");
+                // utente = UtenteConverter(result);
+                System.out.println(email +" sei loggato correttamente.");
             }
+
 
         } catch (Exception e) {
             System.out.println(e);
+            e.printStackTrace();
+            System.out.println("Non esiste nessun account con le credenziali" + email + " e " + password + " immesse");
         }
-
         return utente;
 
+    }
+
+  /*  List<Utente> utenti = getListaUtenti(ruolo);
+            for(Utente utente : utenti)
+            System.out.println(utente.toString()); */
+
+    /**
+     * Metodo che ritorna il ruolo degli utenti in base al ruolo passato
+     *
+     * @param ruolo il ruolo di un utente
+     * @return la lista degli utenti in base al ruolo
+     */
+    public List<Utente> getListaUtenti(String ruolo) {
+
+        ResultSet result;
+        List<Utente> resultList = new ArrayList<Utente>();
+        try {
+            result = connection.createStatement().executeQuery("SELECT * FROM utente WHERE ruolo ='" + ruolo + "'");
+
+            while (result.next()) {
+                resultList.add(UtenteConverter(result));
+                System.out.print(result.getString("nome"));
+                System.out.print(result.getString("cognome"));
+                System.out.print(result.getString("ruolo"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } //add exception here
+
+        //error checking
+        if (resultList.isEmpty())
+            System.out.println("Result is empty");
+
+        return resultList;
     }
 
 
@@ -79,7 +121,7 @@ public class UtenteConnector {
         String nome = result.getString("nome");
         String cognome = result.getString("cognome");
         int id_ombrellone = result.getInt("id_ombrellone");
-
+        //System.out.println("Sei loggato correttamente tramite Utente Converter");
         return new Utente(username, password, ruolo, email, nome, cognome, id_ombrellone);
     }
 
