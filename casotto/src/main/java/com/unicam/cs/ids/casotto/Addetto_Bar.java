@@ -10,8 +10,8 @@ public class Addetto_Bar extends Utente {
 	public ArrayList<Preparazione_Ordine> prepara = new ArrayList<Preparazione_Ordine>();
 
 
-	public Addetto_Bar(String username, String password, String ruolo, int id_addbar, String email, String nome, String cognome) {
-		super(username, password, ruolo, email);
+	public Addetto_Bar(String username, String password, String ruolo, int id_addbar, String email, String nome, String cognome, int id_ombrellone) {
+		super(username, password, ruolo, email, nome, cognome, id_ombrellone);
 		this.id_addbar = id_addbar;
 		this.email = email;
 		this.nome = nome;

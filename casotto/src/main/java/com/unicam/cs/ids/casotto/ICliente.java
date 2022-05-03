@@ -8,5 +8,5 @@ public interface ICliente {
   void ordinazioneBar();
   void cancellazioneOmbrellone();
   void iscrizione_Attivita(Attivita attivita);
-
+  public void registrazione(String email, String username, String password, int id_ombrellone);
 }

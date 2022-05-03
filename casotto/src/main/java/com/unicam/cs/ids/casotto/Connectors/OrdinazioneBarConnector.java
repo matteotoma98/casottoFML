@@ -27,7 +27,7 @@ public class OrdinazioneBarConnector {
 
     public DateTimeFormatter getDate() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-       // System.out.println("yyyy/MM/dd HH:mm:ss-> "+dtf.format(LocalDateTime.now()));
+        // System.out.println("yyyy/MM/dd HH:mm:ss-> "+dtf.format(LocalDateTime.now()));
 
         return dtf;
     }
@@ -47,22 +47,22 @@ public class OrdinazioneBarConnector {
         return formatDateTime;
     }
     */
-        public boolean addOrdine(Ordinazione_Bar ordinazione_bar) {
+    public boolean addOrdine(Ordinazione_Bar ordinazione_bar) {
         int i = 0;
         boolean result;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO ordinazionebar VALUES ( ?,?,?,?,?)");
-            preparedStatement.setInt(1, ordinazione_bar.getId_prodotto());
-            preparedStatement.setInt(2, ordinazione_bar.setId_ordinazione(i + 1));
-            preparedStatement.setDate(3, ordinazione_bar.setData_ordinazione(getDate()));
+            preparedStatement.setDate(1, ordinazione_bar.setData_ordinazione(getDate()));
+            preparedStatement.setInt(2, ordinazione_bar.getQuantita());
+            preparedStatement.setInt(3, ordinazione_bar.setId_ordinazione(i + 1));
             preparedStatement.setInt(4, ordinazione_bar.getId_ombrellone());
-            preparedStatement.setInt(5, ordinazione_bar.getQuantita());
+            preparedStatement.setInt(5, ordinazione_bar.getId_prodotto());
 
             result = preparedStatement.executeUpdate() > 0;
         } catch (Exception e) {
             result = false;
-        }
-        return result;
+            System.out.println("nope");
+        } return result;
     }
 /*
     public List<Ordinazione_Bar> getOrdini() {

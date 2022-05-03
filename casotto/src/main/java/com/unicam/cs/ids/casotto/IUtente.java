@@ -14,7 +14,7 @@ public interface IUtente  {
 
     public String getUsername();
 
-    public void registrazione(String nome, String cognome, String email, String username, String password, String ruolo);
+    public void registrazione( String username, String password, String ruolo,String nome, String cognome,  String email, int id_ombrellone);
 
 
 

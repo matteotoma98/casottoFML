@@ -9,8 +9,8 @@ public class Addetto_Spiaggia extends Utente {
     private String cognome;
     public ArrayList<Preparazione_Ordine> consegna = new ArrayList<Preparazione_Ordine>();
 
-    public Addetto_Spiaggia(String username, String password, String ruolo, int id_addspiaggia, String email, String nome, String cognome) {
-        super(username, password, ruolo, email);
+    public Addetto_Spiaggia(String username, String password, String ruolo, int id_addspiaggia, String email, String nome, String cognome, int id_ombrellone) {
+        super(username, password, ruolo, email, nome, cognome, id_ombrellone);
         this.id_addspiaggia = id_addspiaggia;
         this.email = email;
         this.nome = nome;

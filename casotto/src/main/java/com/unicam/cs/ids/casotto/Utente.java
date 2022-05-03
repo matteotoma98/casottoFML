@@ -12,16 +12,22 @@ public class Utente implements IUtente {
     private String password;
     private String email;
     private String ruolo;
+    private String nome;
+    private String cognome;
+    private int id_ombrellone= 0;
     ClienteConnector cc = new ClienteConnector();
     UtenteConnector uc = new UtenteConnector();
     //Ordinazione_Bar ob= new Ordinazione_Bar();
    // OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
 
-    public Utente(String username, String password, String email, String ruolo) {
+    public Utente(String username, String password,  String ruolo, String nome, String cognome, String email, int id_ombrellone) {
         this.username = username;
         this.password = password;
-        this.email = email;
         this.ruolo = ruolo;
+        this.nome= nome;
+        this.cognome= cognome;
+        this.email = email;
+        this.id_ombrellone= id_ombrellone;
     }
 
     public Utente() {
@@ -40,9 +46,34 @@ public class Utente implements IUtente {
 		return false;
 	}*/
 
+    public int getId_ombrellone() {
+        return id_ombrellone;
+    }
+
+    public void setId_ombrellone(int id_ombrellone) {
+        this.id_ombrellone = id_ombrellone;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
+
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
+
     public String getUsername() {
         return username;
     }
+
 
     public void setUsername(String username) {
         this.username = username;
@@ -73,11 +104,19 @@ public class Utente implements IUtente {
     }
 
 
-    public void registrazione(String nome, String cognome, String email, String username, String password, String ruolo) {
-        uc.registrazione(nome, cognome, email, username, password, ruolo);
+    public void registrazione( String username, String password, String ruolo,String nome, String cognome,  String email, int id_ombrellone) {
+        setUsername(username);
+        setPassword(password);
+        setRuolo(ruolo);
+        setEmail(email);
+        setNome(nome);
+        setCognome(cognome);
+        setId_ombrellone(id_ombrellone);
+        uc.registrazione(username, password,ruolo, email, nome,  cognome,  id_ombrellone);
         Cliente cliente = new Cliente();
         cc.addCliente(cliente);
     }
+
 
     @Override
     public void registrazione(String email, String username, String password) {
@@ -215,7 +254,7 @@ public class Utente implements IUtente {
   */
 
     public void menu_cliente(String email) throws ParseException {
-        Cliente cliente = cc.getCliente(email);
+        //Cliente cliente = cc.getCliente(email);
        // Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar(obc.getDate(), quantita, ob.incremento(id_ordinazione) , scelta);
        // OrdinazioneBarConnector ob = ordinazione_bar.ordinazione_Prodotto("jn", 5);
       //  Attivita attivita= new Attivita();
@@ -232,13 +271,13 @@ public class Utente implements IUtente {
             scelta = scanner.nextInt();
             switch (scelta) {
                 case 1:
-                    cliente.PrenotazioneOmbrellone();
+                 //   cliente.PrenotazioneOmbrellone();
                     break;
                 case 2:
-                    cliente.cancellazioneOmbrellone();
+                 //   cliente.cancellazioneOmbrellone();
                     break;
                 case 3:
-                    cliente.ordinazioneBar();
+                  //  cliente.ordinazioneBar();
                     break;
                 case 4:
                    // cliente.iscrizione_Attivita(attivita.getId_attivita());

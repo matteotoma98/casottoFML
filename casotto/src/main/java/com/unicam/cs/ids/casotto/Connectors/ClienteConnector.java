@@ -19,20 +19,30 @@ public class ClienteConnector {
         } //add exception here
     }
 
-    public Cliente getCliente(String email) {
-        ResultSet result;
+    public ResultSet getCliente(String email) {
+        ResultSet result= null;
         Cliente cliente = new Cliente();
         try {
-            result = connection.createStatement().executeQuery("SELECT * FROM clienti WHERE email = '" + email + "'");
+            result = connection.createStatement().executeQuery("SELECT * FROM cliente WHERE email = '" + email + "'");
             while (result.next()) {
+                System.out.println(result.getString("email"));
+                System.out.print(result.getString(" nome"));
+                System.out.print(result.getString(" cognome"));
+                System.out.print(result.getInt(" id_ombrellone"));
+               // System.out.println(result.getString("email"+"nome"+"cognome"+"id_ombrellone"));
 
                 cliente = convertiRisultatoInCliente(result);
             }
+              /*ResultSet resultSet = statement.executeQuery("select * from chalet ");
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("quantita_lettini"));
+            } */
+
         } catch (Exception e) {
             System.out.println(e);
         } //add exception here
-
-        return cliente;
+        //return cliente;
+        return result;
 
     }
 
@@ -59,8 +69,11 @@ public class ClienteConnector {
             preparedStatement.setInt(4, cliente.getId_ombrellone());
 
             result = preparedStatement.executeUpdate() > 0;
+
         } catch (Exception e) {
             result = false;
+            System.out.println(e);
+            System.out.println("Errore Add Cliente");
         }
         return result;
     }

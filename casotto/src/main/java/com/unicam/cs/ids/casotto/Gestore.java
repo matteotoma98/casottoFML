@@ -38,8 +38,8 @@ public class Gestore extends Utente {
 		throw new UnsupportedOperationException();
 	}
 
-	public Gestore(String username, String password, String ruolo, String nome, String cognome, String email) {
-		super(username, password, email, ruolo);
+	public Gestore(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
+		super(username, password, email, ruolo, nome, cognome, id_ombrellone);
 		this.nome = nome;
 		this.cognome = cognome;
 		this.email = email;

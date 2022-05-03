@@ -39,7 +39,13 @@ public class Cliente extends Utente implements ICliente {
     }
 
     public Cliente(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
-        super(email, username, password, ruolo);
+        super(email, username, password, ruolo, nome, cognome, id_ombrellone);
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.id_ombrellone = id_ombrellone;
+    }
+    public Cliente (String nome, String cognome, String email, int id_ombrellone){
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
@@ -67,13 +73,14 @@ public class Cliente extends Utente implements ICliente {
     }
 
     @Override
-    public void registrazione(String email, String username, String password) {
+    public void registrazione(String email, String username, String password, int id_ombrellone) {
 
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
+
 
     public int getId_ombrellone() {
         return id_ombrellone;
