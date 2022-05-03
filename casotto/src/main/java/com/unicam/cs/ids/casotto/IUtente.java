@@ -1,10 +1,12 @@
 package com.unicam.cs.ids.casotto;
 
+import java.text.ParseException;
+
 public interface IUtente  {
 
     void registrazione(String email, String username, String password);
 
-    public void login(String username, String password);
+    public void login(String username, String password) throws ParseException;
 
     public String getRuolo();
 

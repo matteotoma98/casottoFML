@@ -3,8 +3,7 @@ package com.unicam.cs.ids.casotto;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.GregorianCalendar;
-
+import java.sql.Date;
 import com.unicam.cs.ids.casotto.Connectors.OrdinazioneBarConnector;
 import com.unicam.cs.ids.casotto.Connectors.Prodotti_BarConnector;
 
@@ -97,15 +96,15 @@ public class Cliente extends Utente implements ICliente {
         Prenotazione_Spiaggia prenotazione_spiaggia = new Prenotazione_Spiaggia();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Inserisci il giorno d'inizio della prenotazione:");
-        String date_start = scanner.nextLine();
-        GregorianCalendar date1 = new GregorianCalendar();
-        //System.out.println(date_start);
-        prenotazione_spiaggia.setDatainizioPrenotazione(date1);
-        //  System.out.println(date1);
+        String date_start = scanner.nextLine(); // String str="2015-03-31";
+        Date start_date=Date.valueOf(date_start);//converting string into sql date
+      //  System.out.println(start_date);
+        prenotazione_spiaggia.setDatainizioPrenotazione(start_date);
         System.out.println("Inserisci il giorno di fine della prenotazione:");
-        String date_end = scanner.nextLine();
-        GregorianCalendar date2 = new GregorianCalendar();
-        prenotazione_spiaggia.setData_finePrenotazione(date2);
+        String date_end = scanner.nextLine();// String str="2015-03-31";
+        Date end_date=Date.valueOf(date_end);//converting string into sql date
+       //  System.out.println(start_date);
+        prenotazione_spiaggia.setData_finePrenotazione(end_date);
         System.out.println("Inserisci il giorno di fine della prenotazione:");
         int scelta_fascia_oraria;
         String fasciaOraria = null;
@@ -177,9 +176,9 @@ public class Cliente extends Utente implements ICliente {
         int scelta = scanner.nextInt();
         if (scelta == 1) {
             chalet.decrementaQuantitaLettiniDisponibili(lettini);
-            //chalet.decrementaQuantitaOmbrelloniDisponibili(num_ombrelloni);
-            prenotazione_spiaggia.addPrenotazione(date_start, date_end);
-            System.out.println("Prenotazione effettuata!");
+            //chalet.decrementaQuantitaOmbrelloniDisponibili(id_ombrellone);
+            prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, id);
+           // System.out.println("Prenotazione effettuata!");
         } else {
             //ritorna al menù;
         }
@@ -203,7 +202,6 @@ public class Cliente extends Utente implements ICliente {
         } else
             System.out.println("Prenotazione non effettuata, riprova");
           */
-
     }
 
 

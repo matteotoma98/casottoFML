@@ -20,13 +20,13 @@ public class Utente implements IUtente {
     //Ordinazione_Bar ob= new Ordinazione_Bar();
    // OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
 
-    public Utente(String username, String password,  String ruolo, String nome, String cognome, String email, int id_ombrellone) {
+    public Utente(String username, String password,  String ruolo, String email, String nome, String cognome , int id_ombrellone) {
         this.username = username;
         this.password = password;
         this.ruolo = ruolo;
+        this.email = email;
         this.nome= nome;
         this.cognome= cognome;
-        this.email = email;
         this.id_ombrellone= id_ombrellone;
     }
 
@@ -124,29 +124,33 @@ public class Utente implements IUtente {
     }
 
     @Override
-    public void login(String username, String password) {
-        /*
+    public void login(String email, String password) throws ParseException {
+
         Utente utente = uc.login(email, password);
-        String prova = getUsername();
-        System.out.println(prova);
-        switch (utente.getPrivileges()) {
-            case 1:
-                menu_cliente(username);
+        String _email = utente.getEmail();
+        System.out.println(_email);
+        switch (utente.getRuolo()) {
+            case "cliente":
+                try {
+                    menu_cliente(email);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 break;
-            case 2:
-                menu_addettoSpiaggia();
+            case "addetto_spiaggia":
+               // menu_addettoSpiaggia();
                 break;
-            case 3:
-                menu_cameriere();
+            case "addetto_bar":
+               // menu_cameriere();
                 break;
-            case 4:
-                menu_addettoAttivita(username);
+            case "addetto_attivita":
+               // menu_addettoAttivita(username);
                 break;
-            case 5:
-                menu_gestore();
+            case "gestore":
+                //menu_gestore();
                 break;
         }
-    */
+
     }
 
  /*
@@ -259,7 +263,7 @@ public class Utente implements IUtente {
        // OrdinazioneBarConnector ob = ordinazione_bar.ordinazione_Prodotto("jn", 5);
       //  Attivita attivita= new Attivita();
         int scelta;
-
+        Cliente cliente= new Cliente();
         do {
             System.out.println("Scegli cosa vuoi fare: ");
             System.out.println("1: Prenota ombrellone ");
@@ -271,7 +275,7 @@ public class Utente implements IUtente {
             scelta = scanner.nextInt();
             switch (scelta) {
                 case 1:
-                 //   cliente.PrenotazioneOmbrellone();
+                 cliente.PrenotazioneOmbrellone();
                     break;
                 case 2:
                  //   cliente.cancellazioneOmbrellone();
