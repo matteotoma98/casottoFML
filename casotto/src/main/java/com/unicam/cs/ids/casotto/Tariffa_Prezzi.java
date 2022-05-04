@@ -71,7 +71,7 @@ public class Tariffa_Prezzi {
         int month_f = Integer.parseInt(dateParts_f[1]);
         int year_f = Integer.parseInt(dateParts_f[2]);
 
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
         Date dfrom = null;
         try {
             dfrom = format.parse(data_inizio.toString());

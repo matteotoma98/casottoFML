@@ -63,7 +63,7 @@ public class Prenotazione_Spiaggia {
         throw new UnsupportedOperationException();
     }
 
-    public int incremento_prenottazione(int id_prenotazione) {
+    public int incremento_prenotazione(int id_prenotazione) {
         this.id_prenotazione = id_prenotazione + 1;
         return this.id_prenotazione;
     }
@@ -74,7 +74,7 @@ public class Prenotazione_Spiaggia {
         setData_finePrenotazione(data_finePrenotazione);
         setNum_fila_ombrellone(num_fila_ombrellone);
         setId_ombrellone(id_ombrellone);
-        prenotazioneSpiaggiaConnector.PrenotaSpiaggia(incremento_prenottazione(5), data_inizioPrenotazione, data_finePrenotazione, num_fila_ombrellone, id_ombrellone);
+        prenotazioneSpiaggiaConnector.PrenotaSpiaggia(incremento_prenotazione(5), data_inizioPrenotazione, data_finePrenotazione, num_fila_ombrellone, id_ombrellone);
         //  Cliente cliente = new Cliente();
         //    cliente.addCliente(cliente);
     }
