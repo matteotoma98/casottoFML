@@ -247,10 +247,13 @@ public class Cliente extends Utente implements ICliente {
 
 
     public void cancellazionePrenotazioneOmbrellone(String email) {
-
-
+        Scanner scanner = new Scanner(System.in);
+        int id_prenotazione=0;
         Prenotazione_Spiaggia prenotazione_spiaggia = new Prenotazione_Spiaggia();
-        //  prenotazione_spiaggia.cancellaPrenotazione();
+        prenotazione_spiaggia.listaPrenotazioni(email);
+        System.out.println("seleziona l'id della prenotazione");
+        id_prenotazione= scanner.nextInt();
+        prenotazione_spiaggia.cancellaPrenotazione(id_prenotazione);
         // this.id_ordinazione = id
 
     }

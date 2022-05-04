@@ -61,11 +61,13 @@ public class Prenotazione_Spiaggia {
     public void getLettiniDisponibili(Object aData_InizioPrenotazione, Object aData_finePrenotazione) {
         throw new UnsupportedOperationException();
     }
-
-    public void cancellaPrenotazione(int id_prenotazione, int lettini) {
-
+    public void listaPrenotazioni(String email) {
         PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector= new PrenotazioneSpiaggiaConnector();
-        prenotazioneSpiaggiaConnector.cancellazionePrenotazione(id_prenotazione,lettini);
+        prenotazioneSpiaggiaConnector.listaPrenotazioni(email);
+    }
+    public void cancellaPrenotazione(int id_prenotazione) {
+        PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector= new PrenotazioneSpiaggiaConnector();
+        prenotazioneSpiaggiaConnector.cancellazionePrenotazione(id_prenotazione);
     }
 
     public String getEmail() {

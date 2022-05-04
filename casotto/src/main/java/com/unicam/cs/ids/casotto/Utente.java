@@ -282,6 +282,7 @@ public class Utente implements IUtente {
                     break;
                 case 2:
                     cliente.cancellazionePrenotazioneOmbrellone(email);
+
                     break;
                 case 3:
                     //  cliente.ordinazioneBar();
