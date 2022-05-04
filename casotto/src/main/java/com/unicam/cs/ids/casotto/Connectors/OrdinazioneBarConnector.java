@@ -18,6 +18,8 @@ public class OrdinazioneBarConnector {
             connection = DBConnector.getConnection();
         } catch (Exception e) {
             System.out.println(e);
+
+
         } //add exception here
     }
 
@@ -60,6 +62,7 @@ public class OrdinazioneBarConnector {
 
             result = preparedStatement.executeUpdate() > 0;
         } catch (Exception e) {
+            System.out.println(e);
             result = false;
             System.out.println("nope");
         } return result;

@@ -20,6 +20,8 @@ import java.io.Console;
 @SpringBootApplication
 public class CasottoApplication {
 
+    private String email2;
+
     public CasottoApplication() {
         super();
     }
@@ -48,6 +50,7 @@ public class CasottoApplication {
                 System.out.println(resultSet.getString("quantita_lettini"));
             } */
             Utente utente = new Utente();
+            Cliente cliente = new Cliente();
             int scelta;
             do {
                 System.out.println("Benvenuto nell'App di casottoFML™.\nSeleziona un'azione: ");
@@ -64,6 +67,7 @@ public class CasottoApplication {
                 String cognome;
                 int id_ombrellone;
                 String ruolo = "cliente";
+
                 switch (scelta) {
                     case 1:
                         System.out.println("Digita email");
@@ -71,6 +75,7 @@ public class CasottoApplication {
                         System.out.println("Digita Password");
                         password = scanner_value.nextLine(); //TODO hidare password
                         utente.login(email, password);
+                        cliente.PrenotazioneOmbrellone(email);
                         break;
                     case 2:
                         System.out.println("Digita Username");

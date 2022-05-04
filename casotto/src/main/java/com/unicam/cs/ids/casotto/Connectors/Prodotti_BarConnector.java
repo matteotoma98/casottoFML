@@ -61,8 +61,8 @@ public class Prodotti_BarConnector {
             while (result.next()) {
                 prodotto = convertiRisultatoInProdotto(result);
             }
-        } catch (Exception e)
-        { System.out.println(e); }
+        } catch (Exception e) {
+            System.out.println(e); }
         //add exception here
         return prodotto.getPrezzo()*quantita;
     }
@@ -81,6 +81,8 @@ public class Prodotti_BarConnector {
             preparedStatement.setString(7, prodotto.getId_prodotto());
             result = preparedStatement.executeUpdate() > 0;
         } catch (Exception e) {
+                    System.out.println(e);
+
             result = false;
         }
         return result;

@@ -66,7 +66,6 @@ public class UtenteConnector {
                 password = result.getString("password");
                 // utente = UtenteConverter(result);
                 System.out.println(email + " sei loggato correttamente.");
-
             }
 
 

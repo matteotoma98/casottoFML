@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.sql.Date;
+
 import com.unicam.cs.ids.casotto.Connectors.OrdinazioneBarConnector;
 import com.unicam.cs.ids.casotto.Connectors.Prodotti_BarConnector;
 
@@ -15,12 +16,12 @@ public class Cliente extends Utente implements ICliente {
     private String email;
     private int id_ombrellone;
     private Prodotti_BarConnector cp = new Prodotti_BarConnector();
-    private OrdinazioneBarConnector obc= new OrdinazioneBarConnector();
+    private OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
     DateTimeFormatter data_ordinazione;
-    int quantita;
-    int id_ordinazione;
-    int id_prodotto;
-   // private Ordinazione_Bar ob= new Ordinazione_Bar(obc.getDate(), quantita, , id_ombrellone, id_prodotto);
+    private int quantita;
+    private int id_ordinazione;
+    private int id_prodotto;
+    // private Ordinazione_Bar ob= new Ordinazione_Bar(obc.getDate(), quantita, , id_ombrellone, id_prodotto);
     public ArrayList<Prenotazione_Spiaggia> effettua = new ArrayList<Prenotazione_Spiaggia>();
 
 
@@ -44,12 +45,7 @@ public class Cliente extends Utente implements ICliente {
         this.email = email;
         this.id_ombrellone = id_ombrellone;
     }
-    public Cliente (String nome, String cognome, String email, int id_ombrellone){
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-        this.id_ombrellone = id_ombrellone;
-    }
+
 
     public String getNome() {
         return nome;
@@ -89,21 +85,20 @@ public class Cliente extends Utente implements ICliente {
         this.id_ombrellone = id_ombrellone;
     }
 
-    @Override
-    public void PrenotazioneOmbrellone() {
+    public void PrenotazioneOmbrellone(String email) {
         double prezzo = 0;
         Tariffa_Prezzi tariffaPrezzi = new Tariffa_Prezzi();
         Prenotazione_Spiaggia prenotazione_spiaggia = new Prenotazione_Spiaggia();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Inserisci il giorno d'inizio della prenotazione:");
         String date_start = scanner.nextLine(); // String str="2015-03-31";
-        Date start_date=Date.valueOf(date_start);//converting string into sql date
-      //  System.out.println(start_date);
+        Date start_date = Date.valueOf(date_start);//converting string into sql date
+        //  System.out.println(start_date);
         prenotazione_spiaggia.setDatainizioPrenotazione(start_date);
         System.out.println("Inserisci il giorno di fine della prenotazione:");
         String date_end = scanner.nextLine();// String str="2015-03-31";
-        Date end_date=Date.valueOf(date_end);//converting string into sql date
-       //  System.out.println(start_date);
+        Date end_date = Date.valueOf(date_end);//converting string into sql date
+        //  System.out.println(start_date);
         prenotazione_spiaggia.setData_finePrenotazione(end_date);
         System.out.println("Inserisci il giorno di fine della prenotazione:");
         int scelta_fascia_oraria;
@@ -175,10 +170,11 @@ public class Cliente extends Utente implements ICliente {
         System.out.println("1=Si/2=No");
         int scelta = scanner.nextInt();
         if (scelta == 1) {
-            chalet.decrementaQuantitaLettiniDisponibili(lettini);
+            // chalet.decrementaQuantitaLettiniDisponibili(lettini);
             //chalet.decrementaQuantitaOmbrelloniDisponibili(id_ombrellone);
-            prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, id);
-           // System.out.println("Prenotazione effettuata!");
+            //System.out.println(email);
+            prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, id, lettini, email);
+            // System.out.println("Prenotazione effettuata!");
         } else {
             //ritorna al menù;
         }
@@ -216,40 +212,46 @@ public class Cliente extends Utente implements ICliente {
         String scelta;
         double totale;
         int continuaAcquisti;
-        int id_ordinazione=0;
-        Ordinazione_Bar ob= new Ordinazione_Bar(obc.getDate(), quantita, 0 , id_ombrellone, id_prodotto);
+        int id_ordinazione = 0;
+        Ordinazione_Bar ob = new Ordinazione_Bar(obc.getDate(), quantita, 0, id_ombrellone, id_prodotto);
         do {
             System.out.println("Inserisci l'id del prodotto che vuoi acquistare");
             scelta = scanner.nextLine();
             System.out.println("Inserisci la quantità che vuoi acquistare");
             int quantita = scanner2.nextInt();
-            obc.addOrdine(new Ordinazione_Bar(obc.getDate(), quantita, ob.setId_ordinazione(id_ordinazione) , scelta)); //bis
-          //  (ob.getDate(), quantita, int id_ordinazione, int id_ombrellone, int id_prodotto) {// ognerebbe prendere il valore dell'ultima riga della tabella, e aggiungerci + 1
-          //  totale = +cp.getTotaleOrdine(scelta, quantita);
+            obc.addOrdine(new Ordinazione_Bar(obc.getDate(), quantita, ob.setId_ordinazione(id_ordinazione), scelta)); //bis
+            //  (ob.getDate(), quantita, int id_ordinazione, int id_ombrellone, int id_prodotto) {// bisognerebbe prendere il valore dell'ultima riga della tabella, e aggiungerci + 1
+            //  totale = +cp.getTotaleOrdine(scelta, quantita);
             System.out.println("vuoi aggiungere altri prodotti all'ordine ancora? 1-si 0-no");
             continuaAcquisti = scanner2.nextInt();
         } while (continuaAcquisti != 0);
-      //  System.out.println("Totale:" + totale);
+        //  System.out.println("Totale:" + totale);
         System.out.println("Confermi il pagamento? Si/No");
         scelta = scanner.nextLine();
         if (scelta.equals("Si")) {
-           DateTimeFormatter prova= obc.getDate();
+            DateTimeFormatter prova = obc.getDate();
             prova.format(LocalDateTime.now());
-            System.out.println(  prova.format(LocalDateTime.now()));
-            Ordinazione_Bar ordinazione_bar= new Ordinazione_Bar(obc.getDate(), 0, ob.incremento(id_ordinazione), 1,10);
+            System.out.println(prova.format(LocalDateTime.now()));
+            Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar(obc.getDate(), 0, ob.incremento(id_ordinazione), 1, 10);
             //DateTimeFormatter data_ordinazione, int quantita, int id_ordinazione, int id_ombrellone, int id_prodotto
             //DECREMENTA QUANTITA , ECC
-           obc.addOrdine(ordinazione_bar);
-         System.out.println("prova");
-          if(obc.addOrdine(ordinazione_bar)) System.out.println("andata");
+            obc.addOrdine(ordinazione_bar);
+            System.out.println("prova");
+            if (obc.addOrdine(ordinazione_bar)) System.out.println("andata");
         }
 
 
-       //Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar(obc.getDate(), quantita, ob.incremento(id_ordinazione), scelta);
+        //Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar(obc.getDate(), quantita, ob.incremento(id_ordinazione), scelta);
         // ordinazione_bar.ordinazione_Prodotto(id_prodotto, quantita);
     }
 
 
-    public void cancellazioneOmbrellone() {
+    public void cancellazionePrenotazioneOmbrellone(String email) {
+
+
+        Prenotazione_Spiaggia prenotazione_spiaggia = new Prenotazione_Spiaggia();
+        //  prenotazione_spiaggia.cancellaPrenotazione();
+        // this.id_ordinazione = id
+
     }
 }

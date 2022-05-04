@@ -14,20 +14,20 @@ public class Utente implements IUtente {
     private String ruolo;
     private String nome;
     private String cognome;
-    private int id_ombrellone= 0;
+    private int id_ombrellone = 0;
     ClienteConnector cc = new ClienteConnector();
     UtenteConnector uc = new UtenteConnector();
     //Ordinazione_Bar ob= new Ordinazione_Bar();
-   // OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
+    // OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
 
-    public Utente(String username, String password,  String ruolo, String email, String nome, String cognome , int id_ombrellone) {
+    public Utente(String username, String password, String ruolo, String email, String nome, String cognome, int id_ombrellone) {
         this.username = username;
         this.password = password;
         this.ruolo = ruolo;
         this.email = email;
-        this.nome= nome;
-        this.cognome= cognome;
-        this.id_ombrellone= id_ombrellone;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.id_ombrellone = id_ombrellone;
     }
 
     public Utente() {
@@ -104,7 +104,7 @@ public class Utente implements IUtente {
     }
 
 
-    public void registrazione( String username, String password, String ruolo,String nome, String cognome,  String email, int id_ombrellone) {
+    public void registrazione(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
         setUsername(username);
         setPassword(password);
         setRuolo(ruolo);
@@ -112,7 +112,7 @@ public class Utente implements IUtente {
         setNome(nome);
         setCognome(cognome);
         setId_ombrellone(id_ombrellone);
-        uc.registrazione(username, password,ruolo, email, nome,  cognome,  id_ombrellone);
+        uc.registrazione(username, password, ruolo, email, nome, cognome, id_ombrellone);
         Cliente cliente = new Cliente();
         cc.addCliente(cliente);
     }
@@ -128,7 +128,10 @@ public class Utente implements IUtente {
 
         Utente utente = uc.login(email, password);
         String _email = utente.getEmail();
-        System.out.println(_email);
+        Cliente cliente= new Cliente();
+        cliente.setEmail(_email);
+        System.out.println("Email in login di Utente.java è " + _email);
+       // System.out.println("Email in login di Utente.java è " + email);
         switch (utente.getRuolo()) {
             case "cliente":
                 try {
@@ -138,13 +141,13 @@ public class Utente implements IUtente {
                 }
                 break;
             case "addetto_spiaggia":
-               // menu_addettoSpiaggia();
+                // menu_addettoSpiaggia();
                 break;
             case "addetto_bar":
-               // menu_cameriere();
+                // menu_cameriere();
                 break;
             case "addetto_attivita":
-               // menu_addettoAttivita(username);
+                // menu_addettoAttivita(username);
                 break;
             case "gestore":
                 //menu_gestore();
@@ -259,11 +262,11 @@ public class Utente implements IUtente {
 
     public void menu_cliente(String email) throws ParseException {
         //Cliente cliente = cc.getCliente(email);
-       // Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar(obc.getDate(), quantita, ob.incremento(id_ordinazione) , scelta);
-       // OrdinazioneBarConnector ob = ordinazione_bar.ordinazione_Prodotto("jn", 5);
-      //  Attivita attivita= new Attivita();
+        // Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar(obc.getDate(), quantita, ob.incremento(id_ordinazione) , scelta);
+        // OrdinazioneBarConnector ob = ordinazione_bar.ordinazione_Prodotto("jn", 5);
+        //  Attivita attivita= new Attivita();
         int scelta;
-        Cliente cliente= new Cliente();
+        Cliente cliente = new Cliente();
         do {
             System.out.println("Scegli cosa vuoi fare: ");
             System.out.println("1: Prenota ombrellone ");
@@ -275,16 +278,16 @@ public class Utente implements IUtente {
             scelta = scanner.nextInt();
             switch (scelta) {
                 case 1:
-                 cliente.PrenotazioneOmbrellone();
+                    cliente.PrenotazioneOmbrellone(email);
                     break;
                 case 2:
-                 //   cliente.cancellazioneOmbrellone();
+                    cliente.cancellazionePrenotazioneOmbrellone(email);
                     break;
                 case 3:
-                  //  cliente.ordinazioneBar();
+                    //  cliente.ordinazioneBar();
                     break;
                 case 4:
-                   // cliente.iscrizione_Attivita(attivita.getId_attivita());
+                    // cliente.iscrizione_Attivita(attivita.getId_attivita());
                     break;
             }
         }

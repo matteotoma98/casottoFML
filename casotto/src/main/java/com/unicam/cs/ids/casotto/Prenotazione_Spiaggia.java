@@ -12,6 +12,9 @@ public class Prenotazione_Spiaggia {
     private int num_fila_ombrellone;
     private int id_prenotazione;
     private int id_ombrellone;
+    private static int prenotazione_count = 0;
+    private int lettini = 0;
+    private String email = "";
     PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();
 
     public Date getData_inizioPrenotazione() {
@@ -59,22 +62,44 @@ public class Prenotazione_Spiaggia {
         throw new UnsupportedOperationException();
     }
 
-    public void cancellaPrenotazione(Data data_inizio_prenotazione, Data data_fine_prenotazione) {
-        throw new UnsupportedOperationException();
+    public void cancellaPrenotazione(int id_prenotazione, int lettini) {
+
+        PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector= new PrenotazioneSpiaggiaConnector();
+        prenotazioneSpiaggiaConnector.cancellazionePrenotazione(id_prenotazione,lettini);
     }
 
-    public int incremento_prenotazione(int id_prenotazione) {
-        this.id_prenotazione = id_prenotazione + 1;
-        return this.id_prenotazione;
+    public String getEmail() {
+        return email;
     }
 
-    public void addPrenotazione(Date data_inizioPrenotazione, Date data_finePrenotazione, int num_fila_ombrellone, int id_ombrellone) {
-        id_prenotazione = 0;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int incremento_prenotazione(int prenotazione_count){
+        this.prenotazione_count = id_prenotazione;
+        return this.id_prenotazione + 1;
+    }
+
+    public int getLettini() {
+        return lettini;
+    }
+
+    public void setLettini(int lettini) {
+        this.lettini = lettini;
+    }
+
+    public void addPrenotazione(Date data_inizioPrenotazione, Date data_finePrenotazione, int num_fila_ombrellone, int id_ombrellone, int lettini, String email) {
+        //id_prenotazione = 0;
+
         setDatainizioPrenotazione(data_inizioPrenotazione);
         setData_finePrenotazione(data_finePrenotazione);
         setNum_fila_ombrellone(num_fila_ombrellone);
         setId_ombrellone(id_ombrellone);
-        prenotazioneSpiaggiaConnector.PrenotaSpiaggia(incremento_prenotazione(5), data_inizioPrenotazione, data_finePrenotazione, num_fila_ombrellone, id_ombrellone);
+        setLettini(lettini);
+        setEmail(email);
+        prenotazioneSpiaggiaConnector.PrenotaSpiaggia(incremento_prenotazione(prenotazione_count), data_inizioPrenotazione, data_finePrenotazione, num_fila_ombrellone, id_ombrellone, lettini, email);
+        this.prenotazione_count++;
         //  Cliente cliente = new Cliente();
         //    cliente.addCliente(cliente);
     }
