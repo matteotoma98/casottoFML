@@ -70,7 +70,7 @@ public class CasottoApplication {
 
                 switch (scelta) {
                     case 1:
-                        System.out.println("Digita email");
+                        System.out.println("-Digita email");
                         email = scanner_value.nextLine();
                         System.out.println("Digita Password");
                         password = scanner_value.nextLine(); //TODO hidare password
@@ -86,9 +86,9 @@ public class CasottoApplication {
                         email = scanner_value.nextLine();
                         System.out.println("Digita nome");
                         nome = scanner_value.nextLine();
-                        System.out.println("Digita Password");
+                        System.out.println("Digita cognome");
                         cognome = scanner_value.nextLine();
-                        utente.registrazione(username, password, ruolo, nome, cognome, email, 0);
+                        utente.registrazione(username, password, email, nome, cognome, ruolo, 0);
                         break;
                 }
             }

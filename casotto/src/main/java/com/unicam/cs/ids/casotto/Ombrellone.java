@@ -11,22 +11,26 @@ public class Ombrellone {
 	private Tipologia tipologia;
 	private int num_fila_ombrellone;
 	public Prenotazione_Spiaggia riserva;
-	public ArrayList<Tariffa_Prezzi> apprartiene = new ArrayList<Tariffa_Prezzi>();
+	public ArrayList<Tariffa_Prezzi> appartiene = new ArrayList<Tariffa_Prezzi>();
 
-	public Ombrellone(Object aId_ombrellone) {
-		throw new UnsupportedOperationException();
-	}
 
 	public void getTariffaPrezzi(Object aData_InizioPrenotazione, Object aData_finePrenotazione) {
 		throw new UnsupportedOperationException();
 	}
-
 	public Ombrellone() {
 		this.id_ombrellone = id_ombrellone;
 		this.prezzo = prezzo;
 		this.disponibilita = disponibilita;
 		this.tariffaPrezzi = tariffaPrezzi;
 		this.tipologia = tipologia;
+		this.num_fila_ombrellone = num_fila_ombrellone;
+	}
+	public Ombrellone(int id_ombrellone, double prezzo, boolean disponibilita, Tariffa_Prezzi tariffaPrezzi, String tipologia, int num_fila_ombrellone) {
+		this.id_ombrellone = id_ombrellone;
+		this.prezzo = prezzo;
+		this.disponibilita = disponibilita;
+		this.tariffaPrezzi = tariffaPrezzi;
+		this.tipologia = Tipologia.valueOf(tipologia);
 		this.num_fila_ombrellone = num_fila_ombrellone;
 	}
 

@@ -10,6 +10,7 @@ import java.sql.Date;
 
 import com.unicam.cs.ids.casotto.Connectors.OrdinazioneBarConnector;
 import com.unicam.cs.ids.casotto.Connectors.Prodotti_BarConnector;
+import com.unicam.cs.ids.casotto.Connectors.ScontrinoConnector;
 
 import javax.xml.crypto.Data;
 
@@ -27,6 +28,13 @@ public class Cliente extends Utente implements ICliente {
     // private Ordinazione_Bar ob= new Ordinazione_Bar(obc.getDate(), quantita, , id_ombrellone, id_prodotto);
     public ArrayList<Prenotazione_Spiaggia> effettua = new ArrayList<Prenotazione_Spiaggia>();
 
+    public Cliente(String nome, String cognome, String email, int id_ombrellone) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.id_ombrellone = id_ombrellone;
+    }
+
 
     public void PrenotazioneOmbrellone(Data aData_inizio, Data aData_fine) {
         throw new UnsupportedOperationException();
@@ -43,6 +51,7 @@ public class Cliente extends Utente implements ICliente {
 
     public Cliente(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
         super(email, username, password, ruolo, nome, cognome, id_ombrellone);
+
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
@@ -218,12 +227,14 @@ public class Cliente extends Utente implements ICliente {
         int id_prodotto = 0;
         int quantita = 0;
         int id_ombrellone;
+        double prezzo_totale = 0;
+        int id_scontrino = 0;
         //Ordinazione_Bar ob = new Ordinazione_Bar(obc.getDate(), quantita, 0, id_ombrellone, id_prodotto);
         do {
 
-            System.out.println("Inserisci l'id del prodotto che vuoi acquistare");
+            System.out.println("Inserisci l'id del prodotto che vuoi acquistare:");
             id_prodotto = Integer.parseInt(scanner.nextLine());
-            System.out.println("Inserisci la quantità che vuoi acquistare");
+            System.out.println("Inserisci la quantità che vuoi acquistare:");
             quantita = scanner2.nextInt();
             System.out.println("A quale id dell'ombrellone vuoi far consegnare l'ordine?");
             obc.getIdOmbrelloni(email);
@@ -241,14 +252,15 @@ public class Cliente extends Utente implements ICliente {
             Date data = obc.getDate();
             boolean risultato = false;
             risultato = obc.addOrdine(new Ordinazione_Bar(data, quantita, id_ordinazione, id_ombrellone, id_prodotto));
+            prezzo_totale = obc.calcolaPrezzoOrdine(id_prodotto, quantita);
+            Scontrino scontrino = new Scontrino(id_scontrino, data, id_ombrellone, prezzo_totale);
+            scontrino.CalcolaPrezzo(id_scontrino, data, id_ombrellone, prezzo_totale);
             //DateTimeFormatter data_ordinazione, int quantita, int id_ordinazione, int id_ombrellone, int id_prodotto
             //DECREMENTA QUANTITA , ECC
             //obc.addOrdine(ordinazione_bar);
             if (risultato) System.out.println("Prenotazione aggiunta");
         }
-
     }
-
 
     public void cancellazionePrenotazioneOmbrellone(String email) {
         Scanner scanner = new Scanner(System.in);

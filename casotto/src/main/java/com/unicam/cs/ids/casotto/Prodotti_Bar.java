@@ -62,6 +62,6 @@ public class Prodotti_Bar {
 
     @Override
     public String toString() {
-        return id_prodotto + ": " + nome_prodotto + ", prezzo: " + prezzo + "€, disponibilità: " + quantita;
+        return id_prodotto + ": " + nome_prodotto + ", prezzo: " + prezzo + " €, disponibilità: " + quantita;
     }
     }

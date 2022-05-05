@@ -59,6 +59,17 @@ public class ClienteConnector {
         //  }
     }
 
+    public void aggiornaOmbrellone(String email, int id_ombrellone) {
+        boolean result = false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE cliente set id_ombrellone ='" + id_ombrellone + "' where email='" + email + "'");
+            result = preparedStatement.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
     public boolean addCliente(Cliente cliente) {
         boolean result;
         try {
@@ -70,6 +81,8 @@ public class ClienteConnector {
 
             result = preparedStatement.executeUpdate() > 0;
 
+            System.out.println("Email: "+ cliente.getEmail());
+            System.out.println("Ombrellone:"+cliente.getId_ombrellone());
         } catch (Exception e) {
             result = false;
             System.out.println(e);

@@ -22,20 +22,29 @@ public class UtenteConnector {
         } //add exception here
     }
 
-    public boolean registrazione(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
+    public boolean registrazione(String username, String password, String email, String nome, String cognome, String ruolo, int id_ombrellone) {
         {
             boolean result;
-
+            boolean result2;
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO utente VALUES ( ?,?,?,?,?,?,?)");
                 preparedStatement.setString(1, username.trim());
                 preparedStatement.setString(2, password.trim());
-                preparedStatement.setString(3, ruolo.trim());
+                preparedStatement.setString(3, email.trim());
                 preparedStatement.setString(4, nome.trim());
                 preparedStatement.setString(5, cognome.trim());
-                preparedStatement.setString(6, email.trim());
+                preparedStatement.setString(6, ruolo.trim());
                 preparedStatement.setInt(7, id_ombrellone);
                 result = preparedStatement.executeUpdate() > 0;
+                /* if(result){
+                    PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO cliente VALUES ( ?,?,?,?)");
+                    preparedStatement1.setString(1, nome.trim());
+                    preparedStatement1.setString(2, cognome.trim());
+                    preparedStatement1.setString(3, email.trim());
+                    preparedStatement1.setInt(4, id_ombrellone);
+                    result2 = preparedStatement.executeUpdate() > 0;
+                    if(result2) System.out.println("Cliente+"+nome+" "+cognome+"inserito correttamente");
+                } */
                 // ClienteConnector clienteConnector = new ClienteConnector();
                 //  Cliente cliente = new Cliente(nome, cognome, email, id_ombrellone);
                 //  clienteConnector.addCliente(cliente);
@@ -47,7 +56,7 @@ public class UtenteConnector {
                 System.out.println(result);
             }
 
-            System.out.println(username + " " + password + " " + ruolo + " " + nome + " " + cognome + " " + email + " " + id_ombrellone);
+            System.out.println(username + " " + password + " " + ruolo + " " + email + " " + nome + " " + cognome + " " + id_ombrellone);
             return result;
         }
     }

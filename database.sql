@@ -188,7 +188,7 @@ CREATE TABLE `chalet` (
 
 LOCK TABLES `chalet` WRITE;
 /*!40000 ALTER TABLE `chalet` DISABLE KEYS */;
-INSERT INTO `chalet` VALUES (150,300,150,300);
+INSERT INTO `chalet` VALUES (150,300,138,265);
 /*!40000 ALTER TABLE `chalet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,18 +200,12 @@ DROP TABLE IF EXISTS `cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cliente` (
-  `nome` varchar(30) NOT NULL,
+  `nome` varchar(45) NOT NULL,
   `cognome` varchar(45) NOT NULL,
-  `email` varchar(50) NOT NULL,
+  `email` varchar(45) NOT NULL,
   `id_ombrellone` int NOT NULL,
-  PRIMARY KEY (`email`),
-  UNIQUE KEY `email_UNIQUE` (`email`),
-  KEY `id_ombrellone` (`id_ombrellone`),
-  KEY `nome_cliente_fk_idx` (`nome`),
-  KEY `cognome_cliente_fk_idx` (`cognome`),
-  CONSTRAINT `cognome_cliente_fk` FOREIGN KEY (`cognome`) REFERENCES `utente` (`cognome`),
-  CONSTRAINT `email_fk_cliente` FOREIGN KEY (`email`) REFERENCES `utente` (`email`),
-  CONSTRAINT `nome_cliente_fk` FOREIGN KEY (`nome`) REFERENCES `utente` (`nome`)
+  PRIMARY KEY (`id_ombrellone`),
+  KEY `email_fk_3` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -221,7 +215,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES ('Matteo','T','matteotoma98@hotmail.it',1);
+INSERT INTO `cliente` VALUES ('fraa','franc','chio',0),('Matteo','T','matteotoma98@hotmail.it',1),('toma','toma','matteo',3);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -303,7 +297,7 @@ CREATE TABLE `ombrellone` (
 
 LOCK TABLES `ombrellone` WRITE;
 /*!40000 ALTER TABLE `ombrellone` DISABLE KEYS */;
-INSERT INTO `ombrellone` VALUES (1,8,1,'vip',1),(2,8,1,'vip',1),(3,8,1,'vip',1),(4,8,1,'vip',1),(5,8,1,'vip',1),(6,8,1,'vip',1),(7,8,1,'vip',1),(8,8,1,'vip',1),(9,8,1,'vip',1),(10,8,1,'vip',1),(11,8,1,'vip',2),(12,8,1,'vip',2),(13,8,1,'vip',2),(14,8,1,'vip',2),(15,8,1,'vip',2),(16,8,1,'vip',2),(17,8,1,'vip',2),(18,8,1,'vip',2),(19,8,1,'vip',2),(20,8,1,'vip',2),(21,8,1,'vip',3),(22,8,1,'vip',3),(23,8,1,'vip',3),(24,8,1,'vip',3),(25,8,1,'vip',3),(26,8,1,'vip',3),(27,8,1,'vip',3),(28,8,1,'vip',3),(29,8,1,'vip',3),(30,8,1,'vip',3),(31,6,1,'premium',4),(32,6,1,'premium',4),(33,6,1,'premium',4),(34,6,1,'premium',4),(35,6,1,'premium',4),(36,6,1,'premium',4),(37,6,1,'premium',4),(38,6,1,'premium',4),(39,6,1,'premium',4),(40,6,1,'premium',4),(41,6,1,'premium',5),(42,6,1,'premium',5),(43,6,1,'premium',5),(44,6,1,'premium',5),(45,6,1,'premium',5),(46,6,1,'premium',5),(47,6,1,'premium',5),(48,6,1,'premium',5),(49,6,1,'premium',5),(50,6,1,'premium',5),(51,6,1,'premium',6),(52,6,1,'premium',6),(53,6,1,'premium',6),(54,6,1,'premium',6),(55,6,1,'premium',6),(56,6,1,'premium',6),(57,6,1,'premium',6),(58,6,1,'premium',6),(59,6,1,'premium',6),(60,6,1,'premium',6),(61,6,1,'premium',7),(62,6,1,'premium',7),(63,6,1,'premium',7),(64,6,1,'premium',7),(65,6,1,'premium',7),(66,6,1,'premium',7),(67,6,1,'premium',7),(68,6,1,'premium',7),(69,6,1,'premium',7),(70,6,1,'premium',7),(71,4,1,'base',8),(72,4,1,'base',8),(73,4,1,'base',8),(74,4,1,'base',8),(75,4,1,'base',8),(76,4,1,'base',8),(77,4,1,'base',8),(78,4,1,'base',8),(79,4,1,'base',8),(80,4,1,'base',8),(81,4,1,'base',9),(82,4,1,'base',9),(83,4,1,'base',9),(84,4,1,'base',9),(85,4,1,'base',9),(86,4,1,'base',9),(87,4,1,'base',9),(88,4,1,'base',9),(89,4,1,'base',9),(90,4,1,'base',9),(91,4,1,'base',10),(92,4,1,'base',10),(93,4,1,'base',10),(94,4,1,'base',10),(95,4,1,'base',10),(96,4,1,'base',10),(97,4,1,'base',10),(98,4,1,'base',10),(99,4,1,'base',10),(100,4,1,'base',10),(101,4,1,'base',11),(102,4,1,'base',11),(103,4,1,'base',11),(104,4,1,'base',11),(105,4,1,'base',11),(106,4,1,'base',11),(107,4,1,'base',11),(108,4,1,'base',11),(109,4,1,'base',11),(110,4,1,'base',11),(111,4,1,'base',12),(112,4,1,'base',12),(113,4,1,'base',12),(114,4,1,'base',12),(115,4,1,'base',12),(116,4,1,'base',12),(117,4,1,'base',12),(118,4,1,'base',12),(119,4,1,'base',12),(120,4,1,'base',12),(121,4,1,'base',13),(122,4,1,'base',13),(123,4,1,'base',13),(124,4,1,'base',13),(125,4,1,'base',13),(126,4,1,'base',13),(127,4,1,'base',13),(128,4,1,'base',13),(129,4,1,'base',13),(130,4,1,'base',13),(131,4,1,'base',14),(132,4,1,'base',14),(133,4,1,'base',14),(134,4,1,'base',14),(135,4,1,'base',14),(136,4,1,'base',14),(137,4,1,'base',14),(138,4,1,'base',14),(139,4,1,'base',14),(140,4,1,'base',14),(141,4,1,'base',15),(142,4,1,'base',15),(143,4,1,'base',15),(144,4,1,'base',15),(145,4,1,'base',15),(146,4,1,'base',15),(147,4,1,'base',15),(148,4,1,'base',15),(149,4,1,'base',15),(150,4,1,'base',15);
+INSERT INTO `ombrellone` VALUES (1,8,1,'vip',1),(2,8,1,'vip',1),(3,8,0,'vip',1),(4,8,1,'vip',1),(5,8,1,'vip',1),(6,8,1,'vip',1),(7,8,1,'vip',1),(8,8,1,'vip',1),(9,8,0,'vip',1),(10,8,1,'vip',1),(11,8,1,'vip',2),(12,8,1,'vip',2),(13,8,1,'vip',2),(14,8,1,'vip',2),(15,8,1,'vip',2),(16,8,1,'vip',2),(17,8,1,'vip',2),(18,8,1,'vip',2),(19,8,1,'vip',2),(20,8,1,'vip',2),(21,8,1,'vip',3),(22,8,1,'vip',3),(23,8,1,'vip',3),(24,8,1,'vip',3),(25,8,1,'vip',3),(26,8,1,'vip',3),(27,8,1,'vip',3),(28,8,1,'vip',3),(29,8,1,'vip',3),(30,8,1,'vip',3),(31,6,1,'premium',4),(32,6,1,'premium',4),(33,6,1,'premium',4),(34,6,1,'premium',4),(35,6,1,'premium',4),(36,6,1,'premium',4),(37,6,1,'premium',4),(38,6,1,'premium',4),(39,6,1,'premium',4),(40,6,1,'premium',4),(41,6,1,'premium',5),(42,6,1,'premium',5),(43,6,1,'premium',5),(44,6,1,'premium',5),(45,6,1,'premium',5),(46,6,1,'premium',5),(47,6,1,'premium',5),(48,6,1,'premium',5),(49,6,1,'premium',5),(50,6,1,'premium',5),(51,6,1,'premium',6),(52,6,0,'premium',6),(53,6,1,'premium',6),(54,6,1,'premium',6),(55,6,1,'premium',6),(56,6,1,'premium',6),(57,6,1,'premium',6),(58,6,1,'premium',6),(59,6,1,'premium',6),(60,6,1,'premium',6),(61,6,1,'premium',7),(62,6,1,'premium',7),(63,6,1,'premium',7),(64,6,1,'premium',7),(65,6,1,'premium',7),(66,6,1,'premium',7),(67,6,1,'premium',7),(68,6,1,'premium',7),(69,6,1,'premium',7),(70,6,1,'premium',7),(71,4,1,'base',8),(72,4,1,'base',8),(73,4,1,'base',8),(74,4,1,'base',8),(75,4,1,'base',8),(76,4,1,'base',8),(77,4,1,'base',8),(78,4,1,'base',8),(79,4,1,'base',8),(80,4,1,'base',8),(81,4,1,'base',9),(82,4,1,'base',9),(83,4,1,'base',9),(84,4,1,'base',9),(85,4,1,'base',9),(86,4,1,'base',9),(87,4,1,'base',9),(88,4,1,'base',9),(89,4,1,'base',9),(90,4,1,'base',9),(91,4,1,'base',10),(92,4,1,'base',10),(93,4,1,'base',10),(94,4,1,'base',10),(95,4,1,'base',10),(96,4,1,'base',10),(97,4,1,'base',10),(98,4,1,'base',10),(99,4,1,'base',10),(100,4,1,'base',10),(101,4,1,'base',11),(102,4,1,'base',11),(103,4,1,'base',11),(104,4,1,'base',11),(105,4,1,'base',11),(106,4,1,'base',11),(107,4,1,'base',11),(108,4,1,'base',11),(109,4,1,'base',11),(110,4,1,'base',11),(111,4,1,'base',12),(112,4,1,'base',12),(113,4,1,'base',12),(114,4,1,'base',12),(115,4,1,'base',12),(116,4,1,'base',12),(117,4,1,'base',12),(118,4,1,'base',12),(119,4,1,'base',12),(120,4,1,'base',12),(121,4,1,'base',13),(122,4,1,'base',13),(123,4,1,'base',13),(124,4,1,'base',13),(125,4,1,'base',13),(126,4,1,'base',13),(127,4,1,'base',13),(128,4,1,'base',13),(129,4,1,'base',13),(130,4,1,'base',13),(131,4,1,'base',14),(132,4,1,'base',14),(133,4,1,'base',14),(134,4,1,'base',14),(135,4,1,'base',14),(136,4,1,'base',14),(137,4,1,'base',14),(138,4,1,'base',14),(139,4,1,'base',14),(140,4,1,'base',14),(141,4,1,'base',15),(142,4,1,'base',15),(143,4,1,'base',15),(144,4,1,'base',15),(145,4,1,'base',15),(146,4,1,'base',15),(147,4,1,'base',15),(148,4,1,'base',15),(149,4,1,'base',15),(150,4,1,'base',15);
 /*!40000 ALTER TABLE `ombrellone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -315,7 +309,7 @@ DROP TABLE IF EXISTS `ordinazionebar`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ordinazionebar` (
-  `data_ordinazione` datetime NOT NULL,
+  `data_ordinazione` date NOT NULL,
   `id_ombrellone` int NOT NULL,
   `id_ordinazione` int NOT NULL AUTO_INCREMENT,
   `quantita` int DEFAULT NULL,
@@ -324,8 +318,9 @@ CREATE TABLE `ordinazionebar` (
   KEY `id_ombrellone_fk3_idx` (`id_ombrellone`),
   KEY `data_ordinazione` (`data_ordinazione`),
   KEY `id_prodotto_fk_idx` (`id_prodotto`),
+  CONSTRAINT `id_ombrellone_fk` FOREIGN KEY (`id_ombrellone`) REFERENCES `cliente` (`id_ombrellone`),
   CONSTRAINT `id_prodotto_fk` FOREIGN KEY (`id_prodotto`) REFERENCES `prodottibar` (`id_prodotto`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -334,7 +329,7 @@ CREATE TABLE `ordinazionebar` (
 
 LOCK TABLES `ordinazionebar` WRITE;
 /*!40000 ALTER TABLE `ordinazionebar` DISABLE KEYS */;
-INSERT INTO `ordinazionebar` VALUES ('2022-05-22 00:03:00',1,1,10,1),('2022-05-22 00:00:00',1,2,12,1);
+INSERT INTO `ordinazionebar` VALUES ('2022-05-05',3,1,3,2),('2022-05-05',3,2,3,2),('2022-05-05',3,3,2,1),('2022-05-05',3,4,3,1),('2022-05-05',3,5,3,1),('2022-05-05',3,6,1,2),('2022-05-05',3,7,1,2),('2022-05-05',3,8,1,2),('2022-05-05',3,9,1,1),('2022-05-05',3,10,2,3),('2022-05-05',3,11,2,8),('2022-05-05',0,12,2,9);
 /*!40000 ALTER TABLE `ordinazionebar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -379,10 +374,10 @@ CREATE TABLE `prenotazioneattivita` (
   `data_fine` date NOT NULL,
   `nome_attivita` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
-  PRIMARY KEY (`data_inizio`,`nome_attivita`,`data_fine`,`email`),
+  PRIMARY KEY (`data_inizio`,`nome_attivita`,`data_fine`),
   KEY `nome_attivita_fk_idx` (`nome_attivita`) /*!80000 INVISIBLE */,
-  KEY `email_idx` (`email`),
-  CONSTRAINT `email` FOREIGN KEY (`email`) REFERENCES `cliente` (`email`),
+  KEY `email_pren_spiaggia_fk_idx` (`email`),
+  CONSTRAINT `email_fk_3` FOREIGN KEY (`email`) REFERENCES `cliente` (`email`),
   CONSTRAINT `nome_attivita_fk` FOREIGN KEY (`nome_attivita`) REFERENCES `attivita` (`nome_attivita`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -410,13 +405,17 @@ CREATE TABLE `prenotazionespiaggia` (
   `data_fine_prenotazione` date NOT NULL,
   `num_fila_ombrellone` int NOT NULL,
   `id_ombrellone` int NOT NULL,
+  `lettini` int DEFAULT '0',
+  `email` varchar(50) NOT NULL,
   PRIMARY KEY (`id_prenotazione`),
   UNIQUE KEY `id_ombrellone_UNIQUE` (`id_ombrellone`),
   UNIQUE KEY `id_prenotazione_UNIQUE` (`id_prenotazione`),
   KEY `num_fila_ombrellone_idx` (`num_fila_ombrellone`),
   KEY `id_ombrellone_fk_idx` (`id_ombrellone`),
+  KEY `email_fk_idx` (`email`),
+  CONSTRAINT `email_fk` FOREIGN KEY (`email`) REFERENCES `cliente` (`email`),
   CONSTRAINT `id_fk_ombrellone` FOREIGN KEY (`id_ombrellone`) REFERENCES `ombrellone` (`id_ombrellone`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -425,7 +424,7 @@ CREATE TABLE `prenotazionespiaggia` (
 
 LOCK TABLES `prenotazionespiaggia` WRITE;
 /*!40000 ALTER TABLE `prenotazionespiaggia` DISABLE KEYS */;
-INSERT INTO `prenotazionespiaggia` VALUES (4,'2022-09-01','2022-09-01',4,19),(6,'2022-07-23','2022-07-23',2,18);
+INSERT INTO `prenotazionespiaggia` VALUES (16,'2022-06-02','2022-06-03',1,3,1,'matteotoma98@hotmail.it');
 /*!40000 ALTER TABLE `prenotazionespiaggia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -476,7 +475,7 @@ CREATE TABLE `prodottibar` (
 
 LOCK TABLES `prodottibar` WRITE;
 /*!40000 ALTER TABLE `prodottibar` DISABLE KEYS */;
-INSERT INTO `prodottibar` VALUES (1,'Patatine San Carlo',1,15),(2,'Bruschettine',2,4),(3,'Tramezzini',3,5),(4,'Kinder Bueno',2,10),(5,'Spritz',4,20),(6,'Estathe Pesca',2,20),(7,'Estathe Limone',2,20),(8,'Acqua',1,50),(9,'Cono ',2,10),(10,'Ghiacciolo Menta',1.5,5),(11,'Giacciolo Limone',5,5);
+INSERT INTO `prodottibar` VALUES (1,'Patatine San Carlo',1,15),(2,'Bruschettine',2,12),(3,'Tramezzini',3,3),(4,'Kinder Bueno',2,10),(5,'Spritz',4,20),(6,'Estathe Pesca',2,20),(7,'Estathe Limone',2,20),(8,'Acqua',1,48),(9,'Cono ',2,8),(10,'Ghiacciolo Menta',1.5,5),(11,'Giacciolo Limone',5,5);
 /*!40000 ALTER TABLE `prodottibar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -493,9 +492,9 @@ CREATE TABLE `scontrino` (
   `id_ombrellone` int NOT NULL,
   `prezzo_totale` double NOT NULL,
   PRIMARY KEY (`id_scontrino`),
-  UNIQUE KEY `id_ombrellone_UNIQUE` (`id_ombrellone`),
-  CONSTRAINT `id_ombrellone_fk_4` FOREIGN KEY (`id_ombrellone`) REFERENCES `ordinazionebar` (`id_ombrellone`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `id_ombrellone_idx` (`id_ombrellone`),
+  CONSTRAINT `id_ombrellone` FOREIGN KEY (`id_ombrellone`) REFERENCES `cliente` (`id_ombrellone`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -504,7 +503,7 @@ CREATE TABLE `scontrino` (
 
 LOCK TABLES `scontrino` WRITE;
 /*!40000 ALTER TABLE `scontrino` DISABLE KEYS */;
-INSERT INTO `scontrino` VALUES (1,'2022-05-22',1,25);
+INSERT INTO `scontrino` VALUES (2,'2022-05-05',3,9),(3,'2022-05-05',3,3),(4,'2022-05-05',3,1),(5,'2022-05-05',3,6),(6,'2022-05-05',3,2),(7,'2022-05-05',0,4);
 /*!40000 ALTER TABLE `scontrino` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -551,6 +550,7 @@ CREATE TABLE `utente` (
   `cognome` varchar(45) NOT NULL,
   `id_ombrellone` int DEFAULT NULL,
   PRIMARY KEY (`username`,`password`),
+  UNIQUE KEY `id_ombrellone_UNIQUE` (`id_ombrellone`),
   KEY `ruolo_fk` (`ruolo`),
   KEY `email_fk` (`email`),
   KEY `nome_fk` (`nome`),
@@ -564,7 +564,7 @@ CREATE TABLE `utente` (
 
 LOCK TABLES `utente` WRITE;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
-INSERT INTO `utente` VALUES ('addettoattivita','addettoattivita','addetto_attivita','addettoattivita@studenti.unicam.it','Addetto','Attivita',NULL),('addettobar','addettobar','addetto_bar','addettobar@studenti.unicam.it','Addetto','Bar',NULL),('addettospiaggia','addettospiaggia','addetto_spiaggia','addettospiaggia@studenti.unicam.it','Addetto','Spiaggia',NULL),('fracs_xyz','casottoFML','gestore','francesco.chiocchi@studenti.unicam.it','Francesco','Chiocchi',NULL),('lore_capo','casottoFML','gestore','lorenzo.caporossi@studenti.unicam.it','Lorenzo','Caporossi',NULL),('matteo','matteo','cliente','matteo','toma','toma',3),('matteot','matteot','cliente','matteotoma98@hotmail.it','Matteo','T',1),('matteotoma_98','casottoFML','gestore','matteo.toma@studenti.unicam.it','Matteo','Toma',NULL);
+INSERT INTO `utente` VALUES ('addettoattivita','addettoattivita','addetto_attivita','addettoattivita@studenti.unicam.it','Addetto','Attivita',NULL),('addettobar','addettobar','addetto_bar','addettobar@studenti.unicam.it','Addetto','Bar',NULL),('addettospiaggia','addettospiaggia','addetto_spiaggia','addettospiaggia@studenti.unicam.it','Addetto','Spiaggia',NULL),('fra','fracs','cliente','chio','fraa','franc',0),('fracs_xyz','casottoFML','gestore','francesco.chiocchi@studenti.unicam.it','Francesco','Chiocchi',NULL),('lore_capo','casottoFML','gestore','lorenzo.caporossi@studenti.unicam.it','Lorenzo','Caporossi',NULL),('matteo','matteo','cliente','matteo','toma','toma',3),('matteot','matteot','cliente','matteotoma98@hotmail.it','Matteo','T',1),('matteotoma_98','casottoFML','gestore','matteo.toma@studenti.unicam.it','Matteo','Toma',NULL);
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -577,4 +577,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-03 13:59:23
+-- Dump completed on 2022-05-05 17:38:19

@@ -16,6 +16,22 @@ public class PrenotazioneSpiaggiaConnector {
         } //a
     }
 
+    public void aggiornaOmbrellone(String email, int id_ombrellone) {
+        boolean result = false;
+        boolean result2=false;
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE utente set id_ombrellone ='" + id_ombrellone + "' where email='" + email + "'");
+            result = preparedStatement.executeUpdate() > 0;
+            PreparedStatement preparedStatement1 = connection.prepareStatement("UPDATE cliente set id_ombrellone ='" + id_ombrellone + "' where email='" + email + "'");
+            result2 = preparedStatement1.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println(e);
+
+        }
+
+    }
+
     public boolean PrenotaSpiaggia(int id_prenotazione, Date data_inizio_prenotazione, Date data_fine_prenotazione, int num_fila_ombrellone, int id_ombrellone, int lettini, String email) {
         boolean result = false;
         boolean result2 = false;
@@ -43,6 +59,7 @@ public class PrenotazioneSpiaggiaConnector {
             preparedStatement.setInt(5, id_ombrellone);
             preparedStatement.setInt(6, lettini);
             preparedStatement.setString(7, email);
+
 
             result = preparedStatement.executeUpdate() > 0;
             if (result) {

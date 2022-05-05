@@ -33,22 +33,6 @@ public class OrdinazioneBarConnector {
         return date;
     }
 
-    /*
-
-    public LocalDateTime getDate() {
-        LocalDateTime now = LocalDateTime.now();
-
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String formatDateTime = now.format(format);
-        //System.out.println("After Formatting: " + formatDateTime);
-
-
-        LocalDateTime.now();
-
-        return formatDateTime;
-    }
-    */
-
     public ResultSet getIdOmbrelloni(String email) {
         boolean result = false;
 
@@ -58,7 +42,7 @@ public class OrdinazioneBarConnector {
             resultSet = statement.executeQuery("SELECT id_ombrellone FROM cliente WHERE email='" + email + "'");
 
             while (resultSet.next()) {
-                System.out.println("Lista dei tuoi ombrelloni: "+ resultSet.getInt("id_ombrellone"));
+                System.out.println("Lista dei tuoi ombrelloni: " + resultSet.getInt("id_ombrellone"));
 
             }
 
@@ -92,15 +76,44 @@ public class OrdinazioneBarConnector {
             preparedStatement.setInt(3, ordinazione_bar.setId_ordinazione(id_ordinazione));
             preparedStatement.setInt(4, ordinazione_bar.getQuantita());
             preparedStatement.setInt(5, ordinazione_bar.getId_prodotto());
+            calcolaPrezzoOrdine(ordinazione_bar.getId_prodotto(), ordinazione_bar.getQuantita());
             // INSERT INTO ordinazionebar VALUES ('2022/05/05',1,1,1,1);
             result = preparedStatement.executeUpdate() > 0;
+            if(result) decrementaProdotto(ordinazione_bar.getId_prodotto(),ordinazione_bar.getQuantita());
         } catch (Exception e) {
             System.out.println(e);
             result = false;
-            System.out.println("nope");
+            System.out.println("Ordinazione non riuscita");
         }
         return result;
     }
+
+    public void decrementaProdotto(int id, int quantita) {
+        boolean result= false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE prodottibar SET quantita= quantita-'" + quantita + "' WHERE id_prodotto=" + id);
+            result = preparedStatement.executeUpdate() > 0;
+            if(result) System.out.println("Quantità del prodotto "+id +" diminuita.");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+    public double calcolaPrezzoOrdine(int id, int quantita) {
+        ResultSet result;
+        double prezzo_totale = 0.0;
+        try {
+            result = connection.createStatement().executeQuery("SELECT '" + quantita + "'*prezzo as totale FROM prodottibar WHERE id_prodotto = " + id);
+            while (result.next()) {
+                prezzo_totale = result.getDouble("totale");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        //add exception here
+        return prezzo_totale;
+    }
+
 /*
     public List<Ordinazione_Bar> getOrdini() {
         ResultSet result;

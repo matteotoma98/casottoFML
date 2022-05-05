@@ -104,7 +104,7 @@ public class Utente implements IUtente {
     }
 
 
-    public void registrazione(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
+    public void registrazione(String username, String password, String nome, String cognome, String email,  String ruolo, int id_ombrellone) {
         setUsername(username);
         setPassword(password);
         setRuolo(ruolo);
@@ -113,8 +113,9 @@ public class Utente implements IUtente {
         setCognome(cognome);
         setId_ombrellone(id_ombrellone);
         uc.registrazione(username, password, ruolo, email, nome, cognome, id_ombrellone);
-        Cliente cliente = new Cliente();
+        Cliente cliente = new Cliente(nome, cognome, email, id_ombrellone);
         cc.addCliente(cliente);
+
     }
 
 
