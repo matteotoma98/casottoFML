@@ -78,11 +78,15 @@ public class Prenotazione_Spiaggia {
         this.email = email;
     }
 
-    public int incremento_prenotazione(int prenotazione_count){
-        this.prenotazione_count += 1;
-        return this.prenotazione_count;
+    public int incremento_prenotazione(){
+        //resetCounter();
+       // this.prenotazione_count++;
+        return this.prenotazione_count++;
     }
-
+/*
+    public void resetCounter() {
+        this.prenotazione_count = 0;
+    }*/
     public int getLettini() {
         return lettini;
     }
@@ -93,15 +97,14 @@ public class Prenotazione_Spiaggia {
 
     public void addPrenotazione(Date data_inizioPrenotazione, Date data_finePrenotazione, int num_fila_ombrellone, int id_ombrellone, int lettini, String email) {
         //id_prenotazione = 0;
-
+         int id_prenotazione=0;
         setDatainizioPrenotazione(data_inizioPrenotazione);
         setData_finePrenotazione(data_finePrenotazione);
         setNum_fila_ombrellone(num_fila_ombrellone);
         setId_ombrellone(id_ombrellone);
         setLettini(lettini);
         setEmail(email);
-        prenotazioneSpiaggiaConnector.PrenotaSpiaggia(incremento_prenotazione(prenotazione_count), data_inizioPrenotazione, data_finePrenotazione, num_fila_ombrellone, id_ombrellone, lettini, email);
-        this.prenotazione_count++;
+        prenotazioneSpiaggiaConnector.PrenotaSpiaggia(id_prenotazione, data_inizioPrenotazione, data_finePrenotazione, num_fila_ombrellone, id_ombrellone, lettini, email);
         //  Cliente cliente = new Cliente();
         //    cliente.addCliente(cliente);
     }

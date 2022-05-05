@@ -21,6 +21,19 @@ public class PrenotazioneSpiaggiaConnector {
         boolean result2 = false;
         boolean result3 = false;
         boolean result4 = false;
+        boolean result5 = false;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT id_prenotazione as last_id FROM prenotazionespiaggia WHERE id_prenotazione= (SELECT MAX(id_prenotazione) FROM prenotazionespiaggia)");
+            int lastprenotazione = 0;
+            while (resultSet.next()) {
+                lastprenotazione = resultSet.getInt("last_id");
+            }
+            id_prenotazione = lastprenotazione + 1;
+        } catch (Exception e) {
+            System.out.println(e);
+            result5 = false;
+        }
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO prenotazionespiaggia VALUES (?,?,?,?,?,?,?)");
             preparedStatement.setInt(1, id_prenotazione);
@@ -76,10 +89,10 @@ public class PrenotazioneSpiaggiaConnector {
     }
 
 
-    public boolean cancellazionePrenotazione(int id_prenotazione)  {
+    public boolean cancellazionePrenotazione(int id_prenotazione) {
         boolean result = false;
         boolean result2 = false;
-        boolean result3= false;
+        boolean result3 = false;
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT id_ombrellone,lettini FROM prenotazionespiaggia WHERE id_prenotazione='" + id_prenotazione + "'");
@@ -87,7 +100,7 @@ public class PrenotazioneSpiaggiaConnector {
             int lettini = 0;
             while (resultSet.next()) {
                 id_ombrellone = resultSet.getInt("id_ombrellone");
-                lettini= resultSet.getInt("lettini");
+                lettini = resultSet.getInt("lettini");
             }
             try {
                 PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE ombrellone set disponibilita = 1 where id_ombrellone='" + id_ombrellone + "'");
@@ -98,9 +111,9 @@ public class PrenotazioneSpiaggiaConnector {
                         result2 = preparedStatement3.executeUpdate() > 0;
                         if (result2) {
                             //aggiornare posti chalet
-                            PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE chalet set quantita_ombrelloni_disponibili = quantita_ombrelloni_disponibili +1, quantita_lettini_disponibili= quantita_lettini_disponibili +'" +lettini + "'");
+                            PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE chalet set quantita_ombrelloni_disponibili = quantita_ombrelloni_disponibili +1, quantita_lettini_disponibili= quantita_lettini_disponibili +'" + lettini + "'");
                             result3 = preparedStatement4.executeUpdate() > 0;
-                            if(result3) System.out.println("Lettini e ombrelloni disponibili nello chalet aggiornati");
+                            if (result3) System.out.println("Lettini e ombrelloni disponibili nello chalet aggiornati");
                             System.out.println("Cancellazione della prenotazione effettuata!");
                         }
                         System.out.println("Disponibilità dell'ombrellone cambiata!");
