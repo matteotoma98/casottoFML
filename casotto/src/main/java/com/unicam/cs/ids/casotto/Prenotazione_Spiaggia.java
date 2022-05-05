@@ -79,8 +79,8 @@ public class Prenotazione_Spiaggia {
     }
 
     public int incremento_prenotazione(int prenotazione_count){
-        this.prenotazione_count = id_prenotazione;
-        return this.id_prenotazione + 1;
+        this.prenotazione_count += 1;
+        return this.prenotazione_count;
     }
 
     public int getLettini() {
