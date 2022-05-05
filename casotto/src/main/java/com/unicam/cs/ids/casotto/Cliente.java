@@ -1,5 +1,8 @@
 package com.unicam.cs.ids.casotto;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -14,7 +17,7 @@ public class Cliente extends Utente implements ICliente {
     private String nome;
     private String cognome;
     private String email;
-    private int id_ombrellone;
+    private int id_ombrellone = 0;
     private Prodotti_BarConnector cp = new Prodotti_BarConnector();
     private OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
     DateTimeFormatter data_ordinazione;
@@ -201,8 +204,7 @@ public class Cliente extends Utente implements ICliente {
     }
 
 
-    @Override
-    public void ordinazioneBar() {
+    public void ordinazioneBar(String email) {
         List<Prodotti_Bar> prodotti = cp.getProducts();
         for (Prodotti_Bar prodotto : prodotti) {
             System.out.println(prodotto.toString());
@@ -213,13 +215,20 @@ public class Cliente extends Utente implements ICliente {
         double totale;
         int continuaAcquisti;
         int id_ordinazione = 0;
-        Ordinazione_Bar ob = new Ordinazione_Bar(obc.getDate(), quantita, 0, id_ombrellone, id_prodotto);
+        int id_prodotto = 0;
+        int quantita = 0;
+        int id_ombrellone;
+        //Ordinazione_Bar ob = new Ordinazione_Bar(obc.getDate(), quantita, 0, id_ombrellone, id_prodotto);
         do {
+
             System.out.println("Inserisci l'id del prodotto che vuoi acquistare");
-            scelta = scanner.nextLine();
+            id_prodotto = Integer.parseInt(scanner.nextLine());
             System.out.println("Inserisci la quantità che vuoi acquistare");
-            int quantita = scanner2.nextInt();
-            obc.addOrdine(new Ordinazione_Bar(obc.getDate(), quantita, ob.setId_ordinazione(id_ordinazione), scelta)); //bis
+            quantita = scanner2.nextInt();
+            System.out.println("A quale id dell'ombrellone vuoi far consegnare l'ordine?");
+            obc.getIdOmbrelloni(email);
+            id_ombrellone = scanner2.nextInt();
+
             //  (ob.getDate(), quantita, int id_ordinazione, int id_ombrellone, int id_prodotto) {// bisognerebbe prendere il valore dell'ultima riga della tabella, e aggiungerci + 1
             //  totale = +cp.getTotaleOrdine(scelta, quantita);
             System.out.println("vuoi aggiungere altri prodotti all'ordine ancora? 1-si 0-no");
@@ -229,30 +238,25 @@ public class Cliente extends Utente implements ICliente {
         System.out.println("Confermi il pagamento? Si/No");
         scelta = scanner.nextLine();
         if (scelta.equals("Si")) {
-            DateTimeFormatter prova = obc.getDate();
-            prova.format(LocalDateTime.now());
-            System.out.println(prova.format(LocalDateTime.now()));
-            Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar(obc.getDate(), 0, ob.incremento(id_ordinazione), 1, 10);
+            Date data = obc.getDate();
+            boolean risultato = false;
+            risultato = obc.addOrdine(new Ordinazione_Bar(data, quantita, id_ordinazione, id_ombrellone, id_prodotto));
             //DateTimeFormatter data_ordinazione, int quantita, int id_ordinazione, int id_ombrellone, int id_prodotto
             //DECREMENTA QUANTITA , ECC
-            obc.addOrdine(ordinazione_bar);
-            System.out.println("prova");
-            if (obc.addOrdine(ordinazione_bar)) System.out.println("andata");
+            //obc.addOrdine(ordinazione_bar);
+            if (risultato) System.out.println("Prenotazione aggiunta");
         }
 
-
-        //Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar(obc.getDate(), quantita, ob.incremento(id_ordinazione), scelta);
-        // ordinazione_bar.ordinazione_Prodotto(id_prodotto, quantita);
     }
 
 
     public void cancellazionePrenotazioneOmbrellone(String email) {
         Scanner scanner = new Scanner(System.in);
-        int id_prenotazione=0;
+        int id_prenotazione = 0;
         Prenotazione_Spiaggia prenotazione_spiaggia = new Prenotazione_Spiaggia();
         prenotazione_spiaggia.listaPrenotazioni(email);
         System.out.println("seleziona l'id della prenotazione");
-        id_prenotazione= scanner.nextInt();
+        id_prenotazione = scanner.nextInt();
         prenotazione_spiaggia.cancellaPrenotazione(id_prenotazione);
         // this.id_ordinazione = id
 

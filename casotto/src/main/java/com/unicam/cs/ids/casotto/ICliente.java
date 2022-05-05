@@ -4,9 +4,13 @@ import java.text.ParseException;
 
 public interface ICliente {
 
-  void PrenotazioneOmbrellone(String email ) ;
-  void ordinazioneBar();
-  public void cancellazionePrenotazioneOmbrellone(String email) ;
-  void iscrizione_Attivita(Attivita attivita);
-  public void registrazione(String email, String username, String password, int id_ombrellone);
+    void PrenotazioneOmbrellone(String email);
+
+    void ordinazioneBar(String email);
+
+    public void cancellazionePrenotazioneOmbrellone(String email);
+
+    void iscrizione_Attivita(Attivita attivita);
+
+    public void registrazione(String email, String username, String password, int id_ombrellone);
 }

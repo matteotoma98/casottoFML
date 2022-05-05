@@ -1,8 +1,10 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
+import com.unicam.cs.ids.casotto.Cliente;
 import com.unicam.cs.ids.casotto.Ordinazione_Bar;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,28 +12,25 @@ import java.util.List;
 
 public class OrdinazioneBarConnector {
 
-
     Connection connection;
 
-    public OrdinazioneBarConnector(DateTimeFormatter date, int quantita, int incremento, String scelta) {
+    public OrdinazioneBarConnector() {
         try {
             connection = DBConnector.getConnection();
         } catch (Exception e) {
             System.out.println(e);
-
-
-        } //add exception here
+        }
     }
 
-    public OrdinazioneBarConnector() {
 
-    }
-
-    public DateTimeFormatter getDate() {
+    public Date getDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
+        Date date = new Date(System.currentTimeMillis());
+        // System.out.println(formatter.format(date));
+        // System.out.println(date);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         // System.out.println("yyyy/MM/dd HH:mm:ss-> "+dtf.format(LocalDateTime.now()));
-
-        return dtf;
+        return date;
     }
 
     /*
@@ -49,23 +48,58 @@ public class OrdinazioneBarConnector {
         return formatDateTime;
     }
     */
+
+    public ResultSet getIdOmbrelloni(String email) {
+        boolean result = false;
+
+        ResultSet resultSet = null;
+        try {
+            Statement statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT id_ombrellone FROM cliente WHERE email='" + email + "'");
+
+            while (resultSet.next()) {
+                System.out.println("Lista dei tuoi ombrelloni: "+ resultSet.getInt("id_ombrellone"));
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return resultSet;
+    }
+
     public boolean addOrdine(Ordinazione_Bar ordinazione_bar) {
         int i = 0;
         boolean result;
+        boolean result2;
+        int id_ordinazione = 0;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT id_ordinazione as last_id FROM ordinazionebar WHERE id_ordinazione= (SELECT MAX(id_ordinazione) FROM ordinazionebar)");
+            int lastordinazione = 0;
+            while (resultSet.next()) {
+                lastordinazione = resultSet.getInt("last_id");
+            }
+            id_ordinazione = lastordinazione + 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO ordinazionebar VALUES ( ?,?,?,?,?)");
             preparedStatement.setDate(1, ordinazione_bar.setData_ordinazione(getDate()));
-            preparedStatement.setInt(2, ordinazione_bar.getQuantita());
-            preparedStatement.setInt(3, ordinazione_bar.setId_ordinazione(i + 1));
-            preparedStatement.setInt(4, ordinazione_bar.getId_ombrellone());
+            System.out.println(ordinazione_bar.getId_ombrellone());
+            preparedStatement.setInt(2, ordinazione_bar.getId_ombrellone());
+            preparedStatement.setInt(3, ordinazione_bar.setId_ordinazione(id_ordinazione));
+            preparedStatement.setInt(4, ordinazione_bar.getQuantita());
             preparedStatement.setInt(5, ordinazione_bar.getId_prodotto());
-
+            // INSERT INTO ordinazionebar VALUES ('2022/05/05',1,1,1,1);
             result = preparedStatement.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println(e);
             result = false;
             System.out.println("nope");
-        } return result;
+        }
+        return result;
     }
 /*
     public List<Ordinazione_Bar> getOrdini() {

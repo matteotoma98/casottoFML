@@ -29,6 +29,7 @@ public class Prodotti_BarConnector {
 
             while (result.next()) {
                 resultList.add(convertiRisultatoInProdotto(result));
+
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -44,10 +45,11 @@ public class Prodotti_BarConnector {
 
 
     private Prodotti_Bar convertiRisultatoInProdotto(ResultSet result) throws SQLException {
-        double prezzo = result.getInt("prezzo");
         int id_prodotto = result.getInt("id_prodotto");
-        int quantita = result.getInt("quantita");
         String nome_prodotto = result.getString("nome_prodotto");
+        double prezzo = result.getInt("prezzo");
+        int quantita = result.getInt("quantita");
+
         return new Prodotti_Bar(prezzo, id_prodotto, quantita, nome_prodotto);
     }
 

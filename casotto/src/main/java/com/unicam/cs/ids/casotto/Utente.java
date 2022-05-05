@@ -285,7 +285,7 @@ public class Utente implements IUtente {
 
                     break;
                 case 3:
-                    //  cliente.ordinazioneBar();
+                    cliente.ordinazioneBar(email);
                     break;
                 case 4:
                     // cliente.iscrizione_Attivita(attivita.getId_attivita());
