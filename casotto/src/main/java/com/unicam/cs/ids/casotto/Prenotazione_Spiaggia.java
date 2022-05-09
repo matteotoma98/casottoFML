@@ -109,7 +109,7 @@ public class Prenotazione_Spiaggia {
         setEmail(email);
         boolean creazione = false;
         creazione = prenotazioneSpiaggiaConnector.PrenotaSpiaggia(id_prenotazione, data_inizioPrenotazione, data_finePrenotazione, num_fila_ombrellone, id_ombrellone, lettini, email);
-        if (creazione) prenotazioneSpiaggiaConnector.aggiornaOmbrellone(email,id_ombrellone);
+        if (creazione) prenotazioneSpiaggiaConnector.aggiornaOmbrellone(email, id_ombrellone);
         //  Cliente cliente = new Cliente();
         //    cliente.addCliente(cliente);
     }

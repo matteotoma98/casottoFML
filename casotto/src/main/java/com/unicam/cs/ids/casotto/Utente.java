@@ -104,7 +104,7 @@ public class Utente implements IUtente {
     }
 
 
-    public void registrazione(String username, String password, String nome, String cognome, String email,  String ruolo, int id_ombrellone) {
+    public void registrazione(String username, String password, String nome, String cognome, String email, String ruolo, int id_ombrellone) {
         setUsername(username);
         setPassword(password);
         setRuolo(ruolo);
@@ -129,10 +129,10 @@ public class Utente implements IUtente {
 
         Utente utente = uc.login(email, password);
         String _email = utente.getEmail();
-        Cliente cliente= new Cliente();
+        Cliente cliente = new Cliente();
         cliente.setEmail(_email);
         System.out.println("Email in login di Utente.java è " + _email);
-       // System.out.println("Email in login di Utente.java è " + email);
+        // System.out.println("Email in login di Utente.java è " + email);
         switch (utente.getRuolo()) {
             case "cliente":
                 try {

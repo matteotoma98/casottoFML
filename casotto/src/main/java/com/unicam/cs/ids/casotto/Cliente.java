@@ -1,16 +1,10 @@
 package com.unicam.cs.ids.casotto;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.sql.Date;
 
-import com.unicam.cs.ids.casotto.Connectors.ClienteConnector;
 import com.unicam.cs.ids.casotto.Connectors.OrdinazioneBarConnector;
 import com.unicam.cs.ids.casotto.Connectors.PrenotazioneSpiaggiaConnector;
 import com.unicam.cs.ids.casotto.Connectors.Prodotti_BarConnector;
@@ -215,8 +209,8 @@ public class Cliente extends Utente implements ICliente {
                 boolean risultato = false;
                 //connector tabella tipologia_pg
                 prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, om.getId_ombrellone(), lettini, email);
-                Pagamento p = new Pagamento();
-                p.sceltaMetodo(tipologia, prenotazioneSpiaggiaConnector.last_prenotazione(id_ombrellone), id_ordinazione, this.id_ombrellone, data_pagamento);
+                PagamentoOmbrellone po = new PagamentoOmbrellone();
+                po.sceltaMetodo(tipologia, prenotazioneSpiaggiaConnector.last_prenotazione(id_ombrellone), this.id_ombrellone, data_pagamento);
                 // String tipologia_pagamento, int id_prenotazione, int id_ombrellone, Date data_pagamento
                 //System.out.println("Confermi la prenotazione per " + tariffaPrezzi.getNum_giorni() + " giorni al prezzo di " + prezzo + "€ ?\n");
                 // System.out.println("1=Si/2=No");
@@ -327,13 +321,16 @@ public class Cliente extends Utente implements ICliente {
                 risultato = obc.addOrdine(new Ordinazione_Bar(data, quantita, id_ordinazione, id_ombrellone, id_prodotto));
                 prezzo_totale = obc.calcolaPrezzoOrdine(id_prodotto, quantita);
                 Scontrino scontrino = new Scontrino(id_scontrino, data, id_ombrellone, prezzo_totale);
-                scontrino.CalcolaPrezzo(id_scontrino, data, id_ombrellone, prezzo_totale);
                 //connector tabella tipologia_pg
-                Pagamento p = new Pagamento();
+                PagamentoBar p = new PagamentoBar();
                 Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar();
                 OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
+                System.out.println(tipologia);
+                System.out.println(ordinazioneBarConnector.last_ordinazione(id_ombrellone));
+                System.out.println(id_ombrellone);
+                System.out.println(data_pagamento);
 
-                p.sceltaMetodo(tipologia, id_prenotazione, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
+                p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
                 // String tipologia_pagamento, int id_prenotazione, int id_ombrellone, Date data_pagamento
                 if (risultato) {
                     System.out.println("Prenotazione aggiunta");
@@ -347,10 +344,15 @@ public class Cliente extends Utente implements ICliente {
             if (scelta.equals("Si")) {
                 Date data = obc.getDate();
                 boolean risultato = false;
+                //connector tabella tipologia_pg
+                PagamentoBar p = new PagamentoBar();
+                Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar();
+                OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
                 risultato = obc.addOrdine(new Ordinazione_Bar(data, quantita, id_ordinazione, id_ombrellone, id_prodotto));
                 prezzo_totale = obc.calcolaPrezzoOrdine(id_prodotto, quantita);
                 Scontrino scontrino = new Scontrino(id_scontrino, data, id_ombrellone, prezzo_totale);
-                scontrino.CalcolaPrezzo(id_scontrino, data, id_ombrellone, prezzo_totale);
+
+                p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
                 if (risultato) System.out.println("Ordinazione aggiunta");
             }
         }

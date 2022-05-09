@@ -64,4 +64,4 @@ public class Prodotti_Bar {
     public String toString() {
         return id_prodotto + ": " + nome_prodotto + ", prezzo: " + prezzo + " €, disponibilità: " + quantita;
     }
-    }
+}

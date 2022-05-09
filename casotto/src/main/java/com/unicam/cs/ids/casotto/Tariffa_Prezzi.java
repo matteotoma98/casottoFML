@@ -44,9 +44,10 @@ public class Tariffa_Prezzi {
     public double Imposta_Prezzi_Spiaggia(FasciaOraria fasciaOraria, int num_fila_ombrellone, String data_inizio, String data_fine, int lettini) {
         double prezzo_finale = 0;
         double prezzo_tot_om = 0;
-        double prezzo_fascia_oraria=0;
-        double prezzo_tipologia=0;
-        if (num_fila_ombrellone >= 1 && num_fila_ombrellone <= 3) prezzo_tipologia = prezzo_tipologia + PREZZO_OMBRELLONE_VIP;
+        double prezzo_fascia_oraria = 0;
+        double prezzo_tipologia = 0;
+        if (num_fila_ombrellone >= 1 && num_fila_ombrellone <= 3)
+            prezzo_tipologia = prezzo_tipologia + PREZZO_OMBRELLONE_VIP;
         if (num_fila_ombrellone >= 4 && num_fila_ombrellone <= 7)
             prezzo_tipologia = prezzo_tipologia + PREZZO_OMBRELLONE_PREMIUM;
         if (num_fila_ombrellone >= 8 && num_fila_ombrellone <= 15)
@@ -101,12 +102,12 @@ public class Tariffa_Prezzi {
                 (month_f >= 9 && month_inizio >= 9) && (month_f <= 12 && month_inizio <= 12))
             throw new RuntimeException("Errore: in questi mesi lo chalet è chiuso.");
 
-        if (fasciaOraria.equals(FasciaOraria.MATTINA)) prezzo_fascia_oraria =  4;
-        if (fasciaOraria.equals(FasciaOraria.POMERIGGIO)) prezzo_fascia_oraria =  4;
+        if (fasciaOraria.equals(FasciaOraria.MATTINA)) prezzo_fascia_oraria = 4;
+        if (fasciaOraria.equals(FasciaOraria.POMERIGGIO)) prezzo_fascia_oraria = 4;
         if (fasciaOraria.equals(FasciaOraria.GIORNATA_INTERA)) prezzo_fascia_oraria = 6;
-        prezzo_finale = (prezzo_tot_om) +(prezzo_fascia_oraria*num_giorni) + (PREZZO_LETTINO * num_giorni * lettini);
-        this.num_giorni=num_giorni;
-       // System.out.println("Confermi la prenotazione di " + num_giorni + " giorni al prezzo di\n"+ prezzo_finale+ " ?");
+        prezzo_finale = (prezzo_tot_om) + (prezzo_fascia_oraria * num_giorni) + (PREZZO_LETTINO * num_giorni * lettini);
+        this.num_giorni = num_giorni;
+        // System.out.println("Confermi la prenotazione di " + num_giorni + " giorni al prezzo di\n"+ prezzo_finale+ " ?");
         return prezzo_finale;
     }
 

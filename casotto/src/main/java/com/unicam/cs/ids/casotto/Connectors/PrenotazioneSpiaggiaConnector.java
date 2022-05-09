@@ -18,7 +18,7 @@ public class PrenotazioneSpiaggiaConnector {
 
     public void aggiornaOmbrellone(String email, int id_ombrellone) {
         boolean result = false;
-        boolean result2=false;
+        boolean result2 = false;
         try {
 
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE utente set id_ombrellone ='" + id_ombrellone + "' where email='" + email + "'");
@@ -111,12 +111,12 @@ public class PrenotazioneSpiaggiaConnector {
         int id_ordinazione = 0;
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT id_prenotazione as last_id FROM prenotazionespiaggia WHERE id_prenotazione= (SELECT MAX(id_prenotazione) FROM ordinazionebar WHERE id_ombrellone='"+id_ombrellone+"')");
+            ResultSet resultSet = statement.executeQuery("SELECT id_prenotazione as last_id FROM prenotazionespiaggia WHERE id_prenotazione= (SELECT MAX(id_prenotazione) FROM ordinazionebar WHERE id_ombrellone='" + id_ombrellone + "')");
             int lastordinazione = 0;
             while (resultSet.next()) {
                 lastordinazione = resultSet.getInt("last_id");
             }
-            id_ordinazione = lastordinazione + 1;
+            id_ordinazione = lastordinazione;
         } catch (Exception e) {
             System.out.println(e);
         }

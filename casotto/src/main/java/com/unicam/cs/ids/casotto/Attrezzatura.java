@@ -22,9 +22,9 @@ public class Attrezzatura {
         this.quantita = quantita;
     }
 
-    public Attrezzatura(String nAttr, int q){
-        this.nomeAttrezzatura= nAttr;
-        this.quantita= q;
+    public Attrezzatura(String nAttr, int q) {
+        this.nomeAttrezzatura = nAttr;
+        this.quantita = q;
     }
 
 

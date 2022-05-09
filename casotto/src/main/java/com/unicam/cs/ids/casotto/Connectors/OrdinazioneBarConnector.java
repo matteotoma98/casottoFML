@@ -51,23 +51,25 @@ public class OrdinazioneBarConnector {
         }
         return resultSet;
     }
+
     public int last_ordinazione(int id_ombrellone) {
         int i = 0;
         boolean result;
         int id_ordinazione = 0;
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT id_ordinazione as last_id FROM ordinazionebar WHERE id_ordinazione= (SELECT MAX(id_ordinazione) FROM ordinazionebar WHERE id_ombrellone='"+id_ombrellone+"')");
+            ResultSet resultSet = statement.executeQuery("SELECT id_ordinazione as last_id FROM ordinazionebar WHERE id_ordinazione= (SELECT MAX(id_ordinazione) FROM ordinazionebar WHERE id_ombrellone='" + id_ombrellone + "')");
             int lastordinazione = 0;
             while (resultSet.next()) {
                 lastordinazione = resultSet.getInt("last_id");
             }
-            id_ordinazione = lastordinazione + 1;
+            id_ordinazione = lastordinazione;
         } catch (Exception e) {
             System.out.println(e);
         }
         return id_ordinazione;
     }
+
     public boolean addOrdine(Ordinazione_Bar ordinazione_bar) {
         int i = 0;
         boolean result;
@@ -95,7 +97,7 @@ public class OrdinazioneBarConnector {
             calcolaPrezzoOrdine(ordinazione_bar.getId_prodotto(), ordinazione_bar.getQuantita());
             // INSERT INTO ordinazionebar VALUES ('2022/05/05',1,1,1,1);
             result = preparedStatement.executeUpdate() > 0;
-            if(result) decrementaProdotto(ordinazione_bar.getId_prodotto(),ordinazione_bar.getQuantita());
+            if (result) decrementaProdotto(ordinazione_bar.getId_prodotto(), ordinazione_bar.getQuantita());
         } catch (Exception e) {
             System.out.println(e);
             result = false;
@@ -105,16 +107,17 @@ public class OrdinazioneBarConnector {
     }
 
     public void decrementaProdotto(int id, int quantita) {
-        boolean result= false;
+        boolean result = false;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE prodottibar SET quantita= quantita-'" + quantita + "' WHERE id_prodotto=" + id);
             result = preparedStatement.executeUpdate() > 0;
-            if(result) System.out.println("Quantità del prodotto "+id +" diminuita.");
+            if (result) System.out.println("Quantità del prodotto " + id + " diminuita.");
         } catch (Exception e) {
             System.out.println(e);
         }
 
     }
+
     public double calcolaPrezzoOrdine(int id, int quantita) {
         ResultSet result;
         double prezzo_totale = 0.0;

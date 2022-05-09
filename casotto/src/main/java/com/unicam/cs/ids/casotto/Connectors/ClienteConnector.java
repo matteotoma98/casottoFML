@@ -21,7 +21,7 @@ public class ClienteConnector {
     }
 
     public ResultSet getCliente(String email) {
-        ResultSet result= null;
+        ResultSet result = null;
         Cliente cliente = new Cliente();
         try {
             result = connection.createStatement().executeQuery("SELECT * FROM cliente WHERE email = '" + email + "'");
@@ -30,7 +30,7 @@ public class ClienteConnector {
                 System.out.print(result.getString(" nome"));
                 System.out.print(result.getString(" cognome"));
                 System.out.print(result.getInt(" id_ombrellone"));
-               // System.out.println(result.getString("email"+"nome"+"cognome"+"id_ombrellone"));
+                // System.out.println(result.getString("email"+"nome"+"cognome"+"id_ombrellone"));
 
                 cliente = convertiRisultatoInCliente(result);
             }
@@ -70,13 +70,14 @@ public class ClienteConnector {
         }
 
     }
-    public int getOmbrellone(String email){
+
+    public int getOmbrellone(String email) {
         ResultSet result;
-        int id_ombrellone=0;
+        int id_ombrellone = 0;
         try {
             result = connection.createStatement().executeQuery("SELECT id_ombrellone FROM cliente WHERE email = '" + email + "'");
             while (result.next()) {
-                id_ombrellone= result.getInt("id_ombrellone");
+                id_ombrellone = result.getInt("id_ombrellone");
             }
               /*ResultSet resultSet = statement.executeQuery("select * from chalet ");
             while (resultSet.next()) {
@@ -88,6 +89,7 @@ public class ClienteConnector {
         }
         return id_ombrellone;
     }
+
     public boolean addCliente(Cliente cliente) {
         boolean result;
         try {
@@ -99,8 +101,8 @@ public class ClienteConnector {
 
             result = preparedStatement.executeUpdate() > 0;
 
-            System.out.println("Email: "+ cliente.getEmail());
-            System.out.println("Ombrellone:"+cliente.getId_ombrellone());
+            System.out.println("Email: " + cliente.getEmail());
+            System.out.println("Ombrellone:" + cliente.getId_ombrellone());
         } catch (Exception e) {
             result = false;
             System.out.println(e);

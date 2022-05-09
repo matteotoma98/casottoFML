@@ -64,9 +64,10 @@ public class Prodotti_BarConnector {
                 prodotto = convertiRisultatoInProdotto(result);
             }
         } catch (Exception e) {
-            System.out.println(e); }
+            System.out.println(e);
+        }
         //add exception here
-        return prodotto.getPrezzo()*quantita;
+        return prodotto.getPrezzo() * quantita;
     }
 
     /*

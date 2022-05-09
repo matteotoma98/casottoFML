@@ -2,7 +2,7 @@ package com.unicam.cs.ids.casotto;
 
 import java.text.ParseException;
 
-public interface IUtente  {
+public interface IUtente {
 
     void registrazione(String email, String username, String password);
 
@@ -16,8 +16,7 @@ public interface IUtente  {
 
     public String getUsername();
 
-    public void registrazione( String username, String password, String ruolo,String nome, String cognome,  String email, int id_ombrellone);
-
+    public void registrazione(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone);
 
 
 }
