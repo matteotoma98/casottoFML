@@ -1,5 +1,7 @@
 package com.unicam.cs.ids.casotto;
 
+import com.unicam.cs.ids.casotto.Connectors.OrdinazioneBarConnector;
+
 import java.sql.Date;
 
 
@@ -22,6 +24,10 @@ public class Ordinazione_Bar {
 
     private void decrementoProdotto(Prodotti_Bar id_prodotto) {
         throw new UnsupportedOperationException();
+    }
+
+    public Ordinazione_Bar() {
+
     }
 
     public Ordinazione_Bar(Date data_ordinazione, int quantita, int id_ordinazione, int id_ombrellone, int id_prodotto) {

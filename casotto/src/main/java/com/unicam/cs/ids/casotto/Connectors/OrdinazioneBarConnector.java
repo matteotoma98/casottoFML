@@ -51,7 +51,23 @@ public class OrdinazioneBarConnector {
         }
         return resultSet;
     }
-
+    public int last_ordinazione(int id_ombrellone) {
+        int i = 0;
+        boolean result;
+        int id_ordinazione = 0;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT id_ordinazione as last_id FROM ordinazionebar WHERE id_ordinazione= (SELECT MAX(id_ordinazione) FROM ordinazionebar WHERE id_ombrellone='"+id_ombrellone+"')");
+            int lastordinazione = 0;
+            while (resultSet.next()) {
+                lastordinazione = resultSet.getInt("last_id");
+            }
+            id_ordinazione = lastordinazione + 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return id_ordinazione;
+    }
     public boolean addOrdine(Ordinazione_Bar ordinazione_bar) {
         int i = 0;
         boolean result;

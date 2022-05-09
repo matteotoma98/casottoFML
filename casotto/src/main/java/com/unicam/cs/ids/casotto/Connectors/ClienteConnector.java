@@ -2,6 +2,7 @@ package com.unicam.cs.ids.casotto.Connectors;
 
 import com.unicam.cs.ids.casotto.Cliente;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,7 +70,24 @@ public class ClienteConnector {
         }
 
     }
+    public int getOmbrellone(String email){
+        ResultSet result;
+        int id_ombrellone=0;
+        try {
+            result = connection.createStatement().executeQuery("SELECT id_ombrellone FROM cliente WHERE email = '" + email + "'");
+            while (result.next()) {
+                id_ombrellone= result.getInt("id_ombrellone");
+            }
+              /*ResultSet resultSet = statement.executeQuery("select * from chalet ");
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("quantita_lettini"));
+            } */
 
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return id_ombrellone;
+    }
     public boolean addCliente(Cliente cliente) {
         boolean result;
         try {

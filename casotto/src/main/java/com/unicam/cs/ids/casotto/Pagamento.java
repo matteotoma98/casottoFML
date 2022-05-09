@@ -1,5 +1,7 @@
 package com.unicam.cs.ids.casotto;
 
+import com.unicam.cs.ids.casotto.Connectors.PagamentoConnector;
+
 import java.util.Date;
 
 public class Pagamento {
@@ -16,11 +18,15 @@ public class Pagamento {
         throw new UnsupportedOperationException();
     }
 
-    public void sceltaMetodo(String tipologia_pagamento) {
-        //throw new UnsupportedOperationException();
-    }
 
     public void inserimentoDatiCarta(String dati_carta) {
        // throw new UnsupportedOperationException();
     }
+
+    public void sceltaMetodo( String tipologia_pagamento, int id_prenotazione, int id_ordinazione, int id_ombrellone, Date data_pagamento){
+        String scelta="";
+        PagamentoConnector pc= new PagamentoConnector();
+        pc.aggiornaListaPagamenti(tipologia_pagamento,id_prenotazione,id_ordinazione, id_ombrellone, (java.sql.Date) data_pagamento);
+    }
+    //tostring
 }

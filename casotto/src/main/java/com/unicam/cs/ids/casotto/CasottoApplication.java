@@ -70,23 +70,23 @@ public class CasottoApplication {
 
                 switch (scelta) {
                     case 1:
-                        System.out.println("-Digita email");
+                        System.out.println("Inserisci email");
                         email = scanner_value.nextLine();
-                        System.out.println("Digita Password");
+                        System.out.println("Inserisci Password");
                         password = scanner_value.nextLine(); //TODO hidare password
                         utente.login(email, password);
                         cliente.PrenotazioneOmbrellone(email);
                         break;
                     case 2:
-                        System.out.println("Digita Username");
+                        System.out.println("Inserisci Username");
                         username = scanner_value.nextLine();
-                        System.out.println("Digita Password");
+                        System.out.println("Inserisci Password");
                         password = scanner_value.nextLine();
-                        System.out.println("Digita email");
+                        System.out.println("Inserisci email");
                         email = scanner_value.nextLine();
-                        System.out.println("Digita nome");
+                        System.out.println("Inserisci nome");
                         nome = scanner_value.nextLine();
-                        System.out.println("Digita cognome");
+                        System.out.println("Inserisci cognome");
                         cognome = scanner_value.nextLine();
                         utente.registrazione(username, password, email, nome, cognome, ruolo, 0);
                         break;

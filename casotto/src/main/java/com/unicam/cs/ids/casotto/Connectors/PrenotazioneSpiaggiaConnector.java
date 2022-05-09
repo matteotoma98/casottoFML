@@ -105,6 +105,23 @@ public class PrenotazioneSpiaggiaConnector {
         return result;
     }
 
+    public int last_prenotazione(int id_ombrellone) {
+        int i = 0;
+        boolean result;
+        int id_ordinazione = 0;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT id_prenotazione as last_id FROM prenotazionespiaggia WHERE id_prenotazione= (SELECT MAX(id_prenotazione) FROM ordinazionebar WHERE id_ombrellone='"+id_ombrellone+"')");
+            int lastordinazione = 0;
+            while (resultSet.next()) {
+                lastordinazione = resultSet.getInt("last_id");
+            }
+            id_ordinazione = lastordinazione + 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return id_ordinazione;
+    }
 
     public boolean cancellazionePrenotazione(int id_prenotazione) {
         boolean result = false;
