@@ -1,5 +1,6 @@
 package com.unicam.cs.ids.casotto;
 
+import java.nio.file.attribute.AttributeView;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -41,10 +42,21 @@ public class Cliente extends Utente implements ICliente {
         throw new UnsupportedOperationException();
     }
 
-    public void iscrizione_Attivita(Attivita attivita) {
 
-        attivita.getId_attivita();
-        throw new UnsupportedOperationException();
+    public boolean iscrizione_Attivita(String email) {
+       int id_attività=0;
+        int num_posti=0;
+        Attivita attivita = new Attivita();
+        attivita.getAttivita();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Scegli l'id di un'attività");
+        id_attività= scanner.nextInt();
+        System.out.println("Inserisci il numero di persone che parteciperanno all'attività");
+        num_posti= scanner.nextInt();
+        attivita.addPrenotazioneAttivita(email, id_attività, num_posti );
+        return true;
+
+
     }
 
     public Cliente() {
@@ -152,26 +164,6 @@ public class Cliente extends Utente implements ICliente {
                 break;
         }
 
-        /* int scelta_tipologia;
-        System.out.println("Scegli quale tipologia di ombrellone vuoi prenotare: ");
-        System.out.println("1: VIP ");
-        System.out.println("2: PREMIUM ");
-        System.out.println("3: BASE");
-        scelta_tipologia = scanner.nextInt();
-        switch (scelta_tipologia) {
-            case 1:
-                String tipologia_ombr = "";
-                tipologia_ombr = String.valueOf(Tipologia.VIP);
-                break;
-            case 2:
-                tipologia_ombr= String.valueOf(Tipologia.PREMIUM);
-                break;
-            case 3:
-                tipologia_ombr = String.valueOf(Tipologia.BASE);
-                break;
-        } */
-
-
         System.out.println("Inserisci la fila dell'ombrellone:(FILA 1-3: VIP, FILA 4-7: PREMIUM, FILA 8-15: BASE)");
         //querychemostra la lista delle file
         int fila = 0;
@@ -185,7 +177,6 @@ public class Cliente extends Utente implements ICliente {
         om.setId_ombrellone(id);
 
         System.out.println("Inserisci la quantità di lettini che vuoi prenotare");
-        //querychemostra la lista degli ombrelloni
         int lettini = scanner.nextInt();
         Chalet chalet = new Chalet();
 
@@ -243,27 +234,6 @@ public class Cliente extends Utente implements ICliente {
             }
         }
 
-
-        //ALLA FINE DELLA PRENOTAZIONE, AGGIORNARE I LETTINI DISPONIBILI E ANCHE CHE GLI OMBRELLONI DEVONO DIVENTARE OCCUPATI
-        // chalet.setQuantita_lettini(chalet.getQuantita_lettini_disponibili()-lettini);
-        //connettore.setOmbrelloneOccupato(id);
-      /*   List<Ombrellone> ombrelloni = co.getAvailableOmbrelloni(numero_ospiti);
-        for (Ombrellone ombrellone : ombrelloni) {
-            System.out.println(ombrellone.toString());
-        }
-        System.out.println("Digita l'id dell'ombrellone che vuoi prenotare");
-
-        String id = scanner.nextLine();
-        co.setOmbrelloneOccupato(id);
-        double prezzo = co.getPrezzo(id);
-        boolean ris = Cc.AssegnaOmbrellone(this.email, id);
-        double totale = prezzo * durata;
-        if (ris == true) {
-            System.out.println("Prenotazione effettuata con successo - dirigiti alla cassa per pagare");
-            System.out.println("Totale : " + totale);
-        } else
-            System.out.println("Prenotazione non effettuata, riprova");
-          */
     }
 
     public void ordinazioneBar(String email) {

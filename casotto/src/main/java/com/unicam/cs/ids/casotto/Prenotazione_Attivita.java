@@ -3,7 +3,7 @@ package com.unicam.cs.ids.casotto;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class    Prenotazione_Attivita {
+public class Prenotazione_Attivita {
     private Date dataInizio;
     private Date dataFine;
     private String nome_attivita;

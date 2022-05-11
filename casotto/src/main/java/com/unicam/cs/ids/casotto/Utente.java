@@ -289,7 +289,7 @@ public class Utente implements IUtente {
                     cliente.ordinazioneBar(email);
                     break;
                 case 4:
-                    // cliente.iscrizione_Attivita(attivita.getId_attivita());
+                    cliente.iscrizione_Attivita(email);
                     break;
             }
         }

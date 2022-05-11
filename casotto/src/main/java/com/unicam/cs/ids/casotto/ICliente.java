@@ -10,7 +10,7 @@ public interface ICliente {
 
     public void cancellazionePrenotazioneOmbrellone(String email);
 
-    void iscrizione_Attivita(Attivita attivita);
+    public boolean iscrizione_Attivita(String email);
 
     public void registrazione(String email, String username, String password, int id_ombrellone);
 }

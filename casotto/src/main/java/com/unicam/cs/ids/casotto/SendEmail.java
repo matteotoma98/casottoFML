@@ -9,7 +9,7 @@ import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
 
-    public static void sendMail(String recepient) throws Exception {
+    public static void sendMail(String recipient) throws Exception {
         System.out.println("Preparing to send email");
         Properties properties = new Properties();
         properties.put("mail.smtp.starttls.enable", "true");
@@ -30,19 +30,18 @@ public class SendEmail {
                 return new PasswordAuthentication(myAccountEmail, password);
             }
         });
-        Message message = prepareMessage(session, myAccountEmail, recepient);
+        Message message = prepareMessage(session, myAccountEmail, recipient);
         Transport.send(message);
         System.out.println("Messaggio inviato correttamente");
     }
 
-    private static Message prepareMessage(Session session, String myAccountEmail, String recepient) {
-
+    private static Message prepareMessage(Session session, String myAccountEmail, String recipient) {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
             message.setSubject("CasottoFML™");
-            message.setText("Ciao" + myAccountEmail + " , ci sono delle nuove attività allo chalet CasottoFML™,  \n effettua il Login per dare un'occhiata e prenotarti!");
+            message.setText("Ciao " + myAccountEmail + " , ci sono delle nuove attività allo chalet CasottoFML™,  \n effettua il Login per dare un'occhiata e prenotarti!");
             return message;
         } catch (Exception ex) {
             Logger.getLogger(SendEmail.class.getName()).log(Level.SEVERE, null, ex);

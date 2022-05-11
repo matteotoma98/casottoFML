@@ -38,7 +38,7 @@ public class CasottoApplication {
     }
 
     public static void main(String[] args) throws Exception {
- /*
+
          try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/casotto", "root", "casottofml");
             Statement statement = connection.createStatement();
@@ -114,7 +114,7 @@ public class CasottoApplication {
         String email = "matteorossi@gma.il";
         int id_ombrellone = 10;
         Cliente cliente = new Cliente(username, password, ruolo, nome, cognome, email, id_ombrellone);
-*/
-       SendEmail.sendMail("matteotoma98@hotmail.it");
+
+       //SendEmail.sendMail("fchiocchi1@gmail.com");
     }
 }
