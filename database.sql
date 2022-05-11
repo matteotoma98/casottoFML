@@ -129,7 +129,9 @@ CREATE TABLE `attivita` (
   PRIMARY KEY (`nome_attivita`),
   UNIQUE KEY `nome_UNIQUE` (`nome_attivita`),
   KEY `id_attivita` (`id_attivita`),
-  KEY `nome_attrezzatura_fk_idx` (`nome_attrezzatura`)
+  KEY `nome_attrezzatura_fk_idx` (`nome_attrezzatura`),
+  KEY `data_inizio_attivita` (`data_inizio_attivita`),
+  KEY `data_fine_attivita` (`data_fine_attivita`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -139,7 +141,7 @@ CREATE TABLE `attivita` (
 
 LOCK TABLES `attivita` WRITE;
 /*!40000 ALTER TABLE `attivita` DISABLE KEYS */;
-INSERT INTO `attivita` VALUES ('Beach Volley',2,'Pallone Beach',2,3,NULL,NULL),('Calcio',2,'Pallone Calcio',2,2,NULL,NULL),('Zumba',10,NULL,0,1,'2022-04-29 17:00:00','2022-04-29 19:00:00');
+INSERT INTO `attivita` VALUES ('Beach',4,'Pallone Beach',2,3,'2022-05-11 16:00:00','2022-05-11 18:00:00'),('Calcio',5,'Pallone Calcio',2,2,'2022-04-29 15:00:00','2022-04-29 16:00:00'),('Zumba',5,NULL,0,1,'2022-04-29 17:00:00','2022-04-29 19:00:00');
 /*!40000 ALTER TABLE `attivita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -400,16 +402,22 @@ DROP TABLE IF EXISTS `prenotazioneattivita`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prenotazioneattivita` (
-  `data_inizio` date NOT NULL,
-  `data_fine` date NOT NULL,
-  `nome_attivita` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
-  PRIMARY KEY (`data_inizio`,`nome_attivita`,`data_fine`),
-  KEY `nome_attivita_fk_idx` (`nome_attivita`) /*!80000 INVISIBLE */,
-  KEY `email_pren_spiaggia_fk_idx` (`email`),
-  CONSTRAINT `email_fk_3` FOREIGN KEY (`email`) REFERENCES `cliente` (`email`),
-  CONSTRAINT `nome_attivita_fk` FOREIGN KEY (`nome_attivita`) REFERENCES `attivita` (`nome_attivita`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `data_inizio` datetime NOT NULL,
+  `data_fine` datetime NOT NULL,
+  `id` int NOT NULL,
+  `num_posti` int NOT NULL,
+  `id_prenotazione_attivita` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id_prenotazione_attivita`),
+  KEY `nome_attivita_fk_idx` (`email`) /*!80000 INVISIBLE */,
+  KEY `email_pren_spiaggia_fk_idx` (`id`),
+  KEY `data_inzio_attivita_idx` (`data_inizio`),
+  KEY `data_fine_attivita_idx` (`data_fine`),
+  CONSTRAINT `data_fine_attivita` FOREIGN KEY (`data_fine`) REFERENCES `attivita` (`data_fine_attivita`),
+  CONSTRAINT `data_inzio_attivita` FOREIGN KEY (`data_inizio`) REFERENCES `attivita` (`data_inizio_attivita`),
+  CONSTRAINT `email_fk_2` FOREIGN KEY (`email`) REFERENCES `cliente` (`email`),
+  CONSTRAINT `id_attivita_fk` FOREIGN KEY (`id`) REFERENCES `attivita` (`id_attivita`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -418,7 +426,7 @@ CREATE TABLE `prenotazioneattivita` (
 
 LOCK TABLES `prenotazioneattivita` WRITE;
 /*!40000 ALTER TABLE `prenotazioneattivita` DISABLE KEYS */;
-INSERT INTO `prenotazioneattivita` VALUES ('2005-02-22','2005-02-22','Calcio','matteotoma98@hotmail.it');
+INSERT INTO `prenotazioneattivita` VALUES ('matteo','2022-04-29 17:00:00','2022-04-29 19:00:00',1,1,1),('chio','2022-05-11 16:00:00','2022-05-11 18:00:00',3,3,2),('chio','2022-04-29 17:00:00','2022-04-29 19:00:00',1,2,3),('chio','2022-04-29 15:00:00','2022-04-29 16:00:00',2,2,4),('chio','2022-04-29 17:00:00','2022-04-29 19:00:00',1,3,5),('matteo','2022-04-29 17:00:00','2022-04-29 19:00:00',1,1,6);
 /*!40000 ALTER TABLE `prenotazioneattivita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -606,4 +614,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-09 16:28:01
+-- Dump completed on 2022-05-11 12:49:08
