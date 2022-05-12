@@ -1,5 +1,6 @@
 package com.unicam.cs.ids.casotto;
 
+import com.unicam.cs.ids.casotto.Connectors.AddettoSpiaggiaConnector;
 import com.unicam.cs.ids.casotto.Connectors.ClienteConnector;
 import com.unicam.cs.ids.casotto.Connectors.OrdinazioneBarConnector;
 import com.unicam.cs.ids.casotto.Connectors.UtenteConnector;
@@ -42,14 +43,8 @@ public class CasottoApplication {
          try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/casotto", "root", "casottofml");
             Statement statement = connection.createStatement();
-
-            // Cliente cliente = new Cliente();
-            // utente.menu_cliente("matteotoma98@hotmail.it");
-            // cliente.ordinazioneBar();
-            //ResultSet resultSet = statement.executeQuery("select * from chalet ");
-            //while (resultSet.next()) {
-             //   System.out.println(resultSet.getString("quantita_lettini"));
-           // }
+             AddettoSpiaggiaConnector addettoSpiaggiaConnector= new AddettoSpiaggiaConnector();
+             addettoSpiaggiaConnector.cambiaDisponbilitaOmbrellone();
             Utente utente = new Utente();
             Cliente cliente = new Cliente();
             int scelta;
@@ -105,7 +100,8 @@ public class CasottoApplication {
         }
 
 
-        //SpringApplication.run(CasottoApplication.class, args);
+        /*
+        SpringApplication.run(CasottoApplication.class, args);
         String username = "prova";
         String password = "dd";
         String ruolo = "boh";
@@ -113,7 +109,7 @@ public class CasottoApplication {
         String cognome = "rossi";
         String email = "matteorossi@gma.il";
         int id_ombrellone = 10;
-        Cliente cliente = new Cliente(username, password, ruolo, nome, cognome, email, id_ombrellone);
+        Cliente cliente = new Cliente(username, password, ruolo, nome, cognome, email, id_ombrellone); */
 
        //SendEmail.sendMail("fchiocchi1@gmail.com");
     }

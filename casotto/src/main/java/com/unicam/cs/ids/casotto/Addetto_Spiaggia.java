@@ -1,5 +1,7 @@
 package com.unicam.cs.ids.casotto;
 
+import com.unicam.cs.ids.casotto.Connectors.AddettoSpiaggiaConnector;
+
 import java.util.ArrayList;
 
 public class Addetto_Spiaggia extends Utente {
@@ -25,7 +27,8 @@ public class Addetto_Spiaggia extends Utente {
 
     public void liberaOmbrellone(Ombrellone ombrellone) {
         ombrellone.getId_ombrellone();
-
+        AddettoSpiaggiaConnector addettoSpiaggiaConnector = new AddettoSpiaggiaConnector();
+        addettoSpiaggiaConnector.cambiaDisponbilitaOmbrellone();
         ombrellone.isDisponibilita();
     }
 
