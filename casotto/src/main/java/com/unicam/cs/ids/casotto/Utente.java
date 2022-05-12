@@ -148,7 +148,11 @@ public class Utente implements IUtente {
                 // menu_cameriere();
                 break;
             case "addetto_attivita":
-                // menu_addettoAttivita(username);
+                try {
+                    menu_addettoAttivita(email);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case "gestore":
                 //menu_gestore();
@@ -157,40 +161,28 @@ public class Utente implements IUtente {
 
     }
 
- /*
-	private void menu_cameriere() {
-	}
 
-	private void menu_addettoAttivita (String username) {
-		Addetto_attivita_Ludico_Sportive oe = new A();
+	private void menu_addettoAttivita (String email) throws Exception{
+		Addetto_attivita_Ludico_Sportive addatt = new Addetto_attivita_Ludico_Sportive();
 		int scelta;
 		do{
 			System.out.println("Scegli cosa vuoi fare: ");
-			System.out.println("1: Invia messaggio ");
-			System.out.println("2: Crea evento ");
-			System.out.println("3: Modifica evento ");
-			System.out.println("4: Cancella evento ");
+			System.out.println("1: Modifica orari attività e posti disponibili");
 			System.out.println("0: Esci ");
 			Scanner scanner = new Scanner(System.in);
 			scelta = scanner.nextInt();
+            if(scelta!=1 && scelta != 0)
+                throw new IllegalArgumentException("Scelta non valida");
 			switch(scelta) {
 				case 1:
-					oe.invia_messaggio(username);
-					break;
-				case 2:
-					oe.crea_evento();
-					break;
-				case 3:
-					oe.modifica_evento();
-					break;
-				case 4:
-					oe.cancella_evento();
+                    addatt.organizzaAttivita(email);
 					break;
 			}
+
 		}
 		while(scelta != 0);
 	}
-
+/*
 	private void menu_gestore() {
 		Gestore gestore = new Gestore();
 		int scelta;

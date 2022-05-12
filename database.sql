@@ -141,7 +141,7 @@ CREATE TABLE `attivita` (
 
 LOCK TABLES `attivita` WRITE;
 /*!40000 ALTER TABLE `attivita` DISABLE KEYS */;
-INSERT INTO `attivita` VALUES ('Beach',4,'Pallone Beach',2,3,'2022-05-11 16:00:00','2022-05-11 18:00:00'),('Calcio',5,'Pallone Calcio',2,2,'2022-04-29 15:00:00','2022-04-29 16:00:00'),('Zumba',5,NULL,0,1,'2022-04-29 17:00:00','2022-04-29 19:00:00');
+INSERT INTO `attivita` VALUES ('Beach',4,'Pallone Beach',2,3,'2022-05-11 16:00:00','2022-05-11 18:00:00'),('Calcio',5,'Pallone Calcio',2,2,'2022-04-29 15:00:00','2022-04-29 16:00:00'),('Zumba',4,NULL,0,1,'2022-09-10 00:00:00','2022-09-01 00:00:00');
 /*!40000 ALTER TABLE `attivita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +217,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES ('Matteo','T','matteotoma98@hotmail.it',1),('toma','toma','matteo',2),('fra','fracs','chio',45);
+INSERT INTO `cliente` VALUES ('Matteo','T','matteotoma98@hotmail.it',1),('toma','toma','matteo',2),('Lorenzo','Caporossi','caporossilorenzo98@gmail.com',3),('Francesco','Chiocchi','fchiocchi1@gmail.com',4),('fra','fracs','chio',45);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -299,7 +299,7 @@ CREATE TABLE `ombrellone` (
 
 LOCK TABLES `ombrellone` WRITE;
 /*!40000 ALTER TABLE `ombrellone` DISABLE KEYS */;
-INSERT INTO `ombrellone` VALUES (1,8,1,'vip',1),(2,8,0,'vip',1),(3,8,0,'vip',1),(4,8,0,'vip',1),(5,8,0,'vip',1),(6,8,1,'vip',1),(7,8,1,'vip',1),(8,8,0,'vip',1),(9,8,0,'vip',1),(10,8,1,'vip',1),(11,8,1,'vip',2),(12,8,1,'vip',2),(13,8,1,'vip',2),(14,8,1,'vip',2),(15,8,1,'vip',2),(16,8,1,'vip',2),(17,8,1,'vip',2),(18,8,1,'vip',2),(19,8,1,'vip',2),(20,8,1,'vip',2),(21,8,1,'vip',3),(22,8,1,'vip',3),(23,8,1,'vip',3),(24,8,1,'vip',3),(25,8,1,'vip',3),(26,8,1,'vip',3),(27,8,1,'vip',3),(28,8,1,'vip',3),(29,8,1,'vip',3),(30,8,1,'vip',3),(31,6,1,'premium',4),(32,6,1,'premium',4),(33,6,1,'premium',4),(34,6,1,'premium',4),(35,6,1,'premium',4),(36,6,1,'premium',4),(37,6,1,'premium',4),(38,6,1,'premium',4),(39,6,1,'premium',4),(40,6,1,'premium',4),(41,6,1,'premium',5),(42,6,1,'premium',5),(43,6,1,'premium',5),(44,6,1,'premium',5),(45,6,0,'premium',5),(46,6,1,'premium',5),(47,6,1,'premium',5),(48,6,1,'premium',5),(49,6,1,'premium',5),(50,6,1,'premium',5),(51,6,1,'premium',6),(52,6,0,'premium',6),(53,6,1,'premium',6),(54,6,1,'premium',6),(55,6,1,'premium',6),(56,6,1,'premium',6),(57,6,1,'premium',6),(58,6,1,'premium',6),(59,6,1,'premium',6),(60,6,1,'premium',6),(61,6,1,'premium',7),(62,6,1,'premium',7),(63,6,1,'premium',7),(64,6,1,'premium',7),(65,6,1,'premium',7),(66,6,1,'premium',7),(67,6,1,'premium',7),(68,6,1,'premium',7),(69,6,1,'premium',7),(70,6,1,'premium',7),(71,4,1,'base',8),(72,4,1,'base',8),(73,4,1,'base',8),(74,4,1,'base',8),(75,4,1,'base',8),(76,4,1,'base',8),(77,4,1,'base',8),(78,4,1,'base',8),(79,4,1,'base',8),(80,4,1,'base',8),(81,4,1,'base',9),(82,4,1,'base',9),(83,4,1,'base',9),(84,4,1,'base',9),(85,4,1,'base',9),(86,4,1,'base',9),(87,4,1,'base',9),(88,4,1,'base',9),(89,4,1,'base',9),(90,4,1,'base',9),(91,4,1,'base',10),(92,4,1,'base',10),(93,4,1,'base',10),(94,4,1,'base',10),(95,4,1,'base',10),(96,4,1,'base',10),(97,4,1,'base',10),(98,4,1,'base',10),(99,4,1,'base',10),(100,4,1,'base',10),(101,4,1,'base',11),(102,4,1,'base',11),(103,4,1,'base',11),(104,4,1,'base',11),(105,4,1,'base',11),(106,4,1,'base',11),(107,4,1,'base',11),(108,4,1,'base',11),(109,4,1,'base',11),(110,4,1,'base',11),(111,4,1,'base',12),(112,4,1,'base',12),(113,4,1,'base',12),(114,4,1,'base',12),(115,4,1,'base',12),(116,4,1,'base',12),(117,4,1,'base',12),(118,4,1,'base',12),(119,4,1,'base',12),(120,4,1,'base',12),(121,4,1,'base',13),(122,4,1,'base',13),(123,4,1,'base',13),(124,4,1,'base',13),(125,4,1,'base',13),(126,4,1,'base',13),(127,4,1,'base',13),(128,4,1,'base',13),(129,4,1,'base',13),(130,4,1,'base',13),(131,4,1,'base',14),(132,4,1,'base',14),(133,4,1,'base',14),(134,4,1,'base',14),(135,4,1,'base',14),(136,4,1,'base',14),(137,4,1,'base',14),(138,4,1,'base',14),(139,4,1,'base',14),(140,4,1,'base',14),(141,4,1,'base',15),(142,4,1,'base',15),(143,4,1,'base',15),(144,4,1,'base',15),(145,4,1,'base',15),(146,4,1,'base',15),(147,4,1,'base',15),(148,4,1,'base',15),(149,4,1,'base',15),(150,4,1,'base',15);
+INSERT INTO `ombrellone` VALUES (1,8,1,'vip',1),(2,8,1,'vip',1),(3,8,1,'vip',1),(4,8,1,'vip',1),(5,8,1,'vip',1),(6,8,1,'vip',1),(7,8,1,'vip',1),(8,8,1,'vip',1),(9,8,1,'vip',1),(10,8,1,'vip',1),(11,8,1,'vip',2),(12,8,1,'vip',2),(13,8,1,'vip',2),(14,8,1,'vip',2),(15,8,1,'vip',2),(16,8,1,'vip',2),(17,8,1,'vip',2),(18,8,1,'vip',2),(19,8,1,'vip',2),(20,8,1,'vip',2),(21,8,1,'vip',3),(22,8,1,'vip',3),(23,8,1,'vip',3),(24,8,1,'vip',3),(25,8,1,'vip',3),(26,8,1,'vip',3),(27,8,1,'vip',3),(28,8,1,'vip',3),(29,8,1,'vip',3),(30,8,1,'vip',3),(31,6,1,'premium',4),(32,6,1,'premium',4),(33,6,1,'premium',4),(34,6,1,'premium',4),(35,6,1,'premium',4),(36,6,1,'premium',4),(37,6,1,'premium',4),(38,6,1,'premium',4),(39,6,1,'premium',4),(40,6,1,'premium',4),(41,6,1,'premium',5),(42,6,1,'premium',5),(43,6,1,'premium',5),(44,6,1,'premium',5),(45,6,1,'premium',5),(46,6,1,'premium',5),(47,6,1,'premium',5),(48,6,1,'premium',5),(49,6,1,'premium',5),(50,6,1,'premium',5),(51,6,1,'premium',6),(52,6,1,'premium',6),(53,6,1,'premium',6),(54,6,1,'premium',6),(55,6,1,'premium',6),(56,6,1,'premium',6),(57,6,1,'premium',6),(58,6,1,'premium',6),(59,6,1,'premium',6),(60,6,1,'premium',6),(61,6,1,'premium',7),(62,6,1,'premium',7),(63,6,1,'premium',7),(64,6,1,'premium',7),(65,6,1,'premium',7),(66,6,1,'premium',7),(67,6,1,'premium',7),(68,6,1,'premium',7),(69,6,1,'premium',7),(70,6,1,'premium',7),(71,4,1,'base',8),(72,4,1,'base',8),(73,4,1,'base',8),(74,4,1,'base',8),(75,4,1,'base',8),(76,4,1,'base',8),(77,4,1,'base',8),(78,4,1,'base',8),(79,4,1,'base',8),(80,4,1,'base',8),(81,4,1,'base',9),(82,4,1,'base',9),(83,4,1,'base',9),(84,4,1,'base',9),(85,4,1,'base',9),(86,4,1,'base',9),(87,4,1,'base',9),(88,4,1,'base',9),(89,4,1,'base',9),(90,4,1,'base',9),(91,4,1,'base',10),(92,4,1,'base',10),(93,4,1,'base',10),(94,4,1,'base',10),(95,4,1,'base',10),(96,4,1,'base',10),(97,4,1,'base',10),(98,4,1,'base',10),(99,4,1,'base',10),(100,4,1,'base',10),(101,4,1,'base',11),(102,4,1,'base',11),(103,4,1,'base',11),(104,4,1,'base',11),(105,4,1,'base',11),(106,4,1,'base',11),(107,4,1,'base',11),(108,4,1,'base',11),(109,4,1,'base',11),(110,4,1,'base',11),(111,4,1,'base',12),(112,4,1,'base',12),(113,4,1,'base',12),(114,4,1,'base',12),(115,4,1,'base',12),(116,4,1,'base',12),(117,4,1,'base',12),(118,4,1,'base',12),(119,4,1,'base',12),(120,4,1,'base',12),(121,4,1,'base',13),(122,4,1,'base',13),(123,4,1,'base',13),(124,4,1,'base',13),(125,4,1,'base',13),(126,4,1,'base',13),(127,4,1,'base',13),(128,4,1,'base',13),(129,4,1,'base',13),(130,4,1,'base',13),(131,4,1,'base',14),(132,4,1,'base',14),(133,4,1,'base',14),(134,4,1,'base',14),(135,4,1,'base',14),(136,4,1,'base',14),(137,4,1,'base',14),(138,4,1,'base',14),(139,4,1,'base',14),(140,4,1,'base',14),(141,4,1,'base',15),(142,4,1,'base',15),(143,4,1,'base',15),(144,4,1,'base',15),(145,4,1,'base',15),(146,4,1,'base',15),(147,4,1,'base',15),(148,4,1,'base',15),(149,4,1,'base',15),(150,4,1,'base',15);
 /*!40000 ALTER TABLE `ombrellone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,18 +405,18 @@ CREATE TABLE `prenotazioneattivita` (
   `email` varchar(45) NOT NULL,
   `data_inizio` datetime NOT NULL,
   `data_fine` datetime NOT NULL,
-  `id` int NOT NULL,
+  `id_attivita` int NOT NULL,
   `num_posti` int NOT NULL,
   `id_prenotazione_attivita` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id_prenotazione_attivita`),
   KEY `nome_attivita_fk_idx` (`email`) /*!80000 INVISIBLE */,
-  KEY `email_pren_spiaggia_fk_idx` (`id`),
+  KEY `email_pren_spiaggia_fk_idx` (`id_attivita`),
   KEY `data_inzio_attivita_idx` (`data_inizio`),
   KEY `data_fine_attivita_idx` (`data_fine`),
-  CONSTRAINT `data_fine_attivita` FOREIGN KEY (`data_fine`) REFERENCES `attivita` (`data_fine_attivita`),
-  CONSTRAINT `data_inzio_attivita` FOREIGN KEY (`data_inizio`) REFERENCES `attivita` (`data_inizio_attivita`),
+  CONSTRAINT `data_fine_attivita` FOREIGN KEY (`data_fine`) REFERENCES `attivita` (`data_fine_attivita`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `data_inzio_attivita` FOREIGN KEY (`data_inizio`) REFERENCES `attivita` (`data_inizio_attivita`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `email_fk_2` FOREIGN KEY (`email`) REFERENCES `cliente` (`email`),
-  CONSTRAINT `id_attivita_fk` FOREIGN KEY (`id`) REFERENCES `attivita` (`id_attivita`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `id_attivita_fk` FOREIGN KEY (`id_attivita`) REFERENCES `attivita` (`id_attivita`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -426,7 +426,7 @@ CREATE TABLE `prenotazioneattivita` (
 
 LOCK TABLES `prenotazioneattivita` WRITE;
 /*!40000 ALTER TABLE `prenotazioneattivita` DISABLE KEYS */;
-INSERT INTO `prenotazioneattivita` VALUES ('matteo','2022-04-29 17:00:00','2022-04-29 19:00:00',1,1,1),('chio','2022-05-11 16:00:00','2022-05-11 18:00:00',3,3,2),('chio','2022-04-29 17:00:00','2022-04-29 19:00:00',1,2,3),('chio','2022-04-29 15:00:00','2022-04-29 16:00:00',2,2,4),('chio','2022-04-29 17:00:00','2022-04-29 19:00:00',1,3,5),('matteo','2022-04-29 17:00:00','2022-04-29 19:00:00',1,1,6);
+INSERT INTO `prenotazioneattivita` VALUES ('matteotoma98@hotmail.it','2022-09-10 00:00:00','2022-09-01 00:00:00',1,1,1),('chio','2022-05-11 16:00:00','2022-05-11 18:00:00',3,3,2),('caporossilorenzo98@gmail.com','2022-09-10 00:00:00','2022-09-01 00:00:00',1,2,3),('chio','2022-04-29 15:00:00','2022-04-29 16:00:00',2,2,4),('fchiocchi1@gmail.com','2022-09-10 00:00:00','2022-09-01 00:00:00',1,3,5),('matteo','2022-09-10 00:00:00','2022-09-01 00:00:00',1,1,6);
 /*!40000 ALTER TABLE `prenotazioneattivita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -446,7 +446,6 @@ CREATE TABLE `prenotazionespiaggia` (
   `lettini` int DEFAULT '0',
   `email` varchar(50) NOT NULL,
   PRIMARY KEY (`id_prenotazione`),
-  UNIQUE KEY `id_ombrellone_UNIQUE` (`id_ombrellone`),
   UNIQUE KEY `id_prenotazione_UNIQUE` (`id_prenotazione`),
   KEY `num_fila_ombrellone_idx` (`num_fila_ombrellone`),
   KEY `id_ombrellone_fk_idx` (`id_ombrellone`),
@@ -462,7 +461,7 @@ CREATE TABLE `prenotazionespiaggia` (
 
 LOCK TABLES `prenotazionespiaggia` WRITE;
 /*!40000 ALTER TABLE `prenotazionespiaggia` DISABLE KEYS */;
-INSERT INTO `prenotazionespiaggia` VALUES (1,'2022-06-12','2022-06-12',1,2,2,'matteo');
+INSERT INTO `prenotazionespiaggia` VALUES (1,'2022-05-09','2022-05-08',1,2,2,'matteo'),(2,'2022-05-10','2022-05-10',1,3,2,'matteo'),(3,'2022-05-18','2022-05-22',1,4,2,'matteo'),(4,'2022-05-16','2022-05-17',1,4,2,'matteo');
 /*!40000 ALTER TABLE `prenotazionespiaggia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -601,7 +600,7 @@ CREATE TABLE `utente` (
 
 LOCK TABLES `utente` WRITE;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
-INSERT INTO `utente` VALUES ('addettoattivita','addettoattivita','addetto_attivita','addettoattivita@studenti.unicam.it','Addetto','Attivita',NULL),('addettobar','addettobar','addetto_bar','addettobar@studenti.unicam.it','Addetto','Bar',NULL),('addettospiaggia','addettospiaggia','addetto_spiaggia','addettospiaggia@studenti.unicam.it','Addetto','Spiaggia',NULL),('fra','fracs','cliente','chio','fra','fracs',45),('fracs_xyz','casottoFML','gestore','francesco.chiocchi@studenti.unicam.it','Francesco','Chiocchi',NULL),('lore_capo','casottoFML','gestore','lorenzo.caporossi@studenti.unicam.it','Lorenzo','Caporossi',NULL),('matteo','matteo','cliente','matteo','toma','toma',2),('matteot','matteot','cliente','matteotoma98@hotmail.it','Matteo','T',1),('matteotoma_98','casottoFML','gestore','matteo.toma@studenti.unicam.it','Matteo','Toma',NULL);
+INSERT INTO `utente` VALUES ('addettoattivita','addettoattivita','addetto_attivita','addettoattivita@studenti.unicam.it','Addetto','Attivita',NULL),('addettobar','addettobar','addetto_bar','addettobar@studenti.unicam.it','Addetto','Bar',NULL),('addettospiaggia','addettospiaggia','addetto_spiaggia','addettospiaggia@studenti.unicam.it','Addetto','Spiaggia',NULL),('fra','fracs','cliente','chio','fra','fracs',45),('fracs_xyz','casottoFML','gestore','francesco.chiocchi@studenti.unicam.it','Francesco','Chiocchi',NULL),('francesco','francesco','cliente','fchiocchi1@gmail.com','Francesco','Chiocchi',4),('lore_capo','casottoFML','gestore','lorenzo.caporossi@studenti.unicam.it','Lorenzo','Caporossi',NULL),('lorenzo','lorenzo','cliente','caporossilorenzo98@gmail.com','Lorenzo','Caporossi',3),('matteo','matteo','cliente','matteo','toma','toma',2),('matteot','matteot','cliente','matteotoma98@hotmail.it','Matteo','T',1),('matteotoma_98','casottoFML','gestore','matteo.toma@studenti.unicam.it','Matteo','Toma',NULL);
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -614,4 +613,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-11 12:49:08
+-- Dump completed on 2022-05-12 12:55:04

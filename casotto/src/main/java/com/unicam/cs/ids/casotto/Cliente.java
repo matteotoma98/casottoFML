@@ -56,7 +56,6 @@ public class Cliente extends Utente implements ICliente {
         attivita.addPrenotazioneAttivita(email, id_attività, num_posti );
         return true;
 
-
     }
 
     public Cliente() {
