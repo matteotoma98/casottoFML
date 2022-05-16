@@ -26,7 +26,7 @@ public class ScontrinoConnector {
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT id_scontrino as last_id_scontrino FROM scontrino WHERE id_scontrino= (SELECT MAX(id_scontrino) FROM prenotazionespiaggia)");
+            ResultSet resultSet = statement.executeQuery("SELECT MAX(id_scontrino) as last_id_scontrino FROM scontrino");
             int last_scontrino = 0;
             while (resultSet.next()) {
                 last_scontrino = resultSet.getInt("last_id_scontrino");
@@ -42,6 +42,7 @@ public class ScontrinoConnector {
             result = preparedStatement.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println("problema");
             result2 = false;
         }
 

@@ -44,7 +44,7 @@ public class CasottoApplication {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/casotto", "root", "casottofml");
             Statement statement = connection.createStatement();
             AddettoSpiaggiaConnector addettoSpiaggiaConnector = new AddettoSpiaggiaConnector();
-            addettoSpiaggiaConnector.cambiaDisponbilitaOmbrellone();
+            //addettoSpiaggiaConnector.cambiaDisponbilitaOmbrellone();
             Utente utente = new Utente();
             Cliente cliente = new Cliente();
             int scelta;

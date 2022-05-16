@@ -15,6 +15,7 @@ public class Prenotazione_Spiaggia {
     private static int prenotazione_count = 0;
     private int lettini = 0;
     private String email = "";
+    private double prezzo_Prenotazione;
     PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();
 
     public Date getData_inizioPrenotazione() {
@@ -31,6 +32,14 @@ public class Prenotazione_Spiaggia {
 
     public void setId_ombrellone(int id_ombrellone) {
         this.id_ombrellone = id_ombrellone;
+    }
+
+    public double prezzo_Prenotazione() {
+        return prezzo_Prenotazione;
+    }
+
+    public void prezzo_Prenotazione(double prezzo_Prenotazione) {
+        this.prezzo_Prenotazione = prezzo_Prenotazione;
     }
 
     private Ombrellone ombrellone;

@@ -6,7 +6,6 @@ import java.util.Date;
 public class Ombrellone {
     public int id_ombrellone;
     private double prezzo;
-    private boolean disponibilita;
     private Tariffa_Prezzi tariffaPrezzi;
     private Tipologia tipologia;
     private int num_fila_ombrellone;
@@ -21,7 +20,6 @@ public class Ombrellone {
     public Ombrellone() {
         this.id_ombrellone = id_ombrellone;
         this.prezzo = prezzo;
-        this.disponibilita = disponibilita;
         this.tariffaPrezzi = tariffaPrezzi;
         this.tipologia = tipologia;
         this.num_fila_ombrellone = num_fila_ombrellone;
@@ -30,7 +28,7 @@ public class Ombrellone {
     public Ombrellone(int id_ombrellone, double prezzo, boolean disponibilita, Tariffa_Prezzi tariffaPrezzi, String tipologia, int num_fila_ombrellone) {
         this.id_ombrellone = id_ombrellone;
         this.prezzo = prezzo;
-        this.disponibilita = disponibilita;
+        //this.disponibilita = disponibilita;
         this.tariffaPrezzi = tariffaPrezzi;
         this.tipologia = Tipologia.valueOf(tipologia);
         this.num_fila_ombrellone = num_fila_ombrellone;
@@ -52,13 +50,13 @@ public class Ombrellone {
         this.prezzo = prezzo;
     }
 
-    public boolean isDisponibilita() {
+    /*public boolean isDisponibilita() {
         return disponibilita;
     }
 
     public void setDisponibilita(boolean disponibilita) {
         this.disponibilita = disponibilita;
-    }
+    }*/
 
     public Tariffa_Prezzi getTariffaPrezzi(Date data_inizio_prenotazione, Date data_fine_prenotazione) {
         return tariffaPrezzi;

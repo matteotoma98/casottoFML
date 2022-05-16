@@ -16,8 +16,9 @@ public class AddettoSpiaggiaConnector {
     }
 
 
-    public void cambiaDisponbilitaOmbrellone() {
-        Date data = Date.valueOf(java.time.LocalDate.now());
+   /*
+   public void cambiaDisponbilitaOmbrellone() {
+  Date data = Date.valueOf(java.time.LocalDate.now());
         boolean result = false;
         try {
             PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE ombrellone SET disponibilita=1 WHERE disponibilita=0 AND id_ombrellone= ANY (SELECT id_ombrellone FROM prenotazionespiaggia WHERE data_fine_prenotazione <'" + data + "')");
@@ -28,6 +29,5 @@ public class AddettoSpiaggiaConnector {
         } catch (Exception e) {
             System.out.println(e);
             result = false;
-        }
-    }
+        } */
 }

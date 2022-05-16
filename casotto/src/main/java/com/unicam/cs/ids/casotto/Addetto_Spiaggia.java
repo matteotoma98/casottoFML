@@ -28,8 +28,8 @@ public class Addetto_Spiaggia extends Utente {
     public void liberaOmbrellone(Ombrellone ombrellone) {
         ombrellone.getId_ombrellone();
         AddettoSpiaggiaConnector addettoSpiaggiaConnector = new AddettoSpiaggiaConnector();
-        addettoSpiaggiaConnector.cambiaDisponbilitaOmbrellone();
-        ombrellone.isDisponibilita();
+        //addettoSpiaggiaConnector.cambiaDisponbilitaOmbrellone();
+        //ombrellone.isDisponibilita();
     }
 
     public int getId_addspiaggia() {

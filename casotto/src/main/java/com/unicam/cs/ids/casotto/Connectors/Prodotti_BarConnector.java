@@ -72,14 +72,14 @@ public class Prodotti_BarConnector {
     */
 
     //public int TempoTotale(//lista di tutti i prodotti ordinati)
-    public int TempoTotale(int id, int quantita) {
+    public int TempoTotale(int id, int qta) {
         int tempo_totale = 0;
         ResultSet result;
         try {
             result = connection.createStatement().executeQuery("SELECT tempo_preparazione FROM prodottibar WHERE id_prodotto='" + id + "'");
 
             while (result.next()) {
-                tempo_totale = tempo_totale + (result.getInt("tempo_preparazione") * quantita);
+                tempo_totale = tempo_totale + (result.getInt("tempo_preparazione") * qta);
             }
         } catch (Exception e) {
             System.out.println(e);
