@@ -2,6 +2,7 @@ package com.unicam.cs.ids.casotto;
 
 import com.unicam.cs.ids.casotto.Connectors.PagamentoBarConnector;
 
+import javax.naming.NoInitialContextException;
 import java.util.Date;
 
 public class PagamentoBar {
@@ -13,6 +14,7 @@ public class PagamentoBar {
     //  public Prenotazione_Spiaggia prenotazioneSpiaggia;
     public String dati_carta;
 
+
     public String toString() {
         throw new UnsupportedOperationException();
     }
@@ -22,9 +24,14 @@ public class PagamentoBar {
         // throw new UnsupportedOperationException();
     }
 
-    public void sceltaMetodo(String tipologia_pagamento, int id_ordinazione, int id_ombrellone, Date data_pagamento) {
+    public boolean sceltaMetodo(String tipologia_pagamento, int id_ordinazione, int id_ombrellone, Date data_pagamento) {
         PagamentoBarConnector pc = new PagamentoBarConnector();
-        pc.aggiornaListaPagamenti(tipologia_pagamento, id_ordinazione, id_ombrellone, (java.sql.Date) data_pagamento);
+        boolean risultato = pc.aggiornaListaPagamenti(tipologia_pagamento, id_ordinazione, id_ombrellone, (java.sql.Date) data_pagamento);
+        if (risultato) {
+            NotifyOrder notifyOrder = new NotifyOrder("Addetto Bar");
+
+            return risultato;
+        } else return false;
     }
     //tostring
 }

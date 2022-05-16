@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Prodotti_BarConnector {
 
@@ -40,9 +42,50 @@ public class Prodotti_BarConnector {
             System.out.println("Empty result");
 
         return resultList;
-
     }
 
+    /*
+    public List<Prodotti_Bar> assegnaTempoPreparazione() {
+        ResultSet result;
+        List<Prodotti_Bar> resultList = new ArrayList<Prodotti_Bar>();
+        Map<Integer,Integer> m = new HashMap<>();
+        try {
+            result = connection.createStatement().executeQuery("SELECT id_prodotti FROM prodottibar");
+
+            while (result.next()) {
+                m.put( result.getInt("id_prodotto"), (int) Math.random());
+            }
+            for (Integer key: m.keySet()){
+                System.out.println("Id:"+key +", tempo di preparazione: "+m.get(key));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        } //add exception here
+
+        //error checking
+        if (resultList.isEmpty())
+            System.out.println("Empty result");
+
+        return resultList;
+    }
+    */
+
+    //public int TempoTotale(//lista di tutti i prodotti ordinati)
+    public int TempoTotale(int id, int quantita) {
+        int tempo_totale = 0;
+        ResultSet result;
+        try {
+            result = connection.createStatement().executeQuery("SELECT tempo_preparazione FROM prodottibar WHERE id_prodotto='" + id + "'");
+
+            while (result.next()) {
+                tempo_totale = tempo_totale + (result.getInt("tempo_preparazione") * quantita);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return tempo_totale;
+    }
 
     private Prodotti_Bar convertiRisultatoInProdotto(ResultSet result) throws SQLException {
         int id_prodotto = result.getInt("id_prodotto");

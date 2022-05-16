@@ -61,33 +61,33 @@ public class Addetto_attivita_Ludico_Sportive extends Utente {
         this.cognome = cognome;
     }
 
-    public void organizzaAttivita(String email) throws Exception{
+    public void organizzaAttivita(String email) throws Exception {
         Scanner scanner = new Scanner(System.in);
-        AttivitaConnector attivitaConnector= new AttivitaConnector();
+        AttivitaConnector attivitaConnector = new AttivitaConnector();
         attivitaConnector.getAttivita();
         //inserisci ora fine e inizio
         int num_posti;
         int id_attivita;
         System.out.println("Scegli l'id di un'attività");
-        id_attivita= scanner.nextInt();
+        id_attivita = scanner.nextInt();
         setId_attivita(id_attivita);
         System.out.println("Inserisci la data di inizio dell'attività che vuoi modificare");
         String date_start = scanner.next(); // String str="2015-03-31";
-        Date start_date= Date.valueOf(date_start);
+        Date start_date = Date.valueOf(date_start);
         System.out.println("Inserisci la data di fine dell'attività che vuoi modificare");
         String date_end = scanner.next(); // String str="2015-03-31";
-        Date end_date= Date.valueOf(date_end);
+        Date end_date = Date.valueOf(date_end);
         System.out.println("Inserisci il numero di posti dell'attività:");
         num_posti = scanner.nextInt();
-        AddettoAttivitaConnector addettoAttivitaConnector= new AddettoAttivitaConnector();
+        AddettoAttivitaConnector addettoAttivitaConnector = new AddettoAttivitaConnector();
         addettoAttivitaConnector.setDate(start_date, end_date, num_posti, getId_attivita());
-       
+
         ResultSet r = addettoAttivitaConnector.sendEmail(id_attivita);
         //for (AddettoAttivitaConnector : r) {}
-        
-        
-       // SendEmail sendEmail= new SendEmail();
 
-       // sendEmail.sendMail("matte");
+
+        // SendEmail sendEmail= new SendEmail();
+
+        // sendEmail.sendMail("matte");
     }
 }

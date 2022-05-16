@@ -22,15 +22,14 @@ public class AddettoAttivitaConnector {
     }
 
 
-    public void setDate(Date data_inizio_attivita, Date data_fine_attività , int num_posti, int id_attivita) {
-        boolean result=false;
+    public void setDate(Date data_inizio_attivita, Date data_fine_attività, int num_posti, int id_attivita) {
+        boolean result = false;
         try {
-            PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE attivita SET data_inizio_attivita='"+data_inizio_attivita+ "',data_fine_attivita='"+data_fine_attività+"', num_posti='"+num_posti+"'WHERE id_attivita="+id_attivita);
+            PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE attivita SET data_inizio_attivita='" + data_inizio_attivita + "',data_fine_attivita='" + data_fine_attività + "', num_posti='" + num_posti + "'WHERE id_attivita=" + id_attivita);
             result = preparedStatement3.executeUpdate() > 0;
             if (result) {
-               System.out.println("Dati nella tabella attività cambiati");
-            }
-            else{
+                System.out.println("Dati nella tabella attività cambiati");
+            } else {
                 System.out.println("id attività sbagliato");
             }
         } catch (Exception e) {
@@ -38,16 +37,16 @@ public class AddettoAttivitaConnector {
         }
     }
 
-    public ResultSet sendEmail(int id_attivita){
+    public ResultSet sendEmail(int id_attivita) {
         ResultSet result = null;
         Cliente cliente = new Cliente();
         //Date data= Date.valueOf(java.time.LocalDate.now());
         try {
-            result = connection.createStatement().executeQuery("SELECT email FROM prenotazioneattivita WHERE id_attivita='"+id_attivita+"'");
+            result = connection.createStatement().executeQuery("SELECT email FROM prenotazioneattivita WHERE id_attivita='" + id_attivita + "'");
             while (result.next()) {
-                 SendEmail sendEmail= new SendEmail();
-                 sendEmail.sendMail(result.getString("email"));
-                System.out.print(result.getString("email")+"\n");
+                SendEmail sendEmail = new SendEmail();
+                sendEmail.sendMail(result.getString("email"));
+                System.out.print(result.getString("email") + "\n");
             }
 
               /*ResultSet resultSet = statement.executeQuery("select * from chalet ");

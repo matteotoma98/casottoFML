@@ -30,6 +30,7 @@ public class Cliente extends Utente implements ICliente {
     // private Ordinazione_Bar ob= new Ordinazione_Bar(obc.getDate(), quantita, , id_ombrellone, id_prodotto);
     public ArrayList<Prenotazione_Spiaggia> effettua = new ArrayList<Prenotazione_Spiaggia>();
 
+
     public Cliente(String nome, String cognome, String email, int id_ombrellone) {
         this.nome = nome;
         this.cognome = cognome;
@@ -44,16 +45,16 @@ public class Cliente extends Utente implements ICliente {
 
 
     public boolean iscrizione_Attivita(String email) {
-       int id_attività=0;
-        int num_posti=0;
+        int id_attività = 0;
+        int num_posti = 0;
         Attivita attivita = new Attivita();
         attivita.getAttivita();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Scegli l'id di un'attività");
-        id_attività= scanner.nextInt();
+        id_attività = scanner.nextInt();
         System.out.println("Inserisci il numero di persone che parteciperanno all'attività");
-        num_posti= scanner.nextInt();
-        attivita.addPrenotazioneAttivita(email, id_attività, num_posti );
+        num_posti = scanner.nextInt();
+        attivita.addPrenotazioneAttivita(email, id_attività, num_posti);
         return true;
 
     }
@@ -123,6 +124,7 @@ public class Cliente extends Utente implements ICliente {
         double prezzo_totale = 0;
         int id_scontrino = 0;
         int id_prenotazione = 0;
+
 
         double prezzo = 0;
         Tariffa_Prezzi tariffaPrezzi = new Tariffa_Prezzi();
@@ -291,6 +293,7 @@ public class Cliente extends Utente implements ICliente {
                 prezzo_totale = obc.calcolaPrezzoOrdine(id_prodotto, quantita);
                 Scontrino scontrino = new Scontrino(id_scontrino, data, id_ombrellone, prezzo_totale);
                 //connector tabella tipologia_pg
+
                 PagamentoBar p = new PagamentoBar();
                 Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar();
                 OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
@@ -298,12 +301,21 @@ public class Cliente extends Utente implements ICliente {
                 System.out.println(ordinazioneBarConnector.last_ordinazione(id_ombrellone));
                 System.out.println(id_ombrellone);
                 System.out.println(data_pagamento);
-
-                p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
+                if (!risultato) System.out.println("errore nell'aggiunta dell'ordine");
+                boolean risultato2 = p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
                 // String tipologia_pagamento, int id_prenotazione, int id_ombrellone, Date data_pagamento
-                if (risultato) {
-                    System.out.println("Prenotazione aggiunta");
-
+                if (risultato2) {
+                    NotifyOrder notifyOrder = new NotifyOrder("Addetto Bar");
+                    IObserver notifyOrder2 = new NotifyOrder("Addetto Bar");
+                    notifyOrder.register(notifyOrder2);
+                    notifyOrder.notifyObservers();
+                    //parte preparazione ordine!
+                    //metodo che da il tempo totale e lo memorizziamo in una variabile
+                    System.out.println("Il tuo ordine arriverà tra " + cp.TempoTotale(id_prodotto, quantita) + " minuti");
+                    System.out.println("Ordinazione aggiunta");
+                    IObserver notifyOrder3 = new NotifyOrder("Addetto Spiaggia");
+                    notifyOrder.register(notifyOrder3);
+                    notifyOrder.notifyObservers();
                 }
             }
         }
@@ -322,7 +334,10 @@ public class Cliente extends Utente implements ICliente {
                 Scontrino scontrino = new Scontrino(id_scontrino, data, id_ombrellone, prezzo_totale);
 
                 p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
-                if (risultato) System.out.println("Ordinazione aggiunta");
+                if (risultato) {
+                    //parte preparazione ordine
+                    System.out.println("Ordinazione aggiunta");
+                }
             }
         }
 
@@ -339,4 +354,6 @@ public class Cliente extends Utente implements ICliente {
         // this.id_ordinazione = id
 
     }
+
+
 }

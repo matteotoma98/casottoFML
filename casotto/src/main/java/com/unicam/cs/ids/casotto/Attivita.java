@@ -30,36 +30,37 @@ public class Attivita {
         throw new UnsupportedOperationException();
     }
 
-    public List<String> getListaAttivita(String nome_attivita,int id_attivita, Date data_inizio_attivita, Date data_fine_attivita, int num_posti) {
+    public List<String> getListaAttivita(String nome_attivita, int id_attivita, Date data_inizio_attivita, Date data_fine_attivita, int num_posti) {
         String a = "a";
         List<String> lista_attivita = new ArrayList<>();
         lista_attivita.add(a);
         return Collections.singletonList(a);
     }
 
-    public void getAttivita(){
-        AttivitaConnector attivitaConnector= new AttivitaConnector();
+    public void getAttivita() {
+        AttivitaConnector attivitaConnector = new AttivitaConnector();
         attivitaConnector.getAttivita();
     }
 
-    public Attivita(){
+    public Attivita() {
 
     }
 
     public boolean addPrenotazioneAttivita(String email, int id, int num_posti) {
 
-        AttivitaConnector attivitaConnector= new AttivitaConnector();
-        attivitaConnector.addPrenotazione(email,id,num_posti);
+        AttivitaConnector attivitaConnector = new AttivitaConnector();
+        attivitaConnector.addPrenotazione(email, id, num_posti);
 
         return false;
     }
+
     public Attivita(String nome_attivita, int num_posti, Attrezzatura attrezzatura) {
         this.nome_attivita = nome_attivita;
         this.num_posti = num_posti;
         this.attrezzatura = attrezzatura;
         attrezzatura.getNomeAttrezzatura();
         attrezzatura.getQuantita();
-    //return nome_attivita;
+        //return nome_attivita;
     }
 
     public void setNome_attivita(String nome_attivita) {

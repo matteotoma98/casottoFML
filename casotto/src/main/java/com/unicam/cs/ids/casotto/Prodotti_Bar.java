@@ -28,6 +28,7 @@ public class Prodotti_Bar {
         this.nome_prodotto = nome_prodotto;
     }
 
+
     public String getNome_prodotto() {
         return nome_prodotto;
     }

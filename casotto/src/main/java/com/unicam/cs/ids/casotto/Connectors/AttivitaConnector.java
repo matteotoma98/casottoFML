@@ -99,7 +99,7 @@ public class AttivitaConnector {
                 System.out.println(e);
                 result3 = false;
             }
-           // throw new IllegalArgumentException("hai prenotato troppi posti rispetto a quelli disponibili");
+            // throw new IllegalArgumentException("hai prenotato troppi posti rispetto a quelli disponibili");
         } catch (Exception e) {
             System.out.println(e);
         }

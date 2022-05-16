@@ -162,26 +162,26 @@ public class Utente implements IUtente {
     }
 
 
-	private void menu_addettoAttivita (String email) throws Exception{
-		Addetto_attivita_Ludico_Sportive addatt = new Addetto_attivita_Ludico_Sportive();
-		int scelta;
-		do{
-			System.out.println("Scegli cosa vuoi fare: ");
-			System.out.println("1: Modifica orari attività e posti disponibili");
-			System.out.println("0: Esci ");
-			Scanner scanner = new Scanner(System.in);
-			scelta = scanner.nextInt();
-            if(scelta!=1 && scelta != 0)
+    private void menu_addettoAttivita(String email) throws Exception {
+        Addetto_attivita_Ludico_Sportive addatt = new Addetto_attivita_Ludico_Sportive();
+        int scelta;
+        do {
+            System.out.println("Scegli cosa vuoi fare: ");
+            System.out.println("1: Modifica orari attività e posti disponibili");
+            System.out.println("0: Esci ");
+            Scanner scanner = new Scanner(System.in);
+            scelta = scanner.nextInt();
+            if (scelta != 1 && scelta != 0)
                 throw new IllegalArgumentException("Scelta non valida");
-			switch(scelta) {
-				case 1:
+            switch (scelta) {
+                case 1:
                     addatt.organizzaAttivita(email);
-					break;
-			}
+                    break;
+            }
 
-		}
-		while(scelta != 0);
-	}
+        }
+        while (scelta != 0);
+    }
 /*
 	private void menu_gestore() {
 		Gestore gestore = new Gestore();

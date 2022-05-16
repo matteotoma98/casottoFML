@@ -40,11 +40,11 @@ public class CasottoApplication {
 
     public static void main(String[] args) throws Exception {
 
-         try {
+        try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/casotto", "root", "casottofml");
             Statement statement = connection.createStatement();
-             AddettoSpiaggiaConnector addettoSpiaggiaConnector= new AddettoSpiaggiaConnector();
-             addettoSpiaggiaConnector.cambiaDisponbilitaOmbrellone();
+            AddettoSpiaggiaConnector addettoSpiaggiaConnector = new AddettoSpiaggiaConnector();
+            addettoSpiaggiaConnector.cambiaDisponbilitaOmbrellone();
             Utente utente = new Utente();
             Cliente cliente = new Cliente();
             int scelta;
@@ -111,6 +111,6 @@ public class CasottoApplication {
         int id_ombrellone = 10;
         Cliente cliente = new Cliente(username, password, ruolo, nome, cognome, email, id_ombrellone); */
 
-       //SendEmail.sendMail("fchiocchi1@gmail.com");
+        // SendEmail.sendMail("fchiocchi1@gmail.com");
     }
 }
