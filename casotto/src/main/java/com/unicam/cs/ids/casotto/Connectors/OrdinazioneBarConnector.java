@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -94,7 +95,7 @@ public class OrdinazioneBarConnector {
 
                 System.out.println(i);
             }*/
-            int last_element = ordinazione_bar.getLista_prodotti().size() +1;
+            int last_element = ordinazione_bar.getLista_prodotti().size() + 2;
             StringBuilder sb = new StringBuilder();
             StringBuilder sb2 = new StringBuilder();
 
@@ -113,20 +114,20 @@ public class OrdinazioneBarConnector {
             }
 
 
-            System.out.println("The number string = " + sb.substring(0,sb.length()-1));
-            System.out.println("The number string = " + sb2.substring(0,sb2.length()-1));
+            System.out.println("The number string = " + sb.substring(0, sb.length() - 1));
+            System.out.println("The number string = " + sb2.substring(0, sb2.length() - 1));
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO ordinazionebar VALUES ( ?,?,?,?,?)");
             preparedStatement.setDate(1, ordinazione_bar.setData_ordinazione(getDate()));
-            System.out.println(ordinazione_bar.getId_ombrellone());
+            //System.out.println("L'ombrellone su cui hai richiesto è "+ordinazione_bar.getId_ombrellone());
             preparedStatement.setInt(2, ordinazione_bar.getId_ombrellone());
             preparedStatement.setInt(3, ordinazione_bar.setId_ordinazione(id_ordinazione));
-            preparedStatement.setString(4, String.valueOf(sb2.substring(0,sb.length()-1)));
+            preparedStatement.setString(4, String.valueOf(sb2.substring(0, sb.length() - 1)));
             //  preparedSatementt.setInt(5, ordinazione_bar.getId_prodotto());
-            preparedStatement.setString(5, String.valueOf(sb.substring(0,sb.length()-1)));
+            preparedStatement.setString(5, String.valueOf(sb.substring(0, sb.length() - 1)));
             calcolaPrezzoOrdine(ordinazione_bar.getId_prodotto(), ordinazione_bar.getQuantita());
             // INSERT INTO ordinazionebar VALUES ('2022/05/05',1,1,1,1);
             result = preparedStatement.executeUpdate() > 0;
-            if (result) decrementaProdotto(ordinazione_bar.getLista_prodotti(), ordinazione_bar.getQuantita());
+            if (result) decrementaProdotto(ordinazione_bar.getLista_prodotti());
         } catch (Exception e) {
             System.out.println(e);
             result = false;
@@ -135,17 +136,28 @@ public class OrdinazioneBarConnector {
         return result;
     }
 
-    public void decrementaProdotto(Map<Integer, Integer> lista_prodotti, int quantita) {
+    public void decrementaProdotto(Map<Integer, Integer> lista_prodotti) {
         boolean result = false;
+        boolean controllo = false;
         try {
-            /*
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE prodottibar SET quantita= quantita-'" + quantita + "' WHERE id_prodotto=" + id);
-            result = preparedStatement.executeUpdate() > 0;
-             if (result) System.out.println("Quantità del prodotto " + id + " diminuita."); */
+
+            Iterator<Map.Entry<Integer, Integer>> it = lista_prodotti.entrySet().iterator();
+
+            while (it.hasNext()) {
+                Map.Entry<Integer, Integer> pairs = it.next();
+                //System.out.println("Pairs get key: "+pairs.getKey().toString());
+                //System.out.println("Pairs get value: "+pairs.getValue().toString());
+                it.remove(); // avoids a ConcurrentModificationException
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE prodottibar SET" +
+                        " quantita= quantita-'" + pairs.getValue() + "' WHERE id_prodotto=" + pairs.getKey());
+                if (preparedStatement.executeUpdate() > 0) controllo = true;
+            }
+            if (controllo) System.out.println("Prodotti decrementati");
+            //   if (result) System.out.println("Quantità del prodotto " + id + " diminuita.");
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println("problema nel decremento");
         }
-
     }
 
     public double calcolaPrezzoOrdine(int id, int quantita) {
