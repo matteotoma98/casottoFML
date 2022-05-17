@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OrdinazioneBarConnector {
 
@@ -71,10 +72,11 @@ public class OrdinazioneBarConnector {
     }
 
     public boolean addOrdine(Ordinazione_Bar ordinazione_bar) {
-        int i = 0;
+        //  int i = 0;
         boolean result;
         boolean result2;
         int id_ordinazione = 0;
+        String lista_prodotti;
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT id_ordinazione as last_id FROM ordinazionebar WHERE id_ordinazione= (SELECT MAX(id_ordinazione) FROM ordinazionebar)");
@@ -87,17 +89,44 @@ public class OrdinazioneBarConnector {
             System.out.println(e);
         }
         try {
+            /*for(Integer i: ordinazione_bar.getLista_prodotti()){
+                lista_prodotti= "lista_prodotti"+i+", ";
+
+                System.out.println(i);
+            }*/
+            int last_element = ordinazione_bar.getLista_prodotti().size() +1;
+            StringBuilder sb = new StringBuilder();
+            StringBuilder sb2 = new StringBuilder();
+
+            for (Map.Entry<Integer, Integer> entry : ordinazione_bar.getLista_prodotti().entrySet()) {
+                if (entry.getKey() != last_element)
+                    sb.append(entry.getKey() != null ? entry.getKey().toString() + "," : "");
+
+                else
+                    sb.append(entry.getKey() != null ? entry.getKey().toString() : "");
+            }
+            for (Map.Entry<Integer, Integer> entry : ordinazione_bar.getLista_prodotti().entrySet()) {
+                if (entry.getKey() != last_element)
+                    sb2.append(entry.getValue() != null ? entry.getValue().toString() + "," : "");
+                else
+                    sb2.append(entry.getValue() != null ? entry.getValue().toString() : "");
+            }
+
+
+            System.out.println("The number string = " + sb.substring(0,sb.length()-1));
+            System.out.println("The number string = " + sb2.substring(0,sb2.length()-1));
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO ordinazionebar VALUES ( ?,?,?,?,?)");
             preparedStatement.setDate(1, ordinazione_bar.setData_ordinazione(getDate()));
             System.out.println(ordinazione_bar.getId_ombrellone());
             preparedStatement.setInt(2, ordinazione_bar.getId_ombrellone());
             preparedStatement.setInt(3, ordinazione_bar.setId_ordinazione(id_ordinazione));
-            preparedStatement.setInt(4, ordinazione_bar.getQuantita());
-            preparedStatement.setInt(5, ordinazione_bar.getId_prodotto());
+            preparedStatement.setString(4, String.valueOf(sb2.substring(0,sb.length()-1)));
+            //  preparedSatementt.setInt(5, ordinazione_bar.getId_prodotto());
+            preparedStatement.setString(5, String.valueOf(sb.substring(0,sb.length()-1)));
             calcolaPrezzoOrdine(ordinazione_bar.getId_prodotto(), ordinazione_bar.getQuantita());
             // INSERT INTO ordinazionebar VALUES ('2022/05/05',1,1,1,1);
             result = preparedStatement.executeUpdate() > 0;
-            if (result) decrementaProdotto(ordinazione_bar.getId_prodotto(), ordinazione_bar.getQuantita());
+            if (result) decrementaProdotto(ordinazione_bar.getLista_prodotti(), ordinazione_bar.getQuantita());
         } catch (Exception e) {
             System.out.println(e);
             result = false;
@@ -106,12 +135,13 @@ public class OrdinazioneBarConnector {
         return result;
     }
 
-    public void decrementaProdotto(int id, int quantita) {
+    public void decrementaProdotto(Map<Integer, Integer> lista_prodotti, int quantita) {
         boolean result = false;
         try {
+            /*
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE prodottibar SET quantita= quantita-'" + quantita + "' WHERE id_prodotto=" + id);
             result = preparedStatement.executeUpdate() > 0;
-            if (result) System.out.println("Quantità del prodotto " + id + " diminuita.");
+             if (result) System.out.println("Quantità del prodotto " + id + " diminuita."); */
         } catch (Exception e) {
             System.out.println(e);
         }

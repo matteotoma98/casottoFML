@@ -239,6 +239,7 @@ public class Cliente extends Utente implements ICliente {
 
     public void ordinazioneBar(String email) {
         List<Prodotti_Bar> prodotti = cp.getProducts();
+        System.out.println("--------------------MENU--------------------");
         for (Prodotti_Bar prodotto : prodotti) {
             System.out.println(prodotto.toString());
         }
@@ -255,24 +256,31 @@ public class Cliente extends Utente implements ICliente {
         double prezzo_totale = 0;
         int id_scontrino = 0;
         int id_prenotazione = 0;
-
+        List<Integer> lista_prodotti= new ArrayList<>();
+        Map<Integer,Integer> mprodotti = new HashMap<>();
         //Ordinazione_Bar ob = new Ordinazione_Bar(obc.getDate(), quantita, 0, id_ombrellone, id_prodotto);
-
+        System.out.println("\n");
+        System.out.println("A quale id dell'ombrellone vuoi far consegnare l'ordine?");
+        obc.getIdOmbrelloni(email);
+        id_ombrellone = scanner2.nextInt();
         do {
 
             System.out.println("Inserisci l'id del prodotto che vuoi acquistare:");
             id_prodotto = Integer.parseInt(scanner.nextLine());
+        //    lista_prodotti.add(Integer.parseInt(scanner.nextLine()));
+
             System.out.println("Inserisci la quantità che vuoi acquistare:");
             quantita = scanner2.nextInt();
-            System.out.println("A quale id dell'ombrellone vuoi far consegnare l'ordine?");
-            obc.getIdOmbrelloni(email);
-            id_ombrellone = scanner2.nextInt();
+            mprodotti.put(id_prodotto,quantita);
+
 
             //  (ob.getDate(), quantita, int id_ordinazione, int id_ombrellone, int id_prodotto) {// bisognerebbe prendere il valore dell'ultima riga della tabella, e aggiungerci + 1
             //  totale = +cp.getTotaleOrdine(scelta, quantita);
             System.out.println("vuoi aggiungere altri prodotti all'ordine ancora? 1-si 0-no");
             continuaAcquisti = scanner2.nextInt();
         } while (continuaAcquisti != 0);
+        //for(Integer i: lista_prodotti){System.out.println(i);}
+
         //  System.out.println("Totale:" + totale);
         System.out.println("Scegli la tipologia di pagamento:app -tramite app, consegna -pagamento alla consegna");
         tipologia = scanner.nextLine();
@@ -289,13 +297,14 @@ public class Cliente extends Utente implements ICliente {
             if (scelta.equals("Si")) {
                 Date data = obc.getDate();
                 boolean risultato = false;
-                risultato = obc.addOrdine(new Ordinazione_Bar(data, quantita, id_ordinazione, id_ombrellone, id_prodotto));
+                risultato = obc.addOrdine(new Ordinazione_Bar(data, quantita, id_ordinazione, id_ombrellone, mprodotti));
                 prezzo_totale = obc.calcolaPrezzoOrdine(id_prodotto, quantita);
                 Scontrino scontrino = new Scontrino(id_scontrino, data, id_ombrellone, prezzo_totale);
                 //connector tabella tipologia_pg
 
                 PagamentoBar p = new PagamentoBar();
                 Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar();
+                ordinazione_bar.setLista_prodotti(mprodotti);
                 OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
                 System.out.println(tipologia);
                 System.out.println(ordinazioneBarConnector.last_ordinazione(id_ombrellone));
@@ -329,7 +338,7 @@ public class Cliente extends Utente implements ICliente {
                 PagamentoBar p = new PagamentoBar();
                 Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar();
                 OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
-                risultato = obc.addOrdine(new Ordinazione_Bar(data, quantita, id_ordinazione, id_ombrellone, id_prodotto));
+                risultato = obc.addOrdine(new Ordinazione_Bar(data, quantita, id_ordinazione, id_ombrellone, mprodotti));
                 prezzo_totale = obc.calcolaPrezzoOrdine(id_prodotto, quantita);
                 Scontrino scontrino = new Scontrino(id_scontrino, data, id_ombrellone, prezzo_totale);
 
