@@ -49,4 +49,24 @@ public class NotifyOrder implements IObserver {
             System.out.println("L'ordine ti verrà portato da " + name + "\n");
         }
     }
+    public void updateCliente(String email){
+        if (name.equals("Cliente Bar")) {
+            try {
+                SendEmail.sendMail(email);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println(name + "Ciao, questo è il riepilogo del tuo ordine dal bar di CasottoFML™ hai ordinato dal bar {lista prodotti}\n");
+
+        }
+        if (name.equals("Cliente Ombrellone")) {
+            try {
+                SendEmail.sendMail(email);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println(name + "Ciao, la prenotazion del tuo ombrellone è stata effettuata con successo. Questa è una mail di conferma, nel caso volessi " +
+                    "cancellare effettua il login dall'app di CasottoFML™\n");
+        }
+    }
 }

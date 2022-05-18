@@ -208,6 +208,10 @@ public class Cliente extends Utente implements ICliente {
                 // System.out.println("1=Si/2=No");
                 Scontrino scontrino = new Scontrino(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo);
                 scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo);
+                IObserver notifyOrder4 = new NotifyOrder("Cliente Ombrellone");
+                notifyOrder4.register(notifyOrder4);
+                notifyOrder4.notifyObservers();
+                //notifyOrder.unregister(notifyOrder4);
             }
             System.out.println("Prenotazione aggiunta");
         }
@@ -256,8 +260,8 @@ public class Cliente extends Utente implements ICliente {
         double prezzo_totale = 0;
         int id_scontrino = 0;
         int id_prenotazione = 0;
-        List<Integer> lista_prodotti= new ArrayList<>();
-        Map<Integer,Integer> mprodotti = new HashMap<>();
+        List<Integer> lista_prodotti = new ArrayList<>();
+        Map<Integer, Integer> mprodotti = new HashMap<>();
         //Ordinazione_Bar ob = new Ordinazione_Bar(obc.getDate(), quantita, 0, id_ombrellone, id_prodotto);
         System.out.println("\n");
         System.out.println("A quale id dell'ombrellone vuoi far consegnare l'ordine?");
@@ -267,11 +271,11 @@ public class Cliente extends Utente implements ICliente {
 
             System.out.println("Inserisci l'id del prodotto che vuoi acquistare:");
             id_prodotto = Integer.parseInt(scanner.nextLine());
-        //    lista_prodotti.add(Integer.parseInt(scanner.nextLine()));
+            //    lista_prodotti.add(Integer.parseInt(scanner.nextLine()));
 
             System.out.println("Inserisci la quantità che vuoi acquistare:");
             quantita = scanner2.nextInt();
-            mprodotti.put(id_prodotto,quantita);
+            mprodotti.put(id_prodotto, quantita);
 
 
             //  (ob.getDate(), quantita, int id_ordinazione, int id_ombrellone, int id_prodotto) {// bisognerebbe prendere il valore dell'ultima riga della tabella, e aggiungerci + 1
@@ -314,17 +318,24 @@ public class Cliente extends Utente implements ICliente {
                 boolean risultato2 = p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
                 // String tipologia_pagamento, int id_prenotazione, int id_ombrellone, Date data_pagamento
                 if (risultato2) {
-                    NotifyOrder notifyOrder = new NotifyOrder("Addetto Bar");
-                    IObserver notifyOrder2 = new NotifyOrder("Addetto Bar");
-                    notifyOrder.register(notifyOrder2);
-                    notifyOrder.notifyObservers();
                     //parte preparazione ordine!
                     //metodo che da il tempo totale e lo memorizziamo in una variabile
                     System.out.println("Il tuo ordine arriverà tra " + cp.TempoTotale(id_prodotto, quantita) + " minuti");
                     System.out.println("Ordinazione aggiunta");
-                    IObserver notifyOrder3 = new NotifyOrder("Addetto Spiaggia");
-                    notifyOrder.register(notifyOrder3);
-                    notifyOrder.notifyObservers();
+                    NotifyOrder notifyOrder3 = new NotifyOrder("Addetto Bar");
+                    IObserver notifyOrder4 = new NotifyOrder("Addetto Bar");
+                    notifyOrder3.register(notifyOrder4);
+                    notifyOrder3.notifyObservers();
+                    NotifyOrder notifyOrder5 = new NotifyOrder("Addetto Bar");
+                    IObserver notifyOrder6 = new NotifyOrder("Addetto Spiaggia");
+                    notifyOrder5.register(notifyOrder6);
+                    notifyOrder5.notifyObservers();
+                    //notifyOrder5.unregister(notifyOrder6);
+                    NotifyOrder notifyOrder7 = new NotifyOrder("Cliente Spiaggia");
+                    IObserver notifyOrder8 = new NotifyOrder("Cliente Spiaggia");
+                    notifyOrder7.register(notifyOrder8);
+                    notifyOrder7.notifyObservers();
+                    //notifyOrder7.unregister(notifyOrder8);
                 }
             }
         }
@@ -345,7 +356,24 @@ public class Cliente extends Utente implements ICliente {
                 p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
                 if (risultato) {
                     //parte preparazione ordine
+                    //notifyOrder.unregister(notifyOrder2);
+                    //parte preparazione ordine!
+                    //metodo che da il tempo totale e lo memorizziamo in una variabile
+                    System.out.println("Il tuo ordine arriverà tra " + cp.TempoTotale(id_prodotto, quantita) + " minuti");
                     System.out.println("Ordinazione aggiunta");
+                    NotifyOrder notifyOrder3 = new NotifyOrder("Addetto Bar");
+                    IObserver notifyOrder4 = new NotifyOrder("Addetto Bar");
+                    notifyOrder3.register(notifyOrder4);
+                    notifyOrder3.notifyObservers();
+                    NotifyOrder notifyOrder5 = new NotifyOrder("Addetto Bar");
+                    IObserver notifyOrder6 = new NotifyOrder("Addetto Spiaggia");
+                    notifyOrder5.register(notifyOrder6);
+                    notifyOrder5.notifyObservers();
+                    //notifyOrder5.unregister(notifyOrder6);
+                    NotifyOrder notifyOrder7 = new NotifyOrder("Cliente Spiaggia");
+                    IObserver notifyOrder8 = new NotifyOrder("Cliente Spiaggia");
+                    notifyOrder7.register(notifyOrder8);
+                    notifyOrder7.notifyObservers();
                 }
             }
         }

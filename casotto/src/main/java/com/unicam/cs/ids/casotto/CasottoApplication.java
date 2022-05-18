@@ -49,7 +49,7 @@ public class CasottoApplication {
             Cliente cliente = new Cliente();
             int scelta;
             do {
-                System.out.println("Benvenuto nell'App di casottoFML™.\nSeleziona un'azione: ");
+                System.out.println("Benvenuto nell'App di casottoFML™!.\nSeleziona un'azione: ");
                 System.out.println("1: Login ");
                 System.out.println("2: Registrazione ");
                 System.out.println("0: Esci ");
