@@ -38,6 +38,10 @@ public class Cliente extends Utente implements ICliente {
         this.id_ombrellone = id_ombrellone;
     }
 
+    public Cliente(String nome, String cognome, String email) {
+
+    }
+
 
     public void PrenotazioneOmbrellone(Data aData_inizio, Data aData_fine) {
         throw new UnsupportedOperationException();
@@ -63,7 +67,7 @@ public class Cliente extends Utente implements ICliente {
     }
 
     public Cliente(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
-        super(email, username, password, ruolo, nome, cognome, id_ombrellone);
+        super(email, username, password, ruolo, nome, cognome);
 
         this.nome = nome;
         this.cognome = cognome;
@@ -92,13 +96,14 @@ public class Cliente extends Utente implements ICliente {
         return email;
     }
 
-    @Override
-    public void registrazione(String email, String username, String password, int id_ombrellone) {
-
-    }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public void registrazione(String username, String password, String ruolo, String nome, String cognome, String email) {
+
     }
 
 
@@ -202,12 +207,13 @@ public class Cliente extends Utente implements ICliente {
                 //connector tabella tipologia_pg
                 prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, om.getId_ombrellone(), lettini, email);
                 PagamentoOmbrellone po = new PagamentoOmbrellone();
-                po.sceltaMetodo(tipologia, prenotazioneSpiaggiaConnector.last_prenotazione(id_ombrellone), this.id_ombrellone, data_pagamento);
+                po.sceltaMetodo(tipologia, prenotazioneSpiaggiaConnector.last_prenotazione(id_ombrellone), id, data_pagamento);
                 // String tipologia_pagamento, int id_prenotazione, int id_ombrellone, Date data_pagamento
                 //System.out.println("Confermi la prenotazione per " + tariffaPrezzi.getNum_giorni() + " giorni al prezzo di " + prezzo + "€ ?\n");
                 // System.out.println("1=Si/2=No");
+                //prenotazioneSpiaggiaConnector.aggiornaOmbrelloniUtente(email, id);
                 Scontrino scontrino = new Scontrino(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo);
-                scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo);
+                scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo, "ombrellone");
                 IObserver notifyOrder4 = new NotifyOrder("Cliente Ombrellone");
                 notifyOrder4.register(notifyOrder4);
                 notifyOrder4.notifyObservers();
@@ -223,9 +229,9 @@ public class Cliente extends Utente implements ICliente {
                 Date data = obc.getDate();
                 boolean risultato = false;
                 // Date data_inizioPrenotazione, Date data_finePrenotazione, int num_fila_ombrellone, int id_ombrellone, int lettini, String email
-                prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, this.id_ombrellone, lettini, email);
-                Scontrino scontrino = new Scontrino(id_scontrino, data_pagamento, this.id_ombrellone, prezzo);
-                scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, this.id_ombrellone, prezzo);
+                prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, id, lettini, email);
+                Scontrino scontrino = new Scontrino(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo);
+                scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo, "ombrellone");
                 System.out.println("Confermi la prenotazione per " + tariffaPrezzi.getNum_giorni() + " giorni al prezzo di " + prezzo + "€ ?\n");
                 System.out.println("1=Si/2=No");
                 int scelta2 = scanner2.nextInt();
@@ -305,7 +311,7 @@ public class Cliente extends Utente implements ICliente {
                 prezzo_totale = obc.calcolaPrezzoOrdine(id_prodotto, quantita);
                 Scontrino scontrino = new Scontrino(id_scontrino, data, id_ombrellone, prezzo_totale);
                 //connector tabella tipologia_pg
-
+                scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, id_ombrellone, prezzo_totale, "bar");
                 PagamentoBar p = new PagamentoBar();
                 Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar();
                 ordinazione_bar.setLista_prodotti(mprodotti);
@@ -352,7 +358,8 @@ public class Cliente extends Utente implements ICliente {
                 risultato = obc.addOrdine(new Ordinazione_Bar(data, quantita, id_ordinazione, id_ombrellone, mprodotti));
                 prezzo_totale = obc.calcolaPrezzoOrdine(id_prodotto, quantita);
                 Scontrino scontrino = new Scontrino(id_scontrino, data, id_ombrellone, prezzo_totale);
-
+                //connector tabella tipologia_pg
+                scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, id_ombrellone, prezzo_totale, "bar");
                 p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
                 if (risultato) {
                     //parte preparazione ordine

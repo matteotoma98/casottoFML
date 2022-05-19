@@ -141,7 +141,7 @@ CREATE TABLE `attivita` (
 
 LOCK TABLES `attivita` WRITE;
 /*!40000 ALTER TABLE `attivita` DISABLE KEYS */;
-INSERT INTO `attivita` VALUES ('Beach',4,'Pallone Beach',2,3,'2022-05-11 16:00:00','2022-05-11 18:00:00'),('Calcio',5,'Pallone Calcio',2,2,'2022-04-29 15:00:00','2022-04-29 16:00:00'),('Zumba',4,NULL,0,1,'2022-09-10 00:00:00','2022-09-01 00:00:00');
+INSERT INTO `attivita` VALUES ('Beach',4,'Pallone Beach',2,3,'2022-05-11 16:00:00','2022-05-11 18:00:00'),('Calcio',5,'Pallone Calcio',2,2,'2022-04-29 15:00:00','2022-04-29 16:00:00'),('Zumba',3,NULL,0,1,'2022-09-10 00:00:00','2022-09-01 00:00:00');
 /*!40000 ALTER TABLE `attivita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -190,7 +190,7 @@ CREATE TABLE `chalet` (
 
 LOCK TABLES `chalet` WRITE;
 /*!40000 ALTER TABLE `chalet` DISABLE KEYS */;
-INSERT INTO `chalet` VALUES (150,300,114,223);
+INSERT INTO `chalet` VALUES (150,300,88,188);
 /*!40000 ALTER TABLE `chalet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,7 +207,8 @@ CREATE TABLE `cliente` (
   `email` varchar(45) NOT NULL,
   `id_ombrellone` int NOT NULL,
   PRIMARY KEY (`id_ombrellone`),
-  KEY `email_fk_3` (`email`)
+  KEY `email_fk_3` (`email`),
+  CONSTRAINT `email_fk_3` FOREIGN KEY (`email`) REFERENCES `utente` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -217,7 +218,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES ('Matteo','T','matteotoma98@hotmail.it',1),('toma','toma','matteo',2),('Lorenzo','Caporossi','caporossilorenzo98@gmail.com',3),('Francesco','Chiocchi','fchiocchi1@gmail.com',4),('Matteo','T','matteotoma98@hotmail.it',5),('toma','toma','matteo',6),('toma','toma','matteo',7),('toma','toma','matteo',8),('toma','toma','matteo',9),('fra','fracs','chio',45);
+INSERT INTO `cliente` VALUES ('Matteo','T','matteotoma98@hotmail.it',1),('toma','toma','matteo',2),('Lorenzo','Caporossi','caporossilorenzo98@gmail.com',3),('Francesco','Chiocchi','fchiocchi1@gmail.com',4),('toma','toma','matteo',5),('prova','prova','prova',6),('toma','toma','matteo',11),('fra','fracs','chio',45);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -289,13 +290,13 @@ CREATE TABLE `ordinazionebar` (
   `data_ordinazione` date NOT NULL,
   `id_ombrellone` int NOT NULL,
   `id_ordinazione` int NOT NULL AUTO_INCREMENT,
-  `quantita` int DEFAULT NULL,
-  `lista_prodotti` varchar(1000) NOT NULL,
+  `quantita` varchar(255) DEFAULT NULL,
+  `lista_prodotti` varchar(255) NOT NULL,
   PRIMARY KEY (`id_ordinazione`),
   KEY `data_ordinazione` (`data_ordinazione`),
   KEY `id_ombrellone_fk_idx` (`id_ombrellone`),
   CONSTRAINT `id_ombrellone_fk` FOREIGN KEY (`id_ombrellone`) REFERENCES `prenotazionespiaggia` (`id_ombrellone`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -304,7 +305,6 @@ CREATE TABLE `ordinazionebar` (
 
 LOCK TABLES `ordinazionebar` WRITE;
 /*!40000 ALTER TABLE `ordinazionebar` DISABLE KEYS */;
-INSERT INTO `ordinazionebar` VALUES ('2022-05-09',2,1,1,''),('2022-05-09',2,2,2,''),('2022-05-16',2,3,1,''),('2022-05-16',2,4,1,''),('2022-05-16',2,5,1,''),('2022-05-16',2,6,2,''),('2022-05-16',2,7,1,''),('2022-05-16',2,8,1,''),('2022-05-16',2,9,1,''),('2022-05-17',2,10,1,'1234'),('2022-05-17',6,11,1,'1,2,3,');
 /*!40000 ALTER TABLE `ordinazionebar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -321,8 +321,8 @@ CREATE TABLE `pagamentobar` (
   `id_ombrellone` int DEFAULT NULL,
   `data_pagamento` datetime NOT NULL,
   KEY `id_ordinazione_fk_idx` (`id_ordinazione`),
-  KEY `id_ombrellone_fk_idx` (`id_ombrellone`) /*!80000 INVISIBLE */,
-  CONSTRAINT `id_ombrellone_fk4_idx` FOREIGN KEY (`id_ombrellone`) REFERENCES `ordinazionebar` (`id_ombrellone`),
+  KEY `id_ombrellone_fk_idx` (`id_ombrellone`),
+  CONSTRAINT `id_ombrellone_fk4_idx` FOREIGN KEY (`id_ombrellone`) REFERENCES `ordinazionebar` (`id_ombrellone`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `id_ordinazione_fk` FOREIGN KEY (`id_ordinazione`) REFERENCES `ordinazionebar` (`id_ordinazione`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -333,7 +333,6 @@ CREATE TABLE `pagamentobar` (
 
 LOCK TABLES `pagamentobar` WRITE;
 /*!40000 ALTER TABLE `pagamentobar` DISABLE KEYS */;
-INSERT INTO `pagamentobar` VALUES ('app',2,2,'2022-05-09 00:00:00'),('app',3,2,'2022-05-16 00:00:00'),('app',4,2,'2022-05-16 00:00:00'),('app',5,2,'2022-05-16 00:00:00'),('app',6,2,'2022-05-16 00:00:00'),('app',7,2,'2022-05-16 00:00:00'),('app',8,2,'2022-05-16 00:00:00'),('app',9,2,'2022-05-16 00:00:00'),('app',9,2,'2022-05-17 00:00:00'),('app',10,2,'2022-05-17 00:00:00'),('app',11,6,'2022-05-17 00:00:00');
 /*!40000 ALTER TABLE `pagamentobar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -347,13 +346,12 @@ DROP TABLE IF EXISTS `pagamentoombrellone`;
 CREATE TABLE `pagamentoombrellone` (
   `tipologia_pagamento` varchar(50) NOT NULL DEFAULT 'app',
   `id_prenotazione` int NOT NULL,
-  `id_ombrellone` int DEFAULT NULL,
+  `id_ombrellone` int NOT NULL,
   `data_pagamento` datetime NOT NULL,
   PRIMARY KEY (`id_prenotazione`),
   KEY `id_prenotazione_fk_idx` (`id_prenotazione`),
   KEY `id_ombrellone_fk2_idx` (`id_ombrellone`),
-  CONSTRAINT `id_ombrellone_fk2` FOREIGN KEY (`id_ombrellone`) REFERENCES `prenotazionespiaggia` (`id_ombrellone`),
-  CONSTRAINT `id_prenotazione_fk` FOREIGN KEY (`id_prenotazione`) REFERENCES `prenotazionespiaggia` (`id_prenotazione`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `id_ombrellone_fk_2` FOREIGN KEY (`id_ombrellone`) REFERENCES `prenotazionespiaggia` (`id_ombrellone`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -363,7 +361,7 @@ CREATE TABLE `pagamentoombrellone` (
 
 LOCK TABLES `pagamentoombrellone` WRITE;
 /*!40000 ALTER TABLE `pagamentoombrellone` DISABLE KEYS */;
-INSERT INTO `pagamentoombrellone` VALUES ('app',1,2,'2022-05-09 00:00:00'),('app',5,2,'2022-05-16 00:00:00'),('app',6,2,'2022-05-16 00:00:00'),('app',8,2,'2022-05-16 00:00:00'),('app',9,2,'2022-05-16 00:00:00'),('app',10,2,'2022-05-16 00:00:00'),('app',12,2,'2022-05-16 00:00:00'),('app',13,2,'2022-05-16 00:00:00'),('app',14,2,'2022-05-16 00:00:00'),('app',15,2,'2022-05-16 00:00:00'),('app',16,2,'2022-05-16 00:00:00'),('app',17,7,'2022-05-16 00:00:00'),('app',18,8,'2022-05-16 00:00:00');
+INSERT INTO `pagamentoombrellone` VALUES ('app',1,1,'2022-05-19 00:00:00'),('app',2,2,'2022-05-19 00:00:00'),('app',4,4,'2022-05-19 00:00:00'),('app',5,4,'2022-05-19 00:00:00'),('app',6,4,'2022-05-19 00:00:00'),('app',7,3,'2022-05-19 00:00:00'),('app',8,5,'2022-05-19 00:00:00'),('app',9,6,'2022-05-19 00:00:00');
 /*!40000 ALTER TABLE `pagamentoombrellone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -390,7 +388,7 @@ CREATE TABLE `prenotazioneattivita` (
   CONSTRAINT `data_inzio_attivita` FOREIGN KEY (`data_inizio`) REFERENCES `attivita` (`data_inizio_attivita`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `email_fk_2` FOREIGN KEY (`email`) REFERENCES `cliente` (`email`),
   CONSTRAINT `id_attivita_fk` FOREIGN KEY (`id_attivita`) REFERENCES `attivita` (`id_attivita`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -399,7 +397,6 @@ CREATE TABLE `prenotazioneattivita` (
 
 LOCK TABLES `prenotazioneattivita` WRITE;
 /*!40000 ALTER TABLE `prenotazioneattivita` DISABLE KEYS */;
-INSERT INTO `prenotazioneattivita` VALUES ('matteotoma98@hotmail.it','2022-09-10 00:00:00','2022-09-01 00:00:00',1,1,1),('chio','2022-05-11 16:00:00','2022-05-11 18:00:00',3,3,2),('caporossilorenzo98@gmail.com','2022-09-10 00:00:00','2022-09-01 00:00:00',1,2,3),('chio','2022-04-29 15:00:00','2022-04-29 16:00:00',2,2,4),('fchiocchi1@gmail.com','2022-09-10 00:00:00','2022-09-01 00:00:00',1,3,5),('matteo','2022-09-10 00:00:00','2022-09-01 00:00:00',1,1,6);
 /*!40000 ALTER TABLE `prenotazioneattivita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -423,9 +420,9 @@ CREATE TABLE `prenotazionespiaggia` (
   KEY `num_fila_ombrellone_idx` (`num_fila_ombrellone`),
   KEY `id_ombrellone_fk_idx` (`id_ombrellone`),
   KEY `email_fk_idx` (`email`),
-  CONSTRAINT `email_fk` FOREIGN KEY (`email`) REFERENCES `cliente` (`email`),
+  CONSTRAINT `email_fk` FOREIGN KEY (`email`) REFERENCES `cliente` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `id_fk_ombrellone` FOREIGN KEY (`id_ombrellone`) REFERENCES `ombrellone` (`id_ombrellone`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -434,7 +431,7 @@ CREATE TABLE `prenotazionespiaggia` (
 
 LOCK TABLES `prenotazionespiaggia` WRITE;
 /*!40000 ALTER TABLE `prenotazionespiaggia` DISABLE KEYS */;
-INSERT INTO `prenotazionespiaggia` VALUES (1,'2022-05-09','2022-05-08',1,2,2,'matteo'),(3,'2022-05-18','2022-05-22',1,4,2,'matteo'),(4,'2022-05-16','2022-05-17',1,4,2,'matteo'),(5,'2022-06-12','2022-06-12',1,1,2,'matteo'),(6,'2022-06-12','2022-06-12',1,1,2,'matteo'),(7,'2022-06-12','2022-06-12',1,1,2,'matteo'),(8,'2022-06-12','2022-06-12',1,1,2,'matteo'),(9,'2022-06-12','2022-06-12',1,1,1,'matteo'),(10,'2022-06-12','2022-06-12',1,1,1,'matteo'),(11,'2022-06-12','2022-06-12',1,1,1,'matteo'),(12,'2022-06-12','2022-06-12',1,1,1,'matteo'),(13,'2022-06-12','2022-06-12',1,1,1,'matteo'),(14,'2022-06-12','2022-06-12',1,1,1,'matteo'),(15,'2022-06-12','2022-06-12',1,1,1,'matteo'),(16,'2022-06-12','2022-06-12',1,6,1,'matteo'),(17,'2022-06-12','2022-06-12',1,7,2,'matteo'),(18,'2022-06-12','2022-06-12',1,8,1,'matteo'),(19,'2022-06-12','2022-06-12',1,9,2,'matteo');
+INSERT INTO `prenotazionespiaggia` VALUES (1,'2022-07-12','2022-07-13',1,1,1,'matteo'),(2,'2022-06-12','2022-06-12',1,2,2,'matteo'),(4,'2022-06-19','2022-06-20',1,4,1,'matteo'),(5,'2022-06-20','2022-06-21',1,4,1,'matteo'),(6,'2022-06-20','2022-06-21',1,4,1,'matteo'),(7,'2022-06-12','2022-06-13',1,3,1,'prova'),(8,'2022-06-12','2022-06-13',1,5,1,'matteo'),(9,'2022-06-19','2022-06-19',1,6,1,'prova');
 /*!40000 ALTER TABLE `prenotazionespiaggia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -486,7 +483,7 @@ CREATE TABLE `prodottibar` (
 
 LOCK TABLES `prodottibar` WRITE;
 /*!40000 ALTER TABLE `prodottibar` DISABLE KEYS */;
-INSERT INTO `prodottibar` VALUES (1,'Patatine San Carlo',1,7,1),(2,'Bruschettine',2,8,1),(3,'Tramezzini',3,1,5),(4,'Kinder Bueno',2,10,1),(5,'Spritz',4,20,5),(6,'Estathe Pesca',2,20,1),(7,'Estathe Limone',2,20,1),(8,'Acqua',1,48,1),(9,'Cono ',2,8,1),(10,'Ghiacciolo Menta',1.5,5,1),(11,'Giacciolo Limone',5,5,1);
+INSERT INTO `prodottibar` VALUES (1,'Patatine San Carlo',1,12,1),(2,'Bruschettine',2,13,1),(3,'Tramezzini',3,15,5),(4,'Kinder Bueno',2,10,1),(5,'Spritz',4,20,5),(6,'Estathe Pesca',2,20,1),(7,'Estathe Limone',2,20,1),(8,'Acqua',1,48,1),(9,'Cono ',2,8,1),(10,'Ghiacciolo Menta',1.5,5,1),(11,'Giacciolo Limone',5,5,1);
 /*!40000 ALTER TABLE `prodottibar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -502,10 +499,11 @@ CREATE TABLE `scontrino` (
   `data_scontrino` date NOT NULL,
   `id_ombrellone` int NOT NULL,
   `prezzo_totale` double NOT NULL,
+  `tipologia` varchar(50) NOT NULL,
   PRIMARY KEY (`id_scontrino`),
   KEY `id_ombrellone_idx` (`id_ombrellone`),
-  CONSTRAINT `id_ombrellone` FOREIGN KEY (`id_ombrellone`) REFERENCES `prenotazionespiaggia` (`id_ombrellone`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `id_ombrellone` FOREIGN KEY (`id_ombrellone`) REFERENCES `prenotazionespiaggia` (`id_ombrellone`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -514,7 +512,7 @@ CREATE TABLE `scontrino` (
 
 LOCK TABLES `scontrino` WRITE;
 /*!40000 ALTER TABLE `scontrino` DISABLE KEYS */;
-INSERT INTO `scontrino` VALUES (2,'2022-05-09',2,19),(3,'2022-05-09',2,2),(4,'2022-05-16',1,19),(5,'2022-05-16',1,19),(6,'2022-05-16',1,17),(7,'2022-05-16',1,17),(8,'2022-05-16',1,17),(9,'2022-05-16',1,17),(10,'2022-05-16',1,17),(11,'2022-05-16',1,17),(12,'2022-05-16',1,17),(13,'2022-05-16',6,17),(14,'2022-05-16',7,19),(15,'2022-05-16',8,17),(16,'2022-05-16',9,19);
+INSERT INTO `scontrino` VALUES (1,'2022-05-19',1,36,'ombrellone'),(2,'2022-05-19',2,19,'ombrellone'),(4,'2022-05-19',4,34,'ombrellone'),(5,'2022-05-19',4,34,'ombrellone'),(6,'2022-05-19',4,34,'ombrellone'),(7,'2022-05-19',3,34,'ombrellone'),(8,'2022-05-19',5,34,'ombrellone'),(9,'2022-05-19',6,17,'ombrellone');
 /*!40000 ALTER TABLE `scontrino` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -559,8 +557,7 @@ CREATE TABLE `utente` (
   `email` varchar(45) NOT NULL,
   `nome` varchar(45) NOT NULL,
   `cognome` varchar(45) NOT NULL,
-  `id_ombrellone` int DEFAULT NULL,
-  PRIMARY KEY (`username`,`password`),
+  PRIMARY KEY (`password`,`username`),
   KEY `ruolo_fk` (`ruolo`),
   KEY `email_fk` (`email`),
   KEY `nome_fk` (`nome`),
@@ -574,7 +571,7 @@ CREATE TABLE `utente` (
 
 LOCK TABLES `utente` WRITE;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
-INSERT INTO `utente` VALUES ('addettoattivita','addettoattivita','addetto_attivita','addettoattivita@studenti.unicam.it','Addetto','Attivita',NULL),('addettobar','addettobar','addetto_bar','fchiocchi@libero.it','Addetto','Bar',NULL),('addettospiaggia','addettospiaggia','addetto_spiaggia','francesco.chiocchi@divini.org','Addetto','Spiaggia',NULL),('fra','fracs','cliente','chio','fra','fracs',45),('fracs_xyz','casottoFML','gestore','francesco.chiocchi@studenti.unicam.it','Francesco','Chiocchi',NULL),('francesco','francesco','cliente','fchiocchi1@gmail.com','Francesco','Chiocchi',4),('lore_capo','casottoFML','gestore','lorenzo.caporossi@studenti.unicam.it','Lorenzo','Caporossi',NULL),('lorenzo','lorenzo','cliente','caporossilorenzo98@gmail.com','Lorenzo','Caporossi',3),('matteo','matteo','cliente','matteo','toma','toma',9),('matteot','matteot','cliente','matteotoma98@hotmail.it','Matteo','T',1),('matteotoma_98','casottoFML','gestore','matteo.toma@studenti.unicam.it','Matteo','Toma',NULL);
+INSERT INTO `utente` VALUES ('addettoattivita','addettoattivita','addetto_attivita','addettoattivita@studenti.unicam.it','Addetto','Attivita'),('addettobar','addettobar','addetto_bar','fchiocchi@libero.it','Addetto','Bar'),('addettospiaggia','addettospiaggia','addetto_spiaggia','francesco.chiocchi@divini.org','Addetto','Spiaggia'),('fracs_xyz','casottoFML','gestore','francesco.chiocchi@studenti.unicam.it','Francesco','Chiocchi'),('lore_capo','casottoFML','gestore','lorenzo.caporossi@studenti.unicam.it','Lorenzo','Caporossi'),('matteotoma_98','casottoFML','gestore','matteo.toma@studenti.unicam.it','Matteo','Toma'),('fra','fracs','cliente','chio','fra','fracs'),('francesco','francesco','cliente','fchiocchi1@gmail.com','Francesco','Chiocchi'),('lorenzo','lorenzo','cliente','caporossilorenzo98@gmail.com','Lorenzo','Caporossi'),('matteo','matteo','cliente','matteo','toma','toma'),('matteot','matteot','cliente','matteotoma98@hotmail.it','Matteo','T'),('prova','prova','cliente','prova','prova','cliente');
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -587,4 +584,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-17 10:03:29
+-- Dump completed on 2022-05-19 13:01:41

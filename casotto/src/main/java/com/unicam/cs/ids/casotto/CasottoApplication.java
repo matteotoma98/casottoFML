@@ -84,7 +84,7 @@ public class CasottoApplication {
                         nome = scanner_value.nextLine();
                         System.out.println("Inserisci cognome");
                         cognome = scanner_value.nextLine();
-                        utente.registrazione(username, password, email, nome, cognome, ruolo, 0);
+                        utente.registrazione(username, password, email, nome, cognome, ruolo);
                         break;
                 }
             }

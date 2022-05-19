@@ -32,7 +32,7 @@ public class Ordinazione_Bar {
         this.quantita = quantita;
         this.id_ordinazione = incremento(id_ordinazione);
         this.id_ombrellone = id_ombrellone;
-        this.lista_prodotti= lista_prodotti;
+        this.lista_prodotti = lista_prodotti;
     }
 
     public int getId_prodotto() {

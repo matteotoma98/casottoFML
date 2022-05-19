@@ -12,5 +12,5 @@ public interface ICliente {
 
     public boolean iscrizione_Attivita(String email);
 
-    public void registrazione(String email, String username, String password, int id_ombrellone);
+    public void registrazione(String email, String username, String password);
 }

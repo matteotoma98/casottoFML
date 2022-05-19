@@ -14,20 +14,18 @@ public class Utente implements IUtente {
     private String ruolo;
     private String nome;
     private String cognome;
-    private int id_ombrellone = 0;
     ClienteConnector cc = new ClienteConnector();
     UtenteConnector uc = new UtenteConnector();
     //Ordinazione_Bar ob= new Ordinazione_Bar();
     // OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
 
-    public Utente(String username, String password, String ruolo, String email, String nome, String cognome, int id_ombrellone) {
+    public Utente(String username, String password, String ruolo, String email, String nome, String cognome) {
         this.username = username;
         this.password = password;
         this.ruolo = ruolo;
         this.email = email;
         this.nome = nome;
         this.cognome = cognome;
-        this.id_ombrellone = id_ombrellone;
     }
 
     public Utente() {
@@ -45,14 +43,6 @@ public class Utente implements IUtente {
 	/*public boolean Registrati(String email, String password){
 		return false;
 	}*/
-
-    public int getId_ombrellone() {
-        return id_ombrellone;
-    }
-
-    public void setId_ombrellone(int id_ombrellone) {
-        this.id_ombrellone = id_ombrellone;
-    }
 
     public String getNome() {
         return nome;
@@ -104,16 +94,15 @@ public class Utente implements IUtente {
     }
 
 
-    public void registrazione(String username, String password, String nome, String cognome, String email, String ruolo, int id_ombrellone) {
+    public void registrazione(String username, String password, String nome, String cognome, String email, String ruolo) {
         setUsername(username);
         setPassword(password);
         setRuolo(ruolo);
         setEmail(email);
         setNome(nome);
         setCognome(cognome);
-        setId_ombrellone(id_ombrellone);
-        uc.registrazione(username, password, ruolo, email, nome, cognome, id_ombrellone);
-        Cliente cliente = new Cliente(nome, cognome, email, id_ombrellone);
+        uc.registrazione(username, password, ruolo, email, nome, cognome);
+        Cliente cliente = new Cliente(nome, cognome, email,0);
         cc.addCliente(cliente);
 
     }

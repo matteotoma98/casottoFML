@@ -39,8 +39,8 @@ public class Scontrino {
         this.id_ombrellone = id_ombrellone;
     }
 
-    public void CalcolaPrezzo(int id_scontrino, Date data_scontrino, int id_ombrellone, double prezzo_totale) {
-        scontrinoConnector.creaScontrino(id_scontrino, data_scontrino, id_ombrellone, prezzo_totale);
+    public void CalcolaPrezzo(int id_scontrino, Date data_scontrino, int id_ombrellone, double prezzo_totale, String tipologia) {
+        scontrinoConnector.creaScontrino(id_scontrino, data_scontrino, id_ombrellone, prezzo_totale, tipologia);
     }
 
     public int getId_scontrino() {

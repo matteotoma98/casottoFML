@@ -10,6 +10,10 @@ public class ScontrinoConnector {
 
     Connection connection;
 
+
+    int id_prenotazione_ombrellone;
+    int id_ordinazione_bar = 0;
+
     public ScontrinoConnector() {
         try {
             connection = DBConnector.getConnection();
@@ -18,7 +22,7 @@ public class ScontrinoConnector {
         } //add exception here
     }
 
-    public boolean creaScontrino(int id_scontrino, Date data_scontrino, int id_ombrellone, double prezzo_totale) {
+    public boolean creaScontrino(int id_scontrino, Date data_scontrino, int id_ombrellone, double prezzo_totale, String tipologia) {
         Scontrino scontrino = new Scontrino(id_scontrino, data_scontrino, id_ombrellone, prezzo_totale);
         scontrino.toString();
         boolean result = false;
@@ -33,20 +37,25 @@ public class ScontrinoConnector {
             }
             id_scontrino = last_scontrino + 1;
 
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO scontrino VALUES ( ?,?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO scontrino VALUES ( ?,?,?,?,?)");
             preparedStatement.setInt(1, id_scontrino);
             // System.out.println(ordinazione_bar.getId_ombrellone());
             preparedStatement.setDate(2, (java.sql.Date) data_scontrino);
             preparedStatement.setInt(3, id_ombrellone);
             preparedStatement.setDouble(4, prezzo_totale);
+            preparedStatement.setString(5, tipologia);
+
             result = preparedStatement.executeUpdate() > 0;
+
         } catch (Exception e) {
+        /*    System.out.println(id_scontrino+"\n");
+            System.out.println(data_scontrino+"\n");
+            System.out.println(id_ombrellone+"\n");
+            System.out.println(prezzo_totale); */
             System.out.println(e);
             System.out.println("problema");
             result2 = false;
         }
-
-
         return result;
     }
 

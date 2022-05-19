@@ -22,7 +22,7 @@ public class Addetto_attivita_Ludico_Sportive extends Utente {
 
 
     public Addetto_attivita_Ludico_Sportive(String username, String password, String ruolo, String email, String nome, String cognome, int id_ombrellone) {
-        super(username, password, ruolo, email, nome, cognome, id_ombrellone);
+        super(username, password, ruolo, email, nome, cognome);
         //this.id_attivita = id_attivita;
         this.email = email;
         this.nome = nome;

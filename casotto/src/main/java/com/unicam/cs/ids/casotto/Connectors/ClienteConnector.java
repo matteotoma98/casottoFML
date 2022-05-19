@@ -3,10 +3,7 @@ package com.unicam.cs.ids.casotto.Connectors;
 import com.unicam.cs.ids.casotto.Cliente;
 
 import javax.xml.transform.Result;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ClienteConnector {
 
@@ -24,6 +21,7 @@ public class ClienteConnector {
         ResultSet result = null;
         Cliente cliente = new Cliente();
         try {
+
             result = connection.createStatement().executeQuery("SELECT * FROM cliente WHERE email = '" + email + "'");
             while (result.next()) {
                 System.out.println(result.getString("email"));
@@ -111,5 +109,32 @@ public class ClienteConnector {
         return result;
     }
 
+    public boolean aggiornaClienti() {
+        boolean result = false;
+        ResultSet resultSet;
+        String nome = "", cognome = "", email = "";
+        int id_ombrellone = 0;
+        try {
+            Statement statement = connection.createStatement();
+            resultSet = connection.createStatement().executeQuery("SELECT nome,cognome,email,id_ombrellone FROM utente WHERE ruolo = 'cliente'");
+            while (resultSet.next()) {
+
+                nome = resultSet.getString("nome");
+                cognome = resultSet.getString("cognome");
+                email = resultSet.getString("email");
+                id_ombrellone = resultSet.getInt("id_ombrellone");
+                // System.out.println(result.getString("email"+"nome"+"cognome"+"id_ombrellone"));
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO cliente VALUES ( ?,?,?,?)");
+                preparedStatement.setString(1, nome);
+                preparedStatement.setString(2, cognome);
+                preparedStatement.setString(3, email);
+                preparedStatement.setInt(4, id_ombrellone);
+                result = preparedStatement.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            result = false;
+        }
+        return result;
+    }
 
 }

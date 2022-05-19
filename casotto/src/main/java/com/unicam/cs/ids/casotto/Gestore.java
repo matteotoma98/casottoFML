@@ -39,7 +39,7 @@ public class Gestore extends Utente {
     }
 
     public Gestore(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
-        super(username, password, email, ruolo, nome, cognome, id_ombrellone);
+        super(username, password, email, ruolo, nome, cognome);
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;

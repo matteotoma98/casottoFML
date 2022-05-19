@@ -14,11 +14,11 @@ public class PrenotazioneSpiaggiaConnector {
         } //a
     }
 
-    public void aggiornaOmbrellone(String email, int id_ombrellone) {
+    /* public void aggiornaOmbrellone(String email, int id_ombrellone) {
         boolean result = false;
         boolean result2 = false;
         try {
-             //CAMBIARE QUESTO: SARA' UN UPDATE MA CON PARSANDOGLI IL NUOVO OMBRELLONE PRENOTATO DALL'UTENTE
+            //CAMBIARE QUESTO: SARA' UN UPDATE MA CON PARSANDOGLI IL NUOVO OMBRELLONE PRENOTATO DALL'UTENTE
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE utente set id_ombrellone ='" + id_ombrellone + "' where email='" + email + "'");
             result = preparedStatement.executeUpdate() > 0;
             //PreparedStatement preparedStatement1 = connection.prepareStatement("UPDATE cliente set id_ombrellone ='" + id_ombrellone + "' where email='" + email + "'");
@@ -27,25 +27,79 @@ public class PrenotazioneSpiaggiaConnector {
             System.out.println(e);
             System.out.println("E' QUI IL PROBLEMA");
         }
-    }
+    } */
 
     public boolean aggiornaOmbrelloniCliente(String email, int id_ombrellone) {
         boolean result = false;
-        try {
-            String nome="";
-            String cognome="";
+        boolean prima_pren=false;
+        try{
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM cliente where email='" + email + "'");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM cliente where email='" + email + "'AND id_ombrellone=0");
+            while (resultSet.next()) {
+                email = resultSet.getString("email");
+                prima_pren= true;
+            }
+           if(prima_pren){
+               PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE cliente SET id_ombrellone='" + id_ombrellone + "'WHERE email='" + email +"'");
+               result = preparedStatement3.executeUpdate() > 0;
+               if (result) {
+                   System.out.println("Ombrellone aggiornato");
+               } else {
+                   System.out.println("errore nell'aggiornare l'ombrellone");
+               }
+           }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        if(!prima_pren) {
+            try {
+                String nome = "";
+                String cognome = "";
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM cliente where email='" + email + "'");
+                int lastprenotazione = 0;
+                while (resultSet.next()) {
+                    nome = resultSet.getString("nome");
+                    cognome = resultSet.getString("cognome");
+                    email = resultSet.getString("email");
+                }
+                PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO cliente VALUES ('" + nome + "','" + cognome + "','" + email + "','" + id_ombrellone + "')");
+                result = preparedStatement2.executeUpdate() > 0;
+            } catch (Exception e) {
+                System.out.println(e);
+                System.out.println("errore nell'aggiornare l'ombrellone cliente");
+            }
+        }
+        return result;
+    }
+
+    public boolean aggiornaOmbrelloniUtente(String email, int id_ombrellone) {
+        boolean result = false;
+        try {
+            String nome = "";
+            String cognome = "";
+            String username="";
+            String password="";
+            String ruolo="";
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM utente where email='" + email + "'AND ruolo='cliente'");
             int lastprenotazione = 0;
             while (resultSet.next()) {
+                username= resultSet.getString("username");
+                password= resultSet.getString("password");
+                ruolo= resultSet.getString("ruolo");
+                email = resultSet.getString("email");
                 nome = resultSet.getString("nome");
                 cognome = resultSet.getString("cognome");
-                email = resultSet.getString("email");
+
             }
-            PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO cliente VALUES ('" + nome + "','" + cognome + "','" + email + "','" + id_ombrellone + "')");
+            PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO utente VALUES ('" + username + "','" + password +
+                    "','"+ ruolo + "','" + email + "','" + nome + "','" + cognome + "','"+id_ombrellone+ "')");
             result = preparedStatement2.executeUpdate() > 0;
         } catch (Exception e) {
-
+           System.out.println(e);
         }
         return result;
     }
@@ -82,8 +136,8 @@ public class PrenotazioneSpiaggiaConnector {
                 result = preparedStatement.executeUpdate() > 0;
 
                 if (result) {
-                    boolean prova= aggiornaOmbrelloniCliente(email, id_ombrellone);
-                    if(prova) System.out.println("Tabella Clienti aggiornata");
+                    boolean prova = aggiornaOmbrelloniCliente(email, id_ombrellone);
+                    if (prova) System.out.println("Tabella Clienti aggiornata");
                     try {
                         PreparedStatement preparedStatement1 = connection.prepareStatement("UPDATE chalet set quantita_ombrelloni_disponibili = quantita_ombrelloni_disponibili-1 where quantita_ombrelloni_disponibili>0");
                         //preparedStatement.setInt(1,lettini);

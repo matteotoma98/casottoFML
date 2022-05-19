@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtenteConnector {
-
+    ClienteConnector clienteConnector= new ClienteConnector();
     Connection connection;
+    PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();
 
     public UtenteConnector() {
         try {
@@ -22,20 +23,22 @@ public class UtenteConnector {
         } //add exception here
     }
 
-    public boolean registrazione(String username, String password, String email, String nome, String cognome, String ruolo, int id_ombrellone) {
+    public boolean registrazione(String username, String password, String email, String nome, String cognome, String ruolo) {
         {
             boolean result;
             boolean result2;
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO utente VALUES ( ?,?,?,?,?,?,?)");
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO utente VALUES ( ?,?,?,?,?,'cliente')");
                 preparedStatement.setString(1, username.trim());
                 preparedStatement.setString(2, password.trim());
                 preparedStatement.setString(3, email.trim());
                 preparedStatement.setString(4, nome.trim());
                 preparedStatement.setString(5, cognome.trim());
-                preparedStatement.setString(6, ruolo.trim());
-                preparedStatement.setInt(7, id_ombrellone);
+         //      preparedStatement.setString(6, ruolo.trim());
                 result = preparedStatement.executeUpdate() > 0;
+                if(result){
+                    clienteConnector.aggiornaClienti();
+                }
                 /* if(result){
                     PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO cliente VALUES ( ?,?,?,?)");
                     preparedStatement1.setString(1, nome.trim());
@@ -56,9 +59,10 @@ public class UtenteConnector {
                 System.out.println(result);
             }
 
-            System.out.println(username + " " + password + " " + ruolo + " " + email + " " + nome + " " + cognome + " " + id_ombrellone);
+            System.out.println(username + " " + password + " " + ruolo + " " + email + " " + nome + " " + cognome + " " );
             return result;
         }
+
     }
 
 
@@ -75,8 +79,8 @@ public class UtenteConnector {
                 password = result.getString("password");
                 // utente = UtenteConverter(result);
                 System.out.println(email + " sei loggato correttamente.");
+                clienteConnector.aggiornaClienti();
             }
-
 
         } catch (Exception e) {
             System.out.println(e);
@@ -129,9 +133,8 @@ public class UtenteConnector {
         String email = result.getString("email");
         String nome = result.getString("nome");
         String cognome = result.getString("cognome");
-        int id_ombrellone = result.getInt("id_ombrellone");
         //System.out.println("Sei loggato correttamente tramite Utente Converter");
-        return new Utente(username, password, ruolo, email, nome, cognome, id_ombrellone);
+        return new Utente(username, password, ruolo, email, nome, cognome);
     }
 
 }
