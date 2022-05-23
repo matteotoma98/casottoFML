@@ -81,13 +81,6 @@ public class Addetto_attivita_Ludico_Sportive extends Utente {
         num_posti = scanner.nextInt();
         AddettoAttivitaConnector addettoAttivitaConnector = new AddettoAttivitaConnector();
         addettoAttivitaConnector.setDate(start_date, end_date, num_posti, getId_attivita());
-
         ResultSet r = addettoAttivitaConnector.sendEmail(id_attivita);
-        //for (AddettoAttivitaConnector : r) {}
-
-
-        // SendEmail sendEmail= new SendEmail();
-
-        // sendEmail.sendMail("matte");
     }
 }

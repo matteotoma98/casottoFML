@@ -110,7 +110,7 @@ public class Prenotazione_Spiaggia {
     public boolean addPrenotazione(Date data_inizioPrenotazione, Date data_finePrenotazione, int num_fila_ombrellone, int id_ombrellone, int lettini, String email) {
         //id_prenotazione = 0;
         int id_prenotazione = 0;
-        boolean addPren=false;
+        boolean addPren = false;
         setDatainizioPrenotazione(data_inizioPrenotazione);
         setData_finePrenotazione(data_finePrenotazione);
         setNum_fila_ombrellone(num_fila_ombrellone);
@@ -119,11 +119,11 @@ public class Prenotazione_Spiaggia {
         setEmail(email);
         boolean creazione = false;
         creazione = prenotazioneSpiaggiaConnector.PrenotaSpiaggia(id_prenotazione, data_inizioPrenotazione, data_finePrenotazione, num_fila_ombrellone, id_ombrellone, lettini, email);
-        if(creazione) {
-            addPren= true;
+        if (creazione) {
+            addPren = true;
             System.out.println("Prenotazione aggiunta");
         }
-       // if (creazione) prenotazioneSpiaggiaConnector.aggiornaOmbrellone(email, id_ombrellone);
+        // if (creazione) prenotazioneSpiaggiaConnector.aggiornaOmbrellone(email, id_ombrellone);
         //  Cliente cliente = new Cliente();
         //    cliente.addCliente(cliente);
         return addPren;

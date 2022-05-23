@@ -1,6 +1,7 @@
 package com.unicam.cs.ids.casotto;
 
 import java.nio.file.attribute.AttributeView;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -205,48 +206,62 @@ public class Cliente extends Utente implements ICliente {
             if (scelta.equals("Si")) {
                 boolean risultato = false;
                 //connector tabella tipologia_pg
-                boolean prenotato=false;
-                 prenotato= prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, om.getId_ombrellone(), lettini, email);
-                if(prenotato){
+                boolean prenotato = false;
+                prenotato = prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, om.getId_ombrellone(), lettini, email);
+                if (prenotato) {
                     PagamentoOmbrellone po = new PagamentoOmbrellone();
                     po.sceltaMetodo(tipologia, prenotazioneSpiaggiaConnector.last_prenotazione(id_ombrellone), id, data_pagamento);
                 }
-                else System.out.println("Esiste già una prenotazione relativa all'ombrellone relativo al periodo dal "+date_start+" al " +date_end+
-                        "\n"+ "Riprovare con un'altra data o ombrellone.");
-                // String tipologia_pagamento, int id_prenotazione, int id_ombrellone, Date data_pagamento
-                //System.out.println("Confermi la prenotazione per " + tariffaPrezzi.getNum_giorni() + " giorni al prezzo di " + prezzo + "€ ?\n");
-                // System.out.println("1=Si/2=No");
-                //prenotazioneSpiaggiaConnector.aggiornaOmbrelloniUtente(email, id);
+                else System.out.println("errore nel prenotare");
+
                 Scontrino scontrino = new Scontrino(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo);
                 scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo, "ombrellone");
                 IObserver notifyOrder4 = new NotifyOrder("Cliente Ombrellone");
                 notifyOrder4.register(notifyOrder4);
                 notifyOrder4.notifyObservers();
+                IObserver notifyOrder5 = new NotifyOrder("Addetto SpiaggiaOmbrellone");
+                notifyOrder5.register(notifyOrder5);
+                //notifyOrder5.notifyObservers();
+                notifyOrder5.notifyAddettoSpiaggiaOmbrellone(email, "francesco.chiocchi@divini.org", id_ombrellone);
                 //notifyOrder.unregister(notifyOrder4);
+            } else {
+                try {
+                    menu_cliente(email);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
-
         }
 
         if (tipologia.equals("arrivo")) {
             System.out.println("Confermi il pagamento? Si/No");
             scelta = scanner2.nextLine();
             if (scelta.equals("Si")) {
-                Date data = obc.getDate();
                 boolean risultato = false;
-                // Date data_inizioPrenotazione, Date data_finePrenotazione, int num_fila_ombrellone, int id_ombrellone, int lettini, String email
-                prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, id, lettini, email);
+                //connector tabella tipologia_pg
+                boolean prenotato = false;
+                prenotato = prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, om.getId_ombrellone(), lettini, email);
+                if (prenotato) {
+                    PagamentoOmbrellone po = new PagamentoOmbrellone();
+                    po.sceltaMetodo(tipologia, prenotazioneSpiaggiaConnector.last_prenotazione(id_ombrellone), id, data_pagamento);
+                } else
+                    System.out.println("Esiste già una prenotazione relativa all'ombrellone relativo al periodo dal " + date_start + " al " + date_end +
+                            "\n" + "Riprovare con un'altra data o ombrellone.");
                 Scontrino scontrino = new Scontrino(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo);
-                scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo, "ombrellone");
-                System.out.println("Confermi la prenotazione per " + tariffaPrezzi.getNum_giorni() + " giorni al prezzo di " + prezzo + "€ ?\n");
-                System.out.println("1=Si/2=No");
-                int scelta2 = scanner2.nextInt();
-                if (scelta2 == 1) {
-                    prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, id, lettini, email);
-                } else {
-                    //ritorna al menù;
+                scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo, "arrivo");
+                IObserver notifyOrder4 = new NotifyOrder("Cliente Ombrellone");
+                notifyOrder4.register(notifyOrder4);
+                notifyOrder4.notifyObservers();
+                IObserver notifyOrder5 = new NotifyOrder("Addetto SpiaggiaOmbrellone");
+                notifyOrder5.register(notifyOrder5);
+                //notifyOrder5.notifyObservers();
+                notifyOrder5.notifyAddettoSpiaggiaOmbrellone(email, "francesco.chiocchi@divini.org", id_ombrellone);
+            } else {
+                try {
+                    menu_cliente(email);
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-                System.out.println("Prenotazione aggiunta");
-
             }
         }
 
@@ -321,10 +336,10 @@ public class Cliente extends Utente implements ICliente {
                 Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar();
                 ordinazione_bar.setLista_prodotti(mprodotti);
                 OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
-                System.out.println(tipologia);
+             /*   System.out.println(tipologia);
                 System.out.println(ordinazioneBarConnector.last_ordinazione(id_ombrellone));
                 System.out.println(id_ombrellone);
-                System.out.println(data_pagamento);
+                System.out.println(data_pagamento); */
                 if (!risultato) System.out.println("errore nell'aggiunta dell'ordine");
                 boolean risultato2 = p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
                 // String tipologia_pagamento, int id_prenotazione, int id_ombrellone, Date data_pagamento
@@ -333,20 +348,15 @@ public class Cliente extends Utente implements ICliente {
                     //metodo che da il tempo totale e lo memorizziamo in una variabile
                     System.out.println("Il tuo ordine arriverà tra " + cp.TempoTotale(id_prodotto, quantita) + " minuti");
                     System.out.println("Ordinazione aggiunta");
-                    NotifyOrder notifyOrder3 = new NotifyOrder("Addetto Bar");
                     IObserver notifyOrder4 = new NotifyOrder("Addetto Bar");
-                    notifyOrder3.register(notifyOrder4);
-                    notifyOrder3.notifyObservers();
-                    NotifyOrder notifyOrder5 = new NotifyOrder("Addetto Bar");
-                    IObserver notifyOrder6 = new NotifyOrder("Addetto Spiaggia");
-                    notifyOrder5.register(notifyOrder6);
-                    notifyOrder5.notifyObservers();
-                    //notifyOrder5.unregister(notifyOrder6);
-                    NotifyOrder notifyOrder7 = new NotifyOrder("Cliente Spiaggia");
-                    IObserver notifyOrder8 = new NotifyOrder("Cliente Spiaggia");
-                    notifyOrder7.register(notifyOrder8);
-                    notifyOrder7.notifyObservers();
-                    //notifyOrder7.unregister(notifyOrder8);
+                    notifyOrder4.register(notifyOrder4);
+                    //notifyOrder4.notifyObservers();
+                    // notifyOrder4.notifyAddettobar(email,ordinazione_bar.getLista_prodotti().toString(),ordinazioneBarConnector.last_ordinazione(id_ombrellone),id_ombrellone);
+                    try {
+                        SendEmail.sendMailBar(email, ordinazione_bar.getLista_prodotti().toString(), ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -356,21 +366,23 @@ public class Cliente extends Utente implements ICliente {
             if (scelta.equals("Si")) {
                 Date data = obc.getDate();
                 boolean risultato = false;
-                //connector tabella tipologia_pg
-                PagamentoBar p = new PagamentoBar();
-                Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar();
-                OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
                 risultato = obc.addOrdine(new Ordinazione_Bar(data, quantita, id_ordinazione, id_ombrellone, mprodotti));
                 prezzo_totale = obc.calcolaPrezzoOrdine(id_prodotto, quantita);
                 Scontrino scontrino = new Scontrino(id_scontrino, data, id_ombrellone, prezzo_totale);
                 //connector tabella tipologia_pg
                 scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, id_ombrellone, prezzo_totale, "bar");
-                p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
+                PagamentoBar p = new PagamentoBar();
+                Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar();
+                ordinazione_bar.setLista_prodotti(mprodotti);
+                OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
+                System.out.println(tipologia);
+                System.out.println(ordinazioneBarConnector.last_ordinazione(id_ombrellone));
+                System.out.println(id_ombrellone);
+                System.out.println(data_pagamento);
+                if (!risultato) System.out.println("errore nell'aggiunta dell'ordine");
+                boolean risultato2 = p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
+
                 if (risultato) {
-                    //parte preparazione ordine
-                    //notifyOrder.unregister(notifyOrder2);
-                    //parte preparazione ordine!
-                    //metodo che da il tempo totale e lo memorizziamo in una variabile
                     System.out.println("Il tuo ordine arriverà tra " + cp.TempoTotale(id_prodotto, quantita) + " minuti");
                     System.out.println("Ordinazione aggiunta");
                     NotifyOrder notifyOrder3 = new NotifyOrder("Addetto Bar");
@@ -401,8 +413,7 @@ public class Cliente extends Utente implements ICliente {
             System.out.println("seleziona l'id della prenotazione");
             id_prenotazione = scanner.nextInt();
             prenotazione_spiaggia.cancellaPrenotazione(id_prenotazione);
-        }
-        else System.out.println("Non hai ancora prenotazioni effettuate.\n");
+        } else System.out.println("Non hai ancora prenotazioni effettuate.\n");
 
         // this.id_ordinazione = id
 

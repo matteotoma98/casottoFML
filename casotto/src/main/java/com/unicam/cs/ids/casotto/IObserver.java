@@ -11,4 +11,10 @@ public interface IObserver {
     public void notifyObservers();
 
     public void update();
+
+    public void notifyAddettoSpiaggiaOmbrellone(String emailcliente, String emailaddetto, int id_ombrellone);
+
+    public void notifyAddettobar(String emailcliente, String prodotti , int id_ordine, int id_ombrellone);
+
+    public void updateCliente(String email);
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtenteConnector {
-    ClienteConnector clienteConnector= new ClienteConnector();
+    ClienteConnector clienteConnector = new ClienteConnector();
     Connection connection;
     PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();
 
@@ -34,9 +34,9 @@ public class UtenteConnector {
                 preparedStatement.setString(3, email.trim());
                 preparedStatement.setString(4, nome.trim());
                 preparedStatement.setString(5, cognome.trim());
-         //      preparedStatement.setString(6, ruolo.trim());
+                //      preparedStatement.setString(6, ruolo.trim());
                 result = preparedStatement.executeUpdate() > 0;
-                if(result){
+                if (result) {
                     clienteConnector.aggiornaClienti();
                 }
                 /* if(result){
@@ -59,7 +59,7 @@ public class UtenteConnector {
                 System.out.println(result);
             }
 
-            System.out.println(username + " " + password + " " + ruolo + " " + email + " " + nome + " " + cognome + " " );
+            System.out.println(username + " " + password + " " + ruolo + " " + email + " " + nome + " " + cognome + " ");
             return result;
         }
 

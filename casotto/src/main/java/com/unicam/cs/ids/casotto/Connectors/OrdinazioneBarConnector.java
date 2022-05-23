@@ -112,10 +112,8 @@ public class OrdinazioneBarConnector {
                 else
                     sb2.append(entry.getValue() != null ? entry.getValue().toString() : "");
             }
-
-
-            System.out.println("The number string = " + sb.substring(0, sb.length() - 1));
-            System.out.println("The number string = " + sb2.substring(0, sb2.length() - 1));
+            // System.out.println("The number string = " + sb.substring(0, sb.length() - 1));
+            // System.out.println("The number string = " + sb2.substring(0, sb2.length() - 1));
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO ordinazionebar VALUES ( ?,?,?,?,?)");
             preparedStatement.setDate(1, ordinazione_bar.setData_ordinazione(getDate()));
             //System.out.println("L'ombrellone su cui hai richiesto è "+ordinazione_bar.getId_ombrellone());
