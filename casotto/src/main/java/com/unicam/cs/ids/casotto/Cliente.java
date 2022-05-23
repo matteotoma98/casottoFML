@@ -205,9 +205,14 @@ public class Cliente extends Utente implements ICliente {
             if (scelta.equals("Si")) {
                 boolean risultato = false;
                 //connector tabella tipologia_pg
-                prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, om.getId_ombrellone(), lettini, email);
-                PagamentoOmbrellone po = new PagamentoOmbrellone();
-                po.sceltaMetodo(tipologia, prenotazioneSpiaggiaConnector.last_prenotazione(id_ombrellone), id, data_pagamento);
+                boolean prenotato=false;
+                 prenotato= prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, om.getId_ombrellone(), lettini, email);
+                if(prenotato){
+                    PagamentoOmbrellone po = new PagamentoOmbrellone();
+                    po.sceltaMetodo(tipologia, prenotazioneSpiaggiaConnector.last_prenotazione(id_ombrellone), id, data_pagamento);
+                }
+                else System.out.println("Esiste già una prenotazione relativa all'ombrellone relativo al periodo dal "+date_start+" al " +date_end+
+                        "\n"+ "Riprovare con un'altra data o ombrellone.");
                 // String tipologia_pagamento, int id_prenotazione, int id_ombrellone, Date data_pagamento
                 //System.out.println("Confermi la prenotazione per " + tariffaPrezzi.getNum_giorni() + " giorni al prezzo di " + prezzo + "€ ?\n");
                 // System.out.println("1=Si/2=No");
@@ -219,7 +224,7 @@ public class Cliente extends Utente implements ICliente {
                 notifyOrder4.notifyObservers();
                 //notifyOrder.unregister(notifyOrder4);
             }
-            System.out.println("Prenotazione aggiunta");
+
         }
 
         if (tipologia.equals("arrivo")) {
@@ -392,9 +397,13 @@ public class Cliente extends Utente implements ICliente {
         int id_prenotazione = 0;
         Prenotazione_Spiaggia prenotazione_spiaggia = new Prenotazione_Spiaggia();
         prenotazione_spiaggia.listaPrenotazioni(email);
-        System.out.println("seleziona l'id della prenotazione");
-        id_prenotazione = scanner.nextInt();
-        prenotazione_spiaggia.cancellaPrenotazione(id_prenotazione);
+        if (prenotazioneSpiaggiaConnector.checkPrenotazioniOmbrellone(email)) {
+            System.out.println("seleziona l'id della prenotazione");
+            id_prenotazione = scanner.nextInt();
+            prenotazione_spiaggia.cancellaPrenotazione(id_prenotazione);
+        }
+        else System.out.println("Non hai ancora prenotazioni effettuate.\n");
+
         // this.id_ordinazione = id
 
     }

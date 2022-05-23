@@ -2,6 +2,7 @@ package com.unicam.cs.ids.casotto;
 
 import com.unicam.cs.ids.casotto.Connectors.ClienteConnector;
 import com.unicam.cs.ids.casotto.Connectors.OrdinazioneBarConnector;
+import com.unicam.cs.ids.casotto.Connectors.PrenotazioneSpiaggiaConnector;
 import com.unicam.cs.ids.casotto.Connectors.UtenteConnector;
 
 import java.text.ParseException;
@@ -253,7 +254,10 @@ public class Utente implements IUtente {
             System.out.println("Scegli cosa vuoi fare: ");
             System.out.println("1: Prenota ombrellone ");
             System.out.println("2: Cancella prenotazione ombrellone ");
-            System.out.println("3: Ordinazione bar ");
+            PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector= new PrenotazioneSpiaggiaConnector();
+            if(prenotazioneSpiaggiaConnector.checkPrenotazioniOmbrellone(email)){
+                System.out.println("3: Ordinazione bar ");
+            };
             System.out.println("4: Iscrizione attività ");
             System.out.println("0: Effettua il logout ");
             Scanner scanner = new Scanner(System.in);
@@ -264,10 +268,11 @@ public class Utente implements IUtente {
                     break;
                 case 2:
                     cliente.cancellazionePrenotazioneOmbrellone(email);
-
                     break;
                 case 3:
-                    cliente.ordinazioneBar(email);
+                    if(prenotazioneSpiaggiaConnector.checkPrenotazioniOmbrellone(email)){
+                        cliente.ordinazioneBar(email);
+                    }
                     break;
                 case 4:
                     cliente.iscrizione_Attivita(email);

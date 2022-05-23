@@ -1,9 +1,6 @@
 package com.unicam.cs.ids.casotto;
 
-import com.unicam.cs.ids.casotto.Connectors.AddettoSpiaggiaConnector;
-import com.unicam.cs.ids.casotto.Connectors.ClienteConnector;
-import com.unicam.cs.ids.casotto.Connectors.OrdinazioneBarConnector;
-import com.unicam.cs.ids.casotto.Connectors.UtenteConnector;
+import com.unicam.cs.ids.casotto.Connectors.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
