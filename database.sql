@@ -190,7 +190,7 @@ CREATE TABLE `chalet` (
 
 LOCK TABLES `chalet` WRITE;
 /*!40000 ALTER TABLE `chalet` DISABLE KEYS */;
-INSERT INTO `chalet` VALUES (150,300,80,180);
+INSERT INTO `chalet` VALUES (150,300,79,179);
 /*!40000 ALTER TABLE `chalet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,9 +206,9 @@ CREATE TABLE `cliente` (
   `cognome` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   `id_ombrellone` int NOT NULL,
-  PRIMARY KEY (`id_ombrellone`),
   KEY `email_fk_3` (`email`),
-  CONSTRAINT `id_ombrellone_fk_3` FOREIGN KEY (`id_ombrellone`) REFERENCES `pagamentoombrellone` (`id_ombrellone`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `id_ombrellone_fk_idx` (`id_ombrellone`),
+  CONSTRAINT `id_ombrellone_fk2` FOREIGN KEY (`id_ombrellone`) REFERENCES `prenotazionespiaggia` (`id_ombrellone`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -218,7 +218,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES ('toma','toma','matteo',2);
+INSERT INTO `cliente` VALUES ('toma','toma','matteo',1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -361,7 +361,7 @@ CREATE TABLE `pagamentoombrellone` (
 
 LOCK TABLES `pagamentoombrellone` WRITE;
 /*!40000 ALTER TABLE `pagamentoombrellone` DISABLE KEYS */;
-INSERT INTO `pagamentoombrellone` VALUES ('app',1,1,'2022-05-23 00:00:00'),('app',2,2,'2022-05-23 00:00:00');
+INSERT INTO `pagamentoombrellone` VALUES ('app',1,1,'2022-05-24 00:00:00');
 /*!40000 ALTER TABLE `pagamentoombrellone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -380,13 +380,13 @@ CREATE TABLE `prenotazioneattivita` (
   `num_posti` int NOT NULL,
   `id_prenotazione_attivita` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id_prenotazione_attivita`),
-  KEY `nome_attivita_fk_idx` (`email`) /*!80000 INVISIBLE */,
   KEY `email_pren_spiaggia_fk_idx` (`id_attivita`),
   KEY `data_inzio_attivita_idx` (`data_inizio`),
   KEY `data_fine_attivita_idx` (`data_fine`),
+  KEY `email_fk_idx` (`email`),
   CONSTRAINT `data_fine_attivita` FOREIGN KEY (`data_fine`) REFERENCES `attivita` (`data_fine_attivita`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `data_inzio_attivita` FOREIGN KEY (`data_inizio`) REFERENCES `attivita` (`data_inizio_attivita`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `email_fk_2` FOREIGN KEY (`email`) REFERENCES `cliente` (`email`),
+  CONSTRAINT `email_fk_2` FOREIGN KEY (`email`) REFERENCES `prenotazionespiaggia` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `id_attivita_fk` FOREIGN KEY (`id_attivita`) REFERENCES `attivita` (`id_attivita`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -419,6 +419,7 @@ CREATE TABLE `prenotazionespiaggia` (
   UNIQUE KEY `id_prenotazione_UNIQUE` (`id_prenotazione`),
   KEY `num_fila_ombrellone_idx` (`num_fila_ombrellone`),
   KEY `id_ombrellone_fk_idx` (`id_ombrellone`),
+  KEY `email_fk` (`email`),
   CONSTRAINT `id_fk_ombrellone` FOREIGN KEY (`id_ombrellone`) REFERENCES `ombrellone` (`id_ombrellone`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -429,7 +430,7 @@ CREATE TABLE `prenotazionespiaggia` (
 
 LOCK TABLES `prenotazionespiaggia` WRITE;
 /*!40000 ALTER TABLE `prenotazionespiaggia` DISABLE KEYS */;
-INSERT INTO `prenotazionespiaggia` VALUES (1,'2022-06-01','2022-06-01',1,1,1,'matteo'),(2,'2022-06-02','2022-06-02',1,2,1,'matteo');
+INSERT INTO `prenotazionespiaggia` VALUES (1,'2022-06-12','2022-06-13',1,1,1,'matteo');
 /*!40000 ALTER TABLE `prenotazionespiaggia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -510,7 +511,7 @@ CREATE TABLE `scontrino` (
 
 LOCK TABLES `scontrino` WRITE;
 /*!40000 ALTER TABLE `scontrino` DISABLE KEYS */;
-INSERT INTO `scontrino` VALUES (1,'2022-05-23',1,17,'ombrellone'),(2,'2022-05-23',2,17,'ombrellone');
+INSERT INTO `scontrino` VALUES (1,'2022-05-24',1,34,'ombrellone');
 /*!40000 ALTER TABLE `scontrino` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -582,4 +583,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-23 20:49:01
+-- Dump completed on 2022-05-24  9:34:06
