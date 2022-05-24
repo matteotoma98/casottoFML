@@ -75,11 +75,11 @@ public class Attivita {
         this.num_posti = num_posti;
     }
 
-	/*public String getNome_attrezzatira() {
+	/*public String getNome_attrezzatura() {
 		return nome_attrezzatura;
 	}
 
-	public void setNome_attrezzatira(String nome_attrezzatira) {
+	public void setNome_attrezzatura(String nome_attrezzatura) {
 		this.nome_attrezzatura = nome_attrezzatura;
 	}
 
