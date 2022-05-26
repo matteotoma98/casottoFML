@@ -1,9 +1,11 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
-import com.unicam.cs.ids.casotto.Ombrellone;
-import com.unicam.cs.ids.casotto.Scontrino;
+import com.unicam.cs.ids.casotto.utilities.Scontrino;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Date;
 
 public class ScontrinoConnector {

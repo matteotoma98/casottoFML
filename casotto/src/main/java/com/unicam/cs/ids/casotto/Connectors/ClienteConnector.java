@@ -1,8 +1,7 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
-import com.unicam.cs.ids.casotto.Cliente;
+import com.unicam.cs.ids.casotto.utenti.Cliente;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 
 public class ClienteConnector {

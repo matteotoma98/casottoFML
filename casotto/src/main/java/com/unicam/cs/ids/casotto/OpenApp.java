@@ -4,6 +4,8 @@ import com.unicam.cs.ids.casotto.Connectors.AddettoSpiaggiaConnector;
 import com.unicam.cs.ids.casotto.Connectors.ClienteConnector;
 import com.unicam.cs.ids.casotto.Connectors.OrdinazioneBarConnector;
 import com.unicam.cs.ids.casotto.Connectors.UtenteConnector;
+import com.unicam.cs.ids.casotto.utenti.Cliente;
+import com.unicam.cs.ids.casotto.utenti.Utente;
 
 import java.text.ParseException;
 import java.util.Scanner;

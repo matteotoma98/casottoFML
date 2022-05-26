@@ -1,7 +1,6 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
-import com.unicam.cs.ids.casotto.Cliente;
-import com.unicam.cs.ids.casotto.Utente;
+import com.unicam.cs.ids.casotto.utenti.Utente;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -123,6 +122,11 @@ public class UtenteConnector {
             System.out.println("Result is empty");
 
         return resultList;
+    }
+
+
+    private boolean cambiaRuolo(String email) {
+        return true;
     }
 
 

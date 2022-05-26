@@ -1,8 +1,6 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
-import com.unicam.cs.ids.casotto.Cliente;
-
-import java.sql.*;
+import java.sql.Connection;
 
 public class AddettoSpiaggiaConnector {
     Connection connection;
@@ -15,7 +13,13 @@ public class AddettoSpiaggiaConnector {
         } //add exception here
     }
 
+    public boolean addAttivita(String nome_attivita, String nome_attrezzatura, int quantita) {
+        return true;
+    }
 
+    public boolean removeAttivita(String nome) {
+        return true;
+    }
    /*
    public void cambiaDisponbilitaOmbrellone() {
   Date data = Date.valueOf(java.time.LocalDate.now());

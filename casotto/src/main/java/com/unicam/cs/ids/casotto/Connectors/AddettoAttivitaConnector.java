@@ -1,7 +1,7 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
-import com.unicam.cs.ids.casotto.Cliente;
-import com.unicam.cs.ids.casotto.SendEmail;
+import com.unicam.cs.ids.casotto.utenti.Cliente;
+import com.unicam.cs.ids.casotto.utilities.SendEmail;
 
 import java.sql.Connection;
 import java.sql.Date;

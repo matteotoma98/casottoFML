@@ -1,20 +1,10 @@
 package com.unicam.cs.ids.casotto;
 
-import com.unicam.cs.ids.casotto.Connectors.*;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.mail.MessagingException;
-import java.io.Console;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
-import java.io.Console;
 
 @SpringBootApplication
 public class CasottoApplication {

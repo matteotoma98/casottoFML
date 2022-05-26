@@ -1,7 +1,7 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
 
-import com.unicam.cs.ids.casotto.Cliente;
+import com.unicam.cs.ids.casotto.utenti.Cliente;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -42,6 +42,11 @@ public class AddettoBarConnector {
             System.out.println(e);
         }
         return result;
+    }
+
+    public boolean ordinePronto(int id_ordinazione, int tempo_totale) {
+
+        return false;
     }
 
 

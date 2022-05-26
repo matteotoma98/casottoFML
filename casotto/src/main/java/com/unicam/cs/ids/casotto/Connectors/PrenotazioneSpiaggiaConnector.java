@@ -1,12 +1,10 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
-import com.unicam.cs.ids.casotto.Prenotazione_Spiaggia;
-
 import java.sql.*;
 
 public class PrenotazioneSpiaggiaConnector {
     Connection connection;
-    private boolean a=true;
+    private boolean a = true;
 
     public PrenotazioneSpiaggiaConnector() {
         try {
@@ -154,7 +152,7 @@ public class PrenotazioneSpiaggiaConnector {
         } catch (Exception e) {
             System.out.println(e);
         }
-        if(!a)try { //se a è false allora non ci sono prenotazioni esistenti
+        if (!a) try { //se a è false allora non ci sono prenotazioni esistenti
 
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO prenotazionespiaggia VALUES (?,?,?,?,?,?,?)");
             preparedStatement.setInt(1, id_prenotazione);

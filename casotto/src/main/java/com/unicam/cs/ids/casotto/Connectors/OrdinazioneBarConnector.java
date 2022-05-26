@@ -1,15 +1,11 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
-import com.unicam.cs.ids.casotto.Cliente;
-import com.unicam.cs.ids.casotto.Ordinazione_Bar;
+import com.unicam.cs.ids.casotto.serviziobar.OrdinazioneBar;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 public class OrdinazioneBarConnector {
@@ -72,7 +68,7 @@ public class OrdinazioneBarConnector {
         return id_ordinazione;
     }
 
-    public boolean addOrdine(Ordinazione_Bar ordinazione_bar) {
+    public boolean addOrdine(OrdinazioneBar ordinazione_bar) {
         //  int i = 0;
         boolean result;
         boolean result2;
