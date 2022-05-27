@@ -2,7 +2,6 @@ package com.unicam.cs.ids.casotto.serviziogestione;
 
 import com.unicam.cs.ids.casotto.Connectors.AttivitaConnector;
 import com.unicam.cs.ids.casotto.Connectors.ChaletConnector;
-import com.unicam.cs.ids.casotto.servizioattivita.Attivita;
 import com.unicam.cs.ids.casotto.servizioattivita.Attrezzatura;
 import com.unicam.cs.ids.casotto.utenti.Utente;
 
@@ -78,20 +77,37 @@ public class Gestore extends Utente {
         attrezzatura.add(a);
         throw new UnsupportedOperationException();
     }
+   public void rimozioneAttivita(){
+       String nomeAttivita = "";
+       Scanner scanner = new Scanner(System.in);
+       AttivitaConnector ac = new AttivitaConnector();
+       ac.getAttivita();
+       boolean risultato=false;
+       do {
+           System.out.println("Inserisci il nome dell'attività da rimuovere:");
+           nomeAttivita = scanner.next();
 
+           risultato = ac.rimuoviAttivita(nomeAttivita);
+       }
+       while (!risultato);
+   }
     public void definizioneAttivita() {
-        String nomeAttivita="";
-        String nome_attrezzatura="";
-        int quantita_attrezzatura=0;
+        String nomeAttivita = "";
+        String nome_attrezzatura = "";
+        int quantita_attrezzatura = 0;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Inserisci il nome dell'attività da aggiungere:\n");
-        nomeAttivita= scanner.next();
-        System.out.println("Inserisci il nome dell'attrezzatura di cui l'attività necessita:\n");
-        nome_attrezzatura= scanner.next();
-        System.out.println("Inserisci la quantità dell'attrezzatura:\n");
-        quantita_attrezzatura= scanner.nextInt();
-        AttivitaConnector ac= new AttivitaConnector();
-        ac.addAttivita(nomeAttivita,nome_attrezzatura,quantita_attrezzatura);
+        boolean risultato = false;
+        do {
+            System.out.println("Inserisci il nome dell'attività da aggiungere:");
+            nomeAttivita = scanner.next();
+            System.out.println("Inserisci il nome dell'attrezzatura di cui l'attività necessita:");
+            nome_attrezzatura = scanner.next();
+            System.out.println("Inserisci la quantità dell'attrezzatura:");
+            quantita_attrezzatura = scanner.nextInt();
+            AttivitaConnector ac = new AttivitaConnector();
+            risultato = ac.addAttivita(nomeAttivita, nome_attrezzatura, quantita_attrezzatura);
+        }
+        while (!risultato);
     }
 
     public void definizionePolitichePrezzi() {
@@ -104,7 +120,8 @@ public class Gestore extends Utente {
         this.cognome = cognome;
         this.email = email;
     }
-    public Gestore(){
+
+    public Gestore() {
 
     }
 

@@ -125,8 +125,7 @@ public class Utente implements IUtente {
         String _email = utente.getEmail();
         Cliente cliente = new Cliente();
         cliente.setEmail(_email);
-        System.out.println("Email in login di Utente.java è " + _email);
-        // System.out.println("Email in login di Utente.java è " + email);
+        // System.out.println("Email in login di Utente.java è " + _email);
         switch (utente.getRuolo()) {
             case "cliente":
                 try {
@@ -184,12 +183,13 @@ public class Utente implements IUtente {
         int scelta;
         do {
             System.out.println("Scegli cosa vuoi fare: ");
-            System.out.println("1: Aggiungi attività giornaliere ");
-            System.out.println("2: Aggiungi attrezzature ludico sportive ");
-            System.out.println("3: Aggiorna caratteristiche struttura ");
-            System.out.println("4: Aggiorna politiche dei prezzi ");
-            System.out.println("5: Aggiungi prodotti al bar ");
-            System.out.println("6: Aggiorna/Definisci ruoli utente");
+            System.out.println("1: Aggiungi le attività giornaliere ");
+            System.out.println("2: Rimuovi un'attività giornaliera ");
+            System.out.println("3: Aggiungi le attrezzature ludico sportive ");
+            System.out.println("4: Aggiorna le caratteristiche struttura ");
+            System.out.println("5: Aggiorna le politiche dei prezzi ");
+            System.out.println("6: Aggiungi i prodotti del bar ");
+            System.out.println("7: Aggiorna i ruoli degli utenti");
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
@@ -198,19 +198,22 @@ public class Utente implements IUtente {
                     gestore.definizioneAttivita();
                     break;
                 case 2:
-                    //	gestore.definizioneAttrezzatura();
+                    gestore.rimozioneAttivita();
                     break;
                 case 3:
-                    //gestore.updateCaratteristicheStruttura();
+                    //	gestore.definizioneAttrezzatura();
                     break;
                 case 4:
-                    //	gestore.definizionePolitichePrezzi();
+                    //gestore.updateCaratteristicheStruttura();
                     break;
                 case 5:
-                    //   gestore.updatePolitichePrezzi();
+                    //	gestore.definizionePolitichePrezzi();
                     break;
-                case 6:
-                    //      gestore.cambiaRuolo();
+                case 6: //gestore.updatePolitichePrezzi();
+                    //
+                    break;
+                case 7:
+                    //        gestore.cambiaRuolo();
                     break;
                 case 0:
                     OpenApp openApp = new OpenApp();

@@ -34,38 +34,96 @@ public class AttivitaConnector {
         return id_attivita;
     }
 
-    public void addAttivita(String nome_attivita, String nome_attrezzatura, int quantita) {
+    public boolean addAttivita(String nome_attivita, String nome_attrezzatura, int quantita) {
         int id_attivita = last_attivita();
+        boolean aggiunta = false;
+        boolean risultato = false;
+        //error checking
         boolean result = false;
+        boolean resultattr = false;
+        boolean attresistente = false;
+        boolean attivitaesistente = false;
+        ResultSet result3;
         ResultSet result2;
         try {
-            result2 = connection.createStatement().executeQuery("SELECT nome_attrezzatura FROM attrezzatura WHERE nome_attrezzatura='" + nome_attrezzatura + "'");
-            while (result2.next()) {
-               String nome_attr= result2.getString("nome_attrezzatura");
-            }
-            if(result2 è vuoto){
-
-            }
-            if (result2.next()) {
-                try {
-                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO attivita VALUES (?,NULL,?,?,?,NULL,NULL)");
-                    preparedStatement.setString(1, nome_attivita);
-                    preparedStatement.setInt(2, id_attivita);
-                    preparedStatement.setString(3, nome_attrezzatura);
-                    preparedStatement.setInt(4, quantita);
-                    result = preparedStatement.executeUpdate() > 0;
-                    if (result) {
-                        System.out.println("Attività aggiunta correttamente");
-                    }
-                } catch (Exception e) {
-                    System.out.println(e);
+            result3 = connection.createStatement().executeQuery("SELECT nome_attivita FROM attivita WHERE nome_attivita='" + nome_attivita + "'");
+            while (result3.next()) {
+                nome_attivita = result3.getString("nome_attivita");
+                if (nome_attivita.isEmpty()) attivitaesistente = false;
+                else {
+                    attivitaesistente = true;
+                    System.out.println("esiste già quest'attività, inserirne un'altra diversa.");
                 }
-            } else System.out.println("Non esiste l'attrezzatura nello chalet per inserire l'attività.");
+            }
+            try {
+                result2 = connection.createStatement().executeQuery("SELECT nome_attrezzatura FROM attrezzatura WHERE nome_attrezzatura='" + nome_attrezzatura + "'");
+                while (result2.next()) {
+                    String nome_attr = result2.getString("nome_attrezzatura");
+                    if (nome_attr.isEmpty()) attresistente = false;
+                    else {
+                        attresistente = true;
+                        if (attivitaesistente)
+                            System.out.println("esiste già questa attrezzatura, inserirne un'altra diversa.");
+                    }
+                }
+                if (!attresistente) {
+                    System.out.println("Non c'è un'attrezzatura per questo nome con questo nome, verrà quindi inserita.");
+                    try {
+                        PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO attrezzatura VALUES (?,?,NULL)");
+                        preparedStatement2.setString(1, nome_attrezzatura);
+                        preparedStatement2.setInt(2, quantita);
+                        resultattr = preparedStatement2.executeUpdate() > 0;
+                        if (resultattr) {
+                            System.out.println("Attrezzatura aggiunta correttamente");
+                            risultato = true;
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                } else if (!attivitaesistente && attresistente) {
+                    try {
+                        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO attivita VALUES (?,NULL,?,?,?,NULL,NULL)");
+                        preparedStatement.setString(1, nome_attivita);
+                        preparedStatement.setInt(2, id_attivita);
+                        preparedStatement.setString(3, nome_attrezzatura);
+                        preparedStatement.setInt(4, quantita);
+                        result = preparedStatement.executeUpdate() > 0;
+                        if (result) {
+                            System.out.println("non ci sono attività con questo nome, verrà quindi inserita.");
+                            System.out.println("Attività aggiunta correttamente");
+                            risultato = true;
+                            aggiunta = true;
+                            //decrementare la quantità dell'attrezzatura disponibile dalla tabella attrezzatura
+                            try {
+                                boolean result4 = false;
+                                PreparedStatement preparedStatement1 = connection.prepareStatement("UPDATE attrezzatura set quantita = quantita-'" + quantita + "' where quantita>0 AND nome_attrezzatura='" + nome_attrezzatura + "'");
+                                //preparedStatement.setInt(1,lettini);
+                                result4 = preparedStatement1.executeUpdate() > 0;
+                                if (result4) System.out.println("Quantità delle attrezzature disponibili aggiornate");
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            if (attresistente && aggiunta) {
+                risultato = true;
+            } else if (attivitaesistente) {
+                // System.out.println("Esiste già questa attività, inserirne un'altra.");
+                risultato = false;
+            }
+
+            // else System.out.println("Non esiste l'attrezzatura nello chalet per inserire l'attività.");
         } catch (Exception e) {
-             System.out.println(e);
+            System.out.println(e);
             System.out.println("errore nel cercare l'attrezzatura");
         }
-
+        return risultato;
     }
 
     public ResultSet getAttivita() {
@@ -156,4 +214,42 @@ public class AttivitaConnector {
         }
         return result2 = true;
     }
+
+    public boolean rimuoviAttivita(String nomeAttivita) {
+        ResultSet result;
+        boolean result2 = false;
+        boolean result3 = false;
+        boolean risultato = false;
+        int quantitaAttr = 0;
+        String nome_attrezz="";
+        try {
+            result = connection.createStatement().executeQuery("SELECT quantita,nome_attrezzatura FROM attivita WHERE nome_attivita='" + nomeAttivita + "'");
+            while (result.next()) {
+                quantitaAttr = result.getInt("quantita");
+                nome_attrezz= result.getString("nome_attrezzatura");
+                try {
+                    PreparedStatement preparedStatement3 = connection.prepareStatement("DELETE FROM attivita WHERE nome_attivita= '" + nomeAttivita + "'");
+                    result2 = preparedStatement3.executeUpdate() > 0;
+                    if (result2) {
+                        System.out.println("Attività rimossa.");
+                        PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE attrezzatura set quantita = quantita +'"+quantitaAttr+"'WHERE nome_attrezzatura='"+nome_attrezz+"'");
+                        result3 = preparedStatement4.executeUpdate() > 0;
+                        if (result3) {
+                            System.out.println("Quantità attrezzatura aggiornata");
+                            risultato = true;
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                    result2 = false;
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return risultato;
+    }
 }
+
+

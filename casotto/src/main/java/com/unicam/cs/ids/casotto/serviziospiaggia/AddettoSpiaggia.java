@@ -20,6 +20,7 @@ public class AddettoSpiaggia extends Utente {
         this.nome = nome;
         this.cognome = cognome;
     }
+
     public AddettoSpiaggia() {
     }
 
