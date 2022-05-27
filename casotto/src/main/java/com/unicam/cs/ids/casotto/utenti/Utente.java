@@ -6,6 +6,8 @@ import com.unicam.cs.ids.casotto.Connectors.UtenteConnector;
 import com.unicam.cs.ids.casotto.OpenApp;
 import com.unicam.cs.ids.casotto.model.IUtente;
 import com.unicam.cs.ids.casotto.servizioattivita.AddettoAttivitaLudicoSportive;
+import com.unicam.cs.ids.casotto.serviziogestione.Gestore;
+import com.unicam.cs.ids.casotto.serviziospiaggia.AddettoSpiaggia;
 
 import java.text.ParseException;
 import java.util.Scanner;
@@ -134,10 +136,10 @@ public class Utente implements IUtente {
                 }
                 break;
             case "addetto_spiaggia":
-                // menu_addettoSpiaggia();
+                menu_addettoSpiaggia();
                 break;
             case "addetto_bar":
-                // menu_cameriere();
+                // menu_addetto_bar();
                 break;
             case "addetto_attivita":
                 try {
@@ -147,7 +149,7 @@ public class Utente implements IUtente {
                 }
                 break;
             case "gestore":
-                //menu_gestore();
+                menu_gestore(email);
                 break;
         }
 
@@ -176,76 +178,71 @@ public class Utente implements IUtente {
         }
         while (scelta != 0);
     }
-/*
-	private void menu_gestore() {
-		Gestore gestore = new Gestore();
-		int scelta;
-		do{
-			System.out.println("Scegli cosa vuoi fare: ");
-			System.out.println("1: Modifica prezzo ombrelloni ");
-			System.out.println("2: Assumi dipendente ");
-			System.out.println("3: Licenzia dipendente ");
-			System.out.println("4: Aggiungi ombrellone ");
-			System.out.println("0: Esci ");
-			Scanner scanner = new Scanner(System.in);
-			scelta = scanner.nextInt();
-			switch(scelta) {
-				case 1:
-					gestore.modifica_politica();
-					break;
-				case 2:
-					gestore.assumi_dipendente();
-					break;
-				case 3:
-					gestore.licenzia_dipendente();
-					break;
-				case 4:
-					gestore.aggiungi_ombrellone();
-					break;
-			}
-		}
-		while(scelta != 0);
-	}
+
+    private void menu_gestore(String email) {
+        Gestore gestore = new Gestore();
+        int scelta;
+        do {
+            System.out.println("Scegli cosa vuoi fare: ");
+            System.out.println("1: Aggiungi attività giornaliere ");
+            System.out.println("2: Aggiungi attrezzature ludico sportive ");
+            System.out.println("3: Aggiorna caratteristiche struttura ");
+            System.out.println("4: Aggiorna politiche dei prezzi ");
+            System.out.println("5: Aggiungi prodotti al bar ");
+            System.out.println("6: Aggiorna/Definisci ruoli utente");
+            System.out.println("0: Esci ");
+            Scanner scanner = new Scanner(System.in);
+            scelta = scanner.nextInt();
+            switch (scelta) {
+                case 1:
+                    gestore.definizioneAttivita();
+                    break;
+                case 2:
+                    //	gestore.definizioneAttrezzatura();
+                    break;
+                case 3:
+                    //gestore.updateCaratteristicheStruttura();
+                    break;
+                case 4:
+                    //	gestore.definizionePolitichePrezzi();
+                    break;
+                case 5:
+                    //   gestore.updatePolitichePrezzi();
+                    break;
+                case 6:
+                    //      gestore.cambiaRuolo();
+                    break;
+                case 0:
+                    OpenApp openApp = new OpenApp();
+                    try {
+                        openApp.Open();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+            }
+        }
+        while (scelta != 0);
+    }
 
 
-	private void menu_addettoSpiaggia() {
-		Addetto_Spiaggia as = new Addetto_Spiaggia();
-		int scelta;
-		do{
-			System.out.println("Scegli cosa vuoi fare: ");
-			System.out.println("1: Stampa scontrino ");
-			System.out.println("2: Modifica prodotto ");
-			System.out.println("3: Aggiungi prodotto ");
-			System.out.println("4: Rimuovi prodotto ");
-			System.out.println("5: Modifica stato ombrellone ");
-			System.out.println("6: Leggi ordine ");
-			System.out.println("0: Esci ");
-			Scanner scanner = new Scanner(System.in);
-			scelta = scanner.nextInt();
-			switch(scelta) {
-				case 1:
-					as.stampa_scontrino();
-					break;
-				case 2:
-					as.modifica_prodotto();
-					break;
-				case 3:
-					as.aggiungi_prodotto();
-					break;
-				case 4:
-					as.rimuovi_prodotto();
-					break;
-				case 5:
-					as.modifica_stato_ombrellone();
-					break;
-				case 6:
-					as.leggi_ordine();
-					break;
-			}
-		}
-		while(scelta != 0);
-	}
-  */
+    private void menu_addettoSpiaggia() {
+        AddettoSpiaggia as = new AddettoSpiaggia();
+        int scelta;
+        do {
+            System.out.println("Scegli cosa vuoi fare: ");
+            System.out.println("1: Libera Ombrellone ");
+            System.out.println("0: Esci ");
+            Scanner scanner = new Scanner(System.in);
+            scelta = scanner.nextInt();
+            switch (scelta) {
+                case 1:
+                    // as.liberaOmbrellone();
+                    break;
+            }
+        }
+        while (scelta != 0);
+    }
+
 
     public void menu_cliente(String email) throws ParseException {
         //Cliente cliente = cc.getCliente(email);

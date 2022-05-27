@@ -17,6 +17,57 @@ public class AttivitaConnector {
         } //add exception here
     }
 
+    public int last_attivita() {
+        boolean result;
+        int id_attivita = 0;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT  MAX(id_attivita) as last_id FROM attivita");
+            int last_attivita = 0;
+            while (resultSet.next()) {
+                last_attivita = resultSet.getInt("last_id");
+            }
+            id_attivita = last_attivita + 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return id_attivita;
+    }
+
+    public void addAttivita(String nome_attivita, String nome_attrezzatura, int quantita) {
+        int id_attivita = last_attivita();
+        boolean result = false;
+        ResultSet result2;
+        try {
+            result2 = connection.createStatement().executeQuery("SELECT nome_attrezzatura FROM attrezzatura WHERE nome_attrezzatura='" + nome_attrezzatura + "'");
+            while (result2.next()) {
+               String nome_attr= result2.getString("nome_attrezzatura");
+            }
+            if(result2 è vuoto){
+
+            }
+            if (result2.next()) {
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO attivita VALUES (?,NULL,?,?,?,NULL,NULL)");
+                    preparedStatement.setString(1, nome_attivita);
+                    preparedStatement.setInt(2, id_attivita);
+                    preparedStatement.setString(3, nome_attrezzatura);
+                    preparedStatement.setInt(4, quantita);
+                    result = preparedStatement.executeUpdate() > 0;
+                    if (result) {
+                        System.out.println("Attività aggiunta correttamente");
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            } else System.out.println("Non esiste l'attrezzatura nello chalet per inserire l'attività.");
+        } catch (Exception e) {
+             System.out.println(e);
+            System.out.println("errore nel cercare l'attrezzatura");
+        }
+
+    }
+
     public ResultSet getAttivita() {
         ResultSet result = null;
         Cliente cliente = new Cliente();

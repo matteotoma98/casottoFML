@@ -21,7 +21,6 @@ public class AddettoAttivitaConnector {
         } //add exception here
     }
 
-
     public void setDate(Date data_inizio_attivita, Date data_fine_attività, int num_posti, int id_attivita) {
         boolean result = false;
         try {

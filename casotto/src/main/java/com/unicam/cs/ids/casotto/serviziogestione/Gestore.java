@@ -1,11 +1,13 @@
 package com.unicam.cs.ids.casotto.serviziogestione;
 
+import com.unicam.cs.ids.casotto.Connectors.AttivitaConnector;
 import com.unicam.cs.ids.casotto.Connectors.ChaletConnector;
 import com.unicam.cs.ids.casotto.servizioattivita.Attivita;
 import com.unicam.cs.ids.casotto.servizioattivita.Attrezzatura;
 import com.unicam.cs.ids.casotto.utenti.Utente;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Gestore extends Utente {
     private String nome;
@@ -21,29 +23,29 @@ public class Gestore extends Utente {
         cc.updateCaratteristicheStruttura(ombrelloni_totali, lettini_totali, id_ombrellone, tipologia, fila);
     }
 
-    private boolean addAttivitaGiornaliere(String nome_attivita, String nome_attrezzatura, int quantita) {
+    public boolean addAttivitaGiornaliere(String nome_attivita, String nome_attrezzatura, int quantita) {
         return true;
     }
 
-    private boolean addAttrezzatura(int id_attivita, String nome_attrezzatura, int quantita) {
+    public boolean addAttrezzatura(int id_attivita, String nome_attrezzatura, int quantita) {
         return true;
 
     }
 
-    private boolean updatePolitichePrezzi(int id_fila, int id_ombrellone, double prezzo_ombr_mg, double prezzo_ombr_gi, double prezzo_lettino, double prezzo_prodotto, int id_prodotto) {
+    public boolean updatePolitichePrezzi(int id_fila, int id_ombrellone, double prezzo_ombr_mg, double prezzo_ombr_gi, double prezzo_lettino, double prezzo_prodotto, int id_prodotto) {
 
         return true;
     }
 
-    private boolean aggiornaPrezzoFila(int id_fila, double prezzo) {
+    public boolean aggiornaPrezzoFila(int id_fila, double prezzo) {
         return true;
     }
 
-    private boolean aggiornaPrezzoOmbrellone(int id_ombrellone, double prezzo) {
+    public boolean aggiornaPrezzoOmbrellone(int id_ombrellone, double prezzo) {
         return true;
     }
 
-    private boolean aggiornaPrezzoOmbrelloneMGGI(String tipologia) {
+    public boolean aggiornaPrezzoOmbrelloneMGGI(String tipologia) {
         if (tipologia.equals("MG")) {
 
         }
@@ -53,11 +55,11 @@ public class Gestore extends Utente {
         return true;
     }
 
-    private boolean aggiornaPrezzoProdottobar(int id_prodotto, double prezzo) {
+    public boolean aggiornaPrezzoProdottobar(int id_prodotto, double prezzo) {
         return true;
     }
 
-    private boolean cambiaRuolo(String email) {
+    public boolean cambiaRuolo(String email) {
         return true;
     }
 
@@ -77,8 +79,19 @@ public class Gestore extends Utente {
         throw new UnsupportedOperationException();
     }
 
-    public void definizioneAttivita(Attivita attivita, String nome_attrezzatura, int quantita_attrezzatura) {
-        throw new UnsupportedOperationException();
+    public void definizioneAttivita() {
+        String nomeAttivita="";
+        String nome_attrezzatura="";
+        int quantita_attrezzatura=0;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Inserisci il nome dell'attività da aggiungere:\n");
+        nomeAttivita= scanner.next();
+        System.out.println("Inserisci il nome dell'attrezzatura di cui l'attività necessita:\n");
+        nome_attrezzatura= scanner.next();
+        System.out.println("Inserisci la quantità dell'attrezzatura:\n");
+        quantita_attrezzatura= scanner.nextInt();
+        AttivitaConnector ac= new AttivitaConnector();
+        ac.addAttivita(nomeAttivita,nome_attrezzatura,quantita_attrezzatura);
     }
 
     public void definizionePolitichePrezzi() {
@@ -90,6 +103,9 @@ public class Gestore extends Utente {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
+    }
+    public Gestore(){
+
     }
 
     public String getNome() {

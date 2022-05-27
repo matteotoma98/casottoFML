@@ -13,10 +13,6 @@ public class AddettoSpiaggiaConnector {
         } //add exception here
     }
 
-    public boolean addAttivita(String nome_attivita, String nome_attrezzatura, int quantita) {
-        return true;
-    }
-
     public boolean removeAttivita(String nome) {
         return true;
     }
