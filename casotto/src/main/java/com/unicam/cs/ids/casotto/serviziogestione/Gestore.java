@@ -1,11 +1,10 @@
 package com.unicam.cs.ids.casotto.serviziogestione;
 
 import com.unicam.cs.ids.casotto.Connectors.AttivitaConnector;
+import com.unicam.cs.ids.casotto.Connectors.AttrezzaturaConnector;
 import com.unicam.cs.ids.casotto.Connectors.ChaletConnector;
-import com.unicam.cs.ids.casotto.servizioattivita.Attrezzatura;
 import com.unicam.cs.ids.casotto.utenti.Utente;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class Gestore extends Utente {
@@ -70,27 +69,57 @@ public class Gestore extends Utente {
         throw new UnsupportedOperationException();
     }
 
-    public void definizioneAttrezzatura(List<Attrezzatura> attrezzatura) {
-        String nome_attrezzatura = "";
-        int qta = 0;
-        Attrezzatura a = new Attrezzatura(nome_attrezzatura, qta);
-        attrezzatura.add(a);
-        throw new UnsupportedOperationException();
-    }
-   public void rimozioneAttivita(){
-       String nomeAttivita = "";
-       Scanner scanner = new Scanner(System.in);
-       AttivitaConnector ac = new AttivitaConnector();
-       ac.getAttivita();
-       boolean risultato=false;
-       do {
-           System.out.println("Inserisci il nome dell'attività da rimuovere:");
-           nomeAttivita = scanner.next();
+    public void definizioneAttrezzatura() {
+        String nomeAttrezzatura = "";
+        int quantita = 0;
+        Scanner scanner = new Scanner(System.in);
+        AttrezzaturaConnector at = new AttrezzaturaConnector();
+        //  at.addAttrezzatura();
+        boolean risultato = false;
+        do {
+            System.out.println("Inserisci il nome dell'attrezzatura da aggiungere:");
+            nomeAttrezzatura = scanner.next();
+            System.out.println("Inserisci la quantità dell'attrezzatura:");
+            quantita = scanner.nextInt();
 
-           risultato = ac.rimuoviAttivita(nomeAttivita);
-       }
-       while (!risultato);
-   }
+            risultato = at.addAttrezzatura(nomeAttrezzatura, quantita);
+        }
+        while (!risultato);
+    }
+
+    public void modificaquantitaAttrezzatura() {
+        String nomeAttivita = "";
+        String nome_attrezzatura = "";
+        int quantita_attrezzatura = 0;
+        Scanner scanner = new Scanner(System.in);
+        boolean risultato = false;
+        do {
+            AttrezzaturaConnector at = new AttrezzaturaConnector();
+            at.getAttrezzatura();
+            System.out.println("Inserisci il nome dell'attrezzatura di cui modificare la quantità");
+            nome_attrezzatura = scanner.next();
+            System.out.println("Inserisci la quantità dell'attrezzatura:");
+            quantita_attrezzatura = scanner.nextInt();
+            risultato = at.modificaAttrezzatura(nome_attrezzatura, quantita_attrezzatura);
+        }
+        while (!risultato);
+    }
+
+    public void rimozioneAttivita() {
+        String nomeAttivita = "";
+        Scanner scanner = new Scanner(System.in);
+        AttivitaConnector ac = new AttivitaConnector();
+        ac.getAttivita();
+        boolean risultato = false;
+        do {
+            System.out.println("Inserisci il nome dell'attività da rimuovere:");
+            nomeAttivita = scanner.next();
+
+            risultato = ac.rimuoviAttivita(nomeAttivita);
+        }
+        while (!risultato);
+    }
+
     public void definizioneAttivita() {
         String nomeAttivita = "";
         String nome_attrezzatura = "";
@@ -100,7 +129,7 @@ public class Gestore extends Utente {
         do {
             System.out.println("Inserisci il nome dell'attività da aggiungere:");
             nomeAttivita = scanner.next();
-            System.out.println("Inserisci il nome dell'attrezzatura di cui l'attività necessita:");
+            System.out.println("Inserisci il nome dell'attrezzatura:");
             nome_attrezzatura = scanner.next();
             System.out.println("Inserisci la quantità dell'attrezzatura:");
             quantita_attrezzatura = scanner.nextInt();
@@ -110,8 +139,11 @@ public class Gestore extends Utente {
         while (!risultato);
     }
 
+
+
     public void definizionePolitichePrezzi() {
-        throw new UnsupportedOperationException();
+
+
     }
 
     public Gestore(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
@@ -148,4 +180,6 @@ public class Gestore extends Utente {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }

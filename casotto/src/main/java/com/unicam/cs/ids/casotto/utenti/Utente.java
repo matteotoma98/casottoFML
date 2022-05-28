@@ -186,10 +186,11 @@ public class Utente implements IUtente {
             System.out.println("1: Aggiungi le attività giornaliere ");
             System.out.println("2: Rimuovi un'attività giornaliera ");
             System.out.println("3: Aggiungi le attrezzature ludico sportive ");
-            System.out.println("4: Aggiorna le caratteristiche struttura ");
-            System.out.println("5: Aggiorna le politiche dei prezzi ");
-            System.out.println("6: Aggiungi i prodotti del bar ");
-            System.out.println("7: Aggiorna i ruoli degli utenti");
+            System.out.println("4: Modifica quantità attrezzatura ");
+            System.out.println("5: Aggiorna le caratteristiche struttura ");
+            System.out.println("6: Aggiorna le politiche dei prezzi ");
+            System.out.println("7: Aggiungi i prodotti del bar ");
+            System.out.println("8: Aggiorna i ruoli degli utenti");
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
@@ -201,19 +202,21 @@ public class Utente implements IUtente {
                     gestore.rimozioneAttivita();
                     break;
                 case 3:
-                    //	gestore.definizioneAttrezzatura();
+                    gestore.definizioneAttrezzatura();
                     break;
                 case 4:
-                    //gestore.updateCaratteristicheStruttura();
+                    gestore.modificaquantitaAttrezzatura();
                     break;
                 case 5:
-                    //	gestore.definizionePolitichePrezzi();
+                    //gestore.updateCaratteristicheStruttura();
                     break;
-                case 6: //gestore.updatePolitichePrezzi();
-                    //
+                case 6:
+                    //     //	gestore.definizionePolitichePrezzi();
                     break;
-                case 7:
-                    //        gestore.cambiaRuolo();
+                case 7://gestore.updatePolitichePrezzi();
+
+                    break;
+                case 8:       //        gestore.cambiaRuolo();
                     break;
                 case 0:
                     OpenApp openApp = new OpenApp();

@@ -62,7 +62,7 @@ public class AttivitaConnector {
                     if (nome_attr.isEmpty()) attresistente = false;
                     else {
                         attresistente = true;
-                        if (attivitaesistente)
+                        if (attresistente)
                             System.out.println("esiste già questa attrezzatura, inserirne un'altra diversa.");
                     }
                 }
@@ -221,18 +221,18 @@ public class AttivitaConnector {
         boolean result3 = false;
         boolean risultato = false;
         int quantitaAttr = 0;
-        String nome_attrezz="";
+        String nome_attrezz = "";
         try {
             result = connection.createStatement().executeQuery("SELECT quantita,nome_attrezzatura FROM attivita WHERE nome_attivita='" + nomeAttivita + "'");
             while (result.next()) {
                 quantitaAttr = result.getInt("quantita");
-                nome_attrezz= result.getString("nome_attrezzatura");
+                nome_attrezz = result.getString("nome_attrezzatura");
                 try {
                     PreparedStatement preparedStatement3 = connection.prepareStatement("DELETE FROM attivita WHERE nome_attivita= '" + nomeAttivita + "'");
                     result2 = preparedStatement3.executeUpdate() > 0;
                     if (result2) {
                         System.out.println("Attività rimossa.");
-                        PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE attrezzatura set quantita = quantita +'"+quantitaAttr+"'WHERE nome_attrezzatura='"+nome_attrezz+"'");
+                        PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE attrezzatura set quantita = quantita +'" + quantitaAttr + "'WHERE nome_attrezzatura='" + nome_attrezz + "'");
                         result3 = preparedStatement4.executeUpdate() > 0;
                         if (result3) {
                             System.out.println("Quantità attrezzatura aggiornata");
