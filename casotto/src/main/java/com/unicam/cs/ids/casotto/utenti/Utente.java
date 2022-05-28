@@ -208,12 +208,12 @@ public class Utente implements IUtente {
                     gestore.modificaquantitaAttrezzatura();
                     break;
                 case 5:
-                    //gestore.updateCaratteristicheStruttura();
+                    gestore.updateCaratteristicheStruttura();
                     break;
                 case 6:
-                    //     //	gestore.definizionePolitichePrezzi();
+                    //	gestore.definizionePolitichePrezzi();
                     break;
-                case 7://gestore.updatePolitichePrezzi();
+                case 7:    //gestore.addProdottoBar()
 
                     break;
                 case 8:       //        gestore.cambiaRuolo();

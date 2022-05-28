@@ -89,7 +89,7 @@ public class AttrezzaturaConnector {
 
             if (result2.next() == false) {
                 System.out.println("Il nome dell'attrezzatura da modificare non esiste, inserirne una dalla lista.");
-                attr_trovata=false;
+                attr_trovata = false;
             } else {
                 do {
                     result2.getString("nome_attrezzatura");
