@@ -1,9 +1,6 @@
 package com.unicam.cs.ids.casotto;
 
 import com.unicam.cs.ids.casotto.Connectors.AddettoSpiaggiaConnector;
-import com.unicam.cs.ids.casotto.Connectors.ClienteConnector;
-import com.unicam.cs.ids.casotto.Connectors.OrdinazioneBarConnector;
-import com.unicam.cs.ids.casotto.Connectors.UtenteConnector;
 import com.unicam.cs.ids.casotto.utenti.Cliente;
 import com.unicam.cs.ids.casotto.utenti.Utente;
 
@@ -55,14 +52,13 @@ public class OpenApp {
                     cognome = scanner_value.nextLine();
                     utente.registrazione(username, password, email, nome, cognome, ruolo);
                     break;
+                case 0:
+                    System.exit(0);
             }
         }
         while (scelta != 0);
 
-        OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
-        ClienteConnector clienteConnector = new ClienteConnector();
-        UtenteConnector utenteConnector = new UtenteConnector();
-        utenteConnector.login("matteo", "matteo");
+        //   utenteConnector.login("matteo", "matteo");
     }
 
 

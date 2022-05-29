@@ -189,7 +189,7 @@ public class Utente implements IUtente {
             System.out.println("4: Modifica quantità attrezzatura ");
             System.out.println("5: Aggiorna le caratteristiche struttura ");
             System.out.println("6: Aggiorna le politiche dei prezzi ");
-            System.out.println("7: Aggiungi i prodotti del bar ");
+            System.out.println("7: Modifica i prodotti del bar ");
             System.out.println("8: Aggiorna i ruoli degli utenti");
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
@@ -213,8 +213,8 @@ public class Utente implements IUtente {
                 case 6:
                     gestore.aggiornaPolitichePrezzi();
                     break;
-                case 7:    //gestore.addProdottoBar()
-
+                case 7:
+                    gestore.modificaProdottibar();
                     break;
                 case 8:       //        gestore.cambiaRuolo();
                     break;

@@ -29,7 +29,6 @@ public class CasottoApplication {
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/casotto", "root", "casottofml");
             Statement statement = connection.createStatement();
-
             OpenApp app = new OpenApp();
             app.Open();
 

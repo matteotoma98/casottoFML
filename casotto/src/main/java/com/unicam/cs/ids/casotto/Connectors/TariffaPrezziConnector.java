@@ -58,15 +58,14 @@ public class TariffaPrezziConnector {
 
     public boolean cambiaPrezzoLettini(double prezzo) {
         boolean risultato = false;
-        try{
+        try {
             PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE tariffaprezzi SET prezzo_lettino='" + prezzo + "'");
             risultato = preparedStatement3.executeUpdate() > 0;
             if (risultato) {
                 System.out.println("Prezzi dei lettini aggiornati.");
                 risultato = true;
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return risultato;

@@ -82,8 +82,8 @@ public class Gestore extends Utente {
         double prezzo_ombrellone_mg = 0;
         double prezzo_ombrellone_gi = 0;
         double prezzo_lettini = 0;
-        double prezzo_prodotto=0;
-        int id_prodotto=0;
+        double prezzo_prodotto = 0;
+        int id_prodotto = 0;
         ChaletConnector chaletConnector = new ChaletConnector();
         OmbrelloneConnector ombrelloneConnector = new OmbrelloneConnector();
         ProdottiBarConnector prodottiBarConnector = new ProdottiBarConnector();
@@ -192,7 +192,7 @@ public class Gestore extends Utente {
                     break;
                 case 5:
                     System.out.println("Prodotti del bar:");
-                    List<ProdottiBar> prodotti =   prodottiBarConnector.getProducts();
+                    List<ProdottiBar> prodotti = prodottiBarConnector.getProducts();
                     System.out.println("--------------------PRODOTTI--------------------");
                     for (ProdottiBar prodotto : prodotti) {
                         System.out.println(prodotto.toString());
@@ -216,7 +216,7 @@ public class Gestore extends Utente {
                                 System.out.println("il prezzo dell'ombrellone deve essere maggiore di 0");
                             }
                         } while (prezzo_prodotto < 0);
-                        risultato2 = prodottiBarConnector.updateProdottiBar(prezzo_prodotto,id_prodotto);
+                        risultato2 = prodottiBarConnector.updateProdottiBar(prezzo_prodotto, id_prodotto);
                     } while (!risultato2);
 
                     break;
@@ -325,6 +325,99 @@ public class Gestore extends Utente {
         while (scelta != 0);
     }
 
+    public void modificaProdottibar() {
+        int id_prodotto = 0;
+        double prezzo_prodotto = 0;
+        int quantita_prodotto = 0;
+        int tempo_preparazione = 0;
+        String nome_prodotto = "";
+        int scelta = 0;
+        boolean risultato = false;
+        boolean risultato2 = false;
+
+        ProdottiBarConnector prodottiBarConnector = new ProdottiBarConnector();
+        do {
+            System.out.println("Scegli cosa vuoi fare: ");
+            System.out.println("1: Aggiungi prodotti dal bar ");
+            System.out.println("2: Elimina prodotti dal bar ");
+            System.out.println("0: Esci ");
+            Scanner scanner = new Scanner(System.in);
+            scelta = scanner.nextInt();
+            switch (scelta) {
+                case 1:
+                    do {
+                        do {
+                            System.out.println("Inserisci l'id del prodotto da aggiungere:");
+                            id_prodotto = scanner.nextInt();
+                            if (id_prodotto <= 0) {
+                                System.out.println("l'id del prodotto deve essere maggiore o uguale a 0");
+                            }
+                        } while (id_prodotto <= 0);
+                        do {
+                            System.out.println("Inserisci il nome del prodotto da aggiungere:");
+                            nome_prodotto = scanner.next();
+                            if (nome_prodotto.equals("")) {
+                                System.out.println("il nome del prodotto non può essere vuoto");
+                            }
+                        } while (nome_prodotto.equals(""));
+                        do {
+                            System.out.println("Inserisci la quantità del prodotto da aggiungere:");
+                            quantita_prodotto = scanner.nextInt();
+                            if (quantita_prodotto < 0) {
+                                System.out.println("l'id del prodotto deve essere maggiore di 0");
+                            }
+                        } while (quantita_prodotto <= 0);
+                        do {
+                            System.out.println("Inserisci il prezzo del prodotto da aggiungere:");
+                            prezzo_prodotto = scanner.nextDouble();
+                            if (prezzo_prodotto < 0) {
+                                System.out.println("l'id del prodotto deve essere maggiore di 0");
+                            }
+                        } while (prezzo_prodotto < 0);
+                        do {
+                            System.out.println("Inserisci il tempo di preparazione del prodotto da aggiungere:");
+                            tempo_preparazione = scanner.nextInt();
+                            if (tempo_preparazione < 0) {
+                                System.out.println("l'id del prodotto deve essere maggiore di 0");
+                            }
+                        } while (tempo_preparazione < 0);
+                        risultato = prodottiBarConnector.aggiungiProdottoBar(id_prodotto, prezzo_prodotto, nome_prodotto, quantita_prodotto, tempo_preparazione);
+                    }
+                    while (!risultato);
+                    break;
+
+                case 2:
+                    System.out.println("Prodotti del bar:");
+                    List<ProdottiBar> prodotti = prodottiBarConnector.getProducts();
+                    System.out.println("--------------------PRODOTTI--------------------");
+                    for (ProdottiBar prodotto : prodotti) {
+                        System.out.println(prodotto.toString());
+                    }
+                    do {
+                        do {
+                            System.out.println("Inserisci l'id del prodotto da rimuovere:");
+                            id_prodotto = scanner.nextInt();
+                            if (id_prodotto <= 0) {
+                                System.out.println("l'id del prodotto deve essere maggiore o uguale a 0");
+                            }
+                        } while (id_prodotto <= 0);
+                        risultato = prodottiBarConnector.rimuoviProdottoBar(id_prodotto);
+                    }
+                    while (!risultato);
+                    break;
+                case 0:
+                    OpenApp openApp = new OpenApp();
+                    try {
+                        openApp.Open();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+            }
+        }
+        while (scelta != 0);
+
+    }
+
     public void definizioneAttrezzatura() {
         String nomeAttrezzatura = "";
         int quantita = 0;
@@ -430,6 +523,5 @@ public class Gestore extends Utente {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
 }

@@ -42,6 +42,92 @@ public class ProdottiBarConnector {
         return resultList;
     }
 
+    public boolean aggiungiProdottoBar(int id_prodotto, double prezzo, String nome, int quantita, int tempo_preparazione) {
+        boolean risultato = false;
+        boolean result = false;
+        ResultSet result2;
+        boolean resultattr = false;
+        boolean prodotto_trovato = false;
+        int id_ombr = 0;
+        boolean result3 = false;
+        String nome_prod = "";
+        try {
+            result2 = connection.createStatement().executeQuery("SELECT id_prodotto,nome_prodotto FROM prodottibar WHERE id_prodotto='" + id_prodotto + "'");
+
+            if (result2.next() == false) {
+                System.out.println("L'id del prodotto non esiste, verrà quindi aggiunto");
+                prodotto_trovato = false;
+            } else {
+                do {
+                    result2.getInt("id_prodotto");
+                    nome_prod = result2.getString("nome_prodotto");
+                    prodotto_trovato = true;
+                    System.out.println("L'id del prodotto esiste già, inseriscine un'altro.");
+                } while (result2.next());
+            }
+            if (!prodotto_trovato) {
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO prodottibar VALUES (?,?,?,?,?)");
+                    preparedStatement.setInt(1, id_prodotto);
+                    preparedStatement.setString(2, nome);
+                    preparedStatement.setDouble(3, prezzo);
+                    preparedStatement.setInt(4, quantita);
+                    preparedStatement.setInt(5, tempo_preparazione);
+                    result3 = preparedStatement.executeUpdate() > 0;
+                    if (result3) {
+                        System.out.println("Prodotto aggiunto al bar.");
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        } catch (
+                Exception e) {
+            System.out.println(e);
+        }
+        return risultato;
+    }
+
+    public boolean rimuoviProdottoBar(int id_prodotto) {
+        boolean risultato = false;
+        boolean result = false;
+        ResultSet result2;
+        boolean resultattr = false;
+        boolean prodotto_trovato = false;
+        int id_ombr = 0;
+        boolean result3 = false;
+        String nome_prod = "";
+        try {
+            result2 = connection.createStatement().executeQuery("SELECT id_prodotto,nome_prodotto FROM prodottibar WHERE id_prodotto='" + id_prodotto + "'");
+
+            if (result2.next() == false) {
+                System.out.println("L'id del prodotto non esiste, inserirne uno che esiste.");
+                prodotto_trovato = false;
+            } else {
+                do {
+                    result2.getInt("id_prodotto");
+                    nome_prod = result2.getString("nome_prodotto");
+                    prodotto_trovato = true;
+                } while (result2.next());
+            }
+            if (prodotto_trovato) {
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM prodottibar WHERE id_prodotto= '" + id_prodotto + "'");
+                    result3 = preparedStatement.executeUpdate() > 0;
+                    if (result3) {
+                        System.out.println("Prodotto " + id_prodotto + " e nome " + nome_prod + " rimosso dal bar.");
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        } catch (
+                Exception e) {
+            System.out.println(e);
+        }
+        return risultato;
+    }
+
     public boolean updateProdottiBar(double prezzo_prodotto, int id_prodotto) {
         boolean risultato = false;
         boolean result = false;
@@ -60,16 +146,16 @@ public class ProdottiBarConnector {
             } else {
                 do {
                     result2.getInt("id_prodotto");
-                  nome=  result2.getString("nome_prodotto");
+                    nome = result2.getString("nome_prodotto");
                     prodotto_trovato = true;
                 } while (result2.next());
             }
             if (prodotto_trovato) {
                 try {
-                    PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE prodottibar SET prezzo='" + prezzo_prodotto + "'WHERE id_prodotto='"+id_prodotto+"'");
+                    PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE prodottibar SET prezzo='" + prezzo_prodotto + "'WHERE id_prodotto='" + id_prodotto + "'");
                     result3 = preparedStatement3.executeUpdate() > 0;
                     if (result3) {
-                        System.out.println("Prezzo del prodotto "+nome+" e id " +id_prodotto+" aggiornato.");
+                        System.out.println("Prezzo del prodotto " + nome + " e id " + id_prodotto + " aggiornato.");
                         risultato = true;
                     }
                 } catch (Exception e) {

@@ -157,13 +157,13 @@ public class OmbrelloneConnector {
                 fila_trovata = false;
             } else {
                 do {
-                     result2.getInt("num_fila_ombrellone");
+                    result2.getInt("num_fila_ombrellone");
                     fila_trovata = true;
                 } while (result2.next());
             }
             if (fila_trovata) {
                 try {
-                    PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE ombrellone SET prezzo='"+prezzo+"'WHERE num_fila_ombrellone= '"+fila+"'");
+                    PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE ombrellone SET prezzo='" + prezzo + "'WHERE num_fila_ombrellone= '" + fila + "'");
                     result3 = preparedStatement3.executeUpdate() > 0;
                     if (result3) {
                         System.out.println("Prezzi aggiornati per la fila");
@@ -203,7 +203,7 @@ public class OmbrelloneConnector {
             }
             if (ombr_esistente) {
                 try {
-                    PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE ombrellone SET prezzo='"+prezzo+"'WHERE id_ombrellone= '" + id_ombrellone + "'");
+                    PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE ombrellone SET prezzo='" + prezzo + "'WHERE id_ombrellone= '" + id_ombrellone + "'");
                     result3 = preparedStatement3.executeUpdate() > 0;
                     if (result3) {
                         System.out.println("Prezzo dell'ombrellone aggiornato.");
