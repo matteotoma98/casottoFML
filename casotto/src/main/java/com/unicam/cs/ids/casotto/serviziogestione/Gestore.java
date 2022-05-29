@@ -14,60 +14,61 @@ public class Gestore extends Utente {
     private String cognome;
     private String email;
 
-    /*
-	public Prodotti_Bar prodotti_bar;
-	public Chalet chalet;
-    */
 
+    public void cambiaRuolo() {
 
-    public boolean addAttivitaGiornaliere(String nome_attivita, String nome_attrezzatura, int quantita) {
-        return true;
-    }
+        //get Utenti
+        boolean risultato = false;
+        boolean risultato2 = false;
+        boolean emailesistente = false;
+        String email = "";
+        String ruolo = "";
+        Scanner scanner = new Scanner(System.in);
+        UtenteConnector utenteConnector = new UtenteConnector();
+        System.out.println("Utenti:");
+        utenteConnector.getListaUtenti();
+        do {
+            System.out.println("Seleziona la mail dell'utente di cui cambiare il ruolo:");
+            email = scanner.next();
+            if (email.equals("")) {
+                System.out.println("Inserire un'email non vuota.");
+            }
 
-    public boolean addAttrezzatura(int id_attivita, String nome_attrezzatura, int quantita) {
-        return true;
+            do {
+                String risultato3= utenteConnector.getRuolo(email);
+                if (risultato3.isEmpty()) {
+                    email = scanner.next();
+                }
+                else emailesistente = true;
+            } while (!emailesistente);
 
-    }
-
-    public boolean updatePolitichePrezzi(int id_fila, int id_ombrellone, double prezzo_ombr_mg, double prezzo_ombr_gi, double prezzo_lettino, double prezzo_prodotto, int id_prodotto) {
-
-        return true;
-    }
-
-    public boolean aggiornaPrezzoFila(int id_fila, double prezzo) {
-        return true;
-    }
-
-    public boolean aggiornaPrezzoOmbrellone(int id_ombrellone, double prezzo) {
-        return true;
-    }
-
-    public boolean aggiornaPrezzoOmbrelloneMGGI(String tipologia) {
-        if (tipologia.equals("MG")) {
-
+        } while (email.equals(""));
+        if (emailesistente) {
+            do {
+                System.out.println("Seleziona il ruolo da assegnare all'utente scelto: cliente: c, gestore: g, addettoattivita: at, addettospiaggia: as, addettobar: ab");
+                ruolo = scanner.next();
+                switch (ruolo) {
+                    case "c":
+                        risultato = utenteConnector.cambiaRuolo(email, "cliente");
+                        break;
+                    case "g":
+                        risultato = utenteConnector.cambiaRuolo(email, "gestore");
+                        break;
+                    case "at":
+                        risultato = utenteConnector.cambiaRuolo(email, "addettoattivita");
+                        break;
+                    case "as":
+                        risultato = utenteConnector.cambiaRuolo(email, "addettospiaggia");
+                        break;
+                    case "ab":
+                        risultato = utenteConnector.cambiaRuolo(email, "addettobar");
+                        break;
+                }
+            } while (!risultato);
         }
-        if (tipologia.equals("GI")) {
 
-        }
-        return true;
+
     }
-
-    public boolean aggiornaPrezzoProdottobar(int id_prodotto, double prezzo) {
-        return true;
-    }
-
-    public boolean cambiaRuolo(String email) {
-        return true;
-    }
-
-    public void definizioneProdotti() {
-        throw new UnsupportedOperationException();
-    }
-
-    public void definizioneStruttura(int num_ombrelloni, int num_lettini) {
-        throw new UnsupportedOperationException();
-    }
-
 
     public void aggiornaPolitichePrezzi() {
         int ombrelloni_totali = 0;
@@ -489,7 +490,8 @@ public class Gestore extends Utente {
     }
 
 
-    public Gestore(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
+    public Gestore(String username, String password, String ruolo, String nome, String cognome, String email,
+                   int id_ombrellone) {
         super(username, password, email, ruolo, nome, cognome);
         this.nome = nome;
         this.cognome = cognome;

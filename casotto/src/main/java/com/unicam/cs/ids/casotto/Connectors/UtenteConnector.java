@@ -124,9 +124,107 @@ public class UtenteConnector {
         return resultList;
     }
 
+    /**
+     * Metodo che ritorna il ruolo degli utenti
+     *
+     * @return la lista degli utenti in base al ruolo
+     */
+    public List<Utente> getListaUtenti() {
 
-    private boolean cambiaRuolo(String email) {
-        return true;
+        ResultSet result;
+        List<Utente> resultList = new ArrayList<Utente>();
+        try {
+            result = connection.createStatement().executeQuery("SELECT email,ruolo, nome,cognome FROM utente");
+            if (result.next() == false) {
+                System.out.println("Query non eseguita correttamente o vuota.");
+            } else {
+                do {
+                    System.out.print("email: "+result.getString("email")+", ");
+                    System.out.print("nome: "+result.getString("nome")+", ");
+                    System.out.print("cognome: "+result.getString("cognome")+", ");
+                    System.out.print("ruolo: "+result.getString("ruolo")+"\t");
+                    System.out.println("");
+
+                } while (result.next());
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        } //add exception here
+
+        //error checking
+       // if (resultList.isEmpty()) System.out.println("Result is empty");
+
+        return resultList;
+    }
+
+    public String getRuolo(String email){
+        boolean risultato= false;
+        ResultSet result2;
+        String ruolo="";
+        boolean utente_trovato=false;
+        try{
+            result2 = connection.createStatement().executeQuery("SELECT email,ruolo FROM utente WHERE email='" + email +"'");
+
+            if (result2.next() == false) {
+                System.out.println("L'utente non esiste, inserirne uno di quelli della lista.");
+                utente_trovato = false;
+            } else {
+                do {
+                    result2.getString("email");
+                    ruolo = result2.getString("ruolo");
+                    utente_trovato = true;
+                } while (result2.next());
+            }
+            if (utente_trovato) {
+                return ruolo;
+            }
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+        return ruolo;
+    }
+    public boolean cambiaRuolo(String email, String ruolo) {
+        boolean risultato = false;
+        boolean result = false;
+        ResultSet result2;
+        boolean resultattr = false;
+        boolean utente_trovato = false;
+        int id_ombr = 0;
+        boolean result3 = false;
+        String ruolo_ = "";
+        try {
+                result2 = connection.createStatement().executeQuery("SELECT email,ruolo FROM utente WHERE email='" + email +"'");
+
+            if (result2.next() == false) {
+                System.out.println("L'utente non esiste, inserirne uno di quelli della lista.");
+                utente_trovato = false;
+            } else {
+                do {
+                    result2.getString("email");
+                    ruolo_ = result2.getString("ruolo");
+                    utente_trovato = true;
+                } while (result2.next());
+            }
+            if (utente_trovato) {
+                try {
+                    PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE utente SET ruolo='" + ruolo + "'WHERE email='" + email + "'");
+                    result3 = preparedStatement3.executeUpdate() > 0;
+                    if (result3) {
+                        System.out.println("Ruolo dell'account con email " + email +" e ruolo precedente '" + ruolo_ + "' cambiato in '" +ruolo +"' .");
+                        risultato = true;
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        } catch (
+                Exception e) {
+            System.out.println(e);
+        }
+        return risultato;
+
     }
 
 

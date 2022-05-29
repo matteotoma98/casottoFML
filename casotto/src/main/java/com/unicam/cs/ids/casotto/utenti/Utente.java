@@ -42,6 +42,13 @@ public class Utente implements IUtente {
         this.ruolo = ruolo;
     }
 
+    public Utente(String ruolo, String email, String nome, String cognome) {
+        this.ruolo = ruolo;
+        this.email = email;
+        this.nome = nome;
+        this.cognome = cognome;
+    }
+
     public boolean Login(String email, String password) {
         return false;
     }
@@ -216,7 +223,7 @@ public class Utente implements IUtente {
                 case 7:
                     gestore.modificaProdottibar();
                     break;
-                case 8:       //        gestore.cambiaRuolo();
+                case 8:  gestore.cambiaRuolo();
                     break;
                 case 0:
                     OpenApp openApp = new OpenApp();
