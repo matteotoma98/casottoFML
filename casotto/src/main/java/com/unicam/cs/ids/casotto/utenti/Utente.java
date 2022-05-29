@@ -211,7 +211,7 @@ public class Utente implements IUtente {
                     gestore.updateCaratteristicheStruttura();
                     break;
                 case 6:
-                    //	gestore.definizionePolitichePrezzi();
+                    gestore.aggiornaPolitichePrezzi();
                     break;
                 case 7:    //gestore.addProdottoBar()
 

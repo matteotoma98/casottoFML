@@ -3,6 +3,7 @@ package com.unicam.cs.ids.casotto.Connectors;
 import com.unicam.cs.ids.casotto.serviziobar.ProdottiBar;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -41,8 +42,46 @@ public class ProdottiBarConnector {
         return resultList;
     }
 
-    private boolean updatePolitichePrezzi(double prezzo_prodotto, int id_prodotto) {
-        return true;
+    public boolean updateProdottiBar(double prezzo_prodotto, int id_prodotto) {
+        boolean risultato = false;
+        boolean result = false;
+        ResultSet result2;
+        boolean resultattr = false;
+        boolean prodotto_trovato = false;
+        int id_ombr = 0;
+        boolean result3 = false;
+        String nome = "";
+        try {
+            result2 = connection.createStatement().executeQuery("SELECT id_prodotto,nome_prodotto FROM prodottibar WHERE id_prodotto='" + id_prodotto + "'");
+
+            if (result2.next() == false) {
+                System.out.println("L'id del prodotto non esiste, inserirne uno di quelli della lista.");
+                prodotto_trovato = false;
+            } else {
+                do {
+                    result2.getInt("id_prodotto");
+                  nome=  result2.getString("nome_prodotto");
+                    prodotto_trovato = true;
+                } while (result2.next());
+            }
+            if (prodotto_trovato) {
+                try {
+                    PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE prodottibar SET prezzo='" + prezzo_prodotto + "'WHERE id_prodotto='"+id_prodotto+"'");
+                    result3 = preparedStatement3.executeUpdate() > 0;
+                    if (result3) {
+                        System.out.println("Prezzo del prodotto "+nome+" e id " +id_prodotto+" aggiornato.");
+                        risultato = true;
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        } catch (
+                Exception e) {
+            System.out.println(e);
+        }
+        return risultato;
+
     }
     /*
     public List<Prodotti_Bar> assegnaTempoPreparazione() {
@@ -147,7 +186,6 @@ public class ProdottiBarConnector {
     }
 
 
-
     public Prodotto getProduct(String id)
     {
         ResultSet result;
@@ -172,8 +210,6 @@ public class ProdottiBarConnector {
             preparedStatement.setString(2, prodotto.getNome());
             preparedStatement.setString(3, prodotto.getDescrizione());
             preparedStatement.setInt(4, prodotto.getQuantita());
-            preparedStatement.setString(5, prodotto.getFornitore());
-            preparedStatement.setString(6, prodotto.getMarca());
             preparedStatement.setDouble(7, prodotto.getPrezzo());
 
             result = preparedStatement.executeUpdate() > 0;

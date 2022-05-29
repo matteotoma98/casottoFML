@@ -1,13 +1,12 @@
 package com.unicam.cs.ids.casotto.serviziogestione;
 
-import com.unicam.cs.ids.casotto.Connectors.AttivitaConnector;
-import com.unicam.cs.ids.casotto.Connectors.AttrezzaturaConnector;
-import com.unicam.cs.ids.casotto.Connectors.ChaletConnector;
-import com.unicam.cs.ids.casotto.Connectors.OmbrelloneConnector;
+import com.unicam.cs.ids.casotto.Connectors.*;
 import com.unicam.cs.ids.casotto.OpenApp;
+import com.unicam.cs.ids.casotto.serviziobar.ProdottiBar;
 import com.unicam.cs.ids.casotto.utenti.Utente;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Gestore extends Utente {
@@ -69,6 +68,170 @@ public class Gestore extends Utente {
         throw new UnsupportedOperationException();
     }
 
+
+    public void aggiornaPolitichePrezzi() {
+        int ombrelloni_totali = 0;
+        int lettini_totali = 0;
+        int id_ombrellone = 0;
+        String tipologia = "";
+        int fila = 0;
+        int scelta = 0;
+        boolean risultato = false;
+        boolean risultato2 = false;
+        double prezzo_ombrellone = 0;
+        double prezzo_ombrellone_mg = 0;
+        double prezzo_ombrellone_gi = 0;
+        double prezzo_lettini = 0;
+        double prezzo_prodotto=0;
+        int id_prodotto=0;
+        ChaletConnector chaletConnector = new ChaletConnector();
+        OmbrelloneConnector ombrelloneConnector = new OmbrelloneConnector();
+        ProdottiBarConnector prodottiBarConnector = new ProdottiBarConnector();
+        TariffaPrezziConnector tariffaPrezziConnector = new TariffaPrezziConnector();
+        do {
+            System.out.println("Scegli cosa vuoi fare: ");
+            System.out.println("1: Cambia il prezzo degli ombrelloni per tutta la fila ");
+            System.out.println("2: Cambia il prezzo di un singolo ombrellone ");
+            System.out.println("3: Cambia il costo degli ombrelloni per la mezza giornata e la giornata intera");
+            System.out.println("4: Cambia il prezzo dei lettini");
+            System.out.println("5: Cambia il prezzo dei prodotti del bar");
+            System.out.println("0: Esci ");
+            Scanner scanner = new Scanner(System.in);
+            scelta = scanner.nextInt();
+            switch (scelta) {
+                case 1:
+                    do {
+                        System.out.println("Inserisci la fila dell'ombrellone da aggiungere: (dalla 1 alla 3 => vip, dalla 4 alla 7 => premium, dalla 8 alla 15 => base");
+                        fila = scanner.nextInt();
+                       /* else if ((!tipologia.equals("vip")) || (!tipologia.equals("premium")) || (!tipologia.equals("base"))) {
+                        throw new IllegalArgumentException("inserisci una tipologia che sia base,vip o premium");
+                    } */
+                        if (fila < 1 || fila > 15) {
+                            System.out.println("inserisci una fila compresa tra 1 e 15 ");
+                        }
+                    } while (fila < 1 || fila > 15);
+                    do {
+                        System.out.println("Inserisci il prezzo degli ombrelloni");
+                        prezzo_ombrellone = scanner.nextDouble();
+                        if (prezzo_ombrellone < 0) {
+                            System.out.println("il prezzo degli ombrelloni per la fila scelta deve essere maggiore di 0");
+                            //(mettere do while finchè non è giusto)
+                        }
+                    } while (prezzo_ombrellone <= 0);
+                    ombrelloneConnector.cambiaPrezzoFila(fila, prezzo_ombrellone);
+                    break;
+                case 2:
+                    System.out.println("lista degli id degli ombrelloni:");
+                    ombrelloneConnector.getOmbrelloni();
+                    do {
+                        do {
+                            System.out.println("Inserisci l'id dell'ombrellone:");
+                            id_ombrellone = scanner.nextInt();
+                            if (id_ombrellone < 0) {
+                                System.out.println("l'id dell'ombrellone deve essere maggiore di 0");
+                                //(mettere do while finchè non è giusto)
+                            }
+                        } while (id_ombrellone < 0);
+                        do {
+                            System.out.println("Inserisci il prezzo dell'ombrellone:");
+                            prezzo_ombrellone = scanner.nextDouble();
+                       /* else if ((!tipologia.equals("vip")) || (!tipologia.equals("premium")) || (!tipologia.equals("base"))) {
+                        throw new IllegalArgumentException("inserisci una tipologia che sia base,vip o premium");
+                    } */
+                            if (prezzo_ombrellone <= 0) {
+                                System.out.println("il prezzo dell'ombrellone deve essere maggiore di 0");
+                            }
+                        } while (prezzo_ombrellone < 0);
+                        risultato2 = ombrelloneConnector.cambiaPrezzoOmbrellone(id_ombrellone, prezzo_ombrellone);
+                    } while (!risultato2);
+                    break;
+                case 3:
+                    do {
+                        do {
+                            System.out.println("Inserisci la fila dell'ombrellone da aggiungere: (dalla 1 alla 3 => vip, dalla 4 alla 7 => premium, dalla 8 alla 15 => base");
+                            fila = scanner.nextInt();
+                       /* else if ((!tipologia.equals("vip")) || (!tipologia.equals("premium")) || (!tipologia.equals("base"))) {
+                        throw new IllegalArgumentException("inserisci una tipologia che sia base,vip o premium");
+                    } */
+                            if (fila < 1 || fila > 15) {
+                                System.out.println("inserisci una fila compresa tra 1 e 15 ");
+                            }
+                        } while (fila < 1 || fila > 15);
+                        do {
+                            System.out.println("Inserisci il prezzo degli ombrelloni per la mezza giornata:");
+                            prezzo_ombrellone_mg = scanner.nextDouble();
+                            if (prezzo_ombrellone_mg < 0) {
+                                System.out.println("il prezzo dell'ombrellone deve essere maggiore di 0");
+                                //(mettere do while finchè non è giusto)
+                            }
+                        } while (prezzo_ombrellone_mg < 0);
+                        do {
+                            System.out.println("Inserisci il prezzo degli ombrelloni per la giornata intera:");
+                            prezzo_ombrellone_gi = scanner.nextDouble();
+                            if (prezzo_ombrellone_gi < 0) {
+                                System.out.println("il prezzo dell'ombrellone deve essere maggiore di 0");
+                                //(mettere do while finchè non è giusto)
+                            }
+                        } while (prezzo_ombrellone_gi < 0);
+
+                        risultato2 = tariffaPrezziConnector.updatePolitichePrezzi(fila, prezzo_ombrellone_mg, prezzo_ombrellone_gi);
+                    } while (!risultato2);
+                    break;
+                case 4:
+                    do {
+                        do {
+                            System.out.println("Inserisci il prezzo dei lettini:");
+                            prezzo_lettini = scanner.nextDouble();
+                            if (prezzo_lettini < 0) {
+                                System.out.println("il prezzo dei lettini deve essere maggiore di 0");
+                            }
+                        } while (prezzo_lettini <= 0);
+                        risultato = tariffaPrezziConnector.cambiaPrezzoLettini(prezzo_lettini);
+                    }
+                    while (!risultato);
+                    break;
+                case 5:
+                    System.out.println("Prodotti del bar:");
+                    List<ProdottiBar> prodotti =   prodottiBarConnector.getProducts();
+                    System.out.println("--------------------PRODOTTI--------------------");
+                    for (ProdottiBar prodotto : prodotti) {
+                        System.out.println(prodotto.toString());
+                    }
+                    do {
+                        do {
+                            System.out.println("Inserisci l'id del prodotto di cui modificare il prezzo:");
+                            id_prodotto = scanner.nextInt();
+                            if (id_prodotto < 0) {
+                                System.out.println("l'id dell'ombrellone deve essere maggiore o uguale 0");
+                                //(mettere do while finchè non è giusto)
+                            }
+                        } while (id_prodotto < 0);
+                        do {
+                            System.out.println("Inserisci il prezzo del prodotto:");
+                            prezzo_prodotto = scanner.nextDouble();
+                       /* else if ((!tipologia.equals("vip")) || (!tipologia.equals("premium")) || (!tipologia.equals("base"))) {
+                        throw new IllegalArgumentException("inserisci una tipologia che sia base,vip o premium");
+                    } */
+                            if (prezzo_prodotto <= 0) {
+                                System.out.println("il prezzo dell'ombrellone deve essere maggiore di 0");
+                            }
+                        } while (prezzo_prodotto < 0);
+                        risultato2 = prodottiBarConnector.updateProdottiBar(prezzo_prodotto,id_prodotto);
+                    } while (!risultato2);
+
+                    break;
+                case 0:
+                    OpenApp openApp = new OpenApp();
+                    try {
+                        openApp.Open();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+            }
+        }
+        while (scelta != 0);
+    }
+
     public void updateCaratteristicheStruttura() {
         int ombrelloni_totali = 0;
         int lettini_totali = 0;
@@ -76,7 +239,8 @@ public class Gestore extends Utente {
         String tipologia = "";
         int fila = 0;
         int scelta = 0;
-        boolean risultato=false;
+        boolean risultato = false;
+        boolean risultato2 = false;
         ChaletConnector chaletConnector = new ChaletConnector();
         OmbrelloneConnector ombrelloneConnector = new OmbrelloneConnector();
         do {
@@ -90,45 +254,62 @@ public class Gestore extends Utente {
             scelta = scanner.nextInt();
             switch (scelta) {
                 case 1:
-                    System.out.println("Inserisci il numero di ombrelloni totali dello chalet:");
-                    ombrelloni_totali = scanner.nextInt();
-                    if (lettini_totali < 0) {
-                        throw new IllegalArgumentException("la quantità di ombrelloni totali deve essere maggiore di 0");
-                    } else chaletConnector.updateOmbrelloniTotali(ombrelloni_totali);
+                    do {
+                        System.out.println("Inserisci il numero di ombrelloni totali dello chalet:");
+                        ombrelloni_totali = scanner.nextInt();
+
+                        if (ombrelloni_totali < 0) {
+                            System.out.println("la quantità di ombrelloni totali deve essere maggiore di 0");
+                        }
+                    } while (ombrelloni_totali < 0);
+                    chaletConnector.updateOmbrelloniTotali(ombrelloni_totali);
                     break;
                 case 2:
-                    System.out.println("Inserisci il numero di lettini totali dello chalet:");
-                    lettini_totali = scanner.nextInt();
-                    if (lettini_totali < 0) {
-                        throw new IllegalArgumentException("la quantità di lettini totali deve essere maggiore di 0");
-                    } else chaletConnector.updateLettiniTotali(lettini_totali);
+                    do {
+                        System.out.println("Inserisci il numero di lettini totali dello chalet:");
+                        lettini_totali = scanner.nextInt();
+                        if (lettini_totali < 0) {
+                            System.out.println("la quantità di lettini totali deve essere maggiore di 0");
+                        }
+                    } while (lettini_totali < 0);
+                    chaletConnector.updateLettiniTotali(lettini_totali);
                     break;
                 case 3:
-                    System.out.println("Inserisci l'id dell'ombrellone da aggiungere:");
-                    id_ombrellone = scanner.nextInt();
-                    System.out.println("Inserisci la fila dell'ombrellone da aggiungere: (dalla 1 alla 3 => vip, dalla 4 alla 7 => premium, dalla 8 alla 15 => base");
-                    fila = scanner.nextInt();
-                    if (id_ombrellone < 0) {
-                        throw new IllegalArgumentException("l'id dell'ombrellone deve essere maggiore di 0");
-                        //(mettere do while finchè non è giusto)
-                    } /* else if ((!tipologia.equals("vip")) || (!tipologia.equals("premium")) || (!tipologia.equals("base"))) {
+                    do {
+                        do {
+                            System.out.println("Inserisci l'id dell'ombrellone da aggiungere:");
+                            id_ombrellone = scanner.nextInt();
+                            if (id_ombrellone < 0) {
+                                System.out.println("l'id dell'ombrellone deve essere maggiore di 0");
+                                //(mettere do while finchè non è giusto)
+                            }
+                        } while (id_ombrellone < 0);
+                        do {
+                            System.out.println("Inserisci la fila dell'ombrellone da aggiungere: (dalla 1 alla 3 => vip, dalla 4 alla 7 => premium, dalla 8 alla 15 => base");
+                            fila = scanner.nextInt();
+                       /* else if ((!tipologia.equals("vip")) || (!tipologia.equals("premium")) || (!tipologia.equals("base"))) {
                         throw new IllegalArgumentException("inserisci una tipologia che sia base,vip o premium");
                     } */
-                    else if (fila < 1 || fila > 15) {
-                        throw new IllegalArgumentException("inserisci una fila compresa tra 1 e 15 ");
-                    }
-                    else ombrelloneConnector.addOmbrellone(id_ombrellone, fila);
+                            if (fila < 1 || fila > 15) {
+                                System.out.println("inserisci una fila compresa tra 1 e 15 ");
+                            }
+                        } while (fila < 1 || fila > 15);
+                        ombrelloneConnector.addOmbrellone(id_ombrellone, fila);
+                    } while (!risultato2);
                     break;
                 case 4:
                     System.out.println("Lista degli ombrelloni disponibili:");
                     ombrelloneConnector.getOmbrelloni();
                     do {
-                    System.out.println("Inserisci l'id dell'ombrellone da rimuovere:");
-                    if (id_ombrellone < 0) {
-                        throw new IllegalArgumentException("l'id dell'ombrellone deve essere maggiore di 0");
-                    }
-                    id_ombrellone = scanner.nextInt();
-                    risultato= ombrelloneConnector.removeOmbrellone(id_ombrellone);
+                        do {
+                            System.out.println("Inserisci l'id dell'ombrellone da rimuovere:");
+
+                            if (id_ombrellone < 0) {
+                                System.out.println("l'id dell'ombrellone deve essere maggiore di 0");
+                            }
+                            id_ombrellone = scanner.nextInt();
+                        } while (id_ombrellone < 0);
+                        risultato = ombrelloneConnector.removeOmbrellone(id_ombrellone);
                     }
                     while (!risultato);
                     break;
@@ -214,11 +395,6 @@ public class Gestore extends Utente {
         while (!risultato);
     }
 
-
-    public void definizionePolitichePrezzi() {
-
-
-    }
 
     public Gestore(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
         super(username, password, email, ruolo, nome, cognome);
