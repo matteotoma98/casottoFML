@@ -57,10 +57,6 @@ public class Cliente extends Utente implements ICliente {
     }
 
 
-    public void PrenotazioneOmbrellone(Data aData_inizio, Data aData_fine) {
-        throw new UnsupportedOperationException();
-    }
-
 
     public boolean iscrizione_Attivita(String email) {
         int id_attività = 0;
@@ -135,12 +131,12 @@ public class Cliente extends Utente implements ICliente {
         String scelta;
         String tipologia;
         double totale;
-        int continuaAcquisti;
+        /*int continuaAcquisti;
         int id_ordinazione = 0;
         int id_prodotto = 0;
         int quantita = 0;
 
-        double prezzo_totale = 0;
+        double prezzo_totale = 0;*/
         int id_scontrino = 0;
         int id_prenotazione = 0;
 
@@ -153,13 +149,26 @@ public class Cliente extends Utente implements ICliente {
         System.out.println("Inserisci il giorno d'inizio della prenotazione:");
         String date_start = scanner.nextLine(); // String str="2015-03-31";
         Date start_date = Date.valueOf(date_start);//converting string into sql date
-        //  System.out.println(start_date);
-        prenotazione_spiaggia.setDatainizioPrenotazione(start_date);
+
+        if(date_start.startsWith("2022-06-") || date_start.startsWith("2022-07-") || date_start.startsWith("2022-08-") || date_start.startsWith("2022-09-")){
+            prenotazione_spiaggia.setDatainizioPrenotazione(start_date);
+        } else {
+            throw new IllegalArgumentException("In questi mesi lo chalet rimane chiuso");
+        }
+
         System.out.println("Inserisci il giorno di fine della prenotazione:");
         String date_end = scanner.nextLine();// String str="2015-03-31";
         Date end_date = Date.valueOf(date_end);//converting string into sql date
+        if(date_end.startsWith("2022-06-") || date_end.startsWith("2022-07-") || date_end.startsWith("2022-08-") || date_end.startsWith("2022-09-")){
+            if(date_end.startsWith("2022-06-"))
+                //TODO
+                date_end.endsWith("");
+            prenotazione_spiaggia.setData_finePrenotazione(end_date);
+        }else {
+            throw new IllegalArgumentException("Data fine inserita non valida");
+        }
         //  System.out.println(start_date);
-        prenotazione_spiaggia.setData_finePrenotazione(end_date);
+
         System.out.println("Inserisci il giorno di fine della prenotazione:");
         int scelta_fascia_oraria;
         String fasciaOraria = null;

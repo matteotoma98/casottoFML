@@ -122,14 +122,14 @@ public class Gestore extends Utente {
                     ombrelloneConnector.cambiaPrezzoFila(fila, prezzo_ombrellone);
                     break;
                 case 2:
-                    System.out.println("lista degli id degli ombrelloni:");
+                    System.out.println("Lista degli id degli ombrelloni:");
                     ombrelloneConnector.getOmbrelloni();
                     do {
                         do {
                             System.out.println("Inserisci l'id dell'ombrellone:");
                             id_ombrellone = scanner.nextInt();
                             if (id_ombrellone < 0) {
-                                System.out.println("l'id dell'ombrellone deve essere maggiore di 0");
+                                System.out.println("L'id dell'ombrellone deve essere maggiore di 0");
                                 //(mettere do while finchè non è giusto)
                             }
                         } while (id_ombrellone < 0);
@@ -140,7 +140,7 @@ public class Gestore extends Utente {
                         throw new IllegalArgumentException("inserisci una tipologia che sia base,vip o premium");
                     } */
                             if (prezzo_ombrellone <= 0) {
-                                System.out.println("il prezzo dell'ombrellone deve essere maggiore di 0");
+                                System.out.println("Il prezzo dell'ombrellone deve essere maggiore di 0");
                             }
                         } while (prezzo_ombrellone < 0);
                         risultato2 = ombrelloneConnector.cambiaPrezzoOmbrellone(id_ombrellone, prezzo_ombrellone);
@@ -306,7 +306,7 @@ public class Gestore extends Utente {
                             System.out.println("Inserisci l'id dell'ombrellone da rimuovere:");
 
                             if (id_ombrellone < 0) {
-                                System.out.println("l'id dell'ombrellone deve essere maggiore di 0");
+                                System.out.println("L'id dell'ombrellone deve essere maggiore di 0");
                             }
                             id_ombrellone = scanner.nextInt();
                         } while (id_ombrellone < 0);

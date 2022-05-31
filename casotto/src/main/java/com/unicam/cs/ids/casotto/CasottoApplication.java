@@ -32,9 +32,8 @@ public class CasottoApplication {
             OpenApp app = new OpenApp();
             app.Open();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Probabilmente non sei riuscito a connetterti al database. Assicurati di avere mysql installato e che tu sia collegato al database.");
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Probabilmente non sei riuscito a connetterti al database. Assicurati di avere mysql installato e che tu sia collegato al database.");
         }
     }
 }

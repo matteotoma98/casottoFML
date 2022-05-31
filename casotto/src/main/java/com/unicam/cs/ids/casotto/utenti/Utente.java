@@ -201,6 +201,9 @@ public class Utente implements IUtente {
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
+            if(scelta < 0 || scelta >8){
+                System.out.println("Numero inserito non valido.");
+            }
             switch (scelta) {
                 case 1:
                     gestore.definizioneAttivita();
@@ -272,11 +275,13 @@ public class Utente implements IUtente {
             if (prenotazioneSpiaggiaConnector.checkPrenotazioniOmbrellone(email)) {
                 System.out.println("3: Ordinazione bar ");
             }
-            ;
             System.out.println("4: Iscrizione attività ");
             System.out.println("0: Effettua il logout ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
+            if(scelta < 0 || scelta > 4){
+                System.out.println("Hai selezionato un numero non valido\n");
+            }
             switch (scelta) {
                 case 1:
                     cliente.PrenotazioneOmbrellone(email);

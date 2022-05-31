@@ -29,7 +29,7 @@ public class AddettoAttivitaConnector {
             if (result) {
                 System.out.println("Dati nella tabella attività cambiati");
             } else {
-                System.out.println("id attività sbagliato");
+                System.out.println("id attività non valido");
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -47,11 +47,6 @@ public class AddettoAttivitaConnector {
                 sendEmail.sendMail(result.getString("email"));
                 System.out.print(result.getString("email") + "\n");
             }
-
-              /*ResultSet resultSet = statement.executeQuery("select * from chalet ");
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString("quantita_lettini"));
-            } */
         } catch (Exception e) {
             System.out.println(e);
         }

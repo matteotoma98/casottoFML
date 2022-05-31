@@ -21,6 +21,9 @@ public class OpenApp {
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
+            if(scelta < 0 || scelta > 2){
+                System.out.println("Hai selezionato un numero non valido\n");
+            }
             Scanner scanner_value = new Scanner(System.in);
             String username;
             String password;

@@ -224,6 +224,9 @@ public class AttivitaConnector {
         String nome_attrezz = "";
         try {
             result = connection.createStatement().executeQuery("SELECT quantita,nome_attrezzatura FROM attivita WHERE nome_attivita='" + nomeAttivita + "'");
+            if(!result.next()){
+                System.out.println("--- Nome attivita non valido ---\n");
+            }
             while (result.next()) {
                 quantitaAttr = result.getInt("quantita");
                 nome_attrezz = result.getString("nome_attrezzatura");

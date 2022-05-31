@@ -82,9 +82,8 @@ public class UtenteConnector {
             }
 
         } catch (Exception e) {
-            System.out.println(e);
-            e.printStackTrace();
-            System.out.println("Non esiste nessun account con le credenziali" + email + " e " + password + " immesse");
+            throw new IllegalArgumentException("Non esiste nessun account con le credenziali" + email + " e " + password + " immesse");
+            //System.out.println("Non esiste nessun account con le credenziali" + email + " e " + password + " immesse");
         }
         return utente;
 
