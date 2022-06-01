@@ -70,7 +70,7 @@ public class Gestore extends Utente {
 
     }
 
-    public void aggiornaPolitichePrezzi() {
+    public void aggiornaPolitichePrezzi() throws Exception{
         int ombrelloni_totali = 0;
         int lettini_totali = 0;
         int id_ombrellone = 0;
@@ -99,6 +99,8 @@ public class Gestore extends Utente {
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
+            if (scelta < 0 || scelta > 5)
+                throw new IllegalArgumentException("Scelta non valida");
             switch (scelta) {
                 case 1:
                     do {
@@ -233,7 +235,7 @@ public class Gestore extends Utente {
         while (scelta != 0);
     }
 
-    public void updateCaratteristicheStruttura() {
+    public void updateCaratteristicheStruttura() throws Exception{
         int ombrelloni_totali = 0;
         int lettini_totali = 0;
         int id_ombrellone = 0;
@@ -253,6 +255,8 @@ public class Gestore extends Utente {
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
+            if (scelta < 0 || scelta > 4)
+                throw new IllegalArgumentException("Scelta non valida");
             switch (scelta) {
                 case 1:
                     do {
@@ -326,7 +330,7 @@ public class Gestore extends Utente {
         while (scelta != 0);
     }
 
-    public void modificaProdottibar() {
+    public void modificaProdottibar() throws Exception{
         int id_prodotto = 0;
         double prezzo_prodotto = 0;
         int quantita_prodotto = 0;
@@ -344,6 +348,8 @@ public class Gestore extends Utente {
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
+            if (scelta < 0 || scelta > 2)
+                throw new IllegalArgumentException("Scelta non valida");
             switch (scelta) {
                 case 1:
                     do {
@@ -408,11 +414,8 @@ public class Gestore extends Utente {
                     break;
                 case 0:
                     OpenApp openApp = new OpenApp();
-                    try {
-                        openApp.Open();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    openApp.Open();
+
             }
         }
         while (scelta != 0);

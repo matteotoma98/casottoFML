@@ -1,8 +1,11 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
+import net.bytebuddy.pool.TypePool;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class OmbrelloneConnector {
     Connection connection;
@@ -16,7 +19,24 @@ public class OmbrelloneConnector {
     }
 
 
-    public boolean getOmbrelloni() {
+    public boolean checkOmbrellone(int num_fila, int id_ombrellone) throws Exception{
+        ResultSet resultSet;
+        boolean risultato = false;
+        resultSet = connection.createStatement().executeQuery(" SELECT id_ombrellone, num_fila_ombrellone FROM ombrellone WHERE id_ombrellone ='" + id_ombrellone + "'  AND num_fila_ombrellone = '" + num_fila + "'");
+        while (resultSet.next()) {
+            risultato= true;
+        }
+        if (!risultato){
+            System.out.println("L'ombrellone selezionato non è associato alla fila");
+
+            throw new IllegalArgumentException("djhd");
+
+
+        }
+        return risultato;
+    }
+
+        public boolean getOmbrelloni() {
         ResultSet resultSet;
         boolean risultato = false;
         try {

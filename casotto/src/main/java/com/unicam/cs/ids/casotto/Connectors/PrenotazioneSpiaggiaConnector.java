@@ -1,5 +1,7 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
+import com.unicam.cs.ids.casotto.serviziospiaggia.PrenotazioneSpiaggia;
+
 import java.sql.*;
 
 public class PrenotazioneSpiaggiaConnector {
@@ -11,7 +13,7 @@ public class PrenotazioneSpiaggiaConnector {
             connection = DBConnector.getConnection();
         } catch (Exception e) {
             System.out.println(e);
-        } //a
+        }
     }
 
     /* public void aggiornaOmbrellone(String email, int id_ombrellone) {
@@ -104,6 +106,28 @@ public class PrenotazioneSpiaggiaConnector {
         return result;
     }
 
+    public void setIdPrenotazione(int id_prenotazione){
+        PrenotazioneSpiaggia p = null;
+        p.setId_prenotazione(id_prenotazione);
+    }
+
+    public boolean checkPrenotazioniOmbrellone(String email, int id_prenotazione) {
+        boolean result = false;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM prenotazionespiaggia where email='" + email + "' AND id_prenotazione = '" + id_prenotazione + "'");
+            if (resultSet.next()) {
+                do {
+                    result = true;
+                } while (resultSet.next());
+            } else result = false;
+        } catch (Exception e) {
+            System.out.println("errore");
+            System.out.println(e);
+        }
+        return result;
+    }
+
     public boolean checkPrenotazioniOmbrellone(String email) {
         boolean result = false;
         try {
@@ -123,10 +147,8 @@ public class PrenotazioneSpiaggiaConnector {
 
     public boolean PrenotaSpiaggia(int id_prenotazione, Date data_inizio_prenotazione, Date data_fine_prenotazione, int num_fila_ombrellone, int id_ombrellone, int lettini, String email) {
         boolean result = false;
-        boolean result2 = false;
-        boolean result3 = false;
-        boolean result4 = false;
-        boolean result5 = false;
+        boolean result2;
+        boolean result3;
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet2 = statement.executeQuery("SELECT data_inizio_prenotazione,data_fine_prenotazione,id_ombrellone last_id FROM prenotazionespiaggia WHERE data_inizio_prenotazione='" + data_inizio_prenotazione + "'AND data_fine_prenotazione='" + data_fine_prenotazione + "'AND id_ombrellone='" + id_ombrellone + "'");
@@ -183,15 +205,11 @@ public class PrenotazioneSpiaggiaConnector {
                         } catch (Exception e) {
                             System.out.println(" update lettini");
                             System.out.println(e);
-
-                            result3 = false;
                         }
                     } else System.out.println("Decrementazione ombrelloni NON Riuscita.");
                 } catch (Exception e) {
                     System.out.println("update lettini e ombrelloni");
                     System.out.println(e);
-
-                    result2 = false;
                 }
                 System.out.print(email + ", ");
                 System.out.println("hai effettuato la prenotazione con successo! \n");

@@ -2,7 +2,7 @@ package com.unicam.cs.ids.casotto.model;
 
 public interface ICliente {
 
-    void PrenotazioneOmbrellone(String email);
+    void PrenotazioneOmbrellone(String email) throws Exception;
 
     void ordinazioneBar(String email);
 

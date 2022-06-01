@@ -1,8 +1,6 @@
 package com.unicam.cs.ids.casotto.utenti;
 
-import com.unicam.cs.ids.casotto.Connectors.OrdinazioneBarConnector;
-import com.unicam.cs.ids.casotto.Connectors.PrenotazioneSpiaggiaConnector;
-import com.unicam.cs.ids.casotto.Connectors.ProdottiBarConnector;
+import com.unicam.cs.ids.casotto.Connectors.*;
 import com.unicam.cs.ids.casotto.model.FasciaOraria;
 import com.unicam.cs.ids.casotto.model.ICliente;
 import com.unicam.cs.ids.casotto.model.IObserver;
@@ -28,22 +26,13 @@ import java.util.*;
 
 public class Cliente extends Utente implements ICliente {
     private String nome;
-    String scelta;
     private String cognome;
     private String email;
     private int id_ombrellone = 0;
     private ProdottiBarConnector cp = new ProdottiBarConnector();
     private OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
     private PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();
-    DateTimeFormatter data_ordinazione;
-    private int quantita;
-    private int id_ordinazione;
-    private int id_prodotto;
     Date data_pagamento = Date.valueOf(LocalDate.now());
-    public static final DateTimeFormatter date_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    // private Ordinazione_Bar ob= new Ordinazione_Bar(obc.getDate(), quantita, , id_ombrellone, id_prodotto);
-    public ArrayList<PrenotazioneSpiaggia> effettua = new ArrayList<PrenotazioneSpiaggia>();
-
 
     public Cliente(String nome, String cognome, String email, int id_ombrellone) {
         this.nome = nome;
@@ -53,7 +42,9 @@ public class Cliente extends Utente implements ICliente {
     }
 
     public Cliente(String nome, String cognome, String email) {
-
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
     }
 
 
@@ -121,26 +112,24 @@ public class Cliente extends Utente implements ICliente {
         return id_ombrellone;
     }
 
+    public int getId_ombrellone(String email) {
+        ClienteConnector cliente = new ClienteConnector();
+        Cliente cliente2;
+        cliente2 = cliente.getCliente(email);
+        System.out.println("Cliente: " + cliente2.getEmail() +" "+ cliente2.getId_ombrellone());
+        return cliente2.getId_ombrellone();
+    }
+
     public void setId_ombrellone(int id_ombrellone) {
         this.id_ombrellone = id_ombrellone;
     }
 
 
-    public void PrenotazioneOmbrellone(String email) {
+    public void PrenotazioneOmbrellone(String email) throws Exception{
         this.id_ombrellone = cc.getOmbrellone(email);
         String scelta;
         String tipologia;
-        double totale;
-        /*int continuaAcquisti;
-        int id_ordinazione = 0;
-        int id_prodotto = 0;
-        int quantita = 0;
-
-        double prezzo_totale = 0;*/
         int id_scontrino = 0;
-        int id_prenotazione = 0;
-
-
         double prezzo = 0;
         TariffaPrezzi tariffaPrezzi = new TariffaPrezzi();
         PrenotazioneSpiaggia prenotazione_spiaggia = new PrenotazioneSpiaggia();
@@ -164,25 +153,19 @@ public class Cliente extends Utente implements ICliente {
                 //TODO
                 date_end.endsWith("");
             prenotazione_spiaggia.setData_finePrenotazione(end_date);
-        }else {
+        } else {
             throw new IllegalArgumentException("Data fine inserita non valida");
         }
-        //  System.out.println(start_date);
-
         System.out.println("Inserisci il giorno di fine della prenotazione:");
         int scelta_fascia_oraria;
         String fasciaOraria = null;
-
         System.out.println("Scegli in quale fascia oraria vuoi prenotare:");
         System.out.println("1: Mattina ");
         System.out.println("2: Pomeriggio ");
         System.out.println("3: Giornata Intera ");
-
         scelta_fascia_oraria = scanner.nextInt();
-
         switch (scelta_fascia_oraria) {
             case 1:
-                fasciaOraria = "";
                 fasciaOraria = String.valueOf(FasciaOraria.MATTINA);
                 break;
             case 2:
@@ -192,23 +175,23 @@ public class Cliente extends Utente implements ICliente {
                 fasciaOraria = String.valueOf(FasciaOraria.GIORNATA_INTERA);
                 break;
         }
-
         System.out.println("Inserisci la fila dell'ombrellone:(FILA 1-3: VIP, FILA 4-7: PREMIUM, FILA 8-15: BASE)");
         //querychemostra la lista delle file
-        int fila = 0;
+        int fila;
         fila = scanner.nextInt();
         Ombrellone om = new Ombrellone();
         om.setNum_fila_ombrellone(fila);
-
         System.out.println("Inserisci l'id dell'ombrellone che vuoi prenotare");
         //querychemostra la lista degli ombrelloni
         int id = scanner.nextInt();
-        om.setId_ombrellone(id);
 
+        //vedi ombrelloneconnector
+        OmbrelloneConnector om2 = new OmbrelloneConnector();
+        boolean result = om2.checkOmbrellone(fila, id);
+        if(result)
+            om.setId_ombrellone(id);
         System.out.println("Inserisci la quantità di lettini che vuoi prenotare");
         int lettini = scanner.nextInt();
-        Chalet chalet = new Chalet();
-
         prezzo = prezzo + tariffaPrezzi.Imposta_Prezzi_Spiaggia(FasciaOraria.valueOf(fasciaOraria), fila, date_start, date_end, lettini);
 
         //  System.out.println("Totale:" + totale);
@@ -226,8 +209,7 @@ public class Cliente extends Utente implements ICliente {
             System.out.println("Confermi il pagamento? Si/No");
             scelta = scanner2.nextLine();
             if (scelta.equals("Si")) {
-                boolean risultato = false;
-                //connector tabella tipologia_pg
+                boolean risultato;
                 boolean prenotato = false;
                 prenotato = prenotazione_spiaggia.addPrenotazione(start_date, end_date, fila, om.getId_ombrellone(), lettini, email);
                 if (prenotato) {
@@ -306,24 +288,17 @@ public class Cliente extends Utente implements ICliente {
         int id_ombrellone;
         double prezzo_totale = 0;
         int id_scontrino = 0;
-        int id_prenotazione = 0;
-        List<Integer> lista_prodotti = new ArrayList<>();
         Map<Integer, Integer> mprodotti = new HashMap<>();
-        //Ordinazione_Bar ob = new Ordinazione_Bar(obc.getDate(), quantita, 0, id_ombrellone, id_prodotto);
         System.out.println("\n");
         System.out.println("A quale id dell'ombrellone vuoi far consegnare l'ordine?");
         obc.getIdOmbrelloni(email);
         id_ombrellone = scanner2.nextInt();
         do {
-
             System.out.println("Inserisci l'id del prodotto che vuoi acquistare:");
             id_prodotto = Integer.parseInt(scanner.nextLine());
-            //    lista_prodotti.add(Integer.parseInt(scanner.nextLine()));
-
             System.out.println("Inserisci la quantità che vuoi acquistare:");
             quantita = scanner2.nextInt();
             mprodotti.put(id_prodotto, quantita);
-
 
             //  (ob.getDate(), quantita, int id_ordinazione, int id_ombrellone, int id_prodotto) {// bisognerebbe prendere il valore dell'ultima riga della tabella, e aggiungerci + 1
             //  totale = +cp.getTotaleOrdine(scelta, quantita);
@@ -331,7 +306,6 @@ public class Cliente extends Utente implements ICliente {
             continuaAcquisti = scanner2.nextInt();
         } while (continuaAcquisti != 0);
         //for(Integer i: lista_prodotti){System.out.println(i);}
-
         //  System.out.println("Totale:" + totale);
         System.out.println("Scegli la tipologia di pagamento:app -tramite app, consegna -pagamento alla consegna");
         tipologia = scanner.nextLine();
@@ -357,10 +331,7 @@ public class Cliente extends Utente implements ICliente {
                 OrdinazioneBar ordinazione_bar = new OrdinazioneBar();
                 ordinazione_bar.setLista_prodotti(mprodotti);
                 OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
-             /*   System.out.println(tipologia);
-                System.out.println(ordinazioneBarConnector.last_ordinazione(id_ombrellone));
-                System.out.println(id_ombrellone);
-                System.out.println(data_pagamento); */
+
                 if (!risultato) System.out.println("errore nell'aggiunta dell'ordine");
                 boolean risultato2 = p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
                 // String tipologia_pagamento, int id_prenotazione, int id_ombrellone, Date data_pagamento
@@ -427,14 +398,14 @@ public class Cliente extends Utente implements ICliente {
 
     public void cancellazionePrenotazioneOmbrellone(String email) {
         Scanner scanner = new Scanner(System.in);
-        int id_prenotazione = 0;
+        int id_prenotazione;
         PrenotazioneSpiaggia prenotazione_spiaggia = new PrenotazioneSpiaggia();
         prenotazione_spiaggia.listaPrenotazioni(email);
-        if (prenotazioneSpiaggiaConnector.checkPrenotazioniOmbrellone(email)) {
-            System.out.println("seleziona l'id della prenotazione");
-            id_prenotazione = scanner.nextInt();
+        System.out.println("seleziona l'id della prenotazione");
+        id_prenotazione = scanner.nextInt();
+        if (prenotazioneSpiaggiaConnector.checkPrenotazioniOmbrellone(email, id_prenotazione)) {
             prenotazione_spiaggia.cancellaPrenotazione(id_prenotazione);
-        } else System.out.println("Non hai ancora prenotazioni effettuate.\n");
+        } else System.out.println("Id prenotazione inserito non corrisponde alla tua email\n");
 
         // this.id_ordinazione = id
 

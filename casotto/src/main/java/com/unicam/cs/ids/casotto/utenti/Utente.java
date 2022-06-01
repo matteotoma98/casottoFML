@@ -9,7 +9,6 @@ import com.unicam.cs.ids.casotto.servizioattivita.AddettoAttivitaLudicoSportive;
 import com.unicam.cs.ids.casotto.serviziogestione.Gestore;
 import com.unicam.cs.ids.casotto.serviziospiaggia.AddettoSpiaggia;
 
-import java.text.ParseException;
 import java.util.Scanner;
 
 public class Utente implements IUtente {
@@ -19,10 +18,9 @@ public class Utente implements IUtente {
     private String ruolo;
     private String nome;
     private String cognome;
+    private Cliente cliente1;
     ClienteConnector cc = new ClienteConnector();
     UtenteConnector uc = new UtenteConnector();
-    //Ordinazione_Bar ob= new Ordinazione_Bar();
-    // OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
 
     public Utente(String username, String password, String ruolo, String email, String nome, String cognome) {
         this.username = username;
@@ -126,7 +124,7 @@ public class Utente implements IUtente {
     }
 
     @Override
-    public void login(String email, String password) throws ParseException {
+    public void login(String email, String password) throws Exception {
 
         Utente utente = uc.login(email, password);
         String _email = utente.getEmail();
@@ -135,11 +133,8 @@ public class Utente implements IUtente {
         // System.out.println("Email in login di Utente.java è " + _email);
         switch (utente.getRuolo()) {
             case "cliente":
-                try {
-                    menu_cliente(email);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                menu_cliente(email);
+
                 break;
             case "addetto_spiaggia":
                 menu_addettoSpiaggia();
@@ -185,7 +180,7 @@ public class Utente implements IUtente {
         while (scelta != 0);
     }
 
-    private void menu_gestore(String email) {
+    private void menu_gestore(String email) throws Exception{
         Gestore gestore = new Gestore();
         int scelta;
         do {
@@ -230,11 +225,7 @@ public class Utente implements IUtente {
                     break;
                 case 0:
                     OpenApp openApp = new OpenApp();
-                    try {
-                        openApp.Open();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    openApp.Open();
             }
         }
         while (scelta != 0);
@@ -250,6 +241,8 @@ public class Utente implements IUtente {
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
+            if (scelta != 1 && scelta != 0)
+                throw new IllegalArgumentException("Scelta non valida");
             switch (scelta) {
                 case 1:
                     // as.liberaOmbrellone();
@@ -260,21 +253,22 @@ public class Utente implements IUtente {
     }
 
 
-    public void menu_cliente(String email) throws ParseException {
-        //Cliente cliente = cc.getCliente(email);
-        // Ordinazione_Bar ordinazione_bar = new Ordinazione_Bar(obc.getDate(), quantita, ob.incremento(id_ordinazione) , scelta);
-        // OrdinazioneBarConnector ob = ordinazione_bar.ordinazione_Prodotto("jn", 5);
-        //  Attivita attivita= new Attivita();
+    public void menu_cliente(String email) throws Exception {
         int scelta;
         Cliente cliente = new Cliente();
+
+        //ricavare
         do {
             System.out.println("Scegli cosa vuoi fare: ");
             System.out.println("1: Prenota ombrellone ");
             System.out.println("2: Cancella prenotazione ombrellone ");
             PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();
-            if (prenotazioneSpiaggiaConnector.checkPrenotazioniOmbrellone(email)) {
+            //int id_prenotazione = prenotazioneSpiaggiaConnector.setIdPrenotazione();
+            /*int id_prenotazione= 0;
+            if (prenotazioneSpiaggiaConnector.checkPrenotazioniOmbrellone(email, id_prenotazione)) {
+                prenotazioneSpiaggiaConnector.setIdPrenotazione(id_prenotazione);*/
                 System.out.println("3: Ordinazione bar ");
-            }
+            //}
             System.out.println("4: Iscrizione attività ");
             System.out.println("0: Effettua il logout ");
             Scanner scanner = new Scanner(System.in);
@@ -285,14 +279,17 @@ public class Utente implements IUtente {
             switch (scelta) {
                 case 1:
                     cliente.PrenotazioneOmbrellone(email);
+
                     break;
                 case 2:
                     cliente.cancellazionePrenotazioneOmbrellone(email);
                     break;
                 case 3:
                     if (prenotazioneSpiaggiaConnector.checkPrenotazioniOmbrellone(email)) {
+
                         cliente.ordinazioneBar(email);
                     }
+                    System.out.println("\nImpossibile effettuare un ordine: non hai ombrelloni associati\n");
                     break;
                 case 4:
                     cliente.iscrizione_Attivita(email);

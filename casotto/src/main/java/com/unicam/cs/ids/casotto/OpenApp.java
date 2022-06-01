@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.util.Scanner;
 
 public class OpenApp {
-    public void Open() throws ParseException {
+    public void Open() throws Exception {
         AddettoSpiaggiaConnector addettoSpiaggiaConnector = new AddettoSpiaggiaConnector();
         //addettoSpiaggiaConnector.cambiaDisponbilitaOmbrellone();
         Utente utente = new Utente();
@@ -41,6 +41,7 @@ public class OpenApp {
                     password = scanner_value.nextLine(); //TODO hidare password
                     utente.login(email, password);
                     cliente.PrenotazioneOmbrellone(email);
+
                     break;
                 case 2:
                     System.out.println("Inserisci Username");

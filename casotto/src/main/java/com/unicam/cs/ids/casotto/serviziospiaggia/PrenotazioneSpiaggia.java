@@ -44,18 +44,6 @@ public class PrenotazioneSpiaggia {
         this.prezzo_Prenotazione = prezzo_Prenotazione;
     }
 
-    private Ombrellone ombrellone;
-    public Chalet unnamed_Chalet_;
-    public Cliente effettua;
-    public ArrayList<Ombrellone> riserva = new ArrayList<Ombrellone>();
-
-    public ArrayList<Ombrellone> getOmbrellone() {
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean addOmbrellone() {
-        throw new UnsupportedOperationException();
-    }
 
     public ArrayList<Lettino> getLettino() {
         throw new UnsupportedOperationException();

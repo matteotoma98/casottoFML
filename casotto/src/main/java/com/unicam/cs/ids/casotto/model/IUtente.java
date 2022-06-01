@@ -6,7 +6,7 @@ public interface IUtente {
 
     void registrazione(String email, String username, String password);
 
-    public void login(String username, String password) throws ParseException;
+    public void login(String username, String password) throws Exception;
 
     public String getRuolo();
 
