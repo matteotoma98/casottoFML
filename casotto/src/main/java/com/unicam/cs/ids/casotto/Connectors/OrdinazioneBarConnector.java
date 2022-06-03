@@ -2,8 +2,8 @@ package com.unicam.cs.ids.casotto.Connectors;
 
 import com.unicam.cs.ids.casotto.serviziobar.OrdinazioneBar;
 
-import java.sql.*;
 import java.sql.Date;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -32,9 +32,10 @@ public class OrdinazioneBarConnector {
         return date;
     }
 
-    public int getId(){
+    public int getId() {
         return this.id_ombrellone;
     }
+
     public ResultSet getIdOmbrelloni(String email) {
         boolean result = false;
         Scanner scanner2 = new Scanner(System.in);
@@ -48,12 +49,11 @@ public class OrdinazioneBarConnector {
                 l.add(resultSet.getInt("id_ombrellone"));
             }
             int id_ombrellone = scanner2.nextInt();
-            this.id_ombrellone= id_ombrellone;
-            if(!l.contains(id_ombrellone)) {
+            this.id_ombrellone = id_ombrellone;
+            if (!l.contains(id_ombrellone)) {
                 System.err.println("Errore! Hai immesso un id dell'ombrellone errato.");
                 System.exit(0);
-            }
-            else return resultSet;
+            } else return resultSet;
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -124,36 +124,85 @@ public class Utente implements IUtente {
     }
 
     @Override
-    public void login(String email, String password) throws Exception {
-
+    public void login(String email, String password) {
+        boolean login_eff = false;
+        String _email = "";
+        String _password = "";
         Utente utente = uc.login(email, password);
-        String _email = utente.getEmail();
-        Cliente cliente = new Cliente();
-        cliente.setEmail(_email);
+        //if email e password sono nel db allora ritorna true
         // System.out.println("Email in login di Utente.java è " + _email);
-        switch (utente.getRuolo()) {
-            case "cliente":
-                menu_cliente(email);
-
-                break;
-            case "addetto_spiaggia":
-                menu_addettoSpiaggia();
-                break;
-            case "addetto_bar":
-                // menu_addetto_bar();
-                break;
-            case "addetto_attivita":
-                try {
-                    menu_addettoAttivita(email);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "gestore":
-                menu_gestore(email);
-                break;
+        //   String ruolo= utente.getRuolo();
+        ruolo = uc.getRuolo(email, password);
+        if (ruolo.equals("")) {
+            do {
+                //String _email = utente.getEmail();
+                Cliente cliente = new Cliente();
+                System.out.println("Errore nelle credenziali, reinserisci password ed email:");
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Email:");
+                _email = scanner.next();
+                cliente.setEmail(_email);
+                cliente.setEmail(_email);
+                System.out.println("Password:");
+                _password = scanner.next();
+                cliente.setPassword(_password);
+                ruolo = uc.getRuolo(_email, _password);
+              //  System.out.println("Ruolo= "+ruolo);
+            } while (ruolo.equals(""));
         }
+        if (ruolo != null) {
+            System.out.println("Login effettuato con successo.\n");
+            switch (ruolo) {
+                case "cliente":
+                    try {
+                        menu_cliente(email);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
+                    break;
+                case "addetto_spiaggia":
+                    menu_addettoSpiaggia();
+                    break;
+                case "addetto_bar":
+                    // menu_addetto_bar();
+                    break;
+                case "addetto_attivita":
+                    try {
+                        menu_addettoAttivita(email);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "gestore":
+                    try {
+                        menu_gestore(email);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                /* case "":
+                    do {
+                        System.out.println("Credenziali non corrette.");
+                       //String _email = utente.getEmail();
+                        Cliente cliente = new Cliente();
+                        // System.out.println("errore nelle credenziali, reinserisci password ed email");
+                        Scanner scanner = new Scanner(System.in);
+                        System.out.println("Email:");
+                        _email = scanner.next();
+                        cliente.setEmail(_email);
+                        System.out.println("Password:");
+                        _password = scanner.next();
+                        cliente.setPassword(_password);
+                        ruolo = uc.getRuolo(_email, _password);
+
+                    } while (ruolo != null); */
+
+
+            }
+        } else System.out.println("error.");
+
+        // return login_eff;
     }
 
 
@@ -180,7 +229,7 @@ public class Utente implements IUtente {
         while (scelta != 0);
     }
 
-    private void menu_gestore(String email) throws Exception{
+    private void menu_gestore(String email) throws Exception {
         Gestore gestore = new Gestore();
         int scelta;
         do {
@@ -196,7 +245,7 @@ public class Utente implements IUtente {
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
-            if(scelta < 0 || scelta >8){
+            if (scelta < 0 || scelta > 8) {
                 System.out.println("Numero inserito non valido.");
             }
             switch (scelta) {
@@ -221,7 +270,8 @@ public class Utente implements IUtente {
                 case 7:
                     gestore.modificaProdottibar();
                     break;
-                case 8:  gestore.cambiaRuolo();
+                case 8:
+                    gestore.cambiaRuolo();
                     break;
                 case 0:
                     OpenApp openApp = new OpenApp();
@@ -267,13 +317,13 @@ public class Utente implements IUtente {
             /*int id_prenotazione= 0;
             if (prenotazioneSpiaggiaConnector.checkPrenotazioniOmbrellone(email, id_prenotazione)) {
                 prenotazioneSpiaggiaConnector.setIdPrenotazione(id_prenotazione);*/
-                System.out.println("3: Ordinazione bar ");
+            System.out.println("3: Ordinazione bar ");
             //}
             System.out.println("4: Iscrizione attività ");
             System.out.println("0: Effettua il logout ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
-            if(scelta < 0 || scelta > 4){
+            if (scelta < 0 || scelta > 4) {
                 System.out.println("Hai selezionato un numero non valido\n");
             }
             switch (scelta) {
@@ -294,6 +344,10 @@ public class Utente implements IUtente {
                 case 4:
                     cliente.iscrizione_Attivita(email);
                     break;
+                case 0:
+                    OpenApp openApp= new OpenApp();
+                openApp.Open();
+                break;
             }
         }
         while (scelta != 0);

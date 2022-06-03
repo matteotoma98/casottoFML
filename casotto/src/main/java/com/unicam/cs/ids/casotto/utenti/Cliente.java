@@ -8,7 +8,6 @@ import com.unicam.cs.ids.casotto.servizioattivita.Attivita;
 import com.unicam.cs.ids.casotto.serviziobar.OrdinazioneBar;
 import com.unicam.cs.ids.casotto.serviziobar.PagamentoBar;
 import com.unicam.cs.ids.casotto.serviziobar.ProdottiBar;
-import com.unicam.cs.ids.casotto.serviziogestione.Chalet;
 import com.unicam.cs.ids.casotto.serviziogestione.TariffaPrezzi;
 import com.unicam.cs.ids.casotto.serviziospiaggia.Ombrellone;
 import com.unicam.cs.ids.casotto.serviziospiaggia.PagamentoOmbrellone;
@@ -17,12 +16,13 @@ import com.unicam.cs.ids.casotto.utilities.NotifyOrder;
 import com.unicam.cs.ids.casotto.utilities.Scontrino;
 import com.unicam.cs.ids.casotto.utilities.SendEmail;
 
-import javax.xml.crypto.Data;
 import java.sql.Date;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Cliente extends Utente implements ICliente {
     private String nome;
@@ -46,7 +46,6 @@ public class Cliente extends Utente implements ICliente {
         this.cognome = cognome;
         this.email = email;
     }
-
 
 
     public boolean iscrizione_Attivita(String email) {
@@ -116,7 +115,7 @@ public class Cliente extends Utente implements ICliente {
         ClienteConnector cliente = new ClienteConnector();
         Cliente cliente2;
         cliente2 = cliente.getCliente(email);
-        System.out.println("Cliente: " + cliente2.getEmail() +" "+ cliente2.getId_ombrellone());
+        System.out.println("Cliente: " + cliente2.getEmail() + " " + cliente2.getId_ombrellone());
         return cliente2.getId_ombrellone();
     }
 
@@ -125,7 +124,7 @@ public class Cliente extends Utente implements ICliente {
     }
 
 
-    public void PrenotazioneOmbrellone(String email) throws Exception{
+    public void PrenotazioneOmbrellone(String email) throws Exception {
         this.id_ombrellone = cc.getOmbrellone(email);
         String scelta;
         String tipologia;
@@ -139,7 +138,7 @@ public class Cliente extends Utente implements ICliente {
         String date_start = scanner.nextLine(); // String str="2015-03-31";
         Date start_date = Date.valueOf(date_start);//converting string into sql date
 
-        if(date_start.startsWith("2022-06-") || date_start.startsWith("2022-07-") || date_start.startsWith("2022-08-") || date_start.startsWith("2022-09-")){
+        if (date_start.startsWith("2022-06-") || date_start.startsWith("2022-07-") || date_start.startsWith("2022-08-") || date_start.startsWith("2022-09-")) {
             prenotazione_spiaggia.setDatainizioPrenotazione(start_date);
         } else {
             throw new IllegalArgumentException("In questi mesi lo chalet rimane chiuso");
@@ -148,8 +147,8 @@ public class Cliente extends Utente implements ICliente {
         System.out.println("Inserisci il giorno di fine della prenotazione:");
         String date_end = scanner.nextLine();// String str="2015-03-31";
         Date end_date = Date.valueOf(date_end);//converting string into sql date
-        if(date_end.startsWith("2022-06-") || date_end.startsWith("2022-07-") || date_end.startsWith("2022-08-") || date_end.startsWith("2022-09-")){
-            if(date_end.startsWith("2022-06-"))
+        if (date_end.startsWith("2022-06-") || date_end.startsWith("2022-07-") || date_end.startsWith("2022-08-") || date_end.startsWith("2022-09-")) {
+            if (date_end.startsWith("2022-06-"))
                 //TODO
                 date_end.endsWith("");
             prenotazione_spiaggia.setData_finePrenotazione(end_date);
@@ -164,7 +163,7 @@ public class Cliente extends Utente implements ICliente {
         System.out.println("2: Pomeriggio ");
         System.out.println("3: Giornata Intera ");
         scelta_fascia_oraria = scanner.nextInt();
-        if(scelta_fascia_oraria<=0 || scelta_fascia_oraria> 3){
+        if (scelta_fascia_oraria <= 0 || scelta_fascia_oraria > 3) {
             throw new IllegalArgumentException("Errore! Scelta non valida");
         }
         switch (scelta_fascia_oraria) {
@@ -191,12 +190,12 @@ public class Cliente extends Utente implements ICliente {
         //vedi ombrelloneconnector
         OmbrelloneConnector om2 = new OmbrelloneConnector();
         boolean result = om2.checkOmbrellone(fila, id);
-        if(result)
+        if (result)
             om.setId_ombrellone(id);
         System.out.println("Inserisci la quantità di lettini che vuoi prenotare");
         int lettini = scanner.nextInt();
 
-        if(lettini > 4 || lettini < 0){
+        if (lettini > 4 || lettini < 0) {
             System.err.println("Errore! Hai immesso un numero di lettini non valido");
             System.exit(0);
         }
@@ -274,8 +273,7 @@ public class Cliente extends Utente implements ICliente {
                     e.printStackTrace();
                 }
             }
-        }
-        else {
+        } else {
             System.err.println("Errore! Hai immesso una tipologia di pagamento non prevista.");
             System.exit(0);
         }
@@ -308,7 +306,7 @@ public class Cliente extends Utente implements ICliente {
         do {
             System.out.println("Inserisci l'id del prodotto che vuoi acquistare:");
             id_prodotto = Integer.parseInt(scanner.nextLine());
-            if(id_prodotto < 0 || id_prodotto > cp.getMax()){
+            if (id_prodotto < 0 || id_prodotto > cp.getMax()) {
                 System.err.println("Errore! Hai immesso un id del prodotto non valido.");
                 System.exit(0);
             }
@@ -321,7 +319,7 @@ public class Cliente extends Utente implements ICliente {
             //  totale = +cp.getTotaleOrdine(scelta, quantita);
             System.out.println("vuoi aggiungere altri prodotti all'ordine ancora? 1-si 0-no");
             continuaAcquisti = scanner2.nextInt();
-            } while (continuaAcquisti != 0);
+        } while (continuaAcquisti != 0);
         //for(Integer i: lista_prodotti){System.out.println(i);}
         //  System.out.println("Totale:" + totale);
         System.out.println("Scegli la tipologia di pagamento:app -tramite app, consegna -pagamento alla consegna");
@@ -409,8 +407,7 @@ public class Cliente extends Utente implements ICliente {
                     notifyOrder7.notifyObservers();
                 }
             }
-        }
-        else {
+        } else {
             System.err.println("Errore! Hai immesso una tipologia del pagamento non prevista.");
             System.exit(0);
         }

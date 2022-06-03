@@ -35,11 +35,10 @@ public class Gestore extends Utente {
             }
 
             do {
-                String risultato3= utenteConnector.getRuolo(email);
+                String risultato3 = utenteConnector.getRuolo(email);
                 if (risultato3.isEmpty()) {
                     email = scanner.next();
-                }
-                else emailesistente = true;
+                } else emailesistente = true;
             } while (!emailesistente);
 
         } while (email.equals(""));
@@ -70,7 +69,7 @@ public class Gestore extends Utente {
 
     }
 
-    public void aggiornaPolitichePrezzi() throws Exception{
+    public void aggiornaPolitichePrezzi() throws Exception {
         int ombrelloni_totali = 0;
         int lettini_totali = 0;
         int id_ombrellone = 0;
@@ -235,7 +234,7 @@ public class Gestore extends Utente {
         while (scelta != 0);
     }
 
-    public void updateCaratteristicheStruttura() throws Exception{
+    public void updateCaratteristicheStruttura() throws Exception {
         int ombrelloni_totali = 0;
         int lettini_totali = 0;
         int id_ombrellone = 0;
@@ -330,7 +329,7 @@ public class Gestore extends Utente {
         while (scelta != 0);
     }
 
-    public void modificaProdottibar() throws Exception{
+    public void modificaProdottibar() throws Exception {
         int id_prodotto = 0;
         double prezzo_prodotto = 0;
         int quantita_prodotto = 0;

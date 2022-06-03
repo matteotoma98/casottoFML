@@ -1,7 +1,5 @@
 package com.unicam.cs.ids.casotto.model;
 
-import java.text.ParseException;
-
 public interface IUtente {
 
     void registrazione(String email, String username, String password);

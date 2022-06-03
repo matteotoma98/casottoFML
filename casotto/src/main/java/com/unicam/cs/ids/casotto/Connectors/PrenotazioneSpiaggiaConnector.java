@@ -106,7 +106,7 @@ public class PrenotazioneSpiaggiaConnector {
         return result;
     }
 
-    public void setIdPrenotazione(int id_prenotazione){
+    public void setIdPrenotazione(int id_prenotazione) {
         PrenotazioneSpiaggia p = null;
         p.setId_prenotazione(id_prenotazione);
     }

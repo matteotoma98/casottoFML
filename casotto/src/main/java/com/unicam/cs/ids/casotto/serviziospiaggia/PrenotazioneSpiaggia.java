@@ -2,8 +2,6 @@ package com.unicam.cs.ids.casotto.serviziospiaggia;
 
 import com.unicam.cs.ids.casotto.Connectors.PrenotazioneSpiaggiaConnector;
 import com.unicam.cs.ids.casotto.model.FasciaOraria;
-import com.unicam.cs.ids.casotto.serviziogestione.Chalet;
-import com.unicam.cs.ids.casotto.utenti.Cliente;
 
 import java.sql.Date;
 import java.util.ArrayList;

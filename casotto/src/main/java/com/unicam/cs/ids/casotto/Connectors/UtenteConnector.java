@@ -64,23 +64,56 @@ public class UtenteConnector {
 
     }
 
+    public String getRuolo(String email, String password){
+        ResultSet result;
+        Utente utente = new Utente();
+        boolean login_= false;
+        String ruolo="";
+        try {
+            result = connection.createStatement().executeQuery("SELECT ruolo FROM utente WHERE email ='" + email + "' AND password = '" + password + "'");
+            do {
+                if (result.next() == false) {
+                 //   System.out.println("Non è stato possibile effettuare il login. Controllare le credenziali e riprovare.");
+                    login_= false;
+                }
+                else {
+                    do {
+                       // utente = UtenteConverter(result);
+                        ruolo = result.getString("ruolo");
+                        login_=true;
+                    } while (result.next());
+                }
+            } while(login_);
 
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Non esiste nessun account con le credenziali" + email + " e " + password + " immesse");
+            //System.out.println("Non esiste nessun account con le credenziali" + email + " e " + password + " immesse");
+        }
+        return ruolo;
+    }
     public Utente login(String email, String password) {
         ResultSet result;
         Utente utente = new Utente();
+        boolean login_= false;
         try {
             result = connection.createStatement().executeQuery("SELECT * FROM utente WHERE email ='" + email + "' AND password = '" + password + "'");
-
-            //   System.out.println(result.getString(email));
-            while (result.next()) {
-                utente = UtenteConverter(result);
-                email = result.getString("email");
-                password = result.getString("password");
-                // utente = UtenteConverter(result);
-                System.out.println(email + " sei loggato correttamente.");
-                clienteConnector.aggiornaClienti();
-            }
-
+            do {
+                if (result.next() == false) {
+                  //  System.out.println("Non è stato possibile effettuare il login. Controllare le credenziali e riprovare.");
+                    login_= false;
+                }
+                else {
+                    do {
+                        utente = UtenteConverter(result);
+                        email = result.getString("email");
+                        password = result.getString("password");
+                        // utente = UtenteConverter(result);
+                        System.out.println(email + " sei loggato correttamente.");
+                        login_ = true;
+                        clienteConnector.aggiornaClienti();
+                    } while (result.next());
+                }
+            } while(login_);
         } catch (Exception e) {
             throw new IllegalArgumentException("Non esiste nessun account con le credenziali" + email + " e " + password + " immesse");
             //System.out.println("Non esiste nessun account con le credenziali" + email + " e " + password + " immesse");
@@ -138,10 +171,10 @@ public class UtenteConnector {
                 System.out.println("Query non eseguita correttamente o vuota.");
             } else {
                 do {
-                    System.out.print("email: "+result.getString("email")+", ");
-                    System.out.print("nome: "+result.getString("nome")+", ");
-                    System.out.print("cognome: "+result.getString("cognome")+", ");
-                    System.out.print("ruolo: "+result.getString("ruolo")+"\t");
+                    System.out.print("email: " + result.getString("email") + ", ");
+                    System.out.print("nome: " + result.getString("nome") + ", ");
+                    System.out.print("cognome: " + result.getString("cognome") + ", ");
+                    System.out.print("ruolo: " + result.getString("ruolo") + "\t");
                     System.out.println("");
 
                 } while (result.next());
@@ -152,18 +185,18 @@ public class UtenteConnector {
         } //add exception here
 
         //error checking
-       // if (resultList.isEmpty()) System.out.println("Result is empty");
+        // if (resultList.isEmpty()) System.out.println("Result is empty");
 
         return resultList;
     }
 
-    public String getRuolo(String email){
-        boolean risultato= false;
+    public String getRuolo(String email) {
+        boolean risultato = false;
         ResultSet result2;
-        String ruolo="";
-        boolean utente_trovato=false;
-        try{
-            result2 = connection.createStatement().executeQuery("SELECT email,ruolo FROM utente WHERE email='" + email +"'");
+        String ruolo = "";
+        boolean utente_trovato = false;
+        try {
+            result2 = connection.createStatement().executeQuery("SELECT email,ruolo FROM utente WHERE email='" + email + "'");
 
             if (result2.next() == false) {
                 System.out.println("L'utente non esiste, inserirne uno di quelli della lista.");
@@ -178,12 +211,12 @@ public class UtenteConnector {
             if (utente_trovato) {
                 return ruolo;
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return ruolo;
     }
+
     public boolean cambiaRuolo(String email, String ruolo) {
         boolean risultato = false;
         boolean result = false;
@@ -194,7 +227,7 @@ public class UtenteConnector {
         boolean result3 = false;
         String ruolo_ = "";
         try {
-                result2 = connection.createStatement().executeQuery("SELECT email,ruolo FROM utente WHERE email='" + email +"'");
+            result2 = connection.createStatement().executeQuery("SELECT email,ruolo FROM utente WHERE email='" + email + "'");
 
             if (result2.next() == false) {
                 System.out.println("L'utente non esiste, inserirne uno di quelli della lista.");
@@ -211,7 +244,7 @@ public class UtenteConnector {
                     PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE utente SET ruolo='" + ruolo + "'WHERE email='" + email + "'");
                     result3 = preparedStatement3.executeUpdate() > 0;
                     if (result3) {
-                        System.out.println("Ruolo dell'account con email " + email +" e ruolo precedente '" + ruolo_ + "' cambiato in '" +ruolo +"' .");
+                        System.out.println("Ruolo dell'account con email " + email + " e ruolo precedente '" + ruolo_ + "' cambiato in '" + ruolo + "' .");
                         risultato = true;
                     }
                 } catch (Exception e) {

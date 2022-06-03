@@ -4,7 +4,6 @@ import com.unicam.cs.ids.casotto.Connectors.AddettoSpiaggiaConnector;
 import com.unicam.cs.ids.casotto.utenti.Cliente;
 import com.unicam.cs.ids.casotto.utenti.Utente;
 
-import java.text.ParseException;
 import java.util.Scanner;
 
 public class OpenApp {
@@ -21,7 +20,7 @@ public class OpenApp {
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
-            if(scelta < 0 || scelta > 2){
+            if (scelta < 0 || scelta > 2) {
                 System.out.println("Hai selezionato un numero non valido\n");
             }
             Scanner scanner_value = new Scanner(System.in);
@@ -32,7 +31,7 @@ public class OpenApp {
             String cognome;
             int id_ombrellone;
             String ruolo = "cliente";
-
+            boolean login_succeed = false;
             switch (scelta) {
                 case 1:
                     System.out.println("Inserisci email");
