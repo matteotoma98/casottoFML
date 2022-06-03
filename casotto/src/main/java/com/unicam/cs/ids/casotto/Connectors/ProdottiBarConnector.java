@@ -88,6 +88,17 @@ public class ProdottiBarConnector {
         return risultato;
     }
 
+    public int getMax() throws Exception {
+        ResultSet result2;
+        int max = 0;
+        result2 = connection.createStatement().executeQuery("SELECT MAX(id_prodotto) FROM prodottibar");
+        if (result2.next()) {
+            System.out.println("");
+            max = result2.getInt(1);
+        }
+        return max;
+    }
+
     public boolean rimuoviProdottoBar(int id_prodotto) {
         boolean risultato = false;
         boolean result = false;
@@ -212,4 +223,16 @@ public class ProdottiBarConnector {
     }
 
 
+    public void getQuantitaProdotto(int id_prodotto, int quantita) throws Exception {
+        ResultSet result2;
+        PreparedStatement preparedStatement3;
+        result2 = connection.createStatement().executeQuery("SELECT id_prodotto, quantita FROM prodottibar WHERE id_prodotto ='" + id_prodotto + "'  AND quantita >='" + quantita + "'");
+        if (result2.next())
+            //System.out.println("");
+            connection.prepareStatement("UPDATE prodottibar SET quantita = quantita -'" + quantita + "'WHERE id_prodotto='" + id_prodotto + "'");
+        else {
+            System.err.println("Siamo spiacenti! Non abbiamo la quantità necessaria per il prodotto che vuoi acquistare.");
+            System.exit(0);
+        }
+    }
 }

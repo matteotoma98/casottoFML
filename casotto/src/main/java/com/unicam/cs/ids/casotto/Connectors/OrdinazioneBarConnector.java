@@ -3,14 +3,15 @@ package com.unicam.cs.ids.casotto.Connectors;
 import com.unicam.cs.ids.casotto.serviziobar.OrdinazioneBar;
 
 import java.sql.*;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class OrdinazioneBarConnector {
 
     Connection connection;
+    private int id_ombrellone;
 
     public OrdinazioneBarConnector() {
         try {
@@ -31,19 +32,28 @@ public class OrdinazioneBarConnector {
         return date;
     }
 
+    public int getId(){
+        return this.id_ombrellone;
+    }
     public ResultSet getIdOmbrelloni(String email) {
         boolean result = false;
-
+        Scanner scanner2 = new Scanner(System.in);
         ResultSet resultSet = null;
         try {
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT id_ombrellone FROM cliente WHERE email='" + email + "'");
-
+            List<Integer> l = new ArrayList<>();
             while (resultSet.next()) {
                 System.out.println("Lista dei tuoi ombrelloni: " + resultSet.getInt("id_ombrellone"));
-
+                l.add(resultSet.getInt("id_ombrellone"));
             }
-
+            int id_ombrellone = scanner2.nextInt();
+            this.id_ombrellone= id_ombrellone;
+            if(!l.contains(id_ombrellone)) {
+                System.err.println("Errore! Hai immesso un id dell'ombrellone errato.");
+                System.exit(0);
+            }
+            else return resultSet;
         } catch (Exception e) {
             System.out.println(e);
         }

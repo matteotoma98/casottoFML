@@ -4,7 +4,7 @@ public interface ICliente {
 
     void PrenotazioneOmbrellone(String email) throws Exception;
 
-    void ordinazioneBar(String email);
+    void ordinazioneBar(String email) throws Exception;
 
     public void cancellazionePrenotazioneOmbrellone(String email);
 

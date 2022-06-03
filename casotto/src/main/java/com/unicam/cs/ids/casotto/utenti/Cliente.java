@@ -164,6 +164,9 @@ public class Cliente extends Utente implements ICliente {
         System.out.println("2: Pomeriggio ");
         System.out.println("3: Giornata Intera ");
         scelta_fascia_oraria = scanner.nextInt();
+        if(scelta_fascia_oraria<=0 || scelta_fascia_oraria> 3){
+            throw new IllegalArgumentException("Errore! Scelta non valida");
+        }
         switch (scelta_fascia_oraria) {
             case 1:
                 fasciaOraria = String.valueOf(FasciaOraria.MATTINA);
@@ -192,6 +195,11 @@ public class Cliente extends Utente implements ICliente {
             om.setId_ombrellone(id);
         System.out.println("Inserisci la quantità di lettini che vuoi prenotare");
         int lettini = scanner.nextInt();
+
+        if(lettini > 4 || lettini < 0){
+            System.err.println("Errore! Hai immesso un numero di lettini non valido");
+            System.exit(0);
+        }
         prezzo = prezzo + tariffaPrezzi.Imposta_Prezzi_Spiaggia(FasciaOraria.valueOf(fasciaOraria), fila, date_start, date_end, lettini);
 
         //  System.out.println("Totale:" + totale);
@@ -267,10 +275,14 @@ public class Cliente extends Utente implements ICliente {
                 }
             }
         }
+        else {
+            System.err.println("Errore! Hai immesso una tipologia di pagamento non prevista.");
+            System.exit(0);
+        }
 
     }
 
-    public void ordinazioneBar(String email) {
+    public void ordinazioneBar(String email) throws Exception {
         List<ProdottiBar> prodotti = cp.getProducts();
         System.out.println("--------------------MENU--------------------");
         for (ProdottiBar prodotto : prodotti) {
@@ -292,19 +304,24 @@ public class Cliente extends Utente implements ICliente {
         System.out.println("\n");
         System.out.println("A quale id dell'ombrellone vuoi far consegnare l'ordine?");
         obc.getIdOmbrelloni(email);
-        id_ombrellone = scanner2.nextInt();
+        id_ombrellone = obc.getId();
         do {
             System.out.println("Inserisci l'id del prodotto che vuoi acquistare:");
             id_prodotto = Integer.parseInt(scanner.nextLine());
+            if(id_prodotto < 0 || id_prodotto > cp.getMax()){
+                System.err.println("Errore! Hai immesso un id del prodotto non valido.");
+                System.exit(0);
+            }
             System.out.println("Inserisci la quantità che vuoi acquistare:");
             quantita = scanner2.nextInt();
+            cp.getQuantitaProdotto(id_prodotto, quantita);
             mprodotti.put(id_prodotto, quantita);
 
             //  (ob.getDate(), quantita, int id_ordinazione, int id_ombrellone, int id_prodotto) {// bisognerebbe prendere il valore dell'ultima riga della tabella, e aggiungerci + 1
             //  totale = +cp.getTotaleOrdine(scelta, quantita);
             System.out.println("vuoi aggiungere altri prodotti all'ordine ancora? 1-si 0-no");
             continuaAcquisti = scanner2.nextInt();
-        } while (continuaAcquisti != 0);
+            } while (continuaAcquisti != 0);
         //for(Integer i: lista_prodotti){System.out.println(i);}
         //  System.out.println("Totale:" + totale);
         System.out.println("Scegli la tipologia di pagamento:app -tramite app, consegna -pagamento alla consegna");
@@ -393,7 +410,10 @@ public class Cliente extends Utente implements ICliente {
                 }
             }
         }
-
+        else {
+            System.err.println("Errore! Hai immesso una tipologia del pagamento non prevista.");
+            System.exit(0);
+        }
     }
 
     public void cancellazionePrenotazioneOmbrellone(String email) {
@@ -405,11 +425,9 @@ public class Cliente extends Utente implements ICliente {
         id_prenotazione = scanner.nextInt();
         if (prenotazioneSpiaggiaConnector.checkPrenotazioniOmbrellone(email, id_prenotazione)) {
             prenotazione_spiaggia.cancellaPrenotazione(id_prenotazione);
-        } else System.out.println("Id prenotazione inserito non corrisponde alla tua email\n");
-
-        // this.id_ordinazione = id
-
+        } else {
+            System.err.println("Errore! Id prenotazione inserito non corrisponde alla tua email\n");
+            System.exit(0);
+        }
     }
-
-
 }

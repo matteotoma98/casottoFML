@@ -27,11 +27,8 @@ public class OmbrelloneConnector {
             risultato= true;
         }
         if (!risultato){
-            System.out.println("L'ombrellone selezionato non è associato alla fila");
-
-            throw new IllegalArgumentException("djhd");
-
-
+            System.err.println("Errore! L'ombrellone non è associato alla fila immessa");
+            System.exit(0);
         }
         return risultato;
     }
