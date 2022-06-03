@@ -64,26 +64,25 @@ public class UtenteConnector {
 
     }
 
-    public String getRuolo(String email, String password){
+    public String getRuolo(String email, String password) {
         ResultSet result;
         Utente utente = new Utente();
-        boolean login_= false;
-        String ruolo="";
+        boolean login_ = false;
+        String ruolo = "";
         try {
             result = connection.createStatement().executeQuery("SELECT ruolo FROM utente WHERE email ='" + email + "' AND password = '" + password + "'");
             do {
                 if (result.next() == false) {
-                 //   System.out.println("Non è stato possibile effettuare il login. Controllare le credenziali e riprovare.");
-                    login_= false;
-                }
-                else {
+                    //   System.out.println("Non è stato possibile effettuare il login. Controllare le credenziali e riprovare.");
+                    login_ = false;
+                } else {
                     do {
-                       // utente = UtenteConverter(result);
+                        // utente = UtenteConverter(result);
                         ruolo = result.getString("ruolo");
-                        login_=true;
+                        login_ = true;
                     } while (result.next());
                 }
-            } while(login_);
+            } while (login_);
 
         } catch (Exception e) {
             throw new IllegalArgumentException("Non esiste nessun account con le credenziali" + email + " e " + password + " immesse");
@@ -91,18 +90,18 @@ public class UtenteConnector {
         }
         return ruolo;
     }
+
     public Utente login(String email, String password) {
         ResultSet result;
         Utente utente = new Utente();
-        boolean login_= false;
+        boolean login_ = false;
         try {
             result = connection.createStatement().executeQuery("SELECT * FROM utente WHERE email ='" + email + "' AND password = '" + password + "'");
             do {
                 if (result.next() == false) {
-                  //  System.out.println("Non è stato possibile effettuare il login. Controllare le credenziali e riprovare.");
-                    login_= false;
-                }
-                else {
+                    //  System.out.println("Non è stato possibile effettuare il login. Controllare le credenziali e riprovare.");
+                    login_ = false;
+                } else {
                     do {
                         utente = UtenteConverter(result);
                         email = result.getString("email");
@@ -113,7 +112,7 @@ public class UtenteConnector {
                         clienteConnector.aggiornaClienti();
                     } while (result.next());
                 }
-            } while(login_);
+            } while (login_);
         } catch (Exception e) {
             throw new IllegalArgumentException("Non esiste nessun account con le credenziali" + email + " e " + password + " immesse");
             //System.out.println("Non esiste nessun account con le credenziali" + email + " e " + password + " immesse");

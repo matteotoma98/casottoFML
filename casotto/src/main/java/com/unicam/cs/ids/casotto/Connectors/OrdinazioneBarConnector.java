@@ -45,7 +45,7 @@ public class OrdinazioneBarConnector {
             resultSet = statement.executeQuery("SELECT id_ombrellone FROM cliente WHERE email='" + email + "'");
             List<Integer> l = new ArrayList<>();
             while (resultSet.next()) {
-                System.out.println("Lista dei tuoi ombrelloni: " + resultSet.getInt("id_ombrellone"));
+                System.out.println("Lista dei tuoi ombrelloni:\n" + resultSet.getInt("id_ombrellone"));
                 l.add(resultSet.getInt("id_ombrellone"));
             }
             int id_ombrellone = scanner2.nextInt();
@@ -199,37 +199,9 @@ public class OrdinazioneBarConnector {
         return resultList;
     }
 
-   private Ordinazione_Bar convertiRisultatoInOrdine(ResultSet result)throws SQLException
-    {
-        Date data_ordinazione= result.getDate("data_ordinazione");
-        int quantita= result.getInt("quantita");
-        int id_ordinazione= result.getInt("id_ordinazione");
-        int id_ombrellone= result.getInt("id_ombrellone")
-        int id_prodotto = result.getInt("id_prodotto");
+ */
 
 
-       // DateTimeFormatter data_ordinazione, int quantita, int id_ordinazione, int id_ombrellone, int id_prodotto
-      //  return new Ordinazione_Bar(data_ordinazione, quantita, id_ordinazione, id_ombrellone, id_prodotto);
-    } */
-
-        /*
-
-        public Ordinazione_Bar getOrdinazione(Date data_ordinazione, int id_ombrellone, int id_ordinazione, int quantita ) {
-            ResultSet result;
-            Cliente cliente = new Cliente();
-            try {
-                result = connection.createStatement().executeQuery("SELECT * FROM cliente WHERE email = '" + email + "'");
-                while (result.next()) {
-
-                    cliente = convertiRisultatoInCliente(result);
-                }
-            } catch (Exception e) {
-                System.out.println(e);
-            } //add exception here
-
-            return cliente;
-        }
-       */
 
 
 }

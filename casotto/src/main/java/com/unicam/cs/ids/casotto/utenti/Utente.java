@@ -147,11 +147,11 @@ public class Utente implements IUtente {
                 _password = scanner.next();
                 cliente.setPassword(_password);
                 ruolo = uc.getRuolo(_email, _password);
-              //  System.out.println("Ruolo= "+ruolo);
+                //  System.out.println("Ruolo= "+ruolo);
             } while (ruolo.equals(""));
         }
         if (ruolo != null) {
-            System.out.println("Login effettuato con successo.\n");
+            //System.out.println("Login effettuato con successo.\n");
             switch (ruolo) {
                 case "cliente":
                     try {
@@ -181,24 +181,6 @@ public class Utente implements IUtente {
                         e.printStackTrace();
                     }
                     break;
-                /* case "":
-                    do {
-                        System.out.println("Credenziali non corrette.");
-                       //String _email = utente.getEmail();
-                        Cliente cliente = new Cliente();
-                        // System.out.println("errore nelle credenziali, reinserisci password ed email");
-                        Scanner scanner = new Scanner(System.in);
-                        System.out.println("Email:");
-                        _email = scanner.next();
-                        cliente.setEmail(_email);
-                        System.out.println("Password:");
-                        _password = scanner.next();
-                        cliente.setPassword(_password);
-                        ruolo = uc.getRuolo(_email, _password);
-
-                    } while (ruolo != null); */
-
-
             }
         } else System.out.println("error.");
 
@@ -345,9 +327,9 @@ public class Utente implements IUtente {
                     cliente.iscrizione_Attivita(email);
                     break;
                 case 0:
-                    OpenApp openApp= new OpenApp();
-                openApp.Open();
-                break;
+                    OpenApp openApp = new OpenApp();
+                    openApp.Open();
+                    break;
             }
         }
         while (scelta != 0);
