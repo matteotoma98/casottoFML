@@ -21,6 +21,9 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Cliente extends Utente implements ICliente {
     private String nome;
@@ -359,13 +362,19 @@ public class Cliente extends Utente implements ICliente {
                         //dopo i minuti necessari: preparazioneOrdineConnector.OrdinePronto(id_ordinazione);
                         minuti = cp.TempoTotale(id_prodotto, quantita);
 
-                        Helper helper = new Helper();
+                        Helper helper = new Helper(minuti);
                         //System.out.println("Timer ran " +//);
-                        Timer timer = new Timer();
-                        TimerTask task = new Helper();
-                        timer.schedule(task, minuti*60000, 0);
+                        /* final ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+                        int finalId_ordinazione = id_ordinazione;
+
+                        ses.scheduleWithFixedDelay(() -> {
+                             preparazioneOrdineConnector.OrdinePronto(finalId_ordinazione);
+                            System.out.println(new java.util.Date());
+
+                        }, minuti, 1, TimeUnit.MINUTES); */
                        // helper.run();
-                        preparazioneOrdineConnector.OrdinePronto(id_ordinazione);
+
+                     //   preparazioneOrdineConnector.OrdinePronto(id_ordinazione);
                         //metodo che da il tempo totale e lo memorizziamo in una variabile
                         System.out.println("Il tuo ordine arriverà tra " + minuti + " minuti");
                         System.out.println("Ordinazione aggiunta");
@@ -422,11 +431,7 @@ public class Cliente extends Utente implements ICliente {
                     }
                 }
             }
-    if (!tipologia.equals("consegna")) {
-            System.err.println("Errore! Hai immesso una tipologia del pagamento non prevista.");
-            System.exit(0);
-        }
-        if (!tipologia.equals("app")) {
+    if (!tipologia.equals("consegna") && !tipologia.equals("app")) {
             System.err.println("Errore! Hai immesso una tipologia del pagamento non prevista.");
             System.exit(0);
         }
