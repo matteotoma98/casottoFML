@@ -21,19 +21,47 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class Cliente extends Utente implements ICliente {
     private String nome;
     private String cognome;
     private String email;
     private int id_ombrellone = 0;
+    private String prodotti_ordinati = "";
+
+    public int getId_ordinazione() {
+        return id_ordinazione;
+    }
+
+    public void setId_ordinazione(int id_ordinazione) {
+        this.id_ordinazione = id_ordinazione;
+    }
+
+    private int id_ordinazione = 0;
+
+    public String getProdotti_ordinati() {
+        return prodotti_ordinati;
+    }
+
+    public void setProdotti_ordinati(String prodotti_ordinati) {
+        this.prodotti_ordinati = prodotti_ordinati;
+    }
+
+
     private ProdottiBarConnector cp = new ProdottiBarConnector();
     private OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
     private PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();
     Date data_pagamento = Date.valueOf(LocalDate.now());
+
+    private int a_number;
+
+    public int getNumber() {
+        return a_number;
+    }
+
+    public void setNumber(int a_number){
+        this.a_number= a_number;
+    }
 
     public Cliente(String nome, String cognome, String email, int id_ombrellone) {
         this.nome = nome;
@@ -280,6 +308,7 @@ public class Cliente extends Utente implements ICliente {
     }
 
     public void ordinazioneBar(String email) throws Exception {
+        setId_ombrellone(cc.getOmbrellone(email));
         List<ProdottiBar> prodotti = cp.getProducts();
 
         System.out.println("--------------------MENU--------------------");
@@ -292,13 +321,13 @@ public class Cliente extends Utente implements ICliente {
         String tipologia;
         double totale;
         int continuaAcquisti;
-        int id_ordinazione = 0;
         int id_prodotto = 0;
         int quantita = 0;
         int id_ombrellone;
         double prezzo_totale = 0;
         int id_scontrino = 0;
         int minuti = 0;
+
         PreparazioneOrdineConnector preparazioneOrdineConnector = new PreparazioneOrdineConnector();
         Map<Integer, Integer> mprodotti = new HashMap<>();
         System.out.println("\n");
@@ -326,112 +355,128 @@ public class Cliente extends Utente implements ICliente {
         //for(Integer i: lista_prodotti){System.out.println(i);}
         //  System.out.println("Totale:" + totale);
 
-            System.out.println("Scegli la tipologia di pagamento:app -tramite app, consegna -pagamento alla consegna");
-            tipologia = scanner.nextLine();
+        System.out.println("Scegli la tipologia di pagamento:app -tramite app, consegna -pagamento alla consegna");
+        tipologia = scanner.nextLine();
 
-            if (tipologia.equals("app")) {
-                System.out.println("Inserisci i dati della carta per il pagamento:");
-                String carta;
-                do {
-                    carta = scanner.nextLine();
-                    if (carta.length() != 16)
-                        System.out.println("Errore! Reinserisci il numero della carta");
-                } while (carta.length() != 16);
-                System.out.println("Confermi il pagamento? Si/No");
-                scelta = scanner.nextLine();
-                if (scelta.equals("Si")) {
-                    Date data = obc.getDate();
-                    boolean risultato = false;
-                    risultato = obc.addOrdine(new OrdinazioneBar(data, quantita, id_ordinazione, id_ombrellone, mprodotti));
-                    prezzo_totale = obc.calcolaPrezzoOrdine(id_prodotto, quantita);
-                    Scontrino scontrino = new Scontrino(id_scontrino, data, id_ombrellone, prezzo_totale);
-                    //connector tabella tipologia_pg
-                    scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, id_ombrellone, prezzo_totale, "bar");
-                    PagamentoBar p = new PagamentoBar();
-                    OrdinazioneBar ordinazione_bar = new OrdinazioneBar();
-                    ordinazione_bar.setLista_prodotti(mprodotti);
-                    OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
+        if (tipologia.equals("app")) {
+            System.out.println("Inserisci i dati della carta per il pagamento:");
+            String carta;
+            do {
+                carta = scanner.nextLine();
+                if (carta.length() != 16)
+                    System.out.println("Errore! Reinserisci il numero della carta");
+            } while (carta.length() != 16);
+            System.out.println("Confermi il pagamento? Si/No");
+            scelta = scanner.nextLine();
+            if (scelta.equals("Si")) {
+                Date data = obc.getDate();
+                boolean risultato = false;
+                risultato = obc.addOrdine(new OrdinazioneBar(data, quantita, id_ordinazione, id_ombrellone, mprodotti));
+                prezzo_totale = obc.calcolaPrezzoOrdine(id_prodotto, quantita);
+                Scontrino scontrino = new Scontrino(id_scontrino, data, id_ombrellone, prezzo_totale);
+                //connector tabella tipologia_pg
+                scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, id_ombrellone, prezzo_totale, "bar");
+                PagamentoBar p = new PagamentoBar();
+                OrdinazioneBar ordinazione_bar = new OrdinazioneBar();
+                ordinazione_bar.setLista_prodotti(mprodotti);
+                OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
 
-                    if (!risultato) System.out.println("errore nell'aggiunta dell'ordine");
-                    boolean risultato2 = p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
-                    // String tipologia_pagamento, int id_prenotazione, int id_ombrellone, Date data_pagamento
-                    if (risultato2) {
-                        //parte preparazione ordine!
-                        id_ordinazione = ordinazioneBarConnector.last_ordinazione(id_ombrellone);
-                        preparazioneOrdineConnector.addOrdine(id_ordinazione);
-                        //dopo i minuti necessari: preparazioneOrdineConnector.OrdinePronto(id_ordinazione);
-                        minuti = cp.TempoTotale(id_prodotto, quantita);
+                if (!risultato) System.out.println("errore nell'aggiunta dell'ordine");
+                boolean risultato2 = p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
+                // String tipologia_pagamento, int id_prenotazione, int id_ombrellone, Date data_pagamento
+                if (risultato2) {
+                    //parte preparazione ordine!
+                    id_ordinazione = ordinazioneBarConnector.last_ordinazione(id_ombrellone);
+                    setId_ordinazione(id_ordinazione);
+                    preparazioneOrdineConnector.addOrdine(id_ordinazione);
+                    //dopo i minuti necessari: preparazioneOrdineConnector.OrdinePronto(id_ordinazione);
+                    minuti = cp.TempoTotale(id_prodotto, quantita); //prendere tutti gli id dei prodotti scelti, non solo il primo
+                    setEmail(email);
 
-                        Helper helper = new Helper(minuti);
-                        //System.out.println("Timer ran " +//);
-                        /* final ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
-                        int finalId_ordinazione = id_ordinazione;
+                    prodotti_ordinati = ordinazioneBarConnector.getListaProdotti(id_ordinazione);
+                    setProdotti_ordinati(prodotti_ordinati);
+                    a_number = minuti;
+                    setNumber(a_number);
+                    Helper helper = new Helper(a_number);
+                    Timer t = new java.util.Timer();
+                    t.schedule(
+                            new java.util.TimerTask() {
+                                @Override
+                                public void run() {
+                                    // int finalId_ordinazione = id_ordinazione;
+                                    if(preparazioneOrdineConnector.OrdinePronto(getId_ordinazione()))
+                                        System.out.println("Il tuo ordine è pronto.");
+                                    //else System.out.println("Ordine non ancora pronto");
+                                    try {
+                                        SendEmail.sendMailBar("matteotoma98@hotmail.it", getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone());
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        System.out.println("Errore nell'inviare l'email dell'ordine all'addetto spiaggia");
+                                    }
+                                    // close the thread
+                                    t.cancel();
+                                }
+                            },
+                            minuti* 60000L //invia il messaggio all'addetto spiaggia dopo che è passato il tempo totale per preparare l'ordine
+                    );
+                    // helper.sendMailBar(email, ordinazioneBarConnector.getListaProdotti(id_ordinazione), ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone);
 
-                        ses.scheduleWithFixedDelay(() -> {
-                             preparazioneOrdineConnector.OrdinePronto(finalId_ordinazione);
-                            System.out.println(new java.util.Date());
-
-                        }, minuti, 1, TimeUnit.MINUTES); */
-                       // helper.run();
-
-                     //   preparazioneOrdineConnector.OrdinePronto(id_ordinazione);
-                        //metodo che da il tempo totale e lo memorizziamo in una variabile
-                        System.out.println("Il tuo ordine arriverà tra " + minuti + " minuti");
-                        System.out.println("Ordinazione aggiunta");
-                        IObserver notifyOrder4 = new NotifyOrder("Addetto Bar");
-                        notifyOrder4.register(notifyOrder4);
-                        //notifyOrder4.notifyObservers();
-                        // notifyOrder4.notifyAddettobar(email,ordinazione_bar.getLista_prodotti().toString(),ordinazioneBarConnector.last_ordinazione(id_ombrellone),id_ombrellone);
-                        try {
+                    System.out.println("Il tuo ordine arriverà tra " + minuti + " minuti");
+                    System.out.println("Ordinazione aggiunta, attendi la preparazione!");
+                    IObserver notifyOrder4 = new NotifyOrder("Addetto Bar");
+                    notifyOrder4.register(notifyOrder4);
+                    //notifyOrder4.notifyObservers();
+                    // notifyOrder4.notifyAddettobar(email,ordinazione_bar.getLista_prodotti().toString(),ordinazioneBarConnector.last_ordinazione(id_ombrellone),id_ombrellone);
+                       /* try {
                             SendEmail.sendMailBar(email, ordinazione_bar.getLista_prodotti().toString(), ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone);
                         } catch (Exception e) {
                             e.printStackTrace();
-                        }
-                    }
+                        } */
                 }
             }
-            if (tipologia.equals("consegna")) {
-                System.out.println("Confermi il pagamento? Si/No");
-                scelta = scanner.nextLine();
-                if (scelta.equals("Si")) {
-                    Date data = obc.getDate();
-                    boolean risultato = false;
-                    risultato = obc.addOrdine(new OrdinazioneBar(data, quantita, id_ordinazione, id_ombrellone, mprodotti));
-                    prezzo_totale = obc.calcolaPrezzoOrdine(id_prodotto, quantita);
-                    Scontrino scontrino = new Scontrino(id_scontrino, data, id_ombrellone, prezzo_totale);
-                    //connector tabella tipologia_pg
-                    scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, id_ombrellone, prezzo_totale, "bar");
-                    PagamentoBar p = new PagamentoBar();
-                    OrdinazioneBar ordinazione_bar = new OrdinazioneBar();
-                    ordinazione_bar.setLista_prodotti(mprodotti);
-                    OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
-                    System.out.println(tipologia);
-                    System.out.println(ordinazioneBarConnector.last_ordinazione(id_ombrellone));
-                    System.out.println(id_ombrellone);
-                    System.out.println(data_pagamento);
-                    if (!risultato) System.out.println("errore nell'aggiunta dell'ordine");
-                    boolean risultato2 = p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
+        }
+        if (tipologia.equals("consegna")) {
+            System.out.println("Confermi il pagamento? Si/No");
+            scelta = scanner.nextLine();
+            if (scelta.equals("Si")) {
+                Date data = obc.getDate();
+                boolean risultato = false;
+                risultato = obc.addOrdine(new OrdinazioneBar(data, quantita, id_ordinazione, id_ombrellone, mprodotti));
+                prezzo_totale = obc.calcolaPrezzoOrdine(id_prodotto, quantita);
+                Scontrino scontrino = new Scontrino(id_scontrino, data, id_ombrellone, prezzo_totale);
+                //connector tabella tipologia_pg
+                scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, id_ombrellone, prezzo_totale, "bar");
+                PagamentoBar p = new PagamentoBar();
+                OrdinazioneBar ordinazione_bar = new OrdinazioneBar();
+                ordinazione_bar.setLista_prodotti(mprodotti);
+                OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
+                System.out.println(tipologia);
+                System.out.println(ordinazioneBarConnector.last_ordinazione(id_ombrellone));
+                System.out.println(id_ombrellone);
+                System.out.println(data_pagamento);
+                if (!risultato) System.out.println("errore nell'aggiunta dell'ordine");
+                boolean risultato2 = p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
 
-                    if (risultato) {
-                        System.out.println("Il tuo ordine arriverà tra " + cp.TempoTotale(id_prodotto, quantita) + " minuti");
-                        System.out.println("Ordinazione aggiunta");
-                        NotifyOrder notifyOrder3 = new NotifyOrder("Addetto Bar");
-                        IObserver notifyOrder4 = new NotifyOrder("Addetto Bar");
-                        notifyOrder3.register(notifyOrder4);
-                        notifyOrder3.notifyObservers();
-                        NotifyOrder notifyOrder5 = new NotifyOrder("Addetto Bar");
-                        IObserver notifyOrder6 = new NotifyOrder("Addetto Spiaggia");
-                        notifyOrder5.register(notifyOrder6);
-                        notifyOrder5.notifyObservers();
-                        //notifyOrder5.unregister(notifyOrder6);
-                        NotifyOrder notifyOrder7 = new NotifyOrder("Cliente Spiaggia");
-                        IObserver notifyOrder8 = new NotifyOrder("Cliente Spiaggia");
-                        notifyOrder7.register(notifyOrder8);
-                        notifyOrder7.notifyObservers();
-                    }
+                if (risultato) {
+                    System.out.println("Il tuo ordine arriverà tra " + cp.TempoTotale(id_prodotto, quantita) + " minuti");
+                    System.out.println("Ordinazione aggiunta");
+                    NotifyOrder notifyOrder3 = new NotifyOrder("Addetto Bar");
+                    IObserver notifyOrder4 = new NotifyOrder("Addetto Bar");
+                    notifyOrder3.register(notifyOrder4);
+                    notifyOrder3.notifyObservers();
+                    NotifyOrder notifyOrder5 = new NotifyOrder("Addetto Bar");
+                    IObserver notifyOrder6 = new NotifyOrder("Addetto Spiaggia");
+                    notifyOrder5.register(notifyOrder6);
+                    notifyOrder5.notifyObservers();
+                    //notifyOrder5.unregister(notifyOrder6);
+                    NotifyOrder notifyOrder7 = new NotifyOrder("Cliente Spiaggia");
+                    IObserver notifyOrder8 = new NotifyOrder("Cliente Spiaggia");
+                    notifyOrder7.register(notifyOrder8);
+                    notifyOrder7.notifyObservers();
                 }
             }
-    if (!tipologia.equals("consegna") && !tipologia.equals("app")) {
+        }
+        if (!tipologia.equals("consegna") && !tipologia.equals("app")) {
             System.err.println("Errore! Hai immesso una tipologia del pagamento non prevista.");
             System.exit(0);
         }

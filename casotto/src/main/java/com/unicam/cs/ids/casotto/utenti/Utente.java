@@ -321,7 +321,7 @@ public class Utente implements IUtente {
 
                         cliente.ordinazioneBar(email);
                     }
-                    System.out.println("\nImpossibile effettuare un ordine: non hai ombrelloni associati\n");
+                    else System.out.println("\nImpossibile effettuare un ordine: non hai ombrelloni associati\n");
                     break;
                 case 4:
                     cliente.iscrizione_Attivita(email);

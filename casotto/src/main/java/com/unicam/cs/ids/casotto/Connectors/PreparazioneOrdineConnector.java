@@ -60,7 +60,7 @@ public class PreparazioneOrdineConnector {
             PreparedStatement preparedStatement1 = connection.prepareStatement("UPDATE preparazioneordine set ordine_pronto = true WHERE id_ordinazione='"+id_ordinazione+"'");
             //preparedStatement.setInt(1,lettini);
             result4 = preparedStatement1.executeUpdate() > 0;
-            if (result4) System.out.println("Quantità delle attrezzature disponibili aggiornate");
+            if (result4) System.out.println("Ordine pronto!");
         } catch (Exception e) {
             System.out.println(e);
         }

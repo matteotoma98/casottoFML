@@ -70,7 +70,7 @@ public class SendEmail {
         });
         Message message = prepareMessageBar(session, myAccountEmail, recipient, prodotti, id_ordine, id_ombrellone);
         Transport.send(message);
-        System.out.println("Messaggio inviato correttamente");
+       // System.out.println("Messaggio inviato correttamente");
     }
 
     private static Message prepareMessageBar(Session session, String myAccountEmail, String recipient, String prodotti, int id_ordine, int id_ombrellone) {
@@ -79,7 +79,7 @@ public class SendEmail {
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
             message.setSubject("CasottoFML™");
-            message.setText("Ciao, Il cliente " + recipient + " ha ordinato i seguenti prodotti: " + prodotti + "id_ordine: " + id_ordine + "\n,L'ombrellone a cui portare i prodotti è: " + id_ombrellone + " .");
+            message.setText("Ciao, Il cliente " + recipient + " ha ordinato i seguenti prodotti: " + prodotti + " .\n id_ordine: " + id_ordine + ".\n L'ombrellone a cui portare i prodotti è: " + id_ombrellone + " .");
             return message;
         } catch (Exception ex) {
             Logger.getLogger(SendEmail.class.getName()).log(Level.SEVERE, null, ex);

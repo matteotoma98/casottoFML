@@ -231,7 +231,8 @@ public class ProdottiBarConnector {
             //System.out.println("");
             connection.prepareStatement("UPDATE prodottibar SET quantita = quantita -'" + quantita + "'WHERE id_prodotto='" + id_prodotto + "'");
         else {
-            System.err.println("Siamo spiacenti! Non abbiamo la quantità necessaria per il prodotto che vuoi acquistare.");
+            System.err.println("Siamo spiacenti! Non abbiamo la quantità necessaria per il prodotto che vuoi acquistare, riprova diminuendo la quantità del " +
+                    "prodotto che desideri");
             System.exit(0);
         }
     }

@@ -179,6 +179,22 @@ public class OrdinazioneBarConnector {
         return prezzo_totale;
     }
 
+
+    public String getListaProdotti(int id_ordinazione) {
+        boolean result = false;
+        boolean controllo = false;
+        String prodotti= "";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT lista_prodotti FROM ordinazionebar WHERE id_ordinazione='"+id_ordinazione+"'");
+            while (resultSet.next()) {
+                prodotti = resultSet.getString("lista_prodotti");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return prodotti;
+    }
 /*
     public List<Ordinazione_Bar> getOrdini() {
         ResultSet result;
