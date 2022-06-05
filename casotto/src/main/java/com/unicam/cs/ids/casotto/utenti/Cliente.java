@@ -397,7 +397,7 @@ public class Cliente extends Utente implements ICliente {
                     setProdotti_ordinati(prodotti_ordinati);
                     a_number = minuti;
                     setNumber(a_number);
-                    Helper helper = new Helper(a_number);
+                    //Helper helper = new Helper(a_number);
                     Timer t = new java.util.Timer();
                     t.schedule(
                             new java.util.TimerTask() {
