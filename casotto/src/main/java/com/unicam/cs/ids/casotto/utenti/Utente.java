@@ -8,6 +8,7 @@ import com.unicam.cs.ids.casotto.model.IUtente;
 import com.unicam.cs.ids.casotto.servizioattivita.AddettoAttivitaLudicoSportive;
 import com.unicam.cs.ids.casotto.serviziogestione.Gestore;
 import com.unicam.cs.ids.casotto.serviziospiaggia.AddettoSpiaggia;
+import org.aspectj.apache.bcel.classfile.Module;
 
 import java.util.Scanner;
 
@@ -124,7 +125,7 @@ public class Utente implements IUtente {
     }
 
     @Override
-    public void login(String email, String password) {
+    public void login(String email, String password) throws Exception {
         boolean login_eff = false;
         String _email = "";
         String _password = "";
@@ -137,7 +138,7 @@ public class Utente implements IUtente {
             do {
                 //String _email = utente.getEmail();
                 Cliente cliente = new Cliente();
-                System.out.println("Errore nelle credenziali, reinserisci password ed email:");
+                System.err.println("Errore nelle credenziali, reinserisci password ed email:");
                 Scanner scanner = new Scanner(System.in);
                 System.out.println("Email:");
                 _email = scanner.next();
@@ -228,7 +229,7 @@ public class Utente implements IUtente {
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
             if (scelta < 0 || scelta > 8) {
-                System.out.println("Numero inserito non valido.");
+                System.err.println("Numero inserito non valido.");
             }
             switch (scelta) {
                 case 1:
@@ -264,7 +265,7 @@ public class Utente implements IUtente {
     }
 
 
-    private void menu_addettoSpiaggia() {
+    private void menu_addettoSpiaggia() throws Exception {
         AddettoSpiaggia as = new AddettoSpiaggia();
         int scelta;
         do {
@@ -273,16 +274,21 @@ public class Utente implements IUtente {
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
-            if (scelta != 1 && scelta != 0)
-                throw new IllegalArgumentException("Scelta non valida");
+            if (scelta != 1 && scelta != 0){
+                System.err.println("Scelta non valida");
+                OpenApp o = new OpenApp();
+                o.Open();}
             switch (scelta) {
                 case 1:
-                    // as.liberaOmbrellone();
+                     //as.liberaOmbrellone();
                     break;
             }
         }
         while (scelta != 0);
     }
+
+    //TODO riceve email da addetto al bar quando l'ordine è pronto e poi lo porta all'ombrellone del cliente e si fa pagare
+
 
 
     public void menu_cliente(String email) throws Exception {
@@ -306,7 +312,7 @@ public class Utente implements IUtente {
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
             if (scelta < 0 || scelta > 4) {
-                System.out.println("Hai selezionato un numero non valido\n");
+                System.err.println("Hai selezionato un numero non valido\n");
             }
             switch (scelta) {
                 case 1:
@@ -321,7 +327,7 @@ public class Utente implements IUtente {
 
                         cliente.ordinazioneBar(email);
                     }
-                    else System.out.println("\nImpossibile effettuare un ordine: non hai ombrelloni associati\n");
+                    else System.err.println("\nImpossibile effettuare un ordine: non hai ombrelloni associati\n");
                     break;
                 case 4:
                     cliente.iscrizione_Attivita(email);

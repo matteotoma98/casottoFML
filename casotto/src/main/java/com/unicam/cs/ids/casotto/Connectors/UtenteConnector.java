@@ -167,7 +167,7 @@ public class UtenteConnector {
         try {
             result = connection.createStatement().executeQuery("SELECT email,ruolo, nome,cognome FROM utente");
             if (result.next() == false) {
-                System.out.println("Query non eseguita correttamente o vuota.");
+                System.err.println("Query non eseguita correttamente o vuota.");
             } else {
                 do {
                     System.out.print("email: " + result.getString("email") + ", ");
@@ -198,7 +198,7 @@ public class UtenteConnector {
             result2 = connection.createStatement().executeQuery("SELECT email,ruolo FROM utente WHERE email='" + email + "'");
 
             if (result2.next() == false) {
-                System.out.println("L'utente non esiste, inserirne uno di quelli della lista.");
+                System.err.println("errore: L'utente non esiste, inserirne uno di quelli della lista.");
                 utente_trovato = false;
             } else {
                 do {
@@ -229,7 +229,7 @@ public class UtenteConnector {
             result2 = connection.createStatement().executeQuery("SELECT email,ruolo FROM utente WHERE email='" + email + "'");
 
             if (result2.next() == false) {
-                System.out.println("L'utente non esiste, inserirne uno di quelli della lista.");
+                System.err.println("errore: L'utente non esiste, inserirne uno di quelli della lista.");
                 utente_trovato = false;
             } else {
                 do {

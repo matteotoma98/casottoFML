@@ -28,7 +28,7 @@ public class TariffaPrezziConnector {
             result2 = connection.createStatement().executeQuery("SELECT num_fila_ombrellone FROM ombrellone WHERE num_fila_ombrellone='" + id_fila + "'");
 
             if (result2.next() == false) {
-                System.out.println("La fila dell'ombrellone non esiste, inserirne una tra 1 e 15");
+                System.err.println("errore: La fila dell'ombrellone non esiste, inserirne una tra 1 e 15");
                 fila_trovata = false;
             } else {
                 do {

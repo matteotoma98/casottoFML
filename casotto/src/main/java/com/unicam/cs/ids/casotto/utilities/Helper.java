@@ -54,7 +54,7 @@ public class Helper {
                 SendEmail.sendMailBar("matteotoma98@hotmail.it", cliente.getProdotti_ordinati(), cliente.getId_ordinazione(), cliente.getId_ombrellone());
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("Errore");
+                System.err.println("Errore");
             }
             timer.cancel(); //Terminate the timer thread
         }

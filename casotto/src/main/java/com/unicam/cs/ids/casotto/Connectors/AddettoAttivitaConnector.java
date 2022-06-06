@@ -29,7 +29,7 @@ public class AddettoAttivitaConnector {
             if (result) {
                 System.out.println("Dati nella tabella attività cambiati");
             } else {
-                System.out.println("id attività non valido");
+                System.err.println("errore: id attività non valido");
             }
         } catch (Exception e) {
             System.out.println(e);

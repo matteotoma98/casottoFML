@@ -1,9 +1,12 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
+import com.unicam.cs.ids.casotto.OpenApp;
 import com.unicam.cs.ids.casotto.utenti.Cliente;
+import com.unicam.cs.ids.casotto.utenti.Utente;
 
 import java.sql.*;
 import java.util.Date;
+import java.util.Scanner;
 
 public class AttivitaConnector {
 
@@ -52,7 +55,7 @@ public class AttivitaConnector {
                 if (nome_attivita.isEmpty()) attivitaesistente = false;
                 else {
                     attivitaesistente = true;
-                    System.out.println("esiste già quest'attività, inserirne un'altra diversa.");
+                    System.err.println("errore: esiste già quest'attività, inserirne un'altra diversa.");
                 }
             }
             try {
@@ -63,7 +66,7 @@ public class AttivitaConnector {
                     else {
                         attresistente = true;
                         if (attresistente)
-                            System.out.println("esiste già questa attrezzatura, inserirne un'altra diversa.");
+                            System.err.println("errore: esiste già questa attrezzatura, inserirne un'altra diversa.");
                     }
                 }
                 if (!attresistente) {
@@ -121,9 +124,19 @@ public class AttivitaConnector {
             // else System.out.println("Non esiste l'attrezzatura nello chalet per inserire l'attività.");
         } catch (Exception e) {
             System.out.println(e);
-            System.out.println("errore nel cercare l'attrezzatura");
+            System.err.println("errore nel cercare l'attrezzatura");
         }
         return risultato;
+    }
+
+    public int getMax() throws Exception {
+        ResultSet result2;
+        int max = 0;
+        result2 = connection.createStatement().executeQuery("SELECT MAX(id_attivita) FROM attivita");
+        if (result2.next()) {
+            max = result2.getInt("MAX(id_attivita)");
+        }
+        return max;
     }
 
     public ResultSet getAttivita() {
@@ -222,10 +235,22 @@ public class AttivitaConnector {
         boolean risultato = false;
         int quantitaAttr = 0;
         String nome_attrezz = "";
+        String nomeAttivita2 = "";
+        Scanner scanner = new Scanner(System.in);
         try {
             result = connection.createStatement().executeQuery("SELECT quantita,nome_attrezzatura FROM attivita WHERE nome_attivita='" + nomeAttivita + "'");
-            if (!result.next()) {
-                System.out.println("--- Nome attivita non valido ---\n");
+            while(!result.next()){
+                //if (!result.next()) {
+                System.err.println("--- Nome attivita non valido ---\n");
+                OpenApp o = new OpenApp();
+                o.Open();
+                /*System.out.println("Reinserisci il nome dell'attività");
+                nomeAttivita2 = scanner.next();
+                result = connection.createStatement().executeQuery("SELECT quantita,nome_attrezzatura FROM attivita WHERE nome_attivita='" + nomeAttivita2 + "'");
+                if(result.next()){
+                    risultato=  true;
+                    break;
+                }*/
             }
             while (result.next()) {
                 quantitaAttr = result.getInt("quantita");

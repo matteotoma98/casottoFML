@@ -32,7 +32,7 @@ public class PreparazioneOrdineConnector {
                 System.out.println("Ordine aggiunto in coda");
                 risultato = true;
                                 //decrementare la quantità dell'attrezzatura disponibile dalla tabella attrezzatura
-            } else System.out.println("errore nell'inserire l'orine");
+            } else System.err.println("errore nell'inserire l'orine");
         } catch (Exception e) {
             System.out.println(e);
         }

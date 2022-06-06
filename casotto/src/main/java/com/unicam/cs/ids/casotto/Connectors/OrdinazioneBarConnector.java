@@ -1,6 +1,8 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
+import com.unicam.cs.ids.casotto.OpenApp;
 import com.unicam.cs.ids.casotto.serviziobar.OrdinazioneBar;
+import org.aspectj.apache.bcel.classfile.Module;
 
 import java.sql.Date;
 import java.sql.*;
@@ -51,8 +53,9 @@ public class OrdinazioneBarConnector {
             int id_ombrellone = scanner2.nextInt();
             this.id_ombrellone = id_ombrellone;
             if (!l.contains(id_ombrellone)) {
-                System.err.println("Errore! Hai immesso un id dell'ombrellone errato.");
-                System.exit(0);
+                System.err.println("Errore: Hai immesso un id dell'ombrellone errato.");
+                OpenApp o = new OpenApp();
+                o.Open();
             } else return resultSet;
         } catch (Exception e) {
             System.out.println(e);
@@ -135,7 +138,7 @@ public class OrdinazioneBarConnector {
         } catch (Exception e) {
             System.out.println(e);
             result = false;
-            System.out.println("Ordinazione non riuscita");
+            System.err.println("errore: Ordinazione non riuscita");
         }
         return result;
     }
@@ -160,7 +163,7 @@ public class OrdinazioneBarConnector {
             //   if (result) System.out.println("Quantità del prodotto " + id + " diminuita.");
         } catch (Exception e) {
             System.out.println(e);
-            System.out.println("problema nel decremento");
+            System.err.println("errore: problema nel decremento");
         }
     }
 

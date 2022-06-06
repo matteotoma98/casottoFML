@@ -1,5 +1,6 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
+import com.unicam.cs.ids.casotto.OpenApp;
 import com.unicam.cs.ids.casotto.serviziobar.ProdottiBar;
 
 import java.sql.Connection;
@@ -37,7 +38,7 @@ public class ProdottiBarConnector {
 
         //error checking
         if (resultList.isEmpty())
-            System.out.println("Empty result");
+            System.err.println("errore: Empty result");
 
         return resultList;
     }
@@ -62,7 +63,7 @@ public class ProdottiBarConnector {
                     result2.getInt("id_prodotto");
                     nome_prod = result2.getString("nome_prodotto");
                     prodotto_trovato = true;
-                    System.out.println("L'id del prodotto esiste già, inseriscine un'altro.");
+                    System.err.println("errore: L'id del prodotto esiste già, inseriscine un'altro.");
                 } while (result2.next());
             }
             if (!prodotto_trovato) {
@@ -112,7 +113,7 @@ public class ProdottiBarConnector {
             result2 = connection.createStatement().executeQuery("SELECT id_prodotto,nome_prodotto FROM prodottibar WHERE id_prodotto='" + id_prodotto + "'");
 
             if (result2.next() == false) {
-                System.out.println("L'id del prodotto non esiste, inserirne uno che esiste.");
+                System.err.println("errore: L'id del prodotto non esiste, inseriscine un'altro.");
                 prodotto_trovato = false;
             } else {
                 do {
@@ -152,7 +153,7 @@ public class ProdottiBarConnector {
             result2 = connection.createStatement().executeQuery("SELECT id_prodotto,nome_prodotto FROM prodottibar WHERE id_prodotto='" + id_prodotto + "'");
 
             if (result2.next() == false) {
-                System.out.println("L'id del prodotto non esiste, inserirne uno di quelli della lista.");
+                System.err.println("errore: L'id del prodotto non esiste, inseriscine un'altro.");
                 prodotto_trovato = false;
             } else {
                 do {
@@ -233,7 +234,8 @@ public class ProdottiBarConnector {
         else {
             System.err.println("Siamo spiacenti! Non abbiamo la quantità necessaria per il prodotto che vuoi acquistare, riprova diminuendo la quantità del " +
                     "prodotto che desideri");
-            System.exit(0);
+            OpenApp o = new OpenApp();
+            o.Open();
         }
     }
 }

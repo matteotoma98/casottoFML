@@ -24,7 +24,7 @@ public class OmbrelloneConnector {
             risultato = true;
         }
         if (!risultato) {
-            System.err.println("Errore! L'ombrellone non è associato alla fila immessa");
+            System.err.println("Errore: L'ombrellone non è associato alla fila immessa");
             System.exit(0);
         }
         return risultato;
@@ -67,7 +67,7 @@ public class OmbrelloneConnector {
                 else {
                     ombr_esistente = true;
                     if (ombr_esistente)
-                        System.out.println("esiste già questo id di ombrellone, inserirne un id diverso.");
+                        System.err.println("errore: esiste già questo id di ombrellone, inserirne un id diverso.");
                 }
             }
 
@@ -85,7 +85,7 @@ public class OmbrelloneConnector {
                             tipologia = "base";
                             prezzo = 4;
                         } else
-                            System.out.println("errore, dalla fila 1  alla 3 devi mettere vip, dalla 4 alla 7 premium e dalla 8 alla 15 base.");
+                            System.err.println("errore: dalla fila 1  alla 3 devi mettere vip, dalla 4 alla 7 premium e dalla 8 alla 15 base.");
 
                         PreparedStatement preparedStatement2 = connection.prepareStatement("INSERT INTO ombrellone VALUES (?,?,?,?)");
                         preparedStatement2.setInt(1, id_ombrellone);
@@ -125,7 +125,7 @@ public class OmbrelloneConnector {
             result2 = connection.createStatement().executeQuery("SELECT id_ombrellone FROM ombrellone WHERE id_ombrellone='" + id_ombrellone + "'");
 
             if (result2.next() == false) {
-                System.out.println("L'id dell'ombrellone non esiste, inserirne uno della lista.");
+                System.err.println("errore: L'id dell'ombrellone non esiste, inserirne uno della lista.");
                 ombr_esistente = false;
             } else {
                 do {
@@ -167,7 +167,7 @@ public class OmbrelloneConnector {
             result2 = connection.createStatement().executeQuery("SELECT num_fila_ombrellone FROM ombrellone WHERE num_fila_ombrellone='" + fila + "'");
 
             if (result2.next() == false) {
-                System.out.println("La fila dell'ombrellone non esiste, inserirne una tra 1 e 15");
+                System.err.println("errore: La fila dell'ombrellone non esiste, inserirne una tra 1 e 15");
                 fila_trovata = false;
             } else {
                 do {
@@ -207,7 +207,7 @@ public class OmbrelloneConnector {
             result2 = connection.createStatement().executeQuery("SELECT id_ombrellone FROM ombrellone WHERE id_ombrellone='" + id_ombrellone + "'");
 
             if (result2.next() == false) {
-                System.out.println("L'id dell'ombrellone non esiste, inserirne uno esistente.");
+                System.err.println("errore: L'id dell'ombrellone non esiste, inserirne uno esistente.");
                 ombr_esistente = false;
             } else {
                 do {

@@ -48,7 +48,7 @@ public class PrenotazioneSpiaggiaConnector {
                 if (result) {
                     System.out.println("Ombrellone aggiornato");
                 } else {
-                    System.out.println("errore nell'aggiornare l'ombrellone");
+                    System.err.println("errore nell'aggiornare l'ombrellone");
                 }
             }
         } catch (Exception e) {
@@ -70,7 +70,7 @@ public class PrenotazioneSpiaggiaConnector {
                 result = preparedStatement2.executeUpdate() > 0;
             } catch (Exception e) {
                 System.out.println(e);
-                System.out.println("errore nell'aggiornare l'ombrellone cliente");
+                System.err.println("errore nell'aggiornare l'ombrellone cliente");
             }
         }
         return result;
@@ -122,7 +122,7 @@ public class PrenotazioneSpiaggiaConnector {
                 } while (resultSet.next());
             } else result = false;
         } catch (Exception e) {
-            System.out.println("errore");
+            System.err.println("errore");
             System.out.println(e);
         }
         return result;
@@ -139,7 +139,7 @@ public class PrenotazioneSpiaggiaConnector {
                 } while (resultSet.next());
             } else result = false;
         } catch (Exception e) {
-            System.out.println("errore");
+            System.err.println("errore");
             System.out.println(e);
         }
         return result;
@@ -161,7 +161,7 @@ public class PrenotazioneSpiaggiaConnector {
             } else a = false;
         } catch (Exception e) {
             // System.exit(0);
-            System.out.println("errore check disponbilita");
+            System.err.println("errore check disponbilita");
         }
         try {
             Statement statement = connection.createStatement();
@@ -201,23 +201,23 @@ public class PrenotazioneSpiaggiaConnector {
                             result3 = preparedStatement2.executeUpdate() > 0;
                             if (result3) {
                                 System.out.println("Decrementazione lettini effettuata!");
-                            } else System.out.println("Decrementazione lettini NON Riuscita.");
+                            } else System.err.println("errore: Decrementazione lettini NON Riuscita.");
                         } catch (Exception e) {
                             System.out.println(" update lettini");
                             System.out.println(e);
                         }
-                    } else System.out.println("Decrementazione ombrelloni NON Riuscita.");
+                    } else System.err.println("errore: Decrementazione ombrelloni NON Riuscita.");
                 } catch (Exception e) {
                     System.out.println("update lettini e ombrelloni");
                     System.out.println(e);
                 }
                 System.out.print(email + ", ");
                 System.out.println("hai effettuato la prenotazione con successo! \n");
-            } else System.out.println("Prenotazione NON Riuscita.");
+            } else System.err.println("errore: Prenotazione NON Riuscita.");
 
         } catch (Exception e) {
             System.out.println(e);
-            System.out.println("errore nell'inserire la prenotazione");
+            System.err.println("errore nell'inserire la prenotazione");
             result = false;
         }
         else {

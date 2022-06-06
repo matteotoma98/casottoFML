@@ -4,8 +4,10 @@ import com.unicam.cs.ids.casotto.Connectors.*;
 import com.unicam.cs.ids.casotto.OpenApp;
 import com.unicam.cs.ids.casotto.serviziobar.ProdottiBar;
 import com.unicam.cs.ids.casotto.utenti.Utente;
+import org.springframework.util.NumberUtils;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,7 +33,7 @@ public class Gestore extends Utente {
             System.out.println("Seleziona la mail dell'utente di cui cambiare il ruolo:");
             email = scanner.next();
             if (email.equals("")) {
-                System.out.println("Inserire un'email non vuota.");
+                System.err.println("Errore: inserire un'email non vuota.");
             }
 
             do {
@@ -130,7 +132,7 @@ public class Gestore extends Utente {
                             System.out.println("Inserisci l'id dell'ombrellone:");
                             id_ombrellone = scanner.nextInt();
                             if (id_ombrellone < 0) {
-                                System.out.println("L'id dell'ombrellone deve essere maggiore di 0");
+                                System.err.println("errore: L'id dell'ombrellone deve essere maggiore di 0");
                                 //(mettere do while finchè non è giusto)
                             }
                         } while (id_ombrellone < 0);
@@ -141,7 +143,7 @@ public class Gestore extends Utente {
                         throw new IllegalArgumentException("inserisci una tipologia che sia base,vip o premium");
                     } */
                             if (prezzo_ombrellone <= 0) {
-                                System.out.println("Il prezzo dell'ombrellone deve essere maggiore di 0");
+                                System.err.println("errore: Il prezzo dell'ombrellone deve essere maggiore di 0");
                             }
                         } while (prezzo_ombrellone < 0);
                         risultato2 = ombrelloneConnector.cambiaPrezzoOmbrellone(id_ombrellone, prezzo_ombrellone);
@@ -163,7 +165,7 @@ public class Gestore extends Utente {
                             System.out.println("Inserisci il prezzo degli ombrelloni per la mezza giornata:");
                             prezzo_ombrellone_mg = scanner.nextDouble();
                             if (prezzo_ombrellone_mg < 0) {
-                                System.out.println("il prezzo dell'ombrellone deve essere maggiore di 0");
+                                System.err.println("errore: il prezzo dell'ombrellone deve essere maggiore di 0");
                                 //(mettere do while finchè non è giusto)
                             }
                         } while (prezzo_ombrellone_mg < 0);
@@ -171,7 +173,7 @@ public class Gestore extends Utente {
                             System.out.println("Inserisci il prezzo degli ombrelloni per la giornata intera:");
                             prezzo_ombrellone_gi = scanner.nextDouble();
                             if (prezzo_ombrellone_gi < 0) {
-                                System.out.println("il prezzo dell'ombrellone deve essere maggiore di 0");
+                                System.err.println("errore: il prezzo dell'ombrellone deve essere maggiore di 0");
                                 //(mettere do while finchè non è giusto)
                             }
                         } while (prezzo_ombrellone_gi < 0);
@@ -185,7 +187,7 @@ public class Gestore extends Utente {
                             System.out.println("Inserisci il prezzo dei lettini:");
                             prezzo_lettini = scanner.nextDouble();
                             if (prezzo_lettini < 0) {
-                                System.out.println("il prezzo dei lettini deve essere maggiore di 0");
+                                System.err.println("Errore: il prezzo dei lettini deve essere maggiore di 0");
                             }
                         } while (prezzo_lettini <= 0);
                         risultato = tariffaPrezziConnector.cambiaPrezzoLettini(prezzo_lettini);
@@ -204,7 +206,7 @@ public class Gestore extends Utente {
                             System.out.println("Inserisci l'id del prodotto di cui modificare il prezzo:");
                             id_prodotto = scanner.nextInt();
                             if (id_prodotto < 0) {
-                                System.out.println("l'id dell'ombrellone deve essere maggiore o uguale 0");
+                                System.err.println("errore: l'id dell'ombrellone deve essere maggiore o uguale 0");
                                 //(mettere do while finchè non è giusto)
                             }
                         } while (id_prodotto < 0);
@@ -215,7 +217,7 @@ public class Gestore extends Utente {
                         throw new IllegalArgumentException("inserisci una tipologia che sia base,vip o premium");
                     } */
                             if (prezzo_prodotto <= 0) {
-                                System.out.println("il prezzo dell'ombrellone deve essere maggiore di 0");
+                                System.err.println("errore: il prezzo dell'ombrellone deve essere maggiore di 0");
                             }
                         } while (prezzo_prodotto < 0);
                         risultato2 = prodottiBarConnector.updateProdottiBar(prezzo_prodotto, id_prodotto);
@@ -254,16 +256,20 @@ public class Gestore extends Utente {
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
-            if (scelta < 0 || scelta > 4)
-                throw new IllegalArgumentException("Scelta non valida");
+            if (scelta < 0 || scelta > 4){
+                System.err.println("Scelta non valida");
+                OpenApp o = new OpenApp();
+                o.Open();
+            }
             switch (scelta) {
                 case 1:
                     do {
                         System.out.println("Inserisci il numero di ombrelloni totali dello chalet:");
                         ombrelloni_totali = scanner.nextInt();
-
-                        if (ombrelloni_totali < 0) {
-                            System.out.println("la quantità di ombrelloni totali deve essere maggiore di 0");
+                        if(ombrelloni_totali < 0){
+                            System.err.println("Numero ombrelloni inserito non valido");
+                            OpenApp o = new OpenApp();
+                            o.Open();
                         }
                     } while (ombrelloni_totali < 0);
                     chaletConnector.updateOmbrelloniTotali(ombrelloni_totali);
@@ -272,8 +278,10 @@ public class Gestore extends Utente {
                     do {
                         System.out.println("Inserisci il numero di lettini totali dello chalet:");
                         lettini_totali = scanner.nextInt();
-                        if (lettini_totali < 0) {
-                            System.out.println("la quantità di lettini totali deve essere maggiore di 0");
+                        if(lettini_totali < 0){
+                            System.err.println("Numero lettini inserito non valido");
+                            OpenApp o = new OpenApp();
+                            o.Open();
                         }
                     } while (lettini_totali < 0);
                     chaletConnector.updateLettiniTotali(lettini_totali);
@@ -284,7 +292,9 @@ public class Gestore extends Utente {
                             System.out.println("Inserisci l'id dell'ombrellone da aggiungere:");
                             id_ombrellone = scanner.nextInt();
                             if (id_ombrellone < 0) {
-                                System.out.println("l'id dell'ombrellone deve essere maggiore di 0");
+                                System.err.println("Errore: l'id dell'ombrellone deve essere maggiore di 0");
+                                OpenApp o = new OpenApp();
+                                o.Open();
                                 //(mettere do while finchè non è giusto)
                             }
                         } while (id_ombrellone < 0);
@@ -295,7 +305,7 @@ public class Gestore extends Utente {
                         throw new IllegalArgumentException("inserisci una tipologia che sia base,vip o premium");
                     } */
                             if (fila < 1 || fila > 15) {
-                                System.out.println("inserisci una fila compresa tra 1 e 15 ");
+                                System.err.println("errore: inserisci una fila compresa tra 1 e 15 ");
                             }
                         } while (fila < 1 || fila > 15);
                         ombrelloneConnector.addOmbrellone(id_ombrellone, fila);
@@ -309,7 +319,7 @@ public class Gestore extends Utente {
                             System.out.println("Inserisci l'id dell'ombrellone da rimuovere:");
 
                             if (id_ombrellone < 0) {
-                                System.out.println("L'id dell'ombrellone deve essere maggiore di 0");
+                                System.err.println("errore: L'id dell'ombrellone deve essere maggiore di 0");
                             }
                             id_ombrellone = scanner.nextInt();
                         } while (id_ombrellone < 0);
@@ -356,35 +366,35 @@ public class Gestore extends Utente {
                             System.out.println("Inserisci l'id del prodotto da aggiungere:");
                             id_prodotto = scanner.nextInt();
                             if (id_prodotto <= 0) {
-                                System.out.println("l'id del prodotto deve essere maggiore o uguale a 0");
+                                System.err.println("errore: l'id del prodotto deve essere maggiore o uguale a 0");
                             }
                         } while (id_prodotto <= 0);
                         do {
                             System.out.println("Inserisci il nome del prodotto da aggiungere:");
                             nome_prodotto = scanner.next();
                             if (nome_prodotto.equals("")) {
-                                System.out.println("il nome del prodotto non può essere vuoto");
+                                System.err.println("errore: il nome del prodotto non può essere vuoto");
                             }
                         } while (nome_prodotto.equals(""));
                         do {
                             System.out.println("Inserisci la quantità del prodotto da aggiungere:");
                             quantita_prodotto = scanner.nextInt();
                             if (quantita_prodotto < 0) {
-                                System.out.println("l'id del prodotto deve essere maggiore di 0");
+                                System.err.println("errore: l'id del prodotto deve essere maggiore di 0");
                             }
                         } while (quantita_prodotto <= 0);
                         do {
                             System.out.println("Inserisci il prezzo del prodotto da aggiungere:");
                             prezzo_prodotto = scanner.nextDouble();
                             if (prezzo_prodotto < 0) {
-                                System.out.println("l'id del prodotto deve essere maggiore di 0");
+                                System.err.println("errore: l'id del prodotto deve essere maggiore di 0");
                             }
                         } while (prezzo_prodotto < 0);
                         do {
                             System.out.println("Inserisci il tempo di preparazione del prodotto da aggiungere:");
                             tempo_preparazione = scanner.nextInt();
                             if (tempo_preparazione < 0) {
-                                System.out.println("l'id del prodotto deve essere maggiore di 0");
+                                System.err.println("errore: l'id del prodotto deve essere maggiore di 0");
                             }
                         } while (tempo_preparazione < 0);
                         risultato = prodottiBarConnector.aggiungiProdottoBar(id_prodotto, prezzo_prodotto, nome_prodotto, quantita_prodotto, tempo_preparazione);
@@ -404,7 +414,7 @@ public class Gestore extends Utente {
                             System.out.println("Inserisci l'id del prodotto da rimuovere:");
                             id_prodotto = scanner.nextInt();
                             if (id_prodotto <= 0) {
-                                System.out.println("l'id del prodotto deve essere maggiore o uguale a 0");
+                                System.err.println("errore: l'id del prodotto deve essere maggiore o uguale a 0");
                             }
                         } while (id_prodotto <= 0);
                         risultato = prodottiBarConnector.rimuoviProdottoBar(id_prodotto);
@@ -421,7 +431,7 @@ public class Gestore extends Utente {
 
     }
 
-    public void definizioneAttrezzatura() {
+    public void definizioneAttrezzatura() throws Exception {
         String nomeAttrezzatura = "";
         int quantita = 0;
         Scanner scanner = new Scanner(System.in);
@@ -431,15 +441,24 @@ public class Gestore extends Utente {
         do {
             System.out.println("Inserisci il nome dell'attrezzatura da aggiungere:");
             nomeAttrezzatura = scanner.next();
+            String nome_attrezzatura = scanner.next();
+            boolean containsDigit2;
+            for (char c : nome_attrezzatura.toCharArray())
+                if (containsDigit2 = Character.isDigit(c)){
+                    System.err.println("Errore: il nome dell'attrezzatura contiene un numero'");
+                    OpenApp o = new OpenApp();
+                    o.Open();
+                }
             System.out.println("Inserisci la quantità dell'attrezzatura:");
             quantita = scanner.nextInt();
-
+            if(quantita < 0)
+                throw new IllegalArgumentException("La quantità inserita non è valida");
             risultato = at.addAttrezzatura(nomeAttrezzatura, quantita);
         }
         while (!risultato);
     }
 
-    public void modificaquantitaAttrezzatura() {
+    public void modificaquantitaAttrezzatura() throws Exception {
         String nomeAttivita = "";
         String nome_attrezzatura = "";
         int quantita_attrezzatura = 0;
@@ -449,6 +468,7 @@ public class Gestore extends Utente {
             AttrezzaturaConnector at = new AttrezzaturaConnector();
             at.getAttrezzatura();
             System.out.println("Inserisci il nome dell'attrezzatura di cui modificare la quantità");
+            boolean containsDigit2;
             nome_attrezzatura = scanner.next();
             System.out.println("Inserisci la quantità dell'attrezzatura:");
             quantita_attrezzatura = scanner.nextInt();
@@ -466,23 +486,35 @@ public class Gestore extends Utente {
         do {
             System.out.println("Inserisci il nome dell'attività da rimuovere:");
             nomeAttivita = scanner.next();
-
             risultato = ac.rimuoviAttivita(nomeAttivita);
-        }
-        while (!risultato);
+        } while (!risultato);
     }
 
-    public void definizioneAttivita() {
+    public void definizioneAttivita() throws Exception {
         String nomeAttivita = "";
         String nome_attrezzatura = "";
         int quantita_attrezzatura = 0;
         Scanner scanner = new Scanner(System.in);
         boolean risultato = false;
+        boolean containsDigit;
+        boolean containsDigit2;
         do {
             System.out.println("Inserisci il nome dell'attività da aggiungere:");
             nomeAttivita = scanner.next();
-            System.out.println("Inserisci il nome dell'attrezzatura:");
+            for (char c : nomeAttivita.toCharArray())
+                if (containsDigit = Character.isDigit(c)){
+                    System.err.println("Errore: il nome dell'attività contiene un numero");
+                    OpenApp o = new OpenApp();
+                    o.Open();
+                }
+        System.out.println("Inserisci il nome dell'attrezzatura:");
             nome_attrezzatura = scanner.next();
+            for (char c : nome_attrezzatura.toCharArray())
+                if (containsDigit2 = Character.isDigit(c)){
+                    System.err.println("Errore: il nome dell'attrezzatura contiene un numero'");
+                    OpenApp o = new OpenApp();
+                    o.Open();
+                }
             System.out.println("Inserisci la quantità dell'attrezzatura:");
             quantita_attrezzatura = scanner.nextInt();
             AttivitaConnector ac = new AttivitaConnector();

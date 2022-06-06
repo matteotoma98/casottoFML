@@ -1,6 +1,7 @@
 package com.unicam.cs.ids.casotto.utenti;
 
 import com.unicam.cs.ids.casotto.Connectors.*;
+import com.unicam.cs.ids.casotto.OpenApp;
 import com.unicam.cs.ids.casotto.model.FasciaOraria;
 import com.unicam.cs.ids.casotto.model.ICliente;
 import com.unicam.cs.ids.casotto.model.IObserver;
@@ -77,7 +78,7 @@ public class Cliente extends Utente implements ICliente {
     }
 
 
-    public boolean iscrizione_Attivita(String email) {
+    public boolean iscrizione_Attivita(String email) throws Exception {
         int id_attività = 0;
         int num_posti = 0;
         Attivita attivita = new Attivita();
@@ -85,6 +86,13 @@ public class Cliente extends Utente implements ICliente {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Scegli l'id di un'attività");
         id_attività = scanner.nextInt();
+        AttivitaConnector a = new AttivitaConnector();
+        int max = a.getMax();
+        if(id_attività <= 0 || id_attività > max){
+            System.err.println("Id attività immesso non valido");
+            OpenApp o = new OpenApp();
+            o.Open();
+        }
         System.out.println("Inserisci il numero di persone che parteciperanno all'attività");
         num_posti = scanner.nextInt();
         attivita.addPrenotazioneAttivita(email, id_attività, num_posti);
@@ -170,7 +178,9 @@ public class Cliente extends Utente implements ICliente {
         if (date_start.startsWith("2022-06-") || date_start.startsWith("2022-07-") || date_start.startsWith("2022-08-") || date_start.startsWith("2022-09-")) {
             prenotazione_spiaggia.setDatainizioPrenotazione(start_date);
         } else {
-            throw new IllegalArgumentException("In questi mesi lo chalet rimane chiuso");
+            System.err.println("In questi mesi lo chalet rimane chiuso");
+            OpenApp o = new OpenApp();
+            o.Open();
         }
 
         System.out.println("Inserisci il giorno di fine della prenotazione:");
@@ -182,7 +192,9 @@ public class Cliente extends Utente implements ICliente {
                 date_end.endsWith("");
             prenotazione_spiaggia.setData_finePrenotazione(end_date);
         } else {
-            throw new IllegalArgumentException("Data fine inserita non valida");
+            System.err.println("Data inserita non valida");
+            OpenApp o = new OpenApp();
+            o.Open();
         }
         System.out.println("Inserisci il giorno di fine della prenotazione:");
         int scelta_fascia_oraria;
@@ -193,7 +205,9 @@ public class Cliente extends Utente implements ICliente {
         System.out.println("3: Giornata Intera ");
         scelta_fascia_oraria = scanner.nextInt();
         if (scelta_fascia_oraria <= 0 || scelta_fascia_oraria > 3) {
-            throw new IllegalArgumentException("Errore! Scelta non valida");
+            System.err.println("Errore scelta non valida");
+            OpenApp o = new OpenApp();
+            o.Open();
         }
         switch (scelta_fascia_oraria) {
             case 1:
@@ -226,7 +240,8 @@ public class Cliente extends Utente implements ICliente {
 
         if (lettini > 4 || lettini < 0) {
             System.err.println("Errore! Hai immesso un numero di lettini non valido");
-            System.exit(0);
+            OpenApp o = new OpenApp();
+            o.Open();
         }
         prezzo = prezzo + tariffaPrezzi.Imposta_Prezzi_Spiaggia(FasciaOraria.valueOf(fasciaOraria), fila, date_start, date_end, lettini);
 
@@ -240,7 +255,7 @@ public class Cliente extends Utente implements ICliente {
             do {
                 carta = scanner2.nextLine();
                 if (carta.length() != 16)
-                    System.out.println("Errore! Reinserisci il numero della carta");
+                    System.err.println("Errore! Reinserisci il numero della carta");
             } while (carta.length() != 16);
             System.out.println("Confermi il pagamento? Si/No");
             scelta = scanner2.nextLine();
@@ -335,12 +350,15 @@ public class Cliente extends Utente implements ICliente {
         System.out.println("A quale id dell'ombrellone vuoi far consegnare l'ordine?");
         obc.getIdOmbrelloni(email);
         id_ombrellone = obc.getId();
+        if(id_ombrellone == 0)
+            throw new InputMismatchException("Non esiste nessun id ombrellone");
         do {
             System.out.println("Inserisci l'id del prodotto che vuoi acquistare:");
             id_prodotto = Integer.parseInt(scanner.nextLine());
             if (id_prodotto < 0 || id_prodotto > cp.getMax()) {
                 System.err.println("Errore! Hai immesso un id del prodotto non valido.");
-                System.exit(0);
+                OpenApp o = new OpenApp();
+                o.Open();
             }
             System.out.println("Inserisci la quantità che vuoi acquistare:");
             quantita = scanner2.nextInt();
@@ -364,7 +382,7 @@ public class Cliente extends Utente implements ICliente {
             do {
                 carta = scanner.nextLine();
                 if (carta.length() != 16)
-                    System.out.println("Errore! Reinserisci il numero della carta");
+                    System.err.println("Errore! Reinserisci il numero della carta");
             } while (carta.length() != 16);
             System.out.println("Confermi il pagamento? Si/No");
             scelta = scanner.nextLine();
@@ -381,7 +399,7 @@ public class Cliente extends Utente implements ICliente {
                 ordinazione_bar.setLista_prodotti(mprodotti);
                 OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
 
-                if (!risultato) System.out.println("errore nell'aggiunta dell'ordine");
+                if (!risultato) System.err.println("errore nell'aggiunta dell'ordine");
                 boolean risultato2 = p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
                 // String tipologia_pagamento, int id_prenotazione, int id_ombrellone, Date data_pagamento
                 if (risultato2) {
@@ -411,7 +429,7 @@ public class Cliente extends Utente implements ICliente {
                                         SendEmail.sendMailBar("matteotoma98@hotmail.it", getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone());
                                     } catch (Exception e) {
                                         e.printStackTrace();
-                                        System.out.println("Errore nell'inviare l'email dell'ordine all'addetto spiaggia");
+                                        System.err.println("Errore nell'inviare l'email dell'ordine all'addetto spiaggia");
                                     }
                                     // close the thread
                                     t.cancel();
@@ -454,7 +472,7 @@ public class Cliente extends Utente implements ICliente {
                 System.out.println(ordinazioneBarConnector.last_ordinazione(id_ombrellone));
                 System.out.println(id_ombrellone);
                 System.out.println(data_pagamento);
-                if (!risultato) System.out.println("errore nell'aggiunta dell'ordine");
+                if (!risultato) System.err.println("errore nell'aggiunta dell'ordine");
                 boolean risultato2 = p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
 
                 if (risultato) {
@@ -478,11 +496,12 @@ public class Cliente extends Utente implements ICliente {
         }
         if (!tipologia.equals("consegna") && !tipologia.equals("app")) {
             System.err.println("Errore! Hai immesso una tipologia del pagamento non prevista.");
-            System.exit(0);
+            OpenApp o = new OpenApp();
+            o.Open();
         }
     }
 
-    public void cancellazionePrenotazioneOmbrellone(String email) {
+    public void cancellazionePrenotazioneOmbrellone(String email) throws Exception {
         Scanner scanner = new Scanner(System.in);
         int id_prenotazione;
         PrenotazioneSpiaggia prenotazione_spiaggia = new PrenotazioneSpiaggia();
@@ -493,7 +512,8 @@ public class Cliente extends Utente implements ICliente {
             prenotazione_spiaggia.cancellaPrenotazione(id_prenotazione);
         } else {
             System.err.println("Errore! Id prenotazione inserito non corrisponde alla tua email\n");
-            System.exit(0);
+            OpenApp o = new OpenApp();
+            o.Open();
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
+import com.unicam.cs.ids.casotto.OpenApp;
 import com.unicam.cs.ids.casotto.utenti.Cliente;
 
 import java.sql.Connection;
@@ -31,8 +32,10 @@ public class AttrezzaturaConnector {
                 if (nome_attr.isEmpty()) attresistente = false;
                 else {
                     attresistente = true;
-                    if (attresistente)
-                        System.out.println("esiste già questa attrezzatura, inserirne un'altra diversa.");
+                    if (attresistente){
+                        System.err.println("Esiste già questa attrezzatura, inserirne un'altra diversa.");
+                    OpenApp o = new OpenApp();
+                    o.Open();}
                 }
             }
             try {
@@ -88,7 +91,7 @@ public class AttrezzaturaConnector {
             result2 = connection.createStatement().executeQuery("SELECT nome_attrezzatura FROM attrezzatura WHERE nome_attrezzatura='" + nome_attrezzatura + "'");
 
             if (result2.next() == false) {
-                System.out.println("Il nome dell'attrezzatura da modificare non esiste, inserirne una dalla lista.");
+                System.err.println("Il nome dell'attrezzatura da modificare non esiste, inserirne una dalla lista.");
                 attr_trovata = false;
             } else {
                 do {
