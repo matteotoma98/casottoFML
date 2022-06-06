@@ -2,7 +2,6 @@ package com.unicam.cs.ids.casotto.Connectors;
 
 import com.unicam.cs.ids.casotto.OpenApp;
 import com.unicam.cs.ids.casotto.utenti.Cliente;
-import com.unicam.cs.ids.casotto.utenti.Utente;
 
 import java.sql.*;
 import java.util.Date;
@@ -239,7 +238,7 @@ public class AttivitaConnector {
         Scanner scanner = new Scanner(System.in);
         try {
             result = connection.createStatement().executeQuery("SELECT quantita,nome_attrezzatura FROM attivita WHERE nome_attivita='" + nomeAttivita + "'");
-            while(!result.next()){
+            while (!result.next()) {
                 //if (!result.next()) {
                 System.err.println("--- Nome attivita non valido ---\n");
                 OpenApp o = new OpenApp();

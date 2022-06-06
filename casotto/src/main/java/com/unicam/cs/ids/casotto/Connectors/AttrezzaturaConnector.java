@@ -32,10 +32,11 @@ public class AttrezzaturaConnector {
                 if (nome_attr.isEmpty()) attresistente = false;
                 else {
                     attresistente = true;
-                    if (attresistente){
+                    if (attresistente) {
                         System.err.println("Esiste già questa attrezzatura, inserirne un'altra diversa.");
-                    OpenApp o = new OpenApp();
-                    o.Open();}
+                        OpenApp o = new OpenApp();
+                        o.Open();
+                    }
                 }
             }
             try {

@@ -51,7 +51,7 @@ public class Helper {
         //nel recipient mettere fchiocchi@libero.it
         public void run() {
             try {
-                SendEmail.sendMailBar("matteotoma98@hotmail.it", cliente.getProdotti_ordinati(), cliente.getId_ordinazione(), cliente.getId_ombrellone());
+                SendEmail.sendMailBar("matteotoma98@hotmail.it", cliente.getProdotti_ordinati(), cliente.getId_ordinazione(), cliente.getId_ombrellone(), cliente.getQuantita_prodotti());
             } catch (Exception e) {
                 e.printStackTrace();
                 System.err.println("Errore");

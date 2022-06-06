@@ -48,7 +48,7 @@ public class SendEmail {
         return null;
     }
 
-    public static void sendMailBar(String recipient, String prodotti, int id_ordine, int id_ombrellone) throws Exception {
+    public static void sendMailBar(String recipient, String prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti) throws Exception {
         Properties properties = new Properties();
         properties.put("mail.smtp.starttls.enable", "true");
         properties.setProperty("mail.transport.protocol", "smtp");
@@ -68,18 +68,18 @@ public class SendEmail {
                 return new PasswordAuthentication(myAccountEmail, password);
             }
         });
-        Message message = prepareMessageBar(session, myAccountEmail, recipient, prodotti, id_ordine, id_ombrellone);
+        Message message = prepareMessageBar(session, myAccountEmail, recipient, prodotti, id_ordine, id_ombrellone, quantita_prodotti);
         Transport.send(message);
-       // System.out.println("Messaggio inviato correttamente");
+        // System.out.println("Messaggio inviato correttamente");
     }
 
-    private static Message prepareMessageBar(Session session, String myAccountEmail, String recipient, String prodotti, int id_ordine, int id_ombrellone) {
+    private static Message prepareMessageBar(Session session, String myAccountEmail, String recipient, String prodotti, int id_ordine, int id_ombrellone,String quantita_prodotti) {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
             message.setSubject("CasottoFML™");
-            message.setText("Ciao, Il cliente " + recipient + " ha ordinato i seguenti prodotti: " + prodotti + " .\n id_ordine: " + id_ordine + ".\n L'ombrellone a cui portare i prodotti è: " + id_ombrellone + " .");
+            message.setText("Ciao, Il cliente " + recipient + " ha ordinato i seguenti prodotti: " + prodotti + " con quantità relative ai prodotti rispettivamente: "+ quantita_prodotti +" .\n id_ordine: " + id_ordine + ".\n L'ombrellone a cui portare i prodotti è: " + id_ombrellone + " .");
             return message;
         } catch (Exception ex) {
             Logger.getLogger(SendEmail.class.getName()).log(Level.SEVERE, null, ex);

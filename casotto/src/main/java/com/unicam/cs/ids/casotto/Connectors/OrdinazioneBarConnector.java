@@ -2,7 +2,6 @@ package com.unicam.cs.ids.casotto.Connectors;
 
 import com.unicam.cs.ids.casotto.OpenApp;
 import com.unicam.cs.ids.casotto.serviziobar.OrdinazioneBar;
-import org.aspectj.apache.bcel.classfile.Module;
 
 import java.sql.Date;
 import java.sql.*;
@@ -182,14 +181,28 @@ public class OrdinazioneBarConnector {
         return prezzo_totale;
     }
 
-
+    public String getQuantitaProdotti(int id_ordinazione){
+        boolean result = false;
+        boolean controllo = false;
+        String quantita = "";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT quantita FROM ordinazionebar WHERE id_ordinazione='" + id_ordinazione + "'");
+            while (resultSet.next()) {
+                quantita = resultSet.getString("quantita");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return quantita;
+    }
     public String getListaProdotti(int id_ordinazione) {
         boolean result = false;
         boolean controllo = false;
-        String prodotti= "";
+        String prodotti = "";
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT lista_prodotti FROM ordinazionebar WHERE id_ordinazione='"+id_ordinazione+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT lista_prodotti FROM ordinazionebar WHERE id_ordinazione='" + id_ordinazione + "'");
             while (resultSet.next()) {
                 prodotti = resultSet.getString("lista_prodotti");
             }
@@ -219,8 +232,6 @@ public class OrdinazioneBarConnector {
     }
 
  */
-
-
 
 
 }

@@ -4,10 +4,8 @@ import com.unicam.cs.ids.casotto.Connectors.*;
 import com.unicam.cs.ids.casotto.OpenApp;
 import com.unicam.cs.ids.casotto.serviziobar.ProdottiBar;
 import com.unicam.cs.ids.casotto.utenti.Utente;
-import org.springframework.util.NumberUtils;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -256,7 +254,7 @@ public class Gestore extends Utente {
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
-            if (scelta < 0 || scelta > 4){
+            if (scelta < 0 || scelta > 4) {
                 System.err.println("Scelta non valida");
                 OpenApp o = new OpenApp();
                 o.Open();
@@ -266,7 +264,7 @@ public class Gestore extends Utente {
                     do {
                         System.out.println("Inserisci il numero di ombrelloni totali dello chalet:");
                         ombrelloni_totali = scanner.nextInt();
-                        if(ombrelloni_totali < 0){
+                        if (ombrelloni_totali < 0) {
                             System.err.println("Numero ombrelloni inserito non valido");
                             OpenApp o = new OpenApp();
                             o.Open();
@@ -278,7 +276,7 @@ public class Gestore extends Utente {
                     do {
                         System.out.println("Inserisci il numero di lettini totali dello chalet:");
                         lettini_totali = scanner.nextInt();
-                        if(lettini_totali < 0){
+                        if (lettini_totali < 0) {
                             System.err.println("Numero lettini inserito non valido");
                             OpenApp o = new OpenApp();
                             o.Open();
@@ -444,14 +442,14 @@ public class Gestore extends Utente {
             String nome_attrezzatura = scanner.next();
             boolean containsDigit2;
             for (char c : nome_attrezzatura.toCharArray())
-                if (containsDigit2 = Character.isDigit(c)){
+                if (containsDigit2 = Character.isDigit(c)) {
                     System.err.println("Errore: il nome dell'attrezzatura contiene un numero'");
                     OpenApp o = new OpenApp();
                     o.Open();
                 }
             System.out.println("Inserisci la quantità dell'attrezzatura:");
             quantita = scanner.nextInt();
-            if(quantita < 0)
+            if (quantita < 0)
                 throw new IllegalArgumentException("La quantità inserita non è valida");
             risultato = at.addAttrezzatura(nomeAttrezzatura, quantita);
         }
@@ -502,15 +500,15 @@ public class Gestore extends Utente {
             System.out.println("Inserisci il nome dell'attività da aggiungere:");
             nomeAttivita = scanner.next();
             for (char c : nomeAttivita.toCharArray())
-                if (containsDigit = Character.isDigit(c)){
+                if (containsDigit = Character.isDigit(c)) {
                     System.err.println("Errore: il nome dell'attività contiene un numero");
                     OpenApp o = new OpenApp();
                     o.Open();
                 }
-        System.out.println("Inserisci il nome dell'attrezzatura:");
+            System.out.println("Inserisci il nome dell'attrezzatura:");
             nome_attrezzatura = scanner.next();
             for (char c : nome_attrezzatura.toCharArray())
-                if (containsDigit2 = Character.isDigit(c)){
+                if (containsDigit2 = Character.isDigit(c)) {
                     System.err.println("Errore: il nome dell'attrezzatura contiene un numero'");
                     OpenApp o = new OpenApp();
                     o.Open();

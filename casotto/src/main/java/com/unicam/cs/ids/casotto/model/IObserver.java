@@ -12,7 +12,7 @@ public interface IObserver {
 
     public void notifyAddettoSpiaggiaOmbrellone(String emailcliente, String emailaddetto, int id_ombrellone);
 
-    public void notifyAddettobar(String emailcliente, String prodotti, int id_ordine, int id_ombrellone);
+    public void notifyAddettobar(String emailcliente, String prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti);
 
     public void updateCliente(String email);
 }

@@ -8,7 +8,6 @@ import com.unicam.cs.ids.casotto.model.IUtente;
 import com.unicam.cs.ids.casotto.servizioattivita.AddettoAttivitaLudicoSportive;
 import com.unicam.cs.ids.casotto.serviziogestione.Gestore;
 import com.unicam.cs.ids.casotto.serviziospiaggia.AddettoSpiaggia;
-import org.aspectj.apache.bcel.classfile.Module;
 
 import java.util.Scanner;
 
@@ -274,13 +273,14 @@ public class Utente implements IUtente {
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
-            if (scelta != 1 && scelta != 0){
+            if (scelta != 1 && scelta != 0) {
                 System.err.println("Scelta non valida");
                 OpenApp o = new OpenApp();
-                o.Open();}
+                o.Open();
+            }
             switch (scelta) {
                 case 1:
-                     //as.liberaOmbrellone();
+                    //as.liberaOmbrellone();
                     break;
             }
         }
@@ -288,7 +288,6 @@ public class Utente implements IUtente {
     }
 
     //TODO riceve email da addetto al bar quando l'ordine è pronto e poi lo porta all'ombrellone del cliente e si fa pagare
-
 
 
     public void menu_cliente(String email) throws Exception {
@@ -326,8 +325,7 @@ public class Utente implements IUtente {
                     if (prenotazioneSpiaggiaConnector.checkPrenotazioniOmbrellone(email)) {
 
                         cliente.ordinazioneBar(email);
-                    }
-                    else System.err.println("\nImpossibile effettuare un ordine: non hai ombrelloni associati\n");
+                    } else System.err.println("\nImpossibile effettuare un ordine: non hai ombrelloni associati\n");
                     break;
                 case 4:
                     cliente.iscrizione_Attivita(email);

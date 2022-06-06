@@ -13,7 +13,6 @@ import com.unicam.cs.ids.casotto.serviziogestione.TariffaPrezzi;
 import com.unicam.cs.ids.casotto.serviziospiaggia.Ombrellone;
 import com.unicam.cs.ids.casotto.serviziospiaggia.PagamentoOmbrellone;
 import com.unicam.cs.ids.casotto.serviziospiaggia.PrenotazioneSpiaggia;
-import com.unicam.cs.ids.casotto.utilities.Helper;
 import com.unicam.cs.ids.casotto.utilities.NotifyOrder;
 import com.unicam.cs.ids.casotto.utilities.Scontrino;
 import com.unicam.cs.ids.casotto.utilities.SendEmail;
@@ -30,6 +29,15 @@ public class Cliente extends Utente implements ICliente {
     private int id_ombrellone = 0;
     private String prodotti_ordinati = "";
 
+    public String getQuantita_prodotti() {
+        return quantita_prodotti;
+    }
+
+    public void setQuantita_prodotti(String quantita_prodotti) {
+        this.quantita_prodotti = quantita_prodotti;
+    }
+
+    private String quantita_prodotti=" ";
     public int getId_ordinazione() {
         return id_ordinazione;
     }
@@ -60,8 +68,8 @@ public class Cliente extends Utente implements ICliente {
         return a_number;
     }
 
-    public void setNumber(int a_number){
-        this.a_number= a_number;
+    public void setNumber(int a_number) {
+        this.a_number = a_number;
     }
 
     public Cliente(String nome, String cognome, String email, int id_ombrellone) {
@@ -88,7 +96,7 @@ public class Cliente extends Utente implements ICliente {
         id_attività = scanner.nextInt();
         AttivitaConnector a = new AttivitaConnector();
         int max = a.getMax();
-        if(id_attività <= 0 || id_attività > max){
+        if (id_attività <= 0 || id_attività > max) {
             System.err.println("Id attività immesso non valido");
             OpenApp o = new OpenApp();
             o.Open();
@@ -350,7 +358,7 @@ public class Cliente extends Utente implements ICliente {
         System.out.println("A quale id dell'ombrellone vuoi far consegnare l'ordine?");
         obc.getIdOmbrelloni(email);
         id_ombrellone = obc.getId();
-        if(id_ombrellone == 0)
+        if (id_ombrellone == 0)
             throw new InputMismatchException("Non esiste nessun id ombrellone");
         do {
             System.out.println("Inserisci l'id del prodotto che vuoi acquistare:");
@@ -412,6 +420,8 @@ public class Cliente extends Utente implements ICliente {
                     setEmail(email);
 
                     prodotti_ordinati = ordinazioneBarConnector.getListaProdotti(id_ordinazione);
+                    quantita_prodotti= ordinazioneBarConnector.getQuantitaProdotti(id_ordinazione);
+                    setQuantita_prodotti(quantita_prodotti);
                     setProdotti_ordinati(prodotti_ordinati);
                     a_number = minuti;
                     setNumber(a_number);
@@ -422,11 +432,11 @@ public class Cliente extends Utente implements ICliente {
                                 @Override
                                 public void run() {
                                     // int finalId_ordinazione = id_ordinazione;
-                                    if(preparazioneOrdineConnector.OrdinePronto(getId_ordinazione()))
+                                    if (preparazioneOrdineConnector.OrdinePronto(getId_ordinazione()))
                                         System.out.println("Il tuo ordine è pronto.");
                                     //else System.out.println("Ordine non ancora pronto");
                                     try {
-                                        SendEmail.sendMailBar("matteotoma98@hotmail.it", getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone());
+                                        SendEmail.sendMailBar("matteotoma98@hotmail.it", getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti);
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                         System.err.println("Errore nell'inviare l'email dell'ordine all'addetto spiaggia");
@@ -435,7 +445,7 @@ public class Cliente extends Utente implements ICliente {
                                     t.cancel();
                                 }
                             },
-                            minuti* 60000L //invia il messaggio all'addetto spiaggia dopo che è passato il tempo totale per preparare l'ordine
+                            minuti * 60000L //invia il messaggio all'addetto spiaggia dopo che è passato il tempo totale per preparare l'ordine
                     );
                     // helper.sendMailBar(email, ordinazioneBarConnector.getListaProdotti(id_ordinazione), ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone);
 
@@ -476,8 +486,46 @@ public class Cliente extends Utente implements ICliente {
                 boolean risultato2 = p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
 
                 if (risultato) {
-                    System.out.println("Il tuo ordine arriverà tra " + cp.TempoTotale(id_prodotto, quantita) + " minuti");
-                    System.out.println("Ordinazione aggiunta");
+                    //parte preparazione ordine!
+                    id_ordinazione = ordinazioneBarConnector.last_ordinazione(id_ombrellone);
+                    setId_ordinazione(id_ordinazione);
+                    preparazioneOrdineConnector.addOrdine(id_ordinazione);
+                    //dopo i minuti necessari: preparazioneOrdineConnector.OrdinePronto(id_ordinazione);
+                    minuti = cp.TempoTotale(id_prodotto, quantita); //prendere tutti gli id dei prodotti scelti, non solo il primo
+                    setEmail(email);
+
+                    prodotti_ordinati = ordinazioneBarConnector.getListaProdotti(id_ordinazione);
+                    quantita_prodotti= ordinazioneBarConnector.getQuantitaProdotti(id_ordinazione);
+                    setQuantita_prodotti(quantita_prodotti);
+                    setProdotti_ordinati(prodotti_ordinati);
+                    a_number = minuti;
+                    setNumber(a_number);
+                    //Helper helper = new Helper(a_number);
+                    Timer t = new java.util.Timer();
+                    t.schedule(
+                            new java.util.TimerTask() {
+                                @Override
+                                public void run() {
+                                    // int finalId_ordinazione = id_ordinazione;
+                                    if (preparazioneOrdineConnector.OrdinePronto(getId_ordinazione()))
+                                        System.out.println("Il tuo ordine è pronto.");
+                                    //else System.out.println("Ordine non ancora pronto");
+                                    try {
+                                        SendEmail.sendMailBar("matteotoma98@hotmail.it", getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        System.err.println("Errore nell'inviare l'email dell'ordine all'addetto spiaggia");
+                                    }
+                                    // close the thread
+                                    t.cancel();
+                                }
+                            },
+                            minuti * 60000L //invia il messaggio all'addetto spiaggia dopo che è passato il tempo totale per preparare l'ordine
+                    );
+                    // helper.sendMailBar(email, ordinazioneBarConnector.getListaProdotti(id_ordinazione), ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone);
+
+                    System.out.println("Ordinazione aggiunta, attendi la preparazione!");
+                    System.out.println("Il tuo ordine arriverà tra " + minuti + " minuti");
                     NotifyOrder notifyOrder3 = new NotifyOrder("Addetto Bar");
                     IObserver notifyOrder4 = new NotifyOrder("Addetto Bar");
                     notifyOrder3.register(notifyOrder4);

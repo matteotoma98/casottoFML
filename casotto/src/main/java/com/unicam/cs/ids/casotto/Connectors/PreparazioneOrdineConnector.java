@@ -31,7 +31,7 @@ public class PreparazioneOrdineConnector {
             if (result) {
                 System.out.println("Ordine aggiunto in coda");
                 risultato = true;
-                                //decrementare la quantità dell'attrezzatura disponibile dalla tabella attrezzatura
+                //decrementare la quantità dell'attrezzatura disponibile dalla tabella attrezzatura
             } else System.err.println("errore nell'inserire l'orine");
         } catch (Exception e) {
             System.out.println(e);
@@ -45,7 +45,7 @@ public class PreparazioneOrdineConnector {
         ResultSet result3;
         int id = 0;
         boolean result = false;
-        boolean id_trovato=false;
+        boolean id_trovato = false;
         try {
             /* result3 = connection.createStatement().executeQuery("SELECT id_ordinazione FROM preparazioneordine WHERE id_ordinazione='" + id_ordinazione + "'");
             while (result3.next()) {
@@ -57,7 +57,7 @@ public class PreparazioneOrdineConnector {
                 } */
 
             boolean result4 = false;
-            PreparedStatement preparedStatement1 = connection.prepareStatement("UPDATE preparazioneordine set ordine_pronto = true WHERE id_ordinazione='"+id_ordinazione+"'");
+            PreparedStatement preparedStatement1 = connection.prepareStatement("UPDATE preparazioneordine set ordine_pronto = true WHERE id_ordinazione='" + id_ordinazione + "'");
             //preparedStatement.setInt(1,lettini);
             result4 = preparedStatement1.executeUpdate() > 0;
             if (result4) System.out.println("Ordine pronto!");
