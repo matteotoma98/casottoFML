@@ -1,6 +1,5 @@
 package com.unicam.cs.ids.casotto.serviziospiaggia;
 
-import com.unicam.cs.ids.casotto.Connectors.AddettoSpiaggiaConnector;
 import com.unicam.cs.ids.casotto.Connectors.PrenotazioneSpiaggiaConnector;
 import com.unicam.cs.ids.casotto.serviziobar.PreparazioneOrdine;
 import com.unicam.cs.ids.casotto.utenti.Utente;
@@ -33,13 +32,13 @@ public class AddettoSpiaggia extends Utente {
     Ombrellone ombrellone = new Ombrellone();
 
     public void liberaOmbrellone() {
-        PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector= new PrenotazioneSpiaggiaConnector();
-        int pren=0;
-        Scanner scanner= new Scanner(System.in);
+        PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();
+        int pren = 0;
+        Scanner scanner = new Scanner(System.in);
         //lista
         prenotazioneSpiaggiaConnector.ListaPrenotazioni();
         System.out.println("Inserisci l'id della prenotazione da cancellare:");
-        pren= scanner.nextInt();
+        pren = scanner.nextInt();
 
         prenotazioneSpiaggiaConnector.cancellazionePrenotazioneOmbrelloneAddettoSpiaggia(pren);
         //ombrellone.isDisponibilita();

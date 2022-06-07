@@ -13,20 +13,19 @@ public class OpenApp {
         //addettoSpiaggiaConnector.cambiaDisponbilitaOmbrellone();
         Utente utente = new Utente();
         Cliente cliente = new Cliente();
-        int scelta=0;
+        int scelta = 0;
         do {
             System.out.println("Benvenuto nell'App di casottoFML™\nSeleziona un'azione: ");
             System.out.println("1: Login ");
             System.out.println("2: Registrazione ");
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
-            try{
+            try {
                 scelta = scanner.nextInt();
-                if (scelta < 0 || scelta > 2 ) {
+                if (scelta < 0 || scelta > 2) {
                     System.err.println("Hai selezionato un numero non valido\n");
                 }
-            }
-            catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.err.println("Hai selezionato un carattere invece di un numero");
             }
 

@@ -37,7 +37,8 @@ public class Cliente extends Utente implements ICliente {
         this.quantita_prodotti = quantita_prodotti;
     }
 
-    private String quantita_prodotti=" ";
+    private String quantita_prodotti = " ";
+
     public int getId_ordinazione() {
         return id_ordinazione;
     }
@@ -344,12 +345,13 @@ public class Cliente extends Utente implements ICliente {
         String tipologia;
         double totale;
         int continuaAcquisti;
-        int id_prodotto = 0;
+        int id_prodotto=0;
         int quantita = 0;
         int id_ombrellone;
         double prezzo_totale = 0;
         int id_scontrino = 0;
         int minuti = 0;
+        int cont = 0;
 
         PreparazioneOrdineConnector preparazioneOrdineConnector = new PreparazioneOrdineConnector();
         Map<Integer, Integer> mprodotti = new HashMap<>();
@@ -362,27 +364,41 @@ public class Cliente extends Utente implements ICliente {
             throw new InputMismatchException("Non esiste nessun id ombrellone");
         do {
             System.out.println("Inserisci l'id del prodotto che vuoi acquistare:");
-            id_prodotto = Integer.parseInt(scanner.nextLine());
+            id_prodotto = scanner2.nextInt();
             if (id_prodotto < 0 || id_prodotto > cp.getMax()) {
                 System.err.println("Errore! Hai immesso un id del prodotto non valido.");
                 OpenApp o = new OpenApp();
                 o.Open();
             }
-            System.out.println("Inserisci la quantità che vuoi acquistare:");
-            quantita = scanner2.nextInt();
-            cp.getQuantitaProdotto(id_prodotto, quantita);
-            mprodotti.put(id_prodotto, quantita);
 
-            //  (ob.getDate(), quantita, int id_ordinazione, int id_ombrellone, int id_prodotto) {// bisognerebbe prendere il valore dell'ultima riga della tabella, e aggiungerci + 1
-            //  totale = +cp.getTotaleOrdine(scelta, quantita);
+            System.out.println("Inserisci la quantità che vuoi acquistare:");
+            int quantita2 = scanner2.nextInt();
+            cp.getQuantitaProdotto(id_prodotto, quantita2); //rimuove dal db le quantità di prodotto
+            //mprodotti.put(cont, id_prodotto);
+            mprodotti.put(id_prodotto,quantita2);
+            if (mprodotti.containsValue(id_prodotto)) {
+                mprodotti.replace(id_prodotto,quantita2,quantita2+mprodotti.get(quantita2));
+            }
+            for (Map.Entry<Integer, Integer> entry : mprodotti.entrySet()) {
+                System.out.println(entry.getKey() + ", Value: : " + entry.getValue());
+            }
+            /*
+            for (Integer i: mprodotti.values()) {
+
+                int key = i; //quantita!
+                HashMap.Entry<Integer, Integer> h = (HashMap.Entry<Integer, Integer>) mprodotti.entrySet();
+                int value = mprodotti.get(i); //id_prodotto
+                System.out.println(key + " " + value);
+            } */
+
             do {
                 System.out.println("vuoi aggiungere altri prodotti all'ordine ancora? 1-si 0-no");
                 continuaAcquisti = scanner2.nextInt();
-                if(continuaAcquisti<0 || continuaAcquisti>1) System.out.println("Errore: inserisci un numero che sia 0 o 1:");
-            } while (continuaAcquisti<0 || continuaAcquisti>1);
+
+                if (continuaAcquisti < 0 || continuaAcquisti > 1)
+                    System.out.println("Errore: inserisci un numero che sia 0 o 1:");
+            } while (continuaAcquisti < 0 || continuaAcquisti > 1);
         } while (continuaAcquisti != 0);
-        //for(Integer i: lista_prodotti){System.out.println(i);}
-        //  System.out.println("Totale:" + totale);
 
         System.out.println("Scegli la tipologia di pagamento:app -tramite app, consegna -pagamento alla consegna");
         tipologia = scanner.nextLine();
@@ -423,7 +439,7 @@ public class Cliente extends Utente implements ICliente {
                     setEmail(email);
 
                     prodotti_ordinati = ordinazioneBarConnector.getListaProdotti(id_ordinazione);
-                    quantita_prodotti= ordinazioneBarConnector.getQuantitaProdotti(id_ordinazione);
+                    quantita_prodotti = ordinazioneBarConnector.getQuantitaProdotti(id_ordinazione);
                     setQuantita_prodotti(quantita_prodotti);
                     setProdotti_ordinati(prodotti_ordinati);
                     a_number = minuti;
@@ -500,7 +516,7 @@ public class Cliente extends Utente implements ICliente {
                     setEmail(email);
 
                     prodotti_ordinati = ordinazioneBarConnector.getListaProdotti(id_ordinazione);
-                    quantita_prodotti= ordinazioneBarConnector.getQuantitaProdotti(id_ordinazione);
+                    quantita_prodotti = ordinazioneBarConnector.getQuantitaProdotti(id_ordinazione);
                     setQuantita_prodotti(quantita_prodotti);
                     setProdotti_ordinati(prodotti_ordinati);
                     a_number = minuti;
@@ -538,7 +554,7 @@ public class Cliente extends Utente implements ICliente {
                     notifyOrder3.notifyObservers();
                     NotifyOrder notifyOrder5 = new NotifyOrder("Addetto Spiaggia");
                     IObserver notifyOrder6 = new NotifyOrder("Addetto Spiaggia");
-                    notifyOrder5.notifyAddettoSpiaggiaOmbrellone(email,"francesco.chiocchi@divini.org",id_ombrellone);
+                    notifyOrder5.notifyAddettoSpiaggiaOmbrellone(email, "francesco.chiocchi@divini.org", id_ombrellone);
                     notifyOrder5.notifyObservers();
                     //notifyOrder5.unregister(notifyOrder6);
                     NotifyOrder notifyOrder7 = new NotifyOrder("Cliente Spiaggia");

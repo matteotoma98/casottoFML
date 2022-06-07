@@ -181,7 +181,7 @@ public class OrdinazioneBarConnector {
         return prezzo_totale;
     }
 
-    public String getQuantitaProdotti(int id_ordinazione){
+    public String getQuantitaProdotti(int id_ordinazione) {
         boolean result = false;
         boolean controllo = false;
         String quantita = "";
@@ -196,6 +196,7 @@ public class OrdinazioneBarConnector {
         }
         return quantita;
     }
+
     public String getListaProdotti(int id_ordinazione) {
         boolean result = false;
         boolean controllo = false;
