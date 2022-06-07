@@ -44,8 +44,9 @@ public class NotifyOrder implements IObserver {
             System.out.println("L'ordine ti verrà portato da " + name + "\n");
         }
         /*if(name.equals("Addetto SpiaggiaOmbrellone")){
-            notifyAddettoSpiaggiaOmbrellone("francesco.chiocchi@divini.org",);
-        }*/
+            notifyAddettoSpiaggiaOmbrellone("francesco.chiocchi@divini.org");
+        } */
+
     }
 
     public void notifyAddettoSpiaggiaOmbrellone(String emailcliente, String emailaddetto, int id_ombrellone) {
@@ -63,7 +64,7 @@ public class NotifyOrder implements IObserver {
     public void notifyAddettobar(String emailcliente, String prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti) {
         if (name.equals("Addetto SpiaggiaOmbrellone")) {
             try {
-                SendEmail.sendMailBar("matteotoma98@hotmail.it", prodotti, id_ordine, id_ombrellone, quantita_prodotti);
+                SendEmail.sendMailBar("fchiocchi@libero.it", prodotti, id_ordine, id_ombrellone, quantita_prodotti);
             } catch (Exception e) {
                 e.printStackTrace();
             }

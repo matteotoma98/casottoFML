@@ -375,8 +375,11 @@ public class Cliente extends Utente implements ICliente {
 
             //  (ob.getDate(), quantita, int id_ordinazione, int id_ombrellone, int id_prodotto) {// bisognerebbe prendere il valore dell'ultima riga della tabella, e aggiungerci + 1
             //  totale = +cp.getTotaleOrdine(scelta, quantita);
-            System.out.println("vuoi aggiungere altri prodotti all'ordine ancora? 1-si 0-no");
-            continuaAcquisti = scanner2.nextInt();
+            do {
+                System.out.println("vuoi aggiungere altri prodotti all'ordine ancora? 1-si 0-no");
+                continuaAcquisti = scanner2.nextInt();
+                if(continuaAcquisti<0 || continuaAcquisti>1) System.out.println("Errore: inserisci un numero che sia 0 o 1:");
+            } while (continuaAcquisti<0 || continuaAcquisti>1);
         } while (continuaAcquisti != 0);
         //for(Integer i: lista_prodotti){System.out.println(i);}
         //  System.out.println("Totale:" + totale);
@@ -426,6 +429,8 @@ public class Cliente extends Utente implements ICliente {
                     a_number = minuti;
                     setNumber(a_number);
                     //Helper helper = new Helper(a_number);
+                    SendEmail.sendEmailBarCliente(email, getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti, minuti);
+                    SendEmail.sendMailBar("fchiocchi@libero.it", getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti);
                     Timer t = new java.util.Timer();
                     t.schedule(
                             new java.util.TimerTask() {
@@ -436,7 +441,7 @@ public class Cliente extends Utente implements ICliente {
                                         System.out.println("Il tuo ordine è pronto.");
                                     //else System.out.println("Ordine non ancora pronto");
                                     try {
-                                        SendEmail.sendMailBar("matteotoma98@hotmail.it", getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti);
+                                        SendEmail.sendMailAddettoSpiaggiaOrdine("francesco.chiocchi@divini.org", getId_ordinazione(), getId_ombrellone());
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                         System.err.println("Errore nell'inviare l'email dell'ordine all'addetto spiaggia");
@@ -500,7 +505,8 @@ public class Cliente extends Utente implements ICliente {
                     setProdotti_ordinati(prodotti_ordinati);
                     a_number = minuti;
                     setNumber(a_number);
-                    //Helper helper = new Helper(a_number);
+                    SendEmail.sendEmailBarCliente(email, getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti, minuti);
+                    SendEmail.sendMailBar("fchiocchi@libero.it", getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti);
                     Timer t = new java.util.Timer();
                     t.schedule(
                             new java.util.TimerTask() {
@@ -511,7 +517,7 @@ public class Cliente extends Utente implements ICliente {
                                         System.out.println("Il tuo ordine è pronto.");
                                     //else System.out.println("Ordine non ancora pronto");
                                     try {
-                                        SendEmail.sendMailBar("matteotoma98@hotmail.it", getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti);
+                                        SendEmail.sendMailAddettoSpiaggiaOrdine("francesco.chiocchi@divini.org", getId_ordinazione(), getId_ombrellone());
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                         System.err.println("Errore nell'inviare l'email dell'ordine all'addetto spiaggia");
@@ -522,17 +528,17 @@ public class Cliente extends Utente implements ICliente {
                             },
                             minuti * 60000L //invia il messaggio all'addetto spiaggia dopo che è passato il tempo totale per preparare l'ordine
                     );
-                    // helper.sendMailBar(email, ordinazioneBarConnector.getListaProdotti(id_ordinazione), ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone);
 
                     System.out.println("Ordinazione aggiunta, attendi la preparazione!");
                     System.out.println("Il tuo ordine arriverà tra " + minuti + " minuti");
+
                     NotifyOrder notifyOrder3 = new NotifyOrder("Addetto Bar");
                     IObserver notifyOrder4 = new NotifyOrder("Addetto Bar");
                     notifyOrder3.register(notifyOrder4);
                     notifyOrder3.notifyObservers();
-                    NotifyOrder notifyOrder5 = new NotifyOrder("Addetto Bar");
+                    NotifyOrder notifyOrder5 = new NotifyOrder("Addetto Spiaggia");
                     IObserver notifyOrder6 = new NotifyOrder("Addetto Spiaggia");
-                    notifyOrder5.register(notifyOrder6);
+                    notifyOrder5.notifyAddettoSpiaggiaOmbrellone(email,"francesco.chiocchi@divini.org",id_ombrellone);
                     notifyOrder5.notifyObservers();
                     //notifyOrder5.unregister(notifyOrder6);
                     NotifyOrder notifyOrder7 = new NotifyOrder("Cliente Spiaggia");
