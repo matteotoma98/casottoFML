@@ -246,6 +246,79 @@ public class PrenotazioneSpiaggiaConnector {
         return id_ordinazione;
     }
 
+    public void ListaPrenotazioni() {
+        boolean result = false;
+        boolean result2 = false;
+        boolean result3 = false;
+        int id_ombrellone = 0;
+        Date data_fine_prenotazione = null;
+        int id_prenotazione = 0;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT id_prenotazione,id_ombrellone,data_fine_prenotazione FROM prenotazionespiaggia");
+            int id = 0;
+            int lettini = 0;
+
+            while (resultSet.next()) {
+                id_prenotazione = resultSet.getInt("id_prenotazione");
+                id_ombrellone = resultSet.getInt("id_ombrellone");
+                data_fine_prenotazione = resultSet.getDate("data_fine_prenotazione");
+                System.out.print("Id prenotazione: " + id_prenotazione + ",");
+                System.out.print("Id ombrellone: " + id_ombrellone + ",");
+                System.out.print("Data fine prenotazione: " + data_fine_prenotazione + "; \t\n");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    public boolean cancellazionePrenotazioneOmbrelloneAddettoSpiaggia(int id_prenotazione) {
+        boolean result = false;
+        boolean result2 = false;
+        boolean result3 = false;
+        int id_ombrellone = 0;
+        Date data_fine_prenotazione = null;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT id_prenotazione,id_ombrellone,data_fine_prenotazione FROM prenotazionespiaggia WHERE id_prenotazione='" + id_prenotazione + "'");
+            int id = 0;
+            int lettini = 0;
+
+            while (resultSet.next()) {
+                id_prenotazione = resultSet.getInt("id_prenotazione");
+                id_ombrellone = resultSet.getInt("id_ombrellone");
+                data_fine_prenotazione = resultSet.getDate("data_fine_prenotazione");
+                lettini = resultSet.getInt("lettini");
+                //   System.out.println("Id prenotazione: "+id_prenotazione+",\t");
+                //    System.out.println("Id ombrellone: " +id_ombrellone+",\t");
+                //      System.out.println("Data fine prenotazione: " +data_fine_prenotazione+",\t");
+            }
+            try {
+                PreparedStatement preparedStatement3 = connection.prepareStatement("DELETE FROM prenotazionespiaggia WHERE id_prenotazione= '" + id_prenotazione + "'");
+                result2 = preparedStatement3.executeUpdate() > 0;
+                if (result2) {
+                    PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE chalet set quantita_ombrelloni_disponibili = quantita_ombrelloni_disponibili +1, quantita_lettini_disponibili= quantita_lettini_disponibili +'" + lettini + "'");
+                    result3 = preparedStatement4.executeUpdate() > 0;
+                    if (result3) {
+                        System.out.println("Lettini e ombrelloni disponibili nello chalet aggiornati");
+                        System.out.println("Cancellazione della prenotazione effettuata!");
+                        result = true;
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+                result2 = false;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+            result = false;
+        }
+
+        return result;
+    }
+
     public boolean cancellazionePrenotazione(int id_prenotazione) {
         boolean result = false;
         boolean result2 = false;

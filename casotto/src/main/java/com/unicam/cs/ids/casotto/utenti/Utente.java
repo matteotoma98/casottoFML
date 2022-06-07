@@ -280,7 +280,7 @@ public class Utente implements IUtente {
             }
             switch (scelta) {
                 case 1:
-                    //as.liberaOmbrellone();
+                    as.liberaOmbrellone();
                     break;
             }
         }

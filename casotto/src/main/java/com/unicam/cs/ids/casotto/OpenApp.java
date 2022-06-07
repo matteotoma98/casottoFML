@@ -4,6 +4,7 @@ import com.unicam.cs.ids.casotto.Connectors.AddettoSpiaggiaConnector;
 import com.unicam.cs.ids.casotto.utenti.Cliente;
 import com.unicam.cs.ids.casotto.utenti.Utente;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class OpenApp {
@@ -12,17 +13,24 @@ public class OpenApp {
         //addettoSpiaggiaConnector.cambiaDisponbilitaOmbrellone();
         Utente utente = new Utente();
         Cliente cliente = new Cliente();
-        int scelta;
+        int scelta=0;
         do {
             System.out.println("Benvenuto nell'App di casottoFML™\nSeleziona un'azione: ");
             System.out.println("1: Login ");
             System.out.println("2: Registrazione ");
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
-            scelta = scanner.nextInt();
-            if (scelta < 0 || scelta > 2) {
-                System.err.println("Hai selezionato un numero non valido\n");
+            try{
+                scelta = scanner.nextInt();
+                if (scelta < 0 || scelta > 2 ) {
+                    System.err.println("Hai selezionato un numero non valido\n");
+                }
             }
+            catch (InputMismatchException e){
+                System.err.println("Hai selezionato un carattere invece di un numero");
+            }
+
+
             Scanner scanner_value = new Scanner(System.in);
             String username;
             String password;
