@@ -345,7 +345,7 @@ public class Cliente extends Utente implements ICliente {
         String tipologia;
         double totale;
         int continuaAcquisti;
-        int id_prodotto=0;
+        int id_prodotto = 0;
         int quantita = 0;
         int id_ombrellone;
         double prezzo_totale = 0;
@@ -373,24 +373,33 @@ public class Cliente extends Utente implements ICliente {
 
             System.out.println("Inserisci la quantità che vuoi acquistare:");
             int quantita2 = scanner2.nextInt();
-            cp.getQuantitaProdotto(id_prodotto, quantita2); //rimuove dal db le quantità di prodotto
+
             //mprodotti.put(cont, id_prodotto);
-            mprodotti.put(id_prodotto,quantita2);
-            if (mprodotti.containsValue(id_prodotto)) {
-                mprodotti.replace(id_prodotto,quantita2,quantita2+mprodotti.get(quantita2));
+            //mprodotti.put(id_prodotto,quantita2);
+
+            if (mprodotti.containsKey(id_prodotto)) {
+                int quantita3 = quantita2;
+                int quantita4 = mprodotti.get(id_prodotto);
+                int quantita5 = quantita3 + quantita4;
+                mprodotti.replace(id_prodotto, quantita5);
+                // System.out.println(entry.getKey() + ", Value: : " + entry.getValue());
+                //  mprodotti.merge(quantita2, entry.getValue(), Integer::sum);//quantita2+mprodotti.get(quantita2));
+            } else {
+                mprodotti.put(id_prodotto, quantita2);
             }
-            for (Map.Entry<Integer, Integer> entry : mprodotti.entrySet()) {
-                System.out.println(entry.getKey() + ", Value: : " + entry.getValue());
-            }
+
+           /* for (Map.Entry<Integer, Integer> entry : mprodotti.entrySet()) {
+                System.out.println(entry.getKey() + ", Value nuovo inserito: : " + entry.getValue());
+            } */
             /*
             for (Integer i: mprodotti.values()) {
 
-                int key = i; //quantita!
+                int key = i; //id_prodotto
                 HashMap.Entry<Integer, Integer> h = (HashMap.Entry<Integer, Integer>) mprodotti.entrySet();
                 int value = mprodotti.get(i); //id_prodotto
                 System.out.println(key + " " + value);
             } */
-
+            cp.getQuantitaProdotto(id_prodotto, quantita2); //rimuove dal db le quantità del prodotto e controlla se esiste
             do {
                 System.out.println("vuoi aggiungere altri prodotti all'ordine ancora? 1-si 0-no");
                 continuaAcquisti = scanner2.nextInt();

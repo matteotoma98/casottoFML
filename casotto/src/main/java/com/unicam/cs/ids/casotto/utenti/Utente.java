@@ -282,6 +282,9 @@ public class Utente implements IUtente {
                 case 1:
                     as.liberaOmbrellone();
                     break;
+                case 0:
+                    OpenApp openApp = new OpenApp();
+                    openApp.Open();
             }
         }
         while (scelta != 0);
