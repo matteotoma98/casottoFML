@@ -387,26 +387,32 @@ public class Cliente extends Utente implements ICliente {
             } else {
                 mprodotti.put(id_prodotto, quantita2);
             }
-
-           /* for (Map.Entry<Integer, Integer> entry : mprodotti.entrySet()) {
+          /*  for (Map.Entry<Integer, Integer> entry : mprodotti.entrySet()) {
                 System.out.println(entry.getKey() + ", Value nuovo inserito: : " + entry.getValue());
             } */
-            /*
-            for (Integer i: mprodotti.values()) {
 
-                int key = i; //id_prodotto
-                HashMap.Entry<Integer, Integer> h = (HashMap.Entry<Integer, Integer>) mprodotti.entrySet();
-                int value = mprodotti.get(i); //id_prodotto
-                System.out.println(key + " " + value);
-            } */
-            cp.getQuantitaProdotto(id_prodotto, quantita2); //rimuove dal db le quantità del prodotto e controlla se esiste
             do {
                 System.out.println("vuoi aggiungere altri prodotti all'ordine ancora? 1-si 0-no");
                 continuaAcquisti = scanner2.nextInt();
-
                 if (continuaAcquisti < 0 || continuaAcquisti > 1)
                     System.out.println("Errore: inserisci un numero che sia 0 o 1:");
             } while (continuaAcquisti < 0 || continuaAcquisti > 1);
+            if (continuaAcquisti == 0) {
+                for (Map.Entry<Integer, Integer> entry : mprodotti.entrySet()) {
+                    /* for () {
+                        cp.getQuantitaProdotto(entry.getKey(), entry.getValue());
+                    } */
+                    // System.out.println(entry.getKey() + ", Value nuovo inserito: : " + entry.getValue());
+                    int size = mprodotti.size();
+
+                    Iterator<Integer> iterator = mprodotti.keySet().iterator();
+                    while (iterator.hasNext()) {
+                        Integer key = iterator.next();
+                        System.out.println(key + ":" + mprodotti.get(key));
+                        cp.getQuantitaProdotto(key,mprodotti.get(key));
+                    }
+                }
+            }
         } while (continuaAcquisti != 0);
 
         System.out.println("Scegli la tipologia di pagamento:app -tramite app, consegna -pagamento alla consegna");

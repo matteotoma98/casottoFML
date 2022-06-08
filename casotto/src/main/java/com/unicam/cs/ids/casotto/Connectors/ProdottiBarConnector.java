@@ -224,10 +224,12 @@ public class ProdottiBarConnector {
     }
 
 
-    public void getQuantitaProdotto(int id_prodotto, int quantita) throws Exception {
+    public void getQuantitaProdotto(int id_prodotto, int quantita) {
         ResultSet result2;
         PreparedStatement preparedStatement3;
-        result2 = connection.createStatement().executeQuery("SELECT id_prodotto, quantita FROM prodottibar WHERE id_prodotto ='" + id_prodotto + "'  AND quantita >='" + quantita + "'");
+      try{
+          result2 = connection.createStatement().executeQuery("SELECT id_prodotto, quantita FROM prodottibar WHERE id_prodotto ='" + id_prodotto + "'  AND quantita >='" + quantita + "'");
+
         if (result2.next())
             //System.out.println("");
             connection.prepareStatement("UPDATE prodottibar SET quantita = quantita -'" + quantita + "'WHERE id_prodotto='" + id_prodotto + "'");
@@ -237,5 +239,9 @@ public class ProdottiBarConnector {
             OpenApp o = new OpenApp();
             o.Open();
         }
+      }
+      catch (Exception e){
+          System.out.println(e);
+      }
     }
 }
