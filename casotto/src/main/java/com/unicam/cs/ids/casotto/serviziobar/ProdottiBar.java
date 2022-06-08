@@ -11,6 +11,7 @@ public class ProdottiBar {
     private int id_prodotto;
     private int quantita;
     private String nome_prodotto;
+    private int tempo_preparazione;
     public PreparazioneOrdine utilizza;
     public ArrayList<Gestore> gestisce = new ArrayList<Gestore>();
 
@@ -18,17 +19,19 @@ public class ProdottiBar {
         throw new UnsupportedOperationException();
     }
 
+    public ProdottiBar(double prezzo, int id_prodotto, int quantita, String nome_prodotto, int tempo_preparazione) {
+        this.prezzo = prezzo;
+        this.id_prodotto = id_prodotto;
+        this.quantita = quantita;
+        this.nome_prodotto = nome_prodotto;
+        this.tempo_preparazione= tempo_preparazione;
+    }
+
     public List<ProdottiBar> Menu(List<ProdottiBar> lista_prodotti) {
 
         throw new UnsupportedOperationException();
     }
 
-    public ProdottiBar(double prezzo, int id_prodotto, int quantita, String nome_prodotto) {
-        this.prezzo = prezzo;
-        this.id_prodotto = id_prodotto;
-        this.quantita = quantita;
-        this.nome_prodotto = nome_prodotto;
-    }
 
     public void listaProdottiBar() {
         ProdottiBarConnector pb = new ProdottiBarConnector();
@@ -69,6 +72,6 @@ public class ProdottiBar {
 
     @Override
     public String toString() {
-        return id_prodotto + ": " + nome_prodotto + ", prezzo: " + prezzo + " €, disponibilità: " + quantita;
+        return id_prodotto + ": " + nome_prodotto + ", prezzo: " + prezzo + " €, disponibilità: " + quantita + ", tempo preparazione: "+ tempo_preparazione;
     }
 }

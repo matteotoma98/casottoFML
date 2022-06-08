@@ -29,6 +29,16 @@ public class Cliente extends Utente implements ICliente {
     private int id_ombrellone = 0;
     private String prodotti_ordinati = "";
 
+    public List<String> getNomiprodotti() {
+        return nomiprodotti;
+    }
+
+    public void setNomiprodotti(List<String> nomiprodotti) {
+        this.nomiprodotti = nomiprodotti;
+    }
+
+    List<String> nomiprodotti = new ArrayList<>();
+
     public String getQuantita_prodotti() {
         return quantita_prodotti;
     }
@@ -48,14 +58,6 @@ public class Cliente extends Utente implements ICliente {
     }
 
     private int id_ordinazione = 0;
-
-    public String getProdotti_ordinati() {
-        return prodotti_ordinati;
-    }
-
-    public void setProdotti_ordinati(String prodotti_ordinati) {
-        this.prodotti_ordinati = prodotti_ordinati;
-    }
 
 
     private ProdottiBarConnector cp = new ProdottiBarConnector();
@@ -352,9 +354,10 @@ public class Cliente extends Utente implements ICliente {
         int id_scontrino = 0;
         int minuti = 0;
         int cont = 0;
-
+        OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
         PreparazioneOrdineConnector preparazioneOrdineConnector = new PreparazioneOrdineConnector();
         Map<Integer, Integer> mprodotti = new HashMap<>();
+
         System.out.println("\n");
 
         System.out.println("A quale id dell'ombrellone vuoi far consegnare l'ordine?");
@@ -398,20 +401,18 @@ public class Cliente extends Utente implements ICliente {
                     System.out.println("Errore: inserisci un numero che sia 0 o 1:");
             } while (continuaAcquisti < 0 || continuaAcquisti > 1);
             if (continuaAcquisti == 0) {
-                for (Map.Entry<Integer, Integer> entry : mprodotti.entrySet()) {
-                    /* for () {
-                        cp.getQuantitaProdotto(entry.getKey(), entry.getValue());
-                    } */
-                    // System.out.println(entry.getKey() + ", Value nuovo inserito: : " + entry.getValue());
-                    int size = mprodotti.size();
-
+                    int size = mprodotti.keySet().size();
                     Iterator<Integer> iterator = mprodotti.keySet().iterator();
                     while (iterator.hasNext()) {
                         Integer key = iterator.next();
-                        System.out.println(key + ":" + mprodotti.get(key));
-                        cp.getQuantitaProdotto(key,mprodotti.get(key));
+                        //System.out.println(key + ":" + mprodotti.get(key));
+                        cp.getQuantitaProdotto(key, mprodotti.get(key));
+                        if(!nomiprodotti.contains(ordinazioneBarConnector.getNomeProdotti(key))){
+                            nomiprodotti.add(ordinazioneBarConnector.getNomeProdotti(key));
+                        }
                     }
-                }
+                    minuti= ordinazioneBarConnector.getTempoProdotti(mprodotti);
+
             }
         } while (continuaAcquisti != 0);
 
@@ -439,7 +440,7 @@ public class Cliente extends Utente implements ICliente {
                 PagamentoBar p = new PagamentoBar();
                 OrdinazioneBar ordinazione_bar = new OrdinazioneBar();
                 ordinazione_bar.setLista_prodotti(mprodotti);
-                OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
+
 
                 if (!risultato) System.err.println("errore nell'aggiunta dell'ordine");
                 boolean risultato2 = p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
@@ -450,18 +451,18 @@ public class Cliente extends Utente implements ICliente {
                     setId_ordinazione(id_ordinazione);
                     preparazioneOrdineConnector.addOrdine(id_ordinazione);
                     //dopo i minuti necessari: preparazioneOrdineConnector.OrdinePronto(id_ordinazione);
-                    minuti = cp.TempoTotale(id_prodotto, quantita); //prendere tutti gli id dei prodotti scelti, non solo il primo
+                   // minuti = cp.TempoTotale(id_prodotto, quantita); //prendere tutti gli id dei prodotti scelti, non solo il primo
                     setEmail(email);
 
-                    prodotti_ordinati = ordinazioneBarConnector.getListaProdotti(id_ordinazione);
+                    //prodotti_ordinati = ordinazioneBarConnector.getListaProdotti(id_ordinazione);
                     quantita_prodotti = ordinazioneBarConnector.getQuantitaProdotti(id_ordinazione);
                     setQuantita_prodotti(quantita_prodotti);
-                    setProdotti_ordinati(prodotti_ordinati);
-                    a_number = minuti;
-                    setNumber(a_number);
+                    setNomiprodotti(nomiprodotti);
+                   // a_number = minuti;
+                  //  setNumber(a_number);
                     //Helper helper = new Helper(a_number);
-                    SendEmail.sendEmailBarCliente(email, getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti, minuti);
-                    SendEmail.sendMailBar("fchiocchi@libero.it", getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti);
+                    SendEmail.sendEmailBarCliente(email, getNomiprodotti(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti, minuti);
+                    SendEmail.sendMailBar("fchiocchi@libero.it", getNomiprodotti(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti);
                     Timer t = new java.util.Timer();
                     t.schedule(
                             new java.util.TimerTask() {
@@ -513,7 +514,6 @@ public class Cliente extends Utente implements ICliente {
                 PagamentoBar p = new PagamentoBar();
                 OrdinazioneBar ordinazione_bar = new OrdinazioneBar();
                 ordinazione_bar.setLista_prodotti(mprodotti);
-                OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
                 System.out.println(tipologia);
                 System.out.println(ordinazioneBarConnector.last_ordinazione(id_ombrellone));
                 System.out.println(id_ombrellone);
@@ -527,17 +527,16 @@ public class Cliente extends Utente implements ICliente {
                     setId_ordinazione(id_ordinazione);
                     preparazioneOrdineConnector.addOrdine(id_ordinazione);
                     //dopo i minuti necessari: preparazioneOrdineConnector.OrdinePronto(id_ordinazione);
-                    minuti = cp.TempoTotale(id_prodotto, quantita); //prendere tutti gli id dei prodotti scelti, non solo il primo
+                   // minuti = cp.TempoTotale(id_prodotto, quantita); //prendere tutti gli id dei prodotti scelti, non solo il primo
                     setEmail(email);
-
-                    prodotti_ordinati = ordinazioneBarConnector.getListaProdotti(id_ordinazione);
+                    //  prodotti_ordinati = ordinazioneBarConnector.getListaProdotti(id_ordinazione);
                     quantita_prodotti = ordinazioneBarConnector.getQuantitaProdotti(id_ordinazione);
                     setQuantita_prodotti(quantita_prodotti);
-                    setProdotti_ordinati(prodotti_ordinati);
-                    a_number = minuti;
-                    setNumber(a_number);
-                    SendEmail.sendEmailBarCliente(email, getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti, minuti);
-                    SendEmail.sendMailBar("fchiocchi@libero.it", getProdotti_ordinati(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti);
+                    setNomiprodotti(nomiprodotti);
+                   // a_number = minuti;
+                    //setNumber(a_number);
+                    SendEmail.sendEmailBarCliente(email, getNomiprodotti(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti, minuti);
+                    SendEmail.sendMailBar("fchiocchi@libero.it", getNomiprodotti(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti);
                     Timer t = new java.util.Timer();
                     t.schedule(
                             new java.util.TimerTask() {

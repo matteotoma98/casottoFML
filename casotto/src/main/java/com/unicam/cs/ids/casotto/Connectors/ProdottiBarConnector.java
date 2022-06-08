@@ -202,8 +202,8 @@ public class ProdottiBarConnector {
         String nome_prodotto = result.getString("nome_prodotto");
         double prezzo = result.getInt("prezzo");
         int quantita = result.getInt("quantita");
-
-        return new ProdottiBar(prezzo, id_prodotto, quantita, nome_prodotto);
+        int tempo_preparazione = result.getInt("tempo_preparazione");
+        return new ProdottiBar(prezzo, id_prodotto, quantita, nome_prodotto,tempo_preparazione);
     }
 
 

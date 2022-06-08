@@ -196,6 +196,44 @@ public class OrdinazioneBarConnector {
         }
         return quantita;
     }
+    public String getNomeProdotti(int id_prodotto){
+        boolean result = false;
+        boolean controllo = false;
+        String prodotti = "";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT nome_prodotto FROM prodottibar WHERE id_prodotto='" + id_prodotto + "'");
+            while (resultSet.next()) {
+                prodotti = resultSet.getString("nome_prodotto");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return prodotti;
+    }
+    public int getTempoProdotti(Map<Integer, Integer> prodotti){
+        boolean result = false;
+        boolean controllo = false;
+        int tempo=0;
+        Set<Integer> id_prodotti = prodotti.keySet();
+        Collection<Integer> quantita = prodotti.values();
+        for(Integer id : id_prodotti){
+            for(Integer qta: quantita) {
+                try {
+                    Statement statement = connection.createStatement();
+                    ResultSet resultSet = statement.executeQuery("SELECT tempo_preparazione FROM prodottibar WHERE id_prodotto='" + id + "'");
+                    while (resultSet.next()) {
+
+                        tempo = tempo+ (qta * resultSet.getInt("tempo_preparazione"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        }
+
+        return tempo/id_prodotti.size();
+    }
 
     public String getListaProdotti(int id_ordinazione) {
         boolean result = false;

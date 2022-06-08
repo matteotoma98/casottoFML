@@ -61,7 +61,7 @@ public class NotifyOrder implements IObserver {
         }
     }
 
-    public void notifyAddettobar(String emailcliente, String prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti) {
+    public void notifyAddettobar(String emailcliente, List<String> prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti) {
         if (name.equals("Addetto SpiaggiaOmbrellone")) {
             try {
                 SendEmail.sendMailBar("fchiocchi@libero.it", prodotti, id_ordine, id_ombrellone, quantita_prodotti);

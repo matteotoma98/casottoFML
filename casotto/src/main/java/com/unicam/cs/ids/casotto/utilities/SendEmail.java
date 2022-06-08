@@ -3,6 +3,7 @@ package com.unicam.cs.ids.casotto.utilities;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,7 +49,7 @@ public class SendEmail {
         return null;
     }
 
-    public static void sendEmailBarCliente(String recipient, String prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti, int minuti) throws Exception {
+    public static void sendEmailBarCliente(String recipient, List<String> prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti, int minuti) throws Exception {
         Properties properties = new Properties();
         properties.put("mail.smtp.starttls.enable", "true");
         properties.setProperty("mail.transport.protocol", "smtp");
@@ -73,13 +74,13 @@ public class SendEmail {
         // System.out.println("Messaggio inviato correttamente");
     }
 
-    private static Message prepareMessageBarCliente(Session session, String myAccountEmail, String recipient, String prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti, int minuti) {
+    private static Message prepareMessageBarCliente(Session session, String myAccountEmail, String recipient, List<String>  prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti, int minuti) {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
             message.setSubject("CasottoFML™");
-            message.setText("Ciao, il tuo ordine relativo è stato confermato. Riepilogo ordine: prodotti: " + prodotti + " quantità: " + quantita_prodotti + " , tra circa " + minuti + " minuti arriverà un'addetto spiaggia con il tuo ordine al tuo ombrellone " + id_ombrellone + ".");
+            message.setText("Ciao, il tuo ordine relativo è stato confermato. \nRiepilogo ordine: prodotti: " + prodotti + "\nQuantità: " + quantita_prodotti + ".\n3 Tra circa " + minuti + " minuti arriverà un'addetto spiaggia con il tuo ordine al tuo ombrellone " + id_ombrellone + ".");
             return message;
         } catch (Exception ex) {
             Logger.getLogger(SendEmail.class.getName()).log(Level.SEVERE, null, ex);
@@ -87,7 +88,7 @@ public class SendEmail {
         return null;
     }
 
-    public static void sendMailBar(String recipient, String prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti) throws Exception {
+    public static void sendMailBar(String recipient, List<String> prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti) throws Exception {
         Properties properties = new Properties();
         properties.put("mail.smtp.starttls.enable", "true");
         properties.setProperty("mail.transport.protocol", "smtp");
@@ -112,7 +113,7 @@ public class SendEmail {
         // System.out.println("Messaggio inviato correttamente");
     }
 
-    private static Message prepareMessageBar(Session session, String myAccountEmail, String recipient, String prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti) {
+    private static Message prepareMessageBar(Session session, String myAccountEmail, String recipient, List<String>  prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti) {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
