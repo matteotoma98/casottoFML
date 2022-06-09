@@ -24,7 +24,7 @@ public class ProdottiBar {
         this.id_prodotto = id_prodotto;
         this.quantita = quantita;
         this.nome_prodotto = nome_prodotto;
-        this.tempo_preparazione= tempo_preparazione;
+        this.tempo_preparazione = tempo_preparazione;
     }
 
     public List<ProdottiBar> Menu(List<ProdottiBar> lista_prodotti) {
@@ -72,6 +72,6 @@ public class ProdottiBar {
 
     @Override
     public String toString() {
-        return id_prodotto + ": " + nome_prodotto + ", prezzo: " + prezzo + " €, disponibilità: " + quantita + ", tempo preparazione: "+ tempo_preparazione;
+        return id_prodotto + ": " + nome_prodotto + ", prezzo: " + prezzo + " €, disponibilità: " + quantita + ", tempo preparazione: " + tempo_preparazione;
     }
 }

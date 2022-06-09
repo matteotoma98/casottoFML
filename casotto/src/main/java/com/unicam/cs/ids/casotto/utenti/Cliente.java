@@ -207,7 +207,7 @@ public class Cliente extends Utente implements ICliente {
             OpenApp o = new OpenApp();
             o.Open();
         }
-        System.out.println("Inserisci il giorno di fine della prenotazione:");
+
         int scelta_fascia_oraria;
         String fasciaOraria = null;
         System.out.println("Scegli in quale fascia oraria vuoi prenotare:");
@@ -231,21 +231,18 @@ public class Cliente extends Utente implements ICliente {
                 fasciaOraria = String.valueOf(FasciaOraria.GIORNATA_INTERA);
                 break;
         }
-        System.out.println("Inserisci la fila dell'ombrellone:(FILA 1-3: VIP, FILA 4-7: PREMIUM, FILA 8-15: BASE)");
 
+
+        System.out.println("Inserisci la fila dell'ombrellone:(FILA 1-3: VIP, FILA 4-7: PREMIUM, FILA 8-15: BASE)");
         int fila;
         fila = scanner.nextInt();
         Ombrellone om = new Ombrellone();
         om.setNum_fila_ombrellone(fila);
-        StringBuilder sb = new StringBuilder();
-
         System.out.println((char) 27 + "[31m" + "Lista ombrelloni occupati relativi alle date scelte");
-        prenotazioneSpiaggiaConnector.getOmbrelloniOccupati(start_date, end_date);
+        prenotazioneSpiaggiaConnector.getOmbrelloniOccupati(start_date, end_date); //query che mostra gli ombrelloni occupati nelle date scelte
         System.out.print((char) 27 + "[39m");
-        //querychemostra la lista degli ombrelloni liberi quel giorno
         System.out.println("Inserisci l'id dell'ombrellone che vuoi prenotare:");
         int id = scanner.nextInt();
-
         //vedi ombrelloneconnector
         OmbrelloneConnector om2 = new OmbrelloneConnector();
         boolean result = om2.checkOmbrellone(fila, id);
@@ -282,9 +279,10 @@ public class Cliente extends Utente implements ICliente {
                 if (prenotato) {
                     PagamentoOmbrellone po = new PagamentoOmbrellone();
                     po.sceltaMetodo(tipologia, prenotazioneSpiaggiaConnector.last_prenotazione(id_ombrellone), id, data_pagamento);
+                    prenotazioneSpiaggiaConnector.changeDate(start_date,end_date, id_ombrellone, fasciaOraria);
                 } else {
-                    System.out.println("errore nel prenotare");
-                    OpenApp openApp= new OpenApp();
+                    System.err.println("errore nel prenotare");
+                    OpenApp openApp = new OpenApp();
                     openApp.Open();
                 }
 
@@ -318,8 +316,9 @@ public class Cliente extends Utente implements ICliente {
                 if (prenotato) {
                     PagamentoOmbrellone po = new PagamentoOmbrellone();
                     po.sceltaMetodo(tipologia, prenotazioneSpiaggiaConnector.last_prenotazione(id_ombrellone), id, data_pagamento);
+                    prenotazioneSpiaggiaConnector.changeDate(start_date,end_date, id_ombrellone, fasciaOraria);
                 } else
-                    System.out.println("Esiste già una prenotazione relativa all'ombrellone relativo al periodo dal " + date_start + " al " + date_end +
+                    System.out.println("Errore: già una prenotazione relativa all'ombrellone relativo al periodo dal " + date_start + " al " + date_end +
                             "\n" + "Riprovare con un'altra data o ombrellone.");
                 Scontrino scontrino = new Scontrino(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo);
                 scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo, "arrivo");

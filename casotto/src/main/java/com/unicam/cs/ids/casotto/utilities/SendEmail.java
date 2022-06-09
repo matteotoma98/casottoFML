@@ -74,7 +74,7 @@ public class SendEmail {
         // System.out.println("Messaggio inviato correttamente");
     }
 
-    private static Message prepareMessageBarCliente(Session session, String myAccountEmail, String recipient, List<String>  prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti, int minuti) {
+    private static Message prepareMessageBarCliente(Session session, String myAccountEmail, String recipient, List<String> prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti, int minuti) {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
@@ -113,7 +113,7 @@ public class SendEmail {
         // System.out.println("Messaggio inviato correttamente");
     }
 
-    private static Message prepareMessageBar(Session session, String myAccountEmail, String recipient, List<String>  prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti) {
+    private static Message prepareMessageBar(Session session, String myAccountEmail, String recipient, List<String> prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti) {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));

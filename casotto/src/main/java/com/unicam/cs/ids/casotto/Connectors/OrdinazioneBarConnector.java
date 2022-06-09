@@ -196,7 +196,8 @@ public class OrdinazioneBarConnector {
         }
         return quantita;
     }
-    public String getNomeProdotti(int id_prodotto){
+
+    public String getNomeProdotti(int id_prodotto) {
         boolean result = false;
         boolean controllo = false;
         String prodotti = "";
@@ -211,20 +212,21 @@ public class OrdinazioneBarConnector {
         }
         return prodotti;
     }
-    public int getTempoProdotti(Map<Integer, Integer> prodotti){
+
+    public int getTempoProdotti(Map<Integer, Integer> prodotti) {
         boolean result = false;
         boolean controllo = false;
-        int tempo=0;
+        int tempo = 0;
         Set<Integer> id_prodotti = prodotti.keySet();
         Collection<Integer> quantita = prodotti.values();
-        for(Integer id : id_prodotti){
-            for(Integer qta: quantita) {
+        for (Integer id : id_prodotti) {
+            for (Integer qta : quantita) {
                 try {
                     Statement statement = connection.createStatement();
                     ResultSet resultSet = statement.executeQuery("SELECT tempo_preparazione FROM prodottibar WHERE id_prodotto='" + id + "'");
                     while (resultSet.next()) {
 
-                        tempo = tempo+ (qta * resultSet.getInt("tempo_preparazione"));
+                        tempo = tempo + (qta * resultSet.getInt("tempo_preparazione"));
                     }
                 } catch (Exception e) {
                     System.out.println(e);
@@ -232,7 +234,7 @@ public class OrdinazioneBarConnector {
             }
         }
 
-        return tempo/id_prodotti.size();
+        return tempo / id_prodotti.size();
     }
 
     public String getListaProdotti(int id_ordinazione) {

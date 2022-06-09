@@ -197,7 +197,7 @@ CREATE TABLE `chalet` (
 
 LOCK TABLES `chalet` WRITE;
 /*!40000 ALTER TABLE `chalet` DISABLE KEYS */;
-INSERT INTO `chalet` VALUES (150,150,144,138);
+INSERT INTO `chalet` VALUES (150,150,142,136);
 /*!40000 ALTER TABLE `chalet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,7 +225,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES ('toma','toma','matteo',12),('fra','fracs','chio',8),('fra','fracs','chio',16),('Matteo','T','matteotoma98@hotmail.it',1),('fra','fracs','chio',12),('fra','fracs','chio',12),('fra','fracs','chio',24);
+INSERT INTO `cliente` VALUES ('toma','toma','matteo',12),('fra','fracs','chio',8),('fra','fracs','chio',16),('Matteo','T','matteotoma98@hotmail.it',1),('fra','fracs','chio',12),('fra','fracs','chio',12),('Matteo','T','matteotoma98@hotmail.it',1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -303,7 +303,7 @@ CREATE TABLE `ordinazionebar` (
   KEY `data_ordinazione` (`data_ordinazione`),
   KEY `id_ombrellone_fk_idx` (`id_ombrellone`),
   CONSTRAINT `id_ombrellone_fk` FOREIGN KEY (`id_ombrellone`) REFERENCES `prenotazionespiaggia` (`id_ombrellone`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -312,7 +312,7 @@ CREATE TABLE `ordinazionebar` (
 
 LOCK TABLES `ordinazionebar` WRITE;
 /*!40000 ALTER TABLE `ordinazionebar` DISABLE KEYS */;
-INSERT INTO `ordinazionebar` VALUES ('2022-06-03',8,1,'1','4'),('2022-06-03',8,2,'2','8'),('2022-06-03',12,3,'1','1'),('2022-06-03',1,4,'1','1'),('2022-06-04',1,5,'1','1'),('2022-06-05',1,6,'1','1'),('2022-06-05',1,7,'1,1','1,2'),('2022-06-05',1,8,'1,1','1,2'),('2022-06-05',1,9,'1,1','1,2'),('2022-06-05',1,10,'1,1','1,2'),('2022-06-05',1,11,'1,1,1','1,2,3'),('2022-06-06',1,12,'1,1,2','1,2,3');
+INSERT INTO `ordinazionebar` VALUES ('2022-06-03',8,1,'1','4'),('2022-06-03',8,2,'2','8'),('2022-06-03',12,3,'1','1'),('2022-06-03',1,4,'1','1'),('2022-06-04',1,5,'1','1'),('2022-06-05',1,6,'1','1'),('2022-06-05',1,7,'1,1','1,2'),('2022-06-05',1,8,'1,1','1,2'),('2022-06-05',1,9,'1,1','1,2'),('2022-06-05',1,10,'1,1','1,2'),('2022-06-05',1,11,'1,1,1','1,2,3'),('2022-06-06',1,12,'1,1,2','1,2,3'),('2022-06-07',1,13,'1,1,1','1,2,3'),('2022-06-07',1,14,'3,2','1,3'),('2022-06-07',1,15,'1,1','1,2'),('2022-06-07',1,16,'1,1,1','1,2,3'),('2022-06-08',1,17,'1,1','1,2'),('2022-06-08',1,18,'2,1,1,2','1,2,3,4'),('2022-06-08',1,19,'1,1','1,2'),('2022-06-08',1,20,'1,1','1,2'),('2022-06-08',1,21,'1,1','1,2'),('2022-06-08',1,22,'1,1','1,2'),('2022-06-08',1,23,'1,1','1,2'),('2022-06-08',1,24,'1,1','1,2'),('2022-06-08',1,25,'1,1','1,2'),('2022-06-08',1,26,'1,1','1,2'),('2022-06-08',1,27,'1,1','1,2'),('2022-06-08',1,28,'1,1','1,2'),('2022-06-08',1,29,'2,1','1,2'),('2022-06-08',1,30,'1,1,2,1','1,2,3,4'),('2022-06-08',1,31,'1,1,1','1,2,3'),('2022-06-08',1,32,'1,1,','1,2,'),('2022-06-08',1,33,'1,1,1','1,2,3'),('2022-06-08',1,34,'2,1,2','1,2,4'),('2022-06-08',1,35,'2,2','3,5'),('2022-06-08',1,36,'1','1');
 /*!40000 ALTER TABLE `ordinazionebar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -341,7 +341,7 @@ CREATE TABLE `pagamentobar` (
 
 LOCK TABLES `pagamentobar` WRITE;
 /*!40000 ALTER TABLE `pagamentobar` DISABLE KEYS */;
-INSERT INTO `pagamentobar` VALUES ('consegna',1,8,'2022-06-03 00:00:00'),('consegna',2,8,'2022-06-03 00:00:00'),('app',3,12,'2022-06-03 00:00:00'),('app',4,1,'2022-06-03 00:00:00'),('app',5,1,'2022-06-04 00:00:00'),('app',6,1,'2022-06-05 00:00:00'),('app',7,1,'2022-06-05 00:00:00'),('app',8,1,'2022-06-05 00:00:00'),('app',9,1,'2022-06-05 00:00:00'),('app',10,1,'2022-06-05 00:00:00'),('app',11,1,'2022-06-05 00:00:00'),('app',12,1,'2022-06-06 00:00:00');
+INSERT INTO `pagamentobar` VALUES ('consegna',1,8,'2022-06-03 00:00:00'),('consegna',2,8,'2022-06-03 00:00:00'),('app',3,12,'2022-06-03 00:00:00'),('app',4,1,'2022-06-03 00:00:00'),('app',5,1,'2022-06-04 00:00:00'),('app',6,1,'2022-06-05 00:00:00'),('app',7,1,'2022-06-05 00:00:00'),('app',8,1,'2022-06-05 00:00:00'),('app',9,1,'2022-06-05 00:00:00'),('app',10,1,'2022-06-05 00:00:00'),('app',11,1,'2022-06-05 00:00:00'),('app',12,1,'2022-06-06 00:00:00'),('app',13,1,'2022-06-07 00:00:00'),('app',14,1,'2022-06-07 00:00:00'),('app',15,1,'2022-06-07 00:00:00'),('app',16,1,'2022-06-07 00:00:00'),('app',17,1,'2022-06-08 00:00:00'),('app',18,1,'2022-06-08 00:00:00'),('app',19,1,'2022-06-08 00:00:00'),('app',20,1,'2022-06-08 00:00:00'),('app',21,1,'2022-06-08 00:00:00'),('app',22,1,'2022-06-08 00:00:00'),('app',23,1,'2022-06-08 00:00:00'),('app',24,1,'2022-06-08 00:00:00'),('app',25,1,'2022-06-08 00:00:00'),('app',26,1,'2022-06-08 00:00:00'),('app',27,1,'2022-06-08 00:00:00'),('app',28,1,'2022-06-08 00:00:00'),('app',29,1,'2022-06-08 00:00:00'),('app',30,1,'2022-06-08 00:00:00'),('app',31,1,'2022-06-08 00:00:00'),('app',32,1,'2022-06-08 00:00:00'),('app',33,1,'2022-06-08 00:00:00'),('app',34,1,'2022-06-08 00:00:00'),('app',35,1,'2022-06-08 00:00:00'),('app',36,1,'2022-06-08 00:00:00');
 /*!40000 ALTER TABLE `pagamentobar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -370,7 +370,7 @@ CREATE TABLE `pagamentoombrellone` (
 
 LOCK TABLES `pagamentoombrellone` WRITE;
 /*!40000 ALTER TABLE `pagamentoombrellone` DISABLE KEYS */;
-INSERT INTO `pagamentoombrellone` VALUES ('arrivo',4,12,'2022-06-01 00:00:00'),('arrivo',5,8,'2022-06-01 00:00:00'),('arrivo',6,16,'2022-06-01 00:00:00'),('app',7,1,'2022-06-03 00:00:00'),('arrivo',8,12,'2022-06-06 00:00:00'),('arrivo',9,12,'2022-06-06 00:00:00'),('arrivo',10,24,'2022-06-06 00:00:00');
+INSERT INTO `pagamentoombrellone` VALUES ('arrivo',4,12,'2022-06-01 00:00:00'),('arrivo',5,8,'2022-06-01 00:00:00'),('arrivo',6,16,'2022-06-01 00:00:00'),('app',7,1,'2022-06-03 00:00:00'),('arrivo',8,12,'2022-06-06 00:00:00'),('arrivo',9,12,'2022-06-06 00:00:00'),('app',10,1,'2022-06-09 00:00:00');
 /*!40000 ALTER TABLE `pagamentoombrellone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -419,8 +419,8 @@ DROP TABLE IF EXISTS `prenotazionespiaggia`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prenotazionespiaggia` (
   `id_prenotazione` int NOT NULL AUTO_INCREMENT,
-  `data_inizio_prenotazione` date NOT NULL,
-  `data_fine_prenotazione` date NOT NULL,
+  `data_inizio_prenotazione` datetime NOT NULL,
+  `data_fine_prenotazione` datetime NOT NULL,
   `num_fila_ombrellone` int NOT NULL,
   `id_ombrellone` int NOT NULL,
   `lettini` int DEFAULT '0',
@@ -440,7 +440,7 @@ CREATE TABLE `prenotazionespiaggia` (
 
 LOCK TABLES `prenotazionespiaggia` WRITE;
 /*!40000 ALTER TABLE `prenotazionespiaggia` DISABLE KEYS */;
-INSERT INTO `prenotazionespiaggia` VALUES (4,'2022-06-15','2022-06-16',2,12,1,'matteo'),(5,'2022-06-12','2022-06-13',1,8,2,'chio'),(6,'2022-06-17','2022-06-18',2,16,1,'chio'),(7,'2022-06-01','2022-06-01',1,1,1,'matteotoma98@hotmail.it'),(8,'2022-06-11','2022-06-12',2,12,2,'chio'),(9,'2022-06-17','2022-06-18',2,12,4,'chio'),(10,'2022-06-06','2022-08-15',3,24,2,'chio');
+INSERT INTO `prenotazionespiaggia` VALUES (4,'2022-06-15 00:00:00','2022-06-16 00:00:00',2,12,1,'matteo'),(5,'2022-06-12 00:00:00','2022-06-13 00:00:00',1,8,2,'chio'),(6,'2022-06-17 00:00:00','2022-06-18 00:00:00',2,16,1,'chio'),(7,'2022-06-01 00:00:00','2022-06-02 00:00:00',1,1,1,'matteotoma98@hotmail.it'),(8,'2022-06-11 00:00:00','2022-06-12 00:00:00',2,12,2,'chio'),(9,'2022-06-17 00:00:00','2022-06-18 00:00:00',2,12,4,'chio'),(10,'2022-06-06 00:00:00','2022-08-15 00:00:00',3,24,2,'chio'),(11,'2022-08-16 08:00:00','2022-08-16 13:00:00',1,1,1,'matteotoma98@hotmail.it');
 /*!40000 ALTER TABLE `prenotazionespiaggia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -466,7 +466,7 @@ CREATE TABLE `preparazioneordine` (
 
 LOCK TABLES `preparazioneordine` WRITE;
 /*!40000 ALTER TABLE `preparazioneordine` DISABLE KEYS */;
-INSERT INTO `preparazioneordine` VALUES (0,3),(0,4),(0,5),(0,6),(0,7),(0,8),(1,9),(1,10),(1,11),(1,12);
+INSERT INTO `preparazioneordine` VALUES (0,3),(0,4),(0,5),(0,6),(0,7),(0,8),(1,9),(1,10),(1,11),(1,12),(1,13),(0,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(0,27),(0,28),(0,29),(1,30),(0,31),(0,32),(0,33),(0,34),(0,35),(1,36);
 /*!40000 ALTER TABLE `preparazioneordine` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -495,7 +495,7 @@ CREATE TABLE `prodottibar` (
 
 LOCK TABLES `prodottibar` WRITE;
 /*!40000 ALTER TABLE `prodottibar` DISABLE KEYS */;
-INSERT INTO `prodottibar` VALUES (1,'Patatine San Carlo',1,6,1),(2,'Bruschettine',2,5,1),(3,'Tramezzini',3,11,5),(4,'Kinder Bueno',2,10,1),(5,'Spritz',4,20,5),(6,'Estathe Pesca',2,20,1),(7,'Estathe Limone',2,20,1),(8,'Acqua',1,46,1),(9,'Cono ',2,8,1),(10,'Ghiacciolo Menta',2,5,1),(11,'Giacciolo Limone',2,5,1),(12,'Pizza',1.5,5,1);
+INSERT INTO `prodottibar` VALUES (1,'Patatine San Carlo',1,3,1),(2,'Bruschettine',2,5,1),(3,'Tramezzini',3,4,5),(4,'Kinder Bueno',2,7,1),(5,'Spritz',4,17,5),(6,'Estathe Pesca',2,20,1),(7,'Estathe Limone',2,20,1),(8,'Acqua',1,46,1),(9,'Cono ',2,8,1),(10,'Ghiacciolo Menta',2,5,1),(11,'Giacciolo Limone',2,5,1),(12,'Pizza',1.5,5,1);
 /*!40000 ALTER TABLE `prodottibar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -515,7 +515,7 @@ CREATE TABLE `scontrino` (
   PRIMARY KEY (`id_scontrino`),
   KEY `id_ombrellone_idx` (`id_ombrellone`),
   CONSTRAINT `id_ombrellone` FOREIGN KEY (`id_ombrellone`) REFERENCES `prenotazionespiaggia` (`id_ombrellone`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -524,7 +524,7 @@ CREATE TABLE `scontrino` (
 
 LOCK TABLES `scontrino` WRITE;
 /*!40000 ALTER TABLE `scontrino` DISABLE KEYS */;
-INSERT INTO `scontrino` VALUES (4,'2022-06-01',12,34,'arrivo'),(5,'2022-06-01',8,38,'arrivo'),(6,'2022-06-01',16,38,'arrivo'),(7,'2022-06-03',8,24,'bar'),(8,'2022-06-03',8,2,'bar'),(9,'2022-06-03',12,1,'bar'),(10,'2022-06-03',1,17,'ombrellone'),(11,'2022-06-03',1,1,'bar'),(12,'2022-06-04',1,1,'bar'),(13,'2022-06-05',1,1,'bar'),(14,'2022-06-05',1,2,'bar'),(15,'2022-06-05',1,2,'bar'),(16,'2022-06-05',1,1,'bar'),(17,'2022-06-05',1,2,'bar'),(18,'2022-06-05',1,3,'bar'),(19,'2022-06-06',12,42,'arrivo'),(20,'2022-06-06',12,50,'arrivo'),(21,'2022-06-06',24,568,'arrivo'),(22,'2022-06-06',1,6,'bar');
+INSERT INTO `scontrino` VALUES (4,'2022-06-01',12,34,'arrivo'),(5,'2022-06-01',8,38,'arrivo'),(6,'2022-06-01',16,38,'arrivo'),(7,'2022-06-03',8,24,'bar'),(8,'2022-06-03',8,2,'bar'),(9,'2022-06-03',12,1,'bar'),(10,'2022-06-03',1,17,'ombrellone'),(11,'2022-06-03',1,1,'bar'),(12,'2022-06-04',1,1,'bar'),(13,'2022-06-05',1,1,'bar'),(14,'2022-06-05',1,2,'bar'),(15,'2022-06-05',1,2,'bar'),(16,'2022-06-05',1,1,'bar'),(17,'2022-06-05',1,2,'bar'),(18,'2022-06-05',1,3,'bar'),(19,'2022-06-06',12,42,'arrivo'),(20,'2022-06-06',12,50,'arrivo'),(22,'2022-06-06',1,6,'bar'),(23,'2022-06-07',1,3,'bar'),(24,'2022-06-07',1,6,'bar'),(25,'2022-06-07',1,1,'bar'),(26,'2022-06-07',1,3,'bar'),(27,'2022-06-08',1,0,'bar'),(28,'2022-06-08',1,0,'bar'),(29,'2022-06-08',1,0,'bar'),(30,'2022-06-08',1,0,'bar'),(31,'2022-06-08',1,0,'bar'),(32,'2022-06-08',1,0,'bar'),(33,'2022-06-08',1,0,'bar'),(34,'2022-06-08',1,0,'bar'),(35,'2022-06-08',1,0,'bar'),(36,'2022-06-08',1,0,'bar'),(37,'2022-06-08',1,0,'bar'),(38,'2022-06-08',1,0,'bar'),(39,'2022-06-08',1,0,'bar'),(40,'2022-06-08',1,0,'bar'),(41,'2022-06-08',1,0,'bar'),(42,'2022-06-08',1,0,'bar'),(43,'2022-06-08',1,0,'bar'),(44,'2022-06-08',1,0,'bar'),(45,'2022-06-08',1,0,'bar'),(46,'2022-06-08',1,0,'bar'),(47,'2022-06-09',1,19,'ombrellone');
 /*!40000 ALTER TABLE `scontrino` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -596,4 +596,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-06 15:35:52
+-- Dump completed on 2022-06-09 12:20:38

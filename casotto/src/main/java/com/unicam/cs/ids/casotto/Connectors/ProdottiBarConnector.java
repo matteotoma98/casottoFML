@@ -203,7 +203,7 @@ public class ProdottiBarConnector {
         double prezzo = result.getInt("prezzo");
         int quantita = result.getInt("quantita");
         int tempo_preparazione = result.getInt("tempo_preparazione");
-        return new ProdottiBar(prezzo, id_prodotto, quantita, nome_prodotto,tempo_preparazione);
+        return new ProdottiBar(prezzo, id_prodotto, quantita, nome_prodotto, tempo_preparazione);
     }
 
 
@@ -227,21 +227,20 @@ public class ProdottiBarConnector {
     public void getQuantitaProdotto(int id_prodotto, int quantita) {
         ResultSet result2;
         PreparedStatement preparedStatement3;
-      try{
-          result2 = connection.createStatement().executeQuery("SELECT id_prodotto, quantita FROM prodottibar WHERE id_prodotto ='" + id_prodotto + "'  AND quantita >='" + quantita + "'");
+        try {
+            result2 = connection.createStatement().executeQuery("SELECT id_prodotto, quantita FROM prodottibar WHERE id_prodotto ='" + id_prodotto + "'  AND quantita >='" + quantita + "'");
 
-        if (result2.next())
-            //System.out.println("");
-            connection.prepareStatement("UPDATE prodottibar SET quantita = quantita -'" + quantita + "'WHERE id_prodotto='" + id_prodotto + "'");
-        else {
-            System.err.println("Siamo spiacenti! Non abbiamo la quantità necessaria per il prodotto che vuoi acquistare, riprova diminuendo la quantità del " +
-                    "prodotto che desideri");
-            OpenApp o = new OpenApp();
-            o.Open();
+            if (result2.next())
+                //System.out.println("");
+                connection.prepareStatement("UPDATE prodottibar SET quantita = quantita -'" + quantita + "'WHERE id_prodotto='" + id_prodotto + "'");
+            else {
+                System.err.println("Siamo spiacenti! Non abbiamo la quantità necessaria per il prodotto che vuoi acquistare, riprova diminuendo la quantità del " +
+                        "prodotto che desideri");
+                OpenApp o = new OpenApp();
+                o.Open();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
-      }
-      catch (Exception e){
-          System.out.println(e);
-      }
     }
 }

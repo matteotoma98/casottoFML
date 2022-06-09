@@ -145,13 +145,61 @@ public class PrenotazioneSpiaggiaConnector {
         return result;
     }
 
+    public boolean changeDate(Date data_inizio, Date data_fine, int id_ombrellone, String tipologia) {
+        boolean result = false;
+        boolean result2 = false;
+        boolean result3 = false;
+        boolean result4 = false;
+
+        try {
+            if (tipologia.equals("MATTINA")) {
+
+                PreparedStatement preparedStatement1 = connection.prepareStatement("update prenotazionespiaggia set data_inizio_prenotazione = CONCAT_WS(' ', DATE(data_inizio_prenotazione), '08:00:00'),  data_fine_prenotazione = CONCAT_WS(' ', DATE(data_fine_prenotazione), '13:00:00') where id_ombrellone='"+id_ombrellone+"' AND data_inizio_prenotazione='" + data_inizio + "'AND data_fine_prenotazione='" + data_fine + "'");
+                //preparedStatement.setInt(1,lettini);
+                result2 = preparedStatement1.executeUpdate() > 0;
+                if (result2) {
+                    System.out.println("Data cambiata");
+                    result=true;
+                } else System.err.println("errore nel cambiare la data.");
+            }
+            if (tipologia.equals("POMERIGGIO")) {
+                PreparedStatement preparedStatement1 = connection.prepareStatement("update prenotazionespiaggia set data_inizio_prenotazione = CONCAT_WS(' ', DATE(data_inizio_prenotazione), '13:00:00'),   data_fine_prenotazione = CONCAT_WS(' ', DATE(data_fine_prenotazione), '19:00:00') where id_ombrellone=' "+id_ombrellone+"'AND data_inizio_prenotazione='" + data_inizio + "'AND data_fine_prenotazione='" + data_fine + "'");
+                //preparedStatement.setInt(1,lettini);
+                result3 = preparedStatement1.executeUpdate() > 0;
+                if (result3) {
+                    System.out.println("Data cambiata");
+                    result=true;
+                } else System.err.println("errore nel cambiare la data.");
+            }
+            if (tipologia.equals("GIORNATA_INTERA")) {
+                PreparedStatement preparedStatement1 = connection.prepareStatement("update prenotazionespiaggia set data_inizio_prenotazione = CONCAT_WS(' ', DATE(data_inizio_prenotazione), '08:00:00'),   data_fine_prenotazione = CONCAT_WS(' ', DATE(data_fine_prenotazione), '19:00:00') where id_ombrellone=' "+id_ombrellone+"'AND data_inizio_prenotazione='" + data_inizio + "'AND data_fine_prenotazione='" + data_fine + "'");
+                //preparedStatement.setInt(1,lettini);
+                result4 = preparedStatement1.executeUpdate() > 0;
+                if (result4) {
+                    System.out.println("Data cambiata");
+                    result=true;
+                } else System.err.println("errore nel cambiare la data.");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return result;
+    }
+
     public boolean PrenotaSpiaggia(int id_prenotazione, Date data_inizio_prenotazione, Date data_fine_prenotazione, int num_fila_ombrellone, int id_ombrellone, int lettini, String email) {
         boolean result = false;
         boolean result2;
         boolean result3;
+        boolean result5=false;
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet2 = statement.executeQuery("SELECT data_inizio_prenotazione,data_fine_prenotazione,id_ombrellone last_id FROM prenotazionespiaggia WHERE data_inizio_prenotazione='" + data_inizio_prenotazione + "'AND data_fine_prenotazione='" + data_fine_prenotazione + "'AND id_ombrellone='" + id_ombrellone + "'AND'"+data_inizio_prenotazione+"' BETWEEN data_inizio_prenotazione AND data_fine_prenotazione OR '"+data_fine_prenotazione+"'BETWEEN data_inizio_prenotazione AND data_fine_pren");
+            /* ResultSet resultSet2 = statement.executeQuery("SELECT data_inizio_prenotazione,data_fine_prenotazione,id_ombrellone last_id FROM prenotazionespiaggia WHERE " +
+                    "data_inizio_prenotazione='" + data_inizio_prenotazione + "'AND data_fine_prenotazione='" + data_fine_prenotazione +
+                    "'AND id_ombrellone='" + id_ombrellone + "'AND'" + data_inizio_prenotazione + "'" +
+                    " BETWEEN data_inizio_prenotazione AND data_fine_prenotazione OR '" + data_fine_prenotazione +
+                    "'BETWEEN data_inizio_prenotazione AND data_fine_pren"); */
+            ResultSet resultSet2= statement.executeQuery("SELECT data_inizio_prenotazione,data_fine_prenotazione,id_ombrellone last_id FROM prenotazionespiaggia WHERE data_inizio_prenotazione='"+data_inizio_prenotazione+"'AND data_fine_prenotazione='"+data_fine_prenotazione+"' AND id_ombrellone='"+id_ombrellone+"'AND'"+data_inizio_prenotazione+"'BETWEEN data_inizio_prenotazione AND data_fine_prenotazione OR '"+data_fine_prenotazione+"'BETWEEN data_inizio_prenotazione AND data_fine_prenotazione");
             if (resultSet2.next()) {
                 do {
                     a = true;
@@ -161,7 +209,7 @@ public class PrenotazioneSpiaggiaConnector {
             } else a = false;
         } catch (Exception e) {
             // System.exit(0);
-           // System.err.println("errore check disponbilita");
+            // System.err.println("errore check disponbilita");
         }
         try {
             Statement statement = connection.createStatement();
@@ -185,9 +233,10 @@ public class PrenotazioneSpiaggiaConnector {
             preparedStatement.setInt(6, lettini);
             preparedStatement.setString(7, email);
 
-            result = preparedStatement.executeUpdate() > 0;
+            result5 = preparedStatement.executeUpdate() > 0;
 
-            if (result) {
+            if (result5) {
+                result=true;
                 boolean prova = aggiornaOmbrelloniCliente(email, id_ombrellone);
                 if (prova) System.out.println("Tabella Clienti aggiornata");
                 try {
@@ -231,11 +280,11 @@ public class PrenotazioneSpiaggiaConnector {
     public void getOmbrelloniOccupati(Date data_inizio, Date data_fine) {
         boolean result;
         int id_ombrellone = 0;
-        Date data_inizio_=null;
-        Date data_fine_=null;
+        Date data_inizio_ = null;
+        Date data_fine_ = null;
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT p.id_ombrellone,p.data_inizio_prenotazione,p.data_fine_prenotazione FROM ombrellone o JOIN prenotazionespiaggia p on o.id_ombrellone=p.id_ombrellone where'"+data_inizio+"' BETWEEN p.data_inizio_prenotazione AND p.data_fine_prenotazione OR '"+data_fine+"'BETWEEN p.data_inizio_prenotazione AND p.data_fine_prenotazione");
+            ResultSet resultSet = statement.executeQuery("SELECT p.id_ombrellone,p.data_inizio_prenotazione,p.data_fine_prenotazione FROM ombrellone o JOIN prenotazionespiaggia p on o.id_ombrellone=p.id_ombrellone where'" + data_inizio + "' BETWEEN p.data_inizio_prenotazione AND p.data_fine_prenotazione OR '" + data_fine + "'BETWEEN p.data_inizio_prenotazione AND p.data_fine_prenotazione");
             int lastordinazione = 0;
             while (resultSet.next()) {
                 id_ombrellone = resultSet.getInt("p.id_ombrellone");
@@ -246,8 +295,7 @@ public class PrenotazioneSpiaggiaConnector {
                 System.out.print("Data fine : " + data_fine_ + "; \t\n");
             }
         } catch (Exception e) {
-            System.out.println(e);
-        }
+            System.out.println(e);}
     }
 
 
