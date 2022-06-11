@@ -8,9 +8,9 @@ public interface IUtente {
 
     String getRuolo();
 
-    void setEmail(String email);
-
     void setRuolo(String ruolo);
+
+    void setEmail(String email);
 
     String getUsername();
 

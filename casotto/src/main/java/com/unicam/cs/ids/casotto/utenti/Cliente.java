@@ -23,11 +23,43 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class Cliente extends Utente implements ICliente {
+    private final String prodotti_ordinati = "";
+    private final ProdottiBarConnector cp = new ProdottiBarConnector();
+    private final OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
+    private final PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();
+    List<String> nomiprodotti = new ArrayList<>();
+    Date data_pagamento = Date.valueOf(LocalDate.now());
     private String nome;
     private String cognome;
     private String email;
     private int id_ombrellone = 0;
-    private final String prodotti_ordinati = "";
+    private String quantita_prodotti = " ";
+    private int id_ordinazione = 0;
+    private int a_number;
+
+    public Cliente(String nome, String cognome, String email, int id_ombrellone) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.id_ombrellone = id_ombrellone;
+    }
+
+
+    public Cliente(String nome, String cognome, String email) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+    }
+    public Cliente() {
+    }
+    public Cliente(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
+        super(email, username, password, ruolo, nome, cognome);
+
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.id_ombrellone = id_ombrellone;
+    }
 
     public List<String> getNomiprodotti() {
         return nomiprodotti;
@@ -37,8 +69,6 @@ public class Cliente extends Utente implements ICliente {
         this.nomiprodotti = nomiprodotti;
     }
 
-    List<String> nomiprodotti = new ArrayList<>();
-
     public String getQuantita_prodotti() {
         return quantita_prodotti;
     }
@@ -46,8 +76,6 @@ public class Cliente extends Utente implements ICliente {
     public void setQuantita_prodotti(String quantita_prodotti) {
         this.quantita_prodotti = quantita_prodotti;
     }
-
-    private String quantita_prodotti = " ";
 
     public int getId_ordinazione() {
         return id_ordinazione;
@@ -57,16 +85,6 @@ public class Cliente extends Utente implements ICliente {
         this.id_ordinazione = id_ordinazione;
     }
 
-    private int id_ordinazione = 0;
-
-
-    private final ProdottiBarConnector cp = new ProdottiBarConnector();
-    private final OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
-    private final PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();
-    Date data_pagamento = Date.valueOf(LocalDate.now());
-
-    private int a_number;
-
     public int getNumber() {
         return a_number;
     }
@@ -74,20 +92,6 @@ public class Cliente extends Utente implements ICliente {
     public void setNumber(int a_number) {
         this.a_number = a_number;
     }
-
-    public Cliente(String nome, String cognome, String email, int id_ombrellone) {
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-        this.id_ombrellone = id_ombrellone;
-    }
-
-    public Cliente(String nome, String cognome, String email) {
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-    }
-
 
     public boolean iscrizione_Attivita(String email) throws Exception {
         int id_attività = 0;
@@ -110,19 +114,6 @@ public class Cliente extends Utente implements ICliente {
         return true;
 
     }
-
-    public Cliente() {
-    }
-
-    public Cliente(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
-        super(email, username, password, ruolo, nome, cognome);
-
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-        this.id_ombrellone = id_ombrellone;
-    }
-
 
     public String getNome() {
         return nome;
@@ -159,6 +150,10 @@ public class Cliente extends Utente implements ICliente {
         return id_ombrellone;
     }
 
+    public void setId_ombrellone(int id_ombrellone) {
+        this.id_ombrellone = id_ombrellone;
+    }
+
     public int getId_ombrellone(String email) {
         ClienteConnector cliente = new ClienteConnector();
         Cliente cliente2;
@@ -167,18 +162,13 @@ public class Cliente extends Utente implements ICliente {
         return cliente2.getId_ombrellone();
     }
 
-    public void setId_ombrellone(int id_ombrellone) {
-        this.id_ombrellone = id_ombrellone;
-    }
-
-
     public void PrenotazioneOmbrellone(String email) throws Exception {
         this.id_ombrellone = cc.getOmbrellone(email);
         String scelta;
         String tipologia;
         int id_scontrino = 0;
         double prezzo = 0;
-        int lettini=0;
+        int lettini = 0;
         TariffaPrezzi tariffaPrezzi = new TariffaPrezzi();
         PrenotazioneSpiaggia prenotazione_spiaggia = new PrenotazioneSpiaggia();
         Scanner scanner = new Scanner(System.in);

@@ -7,16 +7,30 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class PrenotazioneSpiaggia {
+    private static int prenotazione_count = 0;
+    PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();
     private Date data_finePrenotazione;
     private Date data_inizioPrenotazione;
     private int num_fila_ombrellone;
     private int id_prenotazione;
     private int id_ombrellone;
-    private static int prenotazione_count = 0;
     private int lettini = 0;
     private String email = "";
     private double prezzo_Prenotazione;
-    PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();
+
+    public PrenotazioneSpiaggia(Date data_finePrenotazione, Date datainizioPrenotazione, int num_fila_ombrellone, int id_prenotazione) {
+        this.data_finePrenotazione = data_finePrenotazione;
+        this.data_inizioPrenotazione = datainizioPrenotazione;
+        this.num_fila_ombrellone = num_fila_ombrellone;
+        this.id_prenotazione = id_prenotazione;
+    }
+
+    public PrenotazioneSpiaggia() {
+        this.data_finePrenotazione = data_finePrenotazione;
+        this.data_inizioPrenotazione = data_inizioPrenotazione;
+        this.num_fila_ombrellone = num_fila_ombrellone;
+        this.id_prenotazione = id_prenotazione;
+    }
 
     public Date getData_inizioPrenotazione() {
         return data_inizioPrenotazione;
@@ -41,7 +55,6 @@ public class PrenotazioneSpiaggia {
     public void prezzo_Prenotazione(double prezzo_Prenotazione) {
         this.prezzo_Prenotazione = prezzo_Prenotazione;
     }
-
 
     public ArrayList<Lettino> getLettino() {
         throw new UnsupportedOperationException();
@@ -117,6 +130,10 @@ public class PrenotazioneSpiaggia {
         return addPren;
     }
 
+    /*
+    public void aggiornaPrezzo(int id_ombrellone, int num_fila_ombrellone, Date data_inizio, Date data_fine ){
+        throw new UnsupportedOperationException();
+    } */
 
     public void notificaAddettoSpiaggia(int num_fila_ombrellone, int num_lettini, int num_ombrelloni) {
         /*
@@ -129,12 +146,6 @@ public class PrenotazioneSpiaggia {
         throw new UnsupportedOperationException();
     }
 
-    /*
-    public void aggiornaPrezzo(int id_ombrellone, int num_fila_ombrellone, Date data_inizio, Date data_fine ){
-        throw new UnsupportedOperationException();
-    } */
-
-
     public void sceltaFasciaOraria(String fasciaOraria) {
         if (fasciaOraria.equals(FasciaOraria.MATTINA)) {
             fasciaOraria = "Mattina";
@@ -146,20 +157,6 @@ public class PrenotazioneSpiaggia {
             fasciaOraria = "Giornata Intera";
         }
         throw new UnsupportedOperationException();
-    }
-
-    public PrenotazioneSpiaggia(Date data_finePrenotazione, Date datainizioPrenotazione, int num_fila_ombrellone, int id_prenotazione) {
-        this.data_finePrenotazione = data_finePrenotazione;
-        this.data_inizioPrenotazione = datainizioPrenotazione;
-        this.num_fila_ombrellone = num_fila_ombrellone;
-        this.id_prenotazione = id_prenotazione;
-    }
-
-    public PrenotazioneSpiaggia() {
-        this.data_finePrenotazione = data_finePrenotazione;
-        this.data_inizioPrenotazione = data_inizioPrenotazione;
-        this.num_fila_ombrellone = num_fila_ombrellone;
-        this.id_prenotazione = id_prenotazione;
     }
 
     public Date getDatainizioPrenotazione() {

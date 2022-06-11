@@ -9,23 +9,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TariffaPrezzi {
+    public static final int PREZZO_LETTINO = 2;
+    public static final int PREZZO_OMBRELLONE_BASE = 4;
+    public static final int PREZZO_OMBRELLONE_PREMIUM = 6;
+    public static final int PREZZO_OMBRELLONE_VIP = 8;
+    public Ombrellone appartiene;
+    public ProdottiBar riferisce;
     private int num_fila_ombrellone;
     private FasciaOraria fasciaOraria;
     private double prezzoLettino;
     private double prezzoOmbrelloneMezzaGiornata;
     private double prezzoOmbrelloneGiornataIntera;
     private int id_prodotto;
-    public Ombrellone appartiene;
-    public ProdottiBar riferisce;
-    public static final int PREZZO_LETTINO = 2;
-    public static final int PREZZO_OMBRELLONE_BASE = 4;
-    public static final int PREZZO_OMBRELLONE_PREMIUM = 6;
-    public static final int PREZZO_OMBRELLONE_VIP = 8;
     private long num_giorni;
-
-    public void modificaPrezzo() {
-        throw new UnsupportedOperationException();
-    }
 
     public TariffaPrezzi() {
         this.num_fila_ombrellone = num_fila_ombrellone;
@@ -43,6 +39,10 @@ public class TariffaPrezzi {
         this.prezzoOmbrelloneMezzaGiornata = prezzoOmbrelloneMezzaGiornata;
         this.prezzoOmbrelloneGiornataIntera = prezzoOmbrelloneGiornataIntera;
         this.id_prodotto = id_prodotto;
+    }
+
+    public void modificaPrezzo() {
+        throw new UnsupportedOperationException();
     }
 
     public double Imposta_Prezzi_Spiaggia(FasciaOraria fasciaOraria, int num_fila_ombrellone, String data_inizio, String data_fine, int lettini) {

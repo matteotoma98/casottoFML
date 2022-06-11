@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProdottiBar {
+    private final int tempo_preparazione;
+    public PreparazioneOrdine utilizza;
+    public ArrayList<Gestore> gestisce = new ArrayList<Gestore>();
     private double prezzo;
     private int id_prodotto;
     private int quantita;
     private String nome_prodotto;
-    private final int tempo_preparazione;
-    public PreparazioneOrdine utilizza;
-    public ArrayList<Gestore> gestisce = new ArrayList<Gestore>();
 
     public ProdottiBar() {
         throw new UnsupportedOperationException();

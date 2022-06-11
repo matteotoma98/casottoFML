@@ -5,7 +5,6 @@ import com.unicam.cs.ids.casotto.serviziobar.OrdinazioneBar;
 import java.sql.Date;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -43,7 +42,7 @@ public class OrdinazioneBarConnector {
         ResultSet resultSet = null;
         try {
             Statement statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT id_ombrellone, id_prenotazione, timediff(data_fine_prenotazione,data_inizio_prenotazione) as diff FROM prenotazionespiaggia WHERE email='"+email+"'AND data_fine_prenotazione>=now() AND data_inizio_prenotazione<=now() GROUP BY id_ombrellone,id_prenotazione");
+            resultSet = statement.executeQuery("SELECT id_ombrellone, id_prenotazione, timediff(data_fine_prenotazione,data_inizio_prenotazione) as diff FROM prenotazionespiaggia WHERE email='" + email + "'AND data_fine_prenotazione>=now() AND data_inizio_prenotazione<=now() GROUP BY id_ombrellone,id_prenotazione");
             List<Integer> l = new ArrayList<>();
             while (resultSet.next()) {
                 System.out.println("Lista dei tuoi ombrelloni:\n" + resultSet.getInt("id_ombrellone"));

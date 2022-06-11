@@ -9,6 +9,10 @@ public class NotifyOrder implements IObserver {
     private final String name;
     private final List<IObserver> observers = new ArrayList<>();
 
+    public NotifyOrder(String OrderName) {
+        name = OrderName;
+    }
+
     @Override
     public void register(IObserver o) {
         observers.add(o);
@@ -26,10 +30,6 @@ public class NotifyOrder implements IObserver {
             // observer.notifyAddettoSpiaggiaOmbrellone();
             //  observer.notifyAddettobar();
         }
-    }
-
-    public NotifyOrder(String OrderName) {
-        name = OrderName;
     }
 
     public void update() {

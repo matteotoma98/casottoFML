@@ -6,9 +6,24 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Attivita {
+    public int id_attivita;
+    public ArrayList<PrenotazioneAttivita> coinvolge = new ArrayList<PrenotazioneAttivita>();
     private String nome_attivita;
     private int num_posti;
     private Attrezzatura attrezzatura;
+    private Date data_inizio_attivita;
+    private Date data_fine_attivita;
+    public Attivita() {
+
+    }
+    public Attivita(String nome_attivita, int num_posti, Attrezzatura attrezzatura) {
+        this.nome_attivita = nome_attivita;
+        this.num_posti = num_posti;
+        this.attrezzatura = attrezzatura;
+        attrezzatura.getNomeAttrezzatura();
+        attrezzatura.getQuantita();
+        //return nome_attivita;
+    }
 
     public int getId_attivita() {
         return id_attivita;
@@ -17,11 +32,6 @@ public class Attivita {
     public void setId_attivita(int id_attivita) {
         this.id_attivita = id_attivita;
     }
-
-    public int id_attivita;
-    private Date data_inizio_attivita;
-    private Date data_fine_attivita;
-    public ArrayList<PrenotazioneAttivita> coinvolge = new ArrayList<PrenotazioneAttivita>();
 
     public void Attrezzatura(String Nome, int Quantita) {
         throw new UnsupportedOperationException();
@@ -32,25 +42,12 @@ public class Attivita {
         attivitaConnector.getAttivita();
     }
 
-    public Attivita() {
-
-    }
-
     public boolean addPrenotazioneAttivita(String email, int id, int num_posti) {
 
         AttivitaConnector attivitaConnector = new AttivitaConnector();
         attivitaConnector.addPrenotazione(email, id, num_posti);
 
         return false;
-    }
-
-    public Attivita(String nome_attivita, int num_posti, Attrezzatura attrezzatura) {
-        this.nome_attivita = nome_attivita;
-        this.num_posti = num_posti;
-        this.attrezzatura = attrezzatura;
-        attrezzatura.getNomeAttrezzatura();
-        attrezzatura.getQuantita();
-        //return nome_attivita;
     }
 
     public void setNome_attivita(String nome_attivita) {

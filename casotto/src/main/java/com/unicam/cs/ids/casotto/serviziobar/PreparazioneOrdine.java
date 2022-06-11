@@ -6,12 +6,18 @@ import com.unicam.cs.ids.casotto.utilities.Scontrino;
 import java.util.ArrayList;
 
 public class PreparazioneOrdine {
-    private boolean ordinePronto;
-    private ArrayList<Scontrino> scontrini;
-    private int id_ordinazione;
     public ArrayList<ProdottiBar> utilizza = new ArrayList<ProdottiBar>();
     public AddettoBar prepara;
     public ArrayList<AddettoSpiaggia> consegna = new ArrayList<AddettoSpiaggia>();
+    private boolean ordinePronto;
+    private ArrayList<Scontrino> scontrini;
+    private int id_ordinazione;
+
+    public PreparazioneOrdine(boolean ordinePronto, ArrayList<Scontrino> scontrini, int id_ordinazione) {
+        this.ordinePronto = ordinePronto;
+        this.scontrini = scontrini;
+        this.id_ordinazione = id_ordinazione;
+    }
 
     public boolean StampaScontrino() {
         throw new UnsupportedOperationException();
@@ -27,12 +33,6 @@ public class PreparazioneOrdine {
 
     public void aggiornaTotale(double prezzo) {
         throw new UnsupportedOperationException();
-    }
-
-    public PreparazioneOrdine(boolean ordinePronto, ArrayList<Scontrino> scontrini, int id_ordinazione) {
-        this.ordinePronto = ordinePronto;
-        this.scontrini = scontrini;
-        this.id_ordinazione = id_ordinazione;
     }
 
     public boolean isOrdinePronto() {

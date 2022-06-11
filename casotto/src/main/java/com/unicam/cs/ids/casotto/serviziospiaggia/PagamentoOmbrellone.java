@@ -7,13 +7,13 @@ import java.util.Date;
 
 public class PagamentoOmbrellone {
 
+    public OrdinazioneBar ordinazioneBar;
+    //  public Prenotazione_Spiaggia prenotazioneSpiaggia;
+    public String dati_carta;
     private String tipologia_pagamento;
     private int id_prenotazione;
     private int id_ombrellone;
     private Date data_pagamento;
-    public OrdinazioneBar ordinazioneBar;
-    //  public Prenotazione_Spiaggia prenotazioneSpiaggia;
-    public String dati_carta;
 
     public String toString() {
         throw new UnsupportedOperationException();

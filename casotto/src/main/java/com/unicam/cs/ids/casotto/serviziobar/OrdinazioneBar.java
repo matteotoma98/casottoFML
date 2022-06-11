@@ -7,22 +7,13 @@ import java.util.Map;
 
 
 public class OrdinazioneBar {
+    private static int id_ordinazione;
+    public Cliente c;
     private Date data_ordinazione;
     private int quantita;
-    private static int id_ordinazione;
     private int id_ombrellone;
     private int id_prodotto;
     private Map<Integer, Integer> lista_prodotti;
-    public Cliente c;
-
-    public void ordinazione_Prodotto(int idProdotto, int quantita) {
-    }
-
-    public int incremento(int id_ordinazione) {
-
-        OrdinazioneBar.id_ordinazione = id_ordinazione + 1;
-        return OrdinazioneBar.id_ordinazione;
-    }
 
     public OrdinazioneBar() {
 
@@ -34,6 +25,15 @@ public class OrdinazioneBar {
         OrdinazioneBar.id_ordinazione = incremento(id_ordinazione);
         this.id_ombrellone = id_ombrellone;
         this.lista_prodotti = lista_prodotti;
+    }
+
+    public void ordinazione_Prodotto(int idProdotto, int quantita) {
+    }
+
+    public int incremento(int id_ordinazione) {
+
+        OrdinazioneBar.id_ordinazione = id_ordinazione + 1;
+        return OrdinazioneBar.id_ordinazione;
     }
 
     public int getId_prodotto() {

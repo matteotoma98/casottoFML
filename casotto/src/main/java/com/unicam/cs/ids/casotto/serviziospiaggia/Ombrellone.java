@@ -8,17 +8,13 @@ import java.util.Date;
 
 public class Ombrellone {
     public int id_ombrellone;
+    public PrenotazioneSpiaggia riserva;
+    public ArrayList<TariffaPrezzi> appartiene = new ArrayList<TariffaPrezzi>();
     private double prezzo;
     private TariffaPrezzi tariffaPrezzi;
     private Tipologia tipologia;
     private int num_fila_ombrellone;
-    public PrenotazioneSpiaggia riserva;
-    public ArrayList<TariffaPrezzi> appartiene = new ArrayList<TariffaPrezzi>();
 
-
-    public void getTariffaPrezzi(Object aData_InizioPrenotazione, Object aData_finePrenotazione) {
-        throw new UnsupportedOperationException();
-    }
 
     public Ombrellone() {
         this.id_ombrellone = id_ombrellone;
@@ -35,6 +31,10 @@ public class Ombrellone {
         this.tariffaPrezzi = tariffaPrezzi;
         this.tipologia = Tipologia.valueOf(tipologia);
         this.num_fila_ombrellone = num_fila_ombrellone;
+    }
+
+    public void getTariffaPrezzi(Object aData_InizioPrenotazione, Object aData_finePrenotazione) {
+        throw new UnsupportedOperationException();
     }
 
     public int getId_ombrellone() {

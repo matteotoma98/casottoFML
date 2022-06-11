@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddettoSpiaggia extends Utente {
+    public ArrayList<PreparazioneOrdine> consegna = new ArrayList<PreparazioneOrdine>();
+    Ombrellone ombrellone = new Ombrellone();
     private int id_addspiaggia;
     private String email;
     private String nome;
     private String cognome;
-    public ArrayList<PreparazioneOrdine> consegna = new ArrayList<PreparazioneOrdine>();
 
     public AddettoSpiaggia(String username, String password, String ruolo, int id_addspiaggia, String email, String nome, String cognome, int id_ombrellone) {
         super(username, password, ruolo, email, nome, cognome);
@@ -28,8 +29,6 @@ public class AddettoSpiaggia extends Utente {
     public void consegnaProdottoBar() {
 
     }
-
-    Ombrellone ombrellone = new Ombrellone();
 
     public void liberaOmbrellone() {
         PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();

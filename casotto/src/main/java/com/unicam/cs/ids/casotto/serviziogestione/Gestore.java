@@ -15,6 +15,18 @@ public class Gestore extends Utente {
     private String email;
 
 
+    public Gestore(String username, String password, String ruolo, String nome, String cognome, String email,
+                   int id_ombrellone) {
+        super(username, password, email, ruolo, nome, cognome);
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+    }
+
+    public Gestore() {
+
+    }
+
     public void cambiaRuolo() {
 
         //get Utenti
@@ -528,19 +540,6 @@ public class Gestore extends Utente {
             risultato = ac.addAttivita(nomeAttivita, nome_attrezzatura, quantita_attrezzatura);
         }
         while (!risultato);
-    }
-
-
-    public Gestore(String username, String password, String ruolo, String nome, String cognome, String email,
-                   int id_ombrellone) {
-        super(username, password, email, ruolo, nome, cognome);
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-    }
-
-    public Gestore() {
-
     }
 
     public String getNome() {

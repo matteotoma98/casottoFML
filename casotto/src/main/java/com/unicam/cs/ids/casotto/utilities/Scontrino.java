@@ -7,12 +7,19 @@ import java.util.Date;
 
 public class Scontrino {
 
+    ScontrinoConnector scontrinoConnector = new ScontrinoConnector();
     private int id_scontrino;
     private Date data_scontrino;
     private Ombrellone ombrellone;
     private double prezzo_totale;
     private int id_ombrellone = 0;
-    ScontrinoConnector scontrinoConnector = new ScontrinoConnector();
+
+    public Scontrino(int id_scontrino, Date data_scontrino, int id_ombrellone, double prezzo_totale) {
+        this.id_scontrino = id_scontrino;
+        this.data_scontrino = data_scontrino;
+        this.id_ombrellone = id_ombrellone;
+        this.prezzo_totale = prezzo_totale;
+    }
 
     @Override
     public String toString() {
@@ -22,14 +29,6 @@ public class Scontrino {
                 ", id_ombrellone=" + id_ombrellone +
                 ", prezzo_totale=" + prezzo_totale +
                 '}';
-    }
-
-
-    public Scontrino(int id_scontrino, Date data_scontrino, int id_ombrellone, double prezzo_totale) {
-        this.id_scontrino = id_scontrino;
-        this.data_scontrino = data_scontrino;
-        this.id_ombrellone = id_ombrellone;
-        this.prezzo_totale = prezzo_totale;
     }
 
     public int getId_ombrellone() {

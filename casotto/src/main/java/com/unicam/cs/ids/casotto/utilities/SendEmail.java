@@ -10,7 +10,8 @@ import java.util.logging.Logger;
 
 public class SendEmail {
 
-    public static void sendMail(String recipient) throws Exception {
+    public static boolean sendMail(String recipient) throws Exception {
+        boolean inviata = false;
         Properties properties = new Properties();
         properties.put("mail.smtp.starttls.enable", "true");
         properties.setProperty("mail.transport.protocol", "smtp");
@@ -32,7 +33,9 @@ public class SendEmail {
         });
         Message message = prepareMessage(session, myAccountEmail, recipient);
         Transport.send(message);
-        System.out.println("Messaggio inviato correttamente");
+        inviata = true;
+        // System.out.println("Email inviate correttamente");
+        return inviata;
     }
 
     private static Message prepareMessage(Session session, String myAccountEmail, String recipient) {
@@ -41,7 +44,7 @@ public class SendEmail {
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
             message.setSubject("CasottoFML™");
-            message.setText("Ciao " + myAccountEmail + " , ci sono delle nuove attività allo chalet CasottoFML™,  \n effettua il Login per dare un'occhiata e prenotarti!");
+            message.setText("Ciao " + myAccountEmail + ", un'attività a cui sei iscritto presso lo chalet CasottoFML™ è stata aggiornata,  \n effettua il Login per dare un'occhiata e prenotarti!");
             return message;
         } catch (Exception ex) {
             Logger.getLogger(SendEmail.class.getName()).log(Level.SEVERE, null, ex);

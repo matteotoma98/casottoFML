@@ -12,6 +12,8 @@ import com.unicam.cs.ids.casotto.serviziospiaggia.AddettoSpiaggia;
 import java.util.Scanner;
 
 public class Utente implements IUtente {
+    ClienteConnector cc = new ClienteConnector();
+    UtenteConnector uc = new UtenteConnector();
     private String username;
     private String password;
     private String email;
@@ -19,8 +21,6 @@ public class Utente implements IUtente {
     private String nome;
     private String cognome;
     private Cliente cliente1;
-    ClienteConnector cc = new ClienteConnector();
-    UtenteConnector uc = new UtenteConnector();
 
     public Utente(String username, String password, String ruolo, String email, String nome, String cognome) {
         this.username = username;

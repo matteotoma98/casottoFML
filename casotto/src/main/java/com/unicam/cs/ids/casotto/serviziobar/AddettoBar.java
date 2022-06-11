@@ -5,11 +5,11 @@ import com.unicam.cs.ids.casotto.utenti.Utente;
 import java.util.ArrayList;
 
 public class AddettoBar extends Utente {
+    public ArrayList<PreparazioneOrdine> prepara = new ArrayList<PreparazioneOrdine>();
     private int id_addbar;
     private String email;
     private String nome;
     private String cognome;
-    public ArrayList<PreparazioneOrdine> prepara = new ArrayList<PreparazioneOrdine>();
 
 
     public AddettoBar(String username, String password, String ruolo, int id_addbar, String email, String nome, String cognome) {

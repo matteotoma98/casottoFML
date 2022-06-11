@@ -4,6 +4,11 @@ public class Attrezzatura {
     private String nomeAttrezzatura;
     private int quantita;
 
+    public Attrezzatura(String nAttr, int q) {
+        this.nomeAttrezzatura = nAttr;
+        this.quantita = q;
+    }
+
     public String getNomeAttrezzatura() {
         return nomeAttrezzatura;
     }
@@ -18,11 +23,6 @@ public class Attrezzatura {
 
     public void setQuantita(int quantita) {
         this.quantita = quantita;
-    }
-
-    public Attrezzatura(String nAttr, int q) {
-        this.nomeAttrezzatura = nAttr;
-        this.quantita = q;
     }
 
 

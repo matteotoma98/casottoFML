@@ -6,14 +6,13 @@ import com.unicam.cs.ids.casotto.utilities.NotifyOrder;
 import java.util.Date;
 
 public class PagamentoBar {
+    public OrdinazioneBar ordinazioneBar;
+    //  public Prenotazione_Spiaggia prenotazioneSpiaggia;
+    public String dati_carta;
     private String tipologia_pagamento;
     private int id_ordinazione;
     private int id_ombrellone;
     private Date data_pagamento;
-    public OrdinazioneBar ordinazioneBar;
-    //  public Prenotazione_Spiaggia prenotazioneSpiaggia;
-    public String dati_carta;
-
 
     public String toString() {
         throw new UnsupportedOperationException();
