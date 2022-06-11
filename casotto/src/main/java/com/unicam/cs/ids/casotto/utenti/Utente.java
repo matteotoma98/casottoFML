@@ -229,6 +229,7 @@ public class Utente implements IUtente {
             scelta = scanner.nextInt();
             if (scelta < 0 || scelta > 8) {
                 System.err.println("Numero inserito non valido.");
+                System.out.println("Reinserisci il numero.");
             }
             switch (scelta) {
                 case 1:
@@ -289,9 +290,6 @@ public class Utente implements IUtente {
         }
         while (scelta != 0);
     }
-
-    //TODO riceve email da addetto al bar quando l'ordine è pronto e poi lo porta all'ombrellone del cliente e si fa pagare
-
 
     public void menu_cliente(String email) throws Exception {
         int scelta;

@@ -79,13 +79,13 @@ public class TariffaPrezzi {
         SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
         Date dfrom = null;
         try {
-            dfrom = format.parse(data_inizio.toString());
+            dfrom = format.parse(data_inizio);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         Date dto = null;
         try {
-            dto = format.parse(data_fine.toString());
+            dto = format.parse(data_fine);
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -20,8 +20,8 @@ public class OrdinazioneBar {
 
     public int incremento(int id_ordinazione) {
 
-        this.id_ordinazione = id_ordinazione + 1;
-        return this.id_ordinazione;
+        OrdinazioneBar.id_ordinazione = id_ordinazione + 1;
+        return OrdinazioneBar.id_ordinazione;
     }
 
     public OrdinazioneBar() {
@@ -31,7 +31,7 @@ public class OrdinazioneBar {
     public OrdinazioneBar(Date data_ordinazione, int quantita, int id_ordinazione, int id_ombrellone, Map<Integer, Integer> lista_prodotti) {
         this.data_ordinazione = data_ordinazione;
         this.quantita = quantita;
-        this.id_ordinazione = incremento(id_ordinazione);
+        OrdinazioneBar.id_ordinazione = incremento(id_ordinazione);
         this.id_ombrellone = id_ombrellone;
         this.lista_prodotti = lista_prodotti;
     }
@@ -74,7 +74,7 @@ public class OrdinazioneBar {
     }
 
     public int setId_ordinazione(int id_ordinazione) {
-        this.id_ordinazione = id_ordinazione;
+        OrdinazioneBar.id_ordinazione = id_ordinazione;
         return id_ordinazione;
     }
 

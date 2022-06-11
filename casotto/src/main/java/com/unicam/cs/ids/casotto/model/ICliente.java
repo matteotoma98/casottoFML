@@ -6,9 +6,9 @@ public interface ICliente {
 
     void ordinazioneBar(String email) throws Exception;
 
-    public void cancellazionePrenotazioneOmbrellone(String email) throws Exception;
+    void cancellazionePrenotazioneOmbrellone(String email) throws Exception;
 
-    public boolean iscrizione_Attivita(String email) throws Exception;
+    boolean iscrizione_Attivita(String email) throws Exception;
 
-    public void registrazione(String email, String username, String password);
+    void registrazione(String email, String username, String password);
 }

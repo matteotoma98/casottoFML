@@ -94,7 +94,7 @@ public class ProdottiBarConnector {
         int max = 0;
         result2 = connection.createStatement().executeQuery("SELECT MAX(id_prodotto) FROM prodottibar");
         if (result2.next()) {
-            System.out.println("");
+            System.out.println();
             max = result2.getInt(1);
         }
         return max;

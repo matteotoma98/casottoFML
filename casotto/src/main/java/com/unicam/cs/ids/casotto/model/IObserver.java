@@ -4,17 +4,17 @@ import java.util.List;
 
 public interface IObserver {
 
-    public void register(IObserver o);
+    void register(IObserver o);
 
-    public void unregister(IObserver o);
+    void unregister(IObserver o);
 
-    public void notifyObservers();
+    void notifyObservers();
 
-    public void update();
+    void update();
 
-    public void notifyAddettoSpiaggiaOmbrellone(String emailcliente, String emailaddetto, int id_ombrellone);
+    void notifyAddettoSpiaggiaOmbrellone(String emailcliente, String emailaddetto, int id_ombrellone);
 
-    public void notifyAddettobar(String emailcliente, List<String> prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti);
+    void notifyAddettobar(String emailcliente, List<String> prodotti, int id_ordine, int id_ombrellone, String quantita_prodotti);
 
-    public void updateCliente(String email);
+    void updateCliente(String email);
 }

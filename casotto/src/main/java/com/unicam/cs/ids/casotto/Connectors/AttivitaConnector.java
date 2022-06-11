@@ -151,7 +151,7 @@ public class AttivitaConnector {
                 System.out.print(result.getTimestamp("data_inizio_attivita") + ", data fine attività: ");
                 System.out.print(result.getTimestamp("data_fine_attivita") + " , numero posti disponibili: ");
                 System.out.print(result.getInt("num_posti"));
-                System.out.println("");
+                System.out.println();
             }
               /*ResultSet resultSet = statement.executeQuery("select * from chalet ");
             while (resultSet.next()) {

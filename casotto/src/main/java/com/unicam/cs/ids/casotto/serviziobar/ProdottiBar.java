@@ -11,7 +11,7 @@ public class ProdottiBar {
     private int id_prodotto;
     private int quantita;
     private String nome_prodotto;
-    private int tempo_preparazione;
+    private final int tempo_preparazione;
     public PreparazioneOrdine utilizza;
     public ArrayList<Gestore> gestisce = new ArrayList<Gestore>();
 

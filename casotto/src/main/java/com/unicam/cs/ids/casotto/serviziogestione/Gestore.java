@@ -89,17 +89,21 @@ public class Gestore extends Utente {
         ProdottiBarConnector prodottiBarConnector = new ProdottiBarConnector();
         TariffaPrezziConnector tariffaPrezziConnector = new TariffaPrezziConnector();
         do {
-            System.out.println("Scegli cosa vuoi fare: ");
-            System.out.println("1: Cambia il prezzo degli ombrelloni per tutta la fila ");
-            System.out.println("2: Cambia il prezzo di un singolo ombrellone ");
-            System.out.println("3: Cambia il costo degli ombrelloni per la mezza giornata e la giornata intera");
-            System.out.println("4: Cambia il prezzo dei lettini");
-            System.out.println("5: Cambia il prezzo dei prodotti del bar");
-            System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
-            scelta = scanner.nextInt();
-            if (scelta < 0 || scelta > 5)
-                throw new IllegalArgumentException("Scelta non valida");
+            do {
+                System.out.println("Scegli cosa vuoi fare: ");
+                System.out.println("1: Cambia il prezzo degli ombrelloni per tutta la fila ");
+                System.out.println("2: Cambia il prezzo di un singolo ombrellone ");
+                System.out.println("3: Cambia il costo degli ombrelloni per la mezza giornata e la giornata intera");
+                System.out.println("4: Cambia il prezzo dei lettini");
+                System.out.println("5: Cambia il prezzo dei prodotti del bar");
+                System.out.println("0: Esci ");
+                scelta = scanner.nextInt();
+                if (scelta < 0 || scelta > 5) {
+                    System.err.println("Scelta non valida");
+                    System.out.println("Reinserici un numero corretto.");
+                }
+            } while (scelta < 0 || scelta > 5);
             switch (scelta) {
                 case 1:
                     do {
@@ -246,19 +250,20 @@ public class Gestore extends Utente {
         ChaletConnector chaletConnector = new ChaletConnector();
         OmbrelloneConnector ombrelloneConnector = new OmbrelloneConnector();
         do {
-            System.out.println("Scegli cosa vuoi fare: ");
-            System.out.println("1: Cambia il numero degli ombrelloni totali dello chalet ");
-            System.out.println("2: Cambia il numero dei lettini totali dello chalet ");
-            System.out.println("3: Aggiungi un ombrellone ");
-            System.out.println("4: Rimuovi un ombrellone ");
-            System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
-            scelta = scanner.nextInt();
-            if (scelta < 0 || scelta > 4) {
-                System.err.println("Scelta non valida");
-                OpenApp o = new OpenApp();
-                o.Open();
-            }
+            do {
+                System.out.println("Scegli cosa vuoi fare: ");
+                System.out.println("1: Cambia il numero degli ombrelloni totali dello chalet ");
+                System.out.println("2: Cambia il numero dei lettini totali dello chalet ");
+                System.out.println("3: Aggiungi un ombrellone ");
+                System.out.println("4: Rimuovi un ombrellone ");
+                System.out.println("0: Esci ");
+                scelta = scanner.nextInt();
+                if (scelta < 0 || scelta > 4) {
+                    System.err.println("Scelta non valida");
+                    System.out.println("Reinserici un numero corretto.");
+                }
+            } while (scelta < 0 || scelta > 4);
             switch (scelta) {
                 case 1:
                     do {
@@ -349,14 +354,18 @@ public class Gestore extends Utente {
 
         ProdottiBarConnector prodottiBarConnector = new ProdottiBarConnector();
         do {
-            System.out.println("Scegli cosa vuoi fare: ");
-            System.out.println("1: Aggiungi prodotti dal bar ");
-            System.out.println("2: Elimina prodotti dal bar ");
-            System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
-            scelta = scanner.nextInt();
-            if (scelta < 0 || scelta > 2)
-                throw new IllegalArgumentException("Scelta non valida");
+            do {
+                System.out.println("Scegli cosa vuoi fare: ");
+                System.out.println("1: Aggiungi prodotti dal bar ");
+                System.out.println("2: Elimina prodotti dal bar ");
+                System.out.println("0: Esci ");
+                scelta = scanner.nextInt();
+                if (scelta < 0 || scelta > 2) {
+                    System.err.println("Scelta non valida");
+                    System.out.println("Reinserici un numero corretto.");
+                }
+            } while (scelta < 0 || scelta > 2);
             switch (scelta) {
                 case 1:
                     do {
@@ -465,7 +474,7 @@ public class Gestore extends Utente {
         do {
             AttrezzaturaConnector at = new AttrezzaturaConnector();
             at.getAttrezzatura();
-            System.out.println("Inserisci il nome dell'attrezzatura di cui modificare la quantità");
+            System.out.println("Inserisci il nome dell'attrezzatura di cui modificare la quantità:");
             boolean containsDigit2;
             nome_attrezzatura = scanner.next();
             System.out.println("Inserisci la quantità dell'attrezzatura:");

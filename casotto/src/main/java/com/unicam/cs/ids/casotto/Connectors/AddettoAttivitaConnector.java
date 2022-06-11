@@ -44,7 +44,7 @@ public class AddettoAttivitaConnector {
             result = connection.createStatement().executeQuery("SELECT email FROM prenotazioneattivita WHERE id_attivita='" + id_attivita + "'");
             while (result.next()) {
                 SendEmail sendEmail = new SendEmail();
-                sendEmail.sendMail(result.getString("email"));
+                SendEmail.sendMail(result.getString("email"));
                 System.out.print(result.getString("email") + "\n");
             }
         } catch (Exception e) {

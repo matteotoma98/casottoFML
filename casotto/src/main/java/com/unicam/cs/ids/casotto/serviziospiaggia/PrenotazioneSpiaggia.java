@@ -80,7 +80,7 @@ public class PrenotazioneSpiaggia {
     public int incremento_prenotazione() {
         //resetCounter();
         // this.prenotazione_count++;
-        return this.prenotazione_count++;
+        return prenotazione_count++;
     }
 
     /*

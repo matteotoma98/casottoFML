@@ -1,11 +1,11 @@
 package com.unicam.cs.ids.casotto.Connectors;
 
-import com.unicam.cs.ids.casotto.OpenApp;
 import com.unicam.cs.ids.casotto.serviziobar.OrdinazioneBar;
 
 import java.sql.Date;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -43,19 +43,22 @@ public class OrdinazioneBarConnector {
         ResultSet resultSet = null;
         try {
             Statement statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT id_ombrellone FROM cliente WHERE email='" + email + "'");
+            resultSet = statement.executeQuery("SELECT id_ombrellone, id_prenotazione, timediff(data_fine_prenotazione,data_inizio_prenotazione) as diff FROM prenotazionespiaggia WHERE email='"+email+"'AND data_fine_prenotazione>=now() AND data_inizio_prenotazione<=now() GROUP BY id_ombrellone,id_prenotazione");
             List<Integer> l = new ArrayList<>();
             while (resultSet.next()) {
                 System.out.println("Lista dei tuoi ombrelloni:\n" + resultSet.getInt("id_ombrellone"));
                 l.add(resultSet.getInt("id_ombrellone"));
             }
-            int id_ombrellone = scanner2.nextInt();
-            this.id_ombrellone = id_ombrellone;
-            if (!l.contains(id_ombrellone)) {
-                System.err.println("Errore: Hai immesso un id dell'ombrellone errato.");
-                OpenApp o = new OpenApp();
-                o.Open();
-            } else return resultSet;
+            //LocalDate.now();
+            do {
+                int id_ombrellone = scanner2.nextInt();
+                this.id_ombrellone = id_ombrellone;
+                if (!l.contains(id_ombrellone)) {
+                    System.err.println("Errore: Hai immesso un id dell'ombrellone errato.");
+                    System.out.println("Reinserisci il tuo id dell'ombrellone");
+                }
+            } while (!l.contains(id_ombrellone));
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -109,14 +112,14 @@ public class OrdinazioneBarConnector {
 
             for (Map.Entry<Integer, Integer> entry : ordinazione_bar.getLista_prodotti().entrySet()) {
                 if (entry.getKey() != last_element)
-                    sb.append(entry.getKey() != null ? entry.getKey().toString() + "," : "");
+                    sb.append(entry.getKey() != null ? entry.getKey() + "," : "");
 
                 else
                     sb.append(entry.getKey() != null ? entry.getKey().toString() : "");
             }
             for (Map.Entry<Integer, Integer> entry : ordinazione_bar.getLista_prodotti().entrySet()) {
                 if (entry.getKey() != last_element)
-                    sb2.append(entry.getValue() != null ? entry.getValue().toString() + "," : "");
+                    sb2.append(entry.getValue() != null ? entry.getValue() + "," : "");
                 else
                     sb2.append(entry.getValue() != null ? entry.getValue().toString() : "");
             }

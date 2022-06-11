@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotifyOrder implements IObserver {
-    private String name;
-    private List<IObserver> observers = new ArrayList<>();
+    private final String name;
+    private final List<IObserver> observers = new ArrayList<>();
 
     @Override
     public void register(IObserver o) {

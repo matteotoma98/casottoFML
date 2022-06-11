@@ -82,12 +82,17 @@ public class AttrezzaturaConnector {
 
     }
 
+
     public boolean modificaAttrezzatura(String nome_attrezzatura, int quantita_attrezzatura) {
         boolean result = false;
         ResultSet result2;
         boolean risultato = false;
         boolean attr_trovata = false;
+        ResultSet result3 = null;
         String nome_attr = "";
+        int totale_attrezzatura_usata = 0;
+        int quantita = 0;
+        boolean correct = false;
         try {
             result2 = connection.createStatement().executeQuery("SELECT nome_attrezzatura FROM attrezzatura WHERE nome_attrezzatura='" + nome_attrezzatura + "'");
 
@@ -101,19 +106,31 @@ public class AttrezzaturaConnector {
                 } while (result2.next());
             }
 
-
             try {
                 if (attr_trovata) {
                     try {
-                        PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE attrezzatura set quantita='" + quantita_attrezzatura + "'WHERE nome_attrezzatura='" + nome_attrezzatura + "'"); //"'WHERE num_posti>=0 );
-                        result = preparedStatement3.executeUpdate() > 0;
-                        if (result) {
-                            System.out.println("Quantità relativa all'attrezzatura " + nome_attrezzatura + " aggiornata.");
-                            risultato = true;
+                        result3 = connection.createStatement().executeQuery("SELECT attr.quantita, SUM(att.quantita) as totale_attr FROM attrezzatura attr JOIN attivita att ON attr.nome_attrezzatura=att.nome_attrezzatura GROUP BY attr.quantita");
+                        while (result3.next()) {
+                            totale_attrezzatura_usata = result3.getInt("totale_attr");
+                            quantita = result3.getInt("attr.quantita");
                         }
+                        if (quantita <= totale_attrezzatura_usata) {
+                            System.err.println("L'attrezzatura immessa è minore di quella necessaria alle attività presenti nello chalet.");
+                        } else correct = true;
                     } catch (Exception e) {
                         System.out.println(e);
                     }
+                    if (correct)
+                        try {
+                            PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE attrezzatura set quantita='" + quantita_attrezzatura + "'WHERE nome_attrezzatura='" + nome_attrezzatura + "'"); //"'WHERE num_posti>=0 );
+                            result = preparedStatement3.executeUpdate() > 0;
+                            if (result) {
+                                System.out.println("Quantità relativa all'attrezzatura " + nome_attrezzatura + " aggiornata.");
+                                risultato = true;
+                            }
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
                 }
             } catch (Exception e) {
                 System.out.println(e);

@@ -27,7 +27,7 @@ public class Cliente extends Utente implements ICliente {
     private String cognome;
     private String email;
     private int id_ombrellone = 0;
-    private String prodotti_ordinati = "";
+    private final String prodotti_ordinati = "";
 
     public List<String> getNomiprodotti() {
         return nomiprodotti;
@@ -60,9 +60,9 @@ public class Cliente extends Utente implements ICliente {
     private int id_ordinazione = 0;
 
 
-    private ProdottiBarConnector cp = new ProdottiBarConnector();
-    private OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
-    private PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();
+    private final ProdottiBarConnector cp = new ProdottiBarConnector();
+    private final OrdinazioneBarConnector obc = new OrdinazioneBarConnector();
+    private final PrenotazioneSpiaggiaConnector prenotazioneSpiaggiaConnector = new PrenotazioneSpiaggiaConnector();
     Date data_pagamento = Date.valueOf(LocalDate.now());
 
     private int a_number;
@@ -178,6 +178,7 @@ public class Cliente extends Utente implements ICliente {
         String tipologia;
         int id_scontrino = 0;
         double prezzo = 0;
+        int lettini=0;
         TariffaPrezzi tariffaPrezzi = new TariffaPrezzi();
         PrenotazioneSpiaggia prenotazione_spiaggia = new PrenotazioneSpiaggia();
         Scanner scanner = new Scanner(System.in);
@@ -248,14 +249,12 @@ public class Cliente extends Utente implements ICliente {
         boolean result = om2.checkOmbrellone(fila, id);
         if (result)
             om.setId_ombrellone(id);
-        System.out.println("Inserisci la quantità di lettini che vuoi prenotare:");
-        int lettini = scanner.nextInt();
-
-        if (lettini > 4 || lettini < 0) {
-            System.err.println("Errore! Hai immesso un numero di lettini non valido");
-            OpenApp o = new OpenApp();
-            o.Open();
-        }
+        do {
+            System.out.println("Inserisci la quantità di lettini che vuoi prenotare:");
+            lettini = scanner.nextInt();
+            if (lettini > 4 || lettini < 0)
+                System.err.println("Errore! Hai immesso un numero di lettini non valido");
+        } while (lettini > 4 || lettini < 0);
         prezzo = prezzo + tariffaPrezzi.Imposta_Prezzi_Spiaggia(FasciaOraria.valueOf(fasciaOraria), fila, date_start, date_end, lettini);
 
         //  System.out.println("Totale:" + totale);
@@ -279,7 +278,7 @@ public class Cliente extends Utente implements ICliente {
                 if (prenotato) {
                     PagamentoOmbrellone po = new PagamentoOmbrellone();
                     po.sceltaMetodo(tipologia, prenotazioneSpiaggiaConnector.last_prenotazione(id_ombrellone), id, data_pagamento);
-                    prenotazioneSpiaggiaConnector.changeDate(start_date,end_date, id_ombrellone, fasciaOraria);
+                    prenotazioneSpiaggiaConnector.changeDate(start_date, end_date, id_ombrellone, fasciaOraria);
                 } else {
                     System.err.println("errore nel prenotare");
                     OpenApp openApp = new OpenApp();
@@ -316,7 +315,7 @@ public class Cliente extends Utente implements ICliente {
                 if (prenotato) {
                     PagamentoOmbrellone po = new PagamentoOmbrellone();
                     po.sceltaMetodo(tipologia, prenotazioneSpiaggiaConnector.last_prenotazione(id_ombrellone), id, data_pagamento);
-                    prenotazioneSpiaggiaConnector.changeDate(start_date,end_date, id_ombrellone, fasciaOraria);
+                    prenotazioneSpiaggiaConnector.changeDate(start_date, end_date, id_ombrellone, fasciaOraria);
                 } else
                     System.out.println("Errore: già una prenotazione relativa all'ombrellone relativo al periodo dal " + date_start + " al " + date_end +
                             "\n" + "Riprovare con un'altra data o ombrellone.");
@@ -338,6 +337,7 @@ public class Cliente extends Utente implements ICliente {
             }
         }
     }
+
 
     public void ordinazioneBar(String email) throws Exception {
         setId_ombrellone(cc.getOmbrellone(email));

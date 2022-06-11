@@ -174,7 +174,7 @@ public class UtenteConnector {
                     System.out.print("nome: " + result.getString("nome") + ", ");
                     System.out.print("cognome: " + result.getString("cognome") + ", ");
                     System.out.print("ruolo: " + result.getString("ruolo") + "\t");
-                    System.out.println("");
+                    System.out.println();
 
                 } while (result.next());
             }
