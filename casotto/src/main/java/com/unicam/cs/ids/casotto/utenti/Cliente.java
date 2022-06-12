@@ -50,8 +50,10 @@ public class Cliente extends Utente implements ICliente {
         this.cognome = cognome;
         this.email = email;
     }
+
     public Cliente() {
     }
+
     public Cliente(String username, String password, String ruolo, String nome, String cognome, String email, int id_ombrellone) {
         super(email, username, password, ruolo, nome, cognome);
 
@@ -268,22 +270,25 @@ public class Cliente extends Utente implements ICliente {
                 if (prenotato) {
                     PagamentoOmbrellone po = new PagamentoOmbrellone();
                     po.sceltaMetodo(tipologia, prenotazioneSpiaggiaConnector.last_prenotazione(id_ombrellone), id, data_pagamento);
-                    prenotazioneSpiaggiaConnector.changeDate(start_date, end_date, id_ombrellone, fasciaOraria);
+                    prenotazioneSpiaggiaConnector.changeDate(start_date, end_date, om.getId_ombrellone(), fasciaOraria);
                 } else {
-                    System.err.println("errore nel prenotare");
+                    System.out.println("Errore: già una prenotazione relativa all'ombrellone relativo al periodo dal " + date_start + " al " + date_end +
+                            "\n" + "Riprovare con un'altra data o ombrellone.");
                     OpenApp openApp = new OpenApp();
                     openApp.Open();
                 }
 
                 Scontrino scontrino = new Scontrino(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo);
                 scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo, "ombrellone");
+                System.out.println("Il prezzo totale della prenotazione è: " + prezzo);
+                SendEmail.sendMailPrenSpiaggiaCliente(email, id_ombrellone, prezzo);
                 IObserver notifyOrder4 = new NotifyOrder("Cliente Ombrellone");
                 notifyOrder4.register(notifyOrder4);
                 notifyOrder4.notifyObservers();
-                IObserver notifyOrder5 = new NotifyOrder("Addetto SpiaggiaOmbrellone");
-                notifyOrder5.register(notifyOrder5);
+                // IObserver notifyOrder5 = new NotifyOrder("Addetto SpiaggiaOmbrellone");
+                // notifyOrder5.register(notifyOrder5);
                 //notifyOrder5.notifyObservers();
-                notifyOrder5.notifyAddettoSpiaggiaOmbrellone(email, "francesco.chiocchi@divini.org", id_ombrellone);
+                // notifyOrder5.notifyAddettoSpiaggiaOmbrellone(email, "francesco.chiocchi@divini.org", id_ombrellone);
                 //notifyOrder.unregister(notifyOrder4);
             } else {
                 try {
@@ -306,18 +311,24 @@ public class Cliente extends Utente implements ICliente {
                     PagamentoOmbrellone po = new PagamentoOmbrellone();
                     po.sceltaMetodo(tipologia, prenotazioneSpiaggiaConnector.last_prenotazione(id_ombrellone), id, data_pagamento);
                     prenotazioneSpiaggiaConnector.changeDate(start_date, end_date, id_ombrellone, fasciaOraria);
-                } else
+                }else {
                     System.out.println("Errore: già una prenotazione relativa all'ombrellone relativo al periodo dal " + date_start + " al " + date_end +
                             "\n" + "Riprovare con un'altra data o ombrellone.");
+                    OpenApp openApp = new OpenApp();
+                    openApp.Open();
+                }
+
                 Scontrino scontrino = new Scontrino(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo);
                 scontrino.CalcolaPrezzo(id_scontrino, data_pagamento, om.getId_ombrellone(), prezzo, "arrivo");
+                System.out.println("Il prezzo totale della prenotazione è: " + prezzo);
+                SendEmail.sendMailPrenSpiaggiaCliente(email, id_ombrellone, prezzo);
                 IObserver notifyOrder4 = new NotifyOrder("Cliente Ombrellone");
                 notifyOrder4.register(notifyOrder4);
                 notifyOrder4.notifyObservers();
-                IObserver notifyOrder5 = new NotifyOrder("Addetto SpiaggiaOmbrellone");
-                notifyOrder5.register(notifyOrder5);
+                //IObserver notifyOrder5 = new NotifyOrder("Addetto SpiaggiaOmbrellone");
+                // notifyOrder5.register(notifyOrder5);
                 //notifyOrder5.notifyObservers();
-                notifyOrder5.notifyAddettoSpiaggiaOmbrellone(email, "francesco.chiocchi@divini.org", id_ombrellone);
+                // notifyOrder5.notifyAddettoSpiaggiaOmbrellone(email, "francesco.chiocchi@divini.org", id_ombrellone);
             } else {
                 try {
                     menu_cliente(email);
@@ -328,11 +339,9 @@ public class Cliente extends Utente implements ICliente {
         }
     }
 
-
     public void ordinazioneBar(String email) throws Exception {
         setId_ombrellone(cc.getOmbrellone(email));
         List<ProdottiBar> prodotti = cp.getProducts();
-
         System.out.println("--------------------MENU--------------------");
         for (ProdottiBar prodotto : prodotti) {
             System.out.println(prodotto.toString());
@@ -353,9 +362,7 @@ public class Cliente extends Utente implements ICliente {
         OrdinazioneBarConnector ordinazioneBarConnector = new OrdinazioneBarConnector();
         PreparazioneOrdineConnector preparazioneOrdineConnector = new PreparazioneOrdineConnector();
         Map<Integer, Integer> mprodotti = new HashMap<>();
-
         System.out.println("\n");
-
         System.out.println("A quale id dell'ombrellone vuoi far consegnare l'ordine?");
         obc.getIdOmbrelloni(email);
         id_ombrellone = obc.getId();
@@ -369,26 +376,17 @@ public class Cliente extends Utente implements ICliente {
                 OpenApp o = new OpenApp();
                 o.Open();
             }
-
             System.out.println("Inserisci la quantità che vuoi acquistare:");
             int quantita2 = scanner2.nextInt();
-
-            //mprodotti.put(cont, id_prodotto);
-            //mprodotti.put(id_prodotto,quantita2);
-
             if (mprodotti.containsKey(id_prodotto)) {
                 int quantita3 = quantita2;
                 int quantita4 = mprodotti.get(id_prodotto);
                 int quantita5 = quantita3 + quantita4;
                 mprodotti.replace(id_prodotto, quantita5);
-                // System.out.println(entry.getKey() + ", Value: : " + entry.getValue());
-                //  mprodotti.merge(quantita2, entry.getValue(), Integer::sum);//quantita2+mprodotti.get(quantita2));
+
             } else {
                 mprodotti.put(id_prodotto, quantita2);
             }
-          /*  for (Map.Entry<Integer, Integer> entry : mprodotti.entrySet()) {
-                System.out.println(entry.getKey() + ", Value nuovo inserito: : " + entry.getValue());
-            } */
 
             do {
                 System.out.println("vuoi aggiungere altri prodotti all'ordine ancora? 1-si 0-no");
@@ -414,7 +412,6 @@ public class Cliente extends Utente implements ICliente {
 
         System.out.println("Scegli la tipologia di pagamento:app -tramite app, consegna -pagamento alla consegna");
         tipologia = scanner.nextLine();
-
         if (tipologia.equals("app")) {
             System.out.println("Inserisci i dati della carta per il pagamento:");
             String carta;
@@ -436,26 +433,17 @@ public class Cliente extends Utente implements ICliente {
                 PagamentoBar p = new PagamentoBar();
                 OrdinazioneBar ordinazione_bar = new OrdinazioneBar();
                 ordinazione_bar.setLista_prodotti(mprodotti);
-
                 if (!risultato) System.err.println("errore nell'aggiunta dell'ordine");
                 boolean risultato2 = p.sceltaMetodo(tipologia, ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone, data_pagamento);
-                // String tipologia_pagamento, int id_prenotazione, int id_ombrellone, Date data_pagamento
                 if (risultato2) {
                     //parte preparazione ordine!
                     id_ordinazione = ordinazioneBarConnector.last_ordinazione(id_ombrellone);
                     setId_ordinazione(id_ordinazione);
                     preparazioneOrdineConnector.addOrdine(id_ordinazione);
-                    //dopo i minuti necessari: preparazioneOrdineConnector.OrdinePronto(id_ordinazione);
-                    // minuti = cp.TempoTotale(id_prodotto, quantita); //prendere tutti gli id dei prodotti scelti, non solo il primo
                     setEmail(email);
-
-                    //prodotti_ordinati = ordinazioneBarConnector.getListaProdotti(id_ordinazione);
                     quantita_prodotti = ordinazioneBarConnector.getQuantitaProdotti(id_ordinazione);
                     setQuantita_prodotti(quantita_prodotti);
                     setNomiprodotti(nomiprodotti);
-                    // a_number = minuti;
-                    //  setNumber(a_number);
-                    //Helper helper = new Helper(a_number);
                     SendEmail.sendEmailBarCliente(email, getNomiprodotti(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti, minuti);
                     SendEmail.sendMailBar("fchiocchi@libero.it", getNomiprodotti(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti);
                     Timer t = new java.util.Timer();
@@ -480,18 +468,10 @@ public class Cliente extends Utente implements ICliente {
                             minuti * 60000L //invia il messaggio all'addetto spiaggia dopo che è passato il tempo totale per preparare l'ordine
                     );
                     // helper.sendMailBar(email, ordinazioneBarConnector.getListaProdotti(id_ordinazione), ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone);
-
                     System.out.println("Il tuo ordine arriverà tra " + minuti + " minuti");
                     System.out.println("Ordinazione aggiunta, attendi la preparazione!");
                     IObserver notifyOrder4 = new NotifyOrder("Addetto Bar");
                     notifyOrder4.register(notifyOrder4);
-                    //notifyOrder4.notifyObservers();
-                    // notifyOrder4.notifyAddettobar(email,ordinazione_bar.getLista_prodotti().toString(),ordinazioneBarConnector.last_ordinazione(id_ombrellone),id_ombrellone);
-                       /* try {
-                            SendEmail.sendMailBar(email, ordinazione_bar.getLista_prodotti().toString(), ordinazioneBarConnector.last_ordinazione(id_ombrellone), id_ombrellone);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        } */
                 }
             }
         }
@@ -521,15 +501,10 @@ public class Cliente extends Utente implements ICliente {
                     id_ordinazione = ordinazioneBarConnector.last_ordinazione(id_ombrellone);
                     setId_ordinazione(id_ordinazione);
                     preparazioneOrdineConnector.addOrdine(id_ordinazione);
-                    //dopo i minuti necessari: preparazioneOrdineConnector.OrdinePronto(id_ordinazione);
-                    // minuti = cp.TempoTotale(id_prodotto, quantita); //prendere tutti gli id dei prodotti scelti, non solo il primo
                     setEmail(email);
-                    //  prodotti_ordinati = ordinazioneBarConnector.getListaProdotti(id_ordinazione);
                     quantita_prodotti = ordinazioneBarConnector.getQuantitaProdotti(id_ordinazione);
                     setQuantita_prodotti(quantita_prodotti);
                     setNomiprodotti(nomiprodotti);
-                    // a_number = minuti;
-                    //setNumber(a_number);
                     SendEmail.sendEmailBarCliente(email, getNomiprodotti(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti, minuti);
                     SendEmail.sendMailBar("fchiocchi@libero.it", getNomiprodotti(), getId_ordinazione(), getId_ombrellone(), quantita_prodotti);
                     Timer t = new java.util.Timer();
@@ -537,10 +512,8 @@ public class Cliente extends Utente implements ICliente {
                             new java.util.TimerTask() {
                                 @Override
                                 public void run() {
-                                    // int finalId_ordinazione = id_ordinazione;
                                     if (preparazioneOrdineConnector.OrdinePronto(getId_ordinazione()))
                                         System.out.println("Il tuo ordine è pronto.");
-                                    //else System.out.println("Ordine non ancora pronto");
                                     try {
                                         SendEmail.sendMailAddettoSpiaggiaOrdine("francesco.chiocchi@divini.org", getId_ordinazione(), getId_ombrellone());
                                     } catch (Exception e) {
@@ -556,16 +529,13 @@ public class Cliente extends Utente implements ICliente {
 
                     System.out.println("Ordinazione aggiunta, attendi la preparazione!");
                     System.out.println("Il tuo ordine arriverà tra " + minuti + " minuti");
-
                     NotifyOrder notifyOrder3 = new NotifyOrder("Addetto Bar");
                     IObserver notifyOrder4 = new NotifyOrder("Addetto Bar");
                     notifyOrder3.register(notifyOrder4);
                     notifyOrder3.notifyObservers();
                     NotifyOrder notifyOrder5 = new NotifyOrder("Addetto Spiaggia");
-                    IObserver notifyOrder6 = new NotifyOrder("Addetto Spiaggia");
                     notifyOrder5.notifyAddettoSpiaggiaOmbrellone(email, "francesco.chiocchi@divini.org", id_ombrellone);
                     notifyOrder5.notifyObservers();
-                    //notifyOrder5.unregister(notifyOrder6);
                     NotifyOrder notifyOrder7 = new NotifyOrder("Cliente Spiaggia");
                     IObserver notifyOrder8 = new NotifyOrder("Cliente Spiaggia");
                     notifyOrder7.register(notifyOrder8);
@@ -590,7 +560,7 @@ public class Cliente extends Utente implements ICliente {
         if (prenotazioneSpiaggiaConnector.checkPrenotazioniOmbrellone(email, id_prenotazione)) {
             prenotazione_spiaggia.cancellaPrenotazione(id_prenotazione);
         } else {
-            System.err.println("Errore! Id prenotazione inserito non corrisponde alla tua email\n");
+            System.err.println("Errore! L'id prenotazione inserito non corrisponde alla tua email\n");
             OpenApp o = new OpenApp();
             o.Open();
         }

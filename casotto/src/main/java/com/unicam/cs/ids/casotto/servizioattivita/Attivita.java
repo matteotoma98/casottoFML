@@ -13,9 +13,11 @@ public class Attivita {
     private Attrezzatura attrezzatura;
     private Date data_inizio_attivita;
     private Date data_fine_attivita;
+
     public Attivita() {
 
     }
+
     public Attivita(String nome_attivita, int num_posti, Attrezzatura attrezzatura) {
         this.nome_attivita = nome_attivita;
         this.num_posti = num_posti;
