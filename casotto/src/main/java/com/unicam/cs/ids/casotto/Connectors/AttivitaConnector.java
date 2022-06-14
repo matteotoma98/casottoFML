@@ -199,7 +199,7 @@ public class AttivitaConnector {
             try {
                 result4 = connection.createStatement().executeQuery("SELECT id_attivita, num_posti FROM attivita WHERE num_posti >='" + num_posti + "'AND id_attivita='" + id + "'");
                 if (result4.next() == false) {
-                    System.out.println("Posti non disponibili per l'attività");
+                    System.out.println("Posti non disponibili per l'attività, provare a diminuire il numero dei posti");
                 } else {
 
                     PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO prenotazioneattivita VALUES (?,?,?,?,?,?)");

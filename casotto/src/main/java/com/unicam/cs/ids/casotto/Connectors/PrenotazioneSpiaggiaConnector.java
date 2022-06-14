@@ -255,7 +255,7 @@ public class PrenotazioneSpiaggiaConnector {
                         }
                     } else System.err.println("errore: Decrementazione ombrelloni NON Riuscita.");
                 } catch (Exception e) {
-                    System.out.println("update lettini e ombrelloni");
+                    //  System.out.println("update lettini e ombrelloni");
                     System.out.println(e);
                 }
                 System.out.print(email + ", ");
@@ -371,7 +371,7 @@ public class PrenotazioneSpiaggiaConnector {
                     PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE chalet set quantita_ombrelloni_disponibili = quantita_ombrelloni_disponibili +1, quantita_lettini_disponibili= quantita_lettini_disponibili +'" + lettini + "'");
                     result3 = preparedStatement4.executeUpdate() > 0;
                     if (result3) {
-                        System.out.println("Lettini e ombrelloni disponibili nello chalet aggiornati");
+                        //System.out.println("Lettini e ombrelloni disponibili nello chalet aggiornati");
                         System.out.println("Cancellazione della prenotazione effettuata!");
                         result = true;
                     }
@@ -409,7 +409,7 @@ public class PrenotazioneSpiaggiaConnector {
                     PreparedStatement preparedStatement4 = connection.prepareStatement("UPDATE chalet set quantita_ombrelloni_disponibili = quantita_ombrelloni_disponibili +1, quantita_lettini_disponibili= quantita_lettini_disponibili +'" + lettini + "'");
                     result3 = preparedStatement4.executeUpdate() > 0;
                     if (result3) {
-                        System.out.println("Lettini e ombrelloni disponibili nello chalet aggiornati");
+                        //System.out.println("Lettini e ombrelloni disponibili nello chalet aggiornati");
                         System.out.println("Cancellazione della prenotazione effettuata!");
                         result = true;
                     }

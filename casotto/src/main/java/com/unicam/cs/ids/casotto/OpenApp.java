@@ -66,7 +66,7 @@ public class OpenApp {
                     System.exit(0);
             }
         }
-        while (scelta != 0);
+        while (true);
         //   utenteConnector.login("matteo", "matteo");
     }
 

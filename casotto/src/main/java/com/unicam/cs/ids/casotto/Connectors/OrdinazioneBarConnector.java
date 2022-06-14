@@ -48,6 +48,7 @@ public class OrdinazioneBarConnector {
                 System.out.println("Lista dei tuoi ombrelloni:\n" + resultSet.getInt("id_ombrellone"));
                 l.add(resultSet.getInt("id_ombrellone"));
             }
+            //if(resultSet.next()==false) System.out.println("Non puoi prenotare dal bar perché non hai un ombrellone prenotato per la data attuale.");
             //LocalDate.now();
             do {
                 int id_ombrellone = scanner2.nextInt();
@@ -160,7 +161,7 @@ public class OrdinazioneBarConnector {
                         " quantita= quantita-'" + pairs.getValue() + "' WHERE id_prodotto=" + pairs.getKey());
                 if (preparedStatement.executeUpdate() > 0) controllo = true;
             }
-            if (controllo) System.out.println("Prodotti decrementati");
+            // if (controllo) System.out.println("Prodotti decrementati");
             //   if (result) System.out.println("Quantità del prodotto " + id + " diminuita.");
         } catch (Exception e) {
             System.out.println(e);

@@ -2,10 +2,7 @@ package com.unicam.cs.ids.casotto.Connectors;
 
 import com.unicam.cs.ids.casotto.utilities.Scontrino;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Date;
 
 public class ScontrinoConnector {
@@ -29,7 +26,8 @@ public class ScontrinoConnector {
         scontrino.toString();
         boolean result = false;
         boolean result2 = false;
-
+        Date date = new Date();
+        Timestamp ts = new Timestamp(date.getTime());
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT MAX(id_scontrino) as last_id_scontrino FROM scontrino");
@@ -42,7 +40,7 @@ public class ScontrinoConnector {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO scontrino VALUES ( ?,?,?,?,?)");
             preparedStatement.setInt(1, id_scontrino);
             // System.out.println(ordinazione_bar.getId_ombrellone());
-            preparedStatement.setDate(2, (java.sql.Date) data_scontrino);
+            preparedStatement.setTimestamp(2, ts);
             preparedStatement.setInt(3, id_ombrellone);
             preparedStatement.setDouble(4, prezzo_totale);
             preparedStatement.setString(5, tipologia);

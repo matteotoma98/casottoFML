@@ -34,15 +34,17 @@ public class PagamentoOmbrelloneConnector {
 
     public boolean aggiornaListaPagamenti(String tipologia_pagamento, int id_prenotazione, int id_ombrellone, Date data_pagamento) {
         boolean result = false;
+        java.util.Date date = new java.util.Date();
+        Timestamp ts = new Timestamp(date.getTime());
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO pagamentoombrellone VALUES (?,?,?,?)");
             preparedStatement.setString(1, tipologia_pagamento);
             preparedStatement.setInt(2, last_prenotazione());
             preparedStatement.setInt(3, id_ombrellone);
-            preparedStatement.setDate(4, data_pagamento);
+            preparedStatement.setTimestamp(4, ts);
             result = preparedStatement.executeUpdate() > 0;
 
-            if (result) System.out.println("Lista pagamenti aggiornata.");
+            //  if (result) System.out.println("Lista pagamenti aggiornata.");
         } catch (Exception e) {
 
             System.out.println(e);

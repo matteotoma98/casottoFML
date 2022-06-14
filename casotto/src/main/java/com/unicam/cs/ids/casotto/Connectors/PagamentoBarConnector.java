@@ -3,6 +3,7 @@ package com.unicam.cs.ids.casotto.Connectors;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.Timestamp;
 
 public class PagamentoBarConnector {
 
@@ -18,14 +19,16 @@ public class PagamentoBarConnector {
 
     public boolean aggiornaListaPagamenti(String tipologia_pagamento, int id_ordinazione, int id_ombrellone, Date data_pagamento) {
         boolean result = false;
+        java.util.Date date = new java.util.Date();
+        Timestamp ts = new Timestamp(date.getTime());
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO pagamentobar VALUES (?,?,?,?)");
             preparedStatement.setString(1, tipologia_pagamento);
             preparedStatement.setInt(2, id_ordinazione);
             preparedStatement.setInt(3, id_ombrellone);
-            preparedStatement.setDate(4, data_pagamento);
+            preparedStatement.setTimestamp(4, ts);
             result = preparedStatement.executeUpdate() > 0;
-            if (result) System.out.println("Lista pagamenti aggiornata.");
+            //    if (result) System.out.println("Lista pagamenti aggiornata.");
         } catch (Exception e) {
             result = false;
         }
