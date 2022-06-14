@@ -186,36 +186,42 @@ public class Cliente extends Utente implements ICliente {
                     System.out.println("Inserisci il giorno d'inizio della prenotazione:");
                     date_start = scanner.nextLine(); // String str="2015-03-31";
                     start_date = Date.valueOf(date_start);//converting string into sql date
-                    do {
-                        if (date_start.startsWith("2022-06-") || date_start.startsWith("2022-07-") || date_start.startsWith("2022-08-") || date_start.startsWith("2022-09-")) {
-                            prenotazione_spiaggia.setDatainizioPrenotazione(start_date);
-                            data_corretta = true;
-                        } else {
-                            System.err.println("In questi mesi lo chalet è chiuso, reinserisci la data d'inizio");
-                            date_start = scanner.nextLine();
-                            start_date = Date.valueOf(date_start);
-                            data_corretta = false;
-                        }
-                    } while (!(date_start.startsWith("2022-06-") || date_start.startsWith("2022-07-") || date_start.startsWith("2022-08-") || date_start.startsWith("2022-09-")));
+                    if (date_start.startsWith("2022-06-") || date_start.startsWith("2022-07-") || date_start.startsWith("2022-08-") || date_start.startsWith("2022-09-")) {
+                        prenotazione_spiaggia.setDatainizioPrenotazione(start_date);
+                        data_corretta = true;
+                        formato_data_errata = false;
+                    } else {
+                        System.err.println("In questi mesi lo chalet è chiuso, reinserisci la data d'inizio");
+                        date_start = scanner.nextLine();
+                        start_date = Date.valueOf(date_start);
+                    }
+                } while (!(date_start.startsWith("2022-06-") || date_start.startsWith("2022-07-") || date_start.startsWith("2022-08-") || date_start.startsWith("2022-09-") || !data_corretta));
+                do {
                     System.out.println("Inserisci il giorno di fine della prenotazione:");
                     date_end = scanner.nextLine();// String str="2015-03-31";
                     end_date = Date.valueOf(date_end);//converting string into sql date
-                    do {
-                        if (date_end.startsWith("2022-06-") || date_end.startsWith("2022-07-") || date_end.startsWith("2022-08-") || date_end.startsWith("2022-09-")) {
-                            prenotazione_spiaggia.setData_finePrenotazione(end_date);
-                            data_corretta = true;
-                        }
-                        if (end_date.compareTo(start_date) < 0) {
-                            System.out.println("La data d'inizio non può essere maggiore della data di fine");
-                        } else {
-                            System.err.println("In questi mesi lo chalet è chiuso, reinserisci la data di fine");
-                            date_end = scanner.nextLine();// String str="2015-03-31";
-                            end_date = Date.valueOf(date_end);//converting string into sql date
-                            data_corretta = false;
-                        }
-                        if (data_corretta) formato_data_errata = false;
-                    } while (date_end.startsWith("2022-06-") || date_end.startsWith("2022-07-") || date_end.startsWith("2022-08-") || date_end.startsWith("2022-09-"));
-                } while (data_corretta);
+                    if (date_end.startsWith("2022-06-") || date_end.startsWith("2022-07-") || date_end.startsWith("2022-08-") || date_end.startsWith("2022-09-")) {
+                        prenotazione_spiaggia.setDatainizioPrenotazione(start_date);
+                        data_corretta = true;
+                        formato_data_errata = false;
+                    } else {
+                        System.err.println("In questi mesi lo chalet è chiuso, reinserisci la data di fine");
+                        date_end = scanner.nextLine();
+                        end_date = Date.valueOf(date_end);
+                    }
+                    if (end_date.compareTo(start_date) < 0) {
+                        System.out.println("La data d'inizio non può essere maggiore della data di fine, riprova");
+                        date_end = scanner.nextLine();
+                        end_date = Date.valueOf(date_end);
+                        data_corretta = false;
+                    }
+
+                    if (end_date.compareTo(start_date) == 0) {
+                        prenotazione_spiaggia.setData_finePrenotazione(end_date);
+                        data_corretta = true;
+                    }
+                    //  if (data_corretta) formato_data_errata = false;
+                } while (!(date_end.startsWith("2022-06-") || date_end.startsWith("2022-07-") || date_end.startsWith("2022-08-") || date_end.startsWith("2022-09-") || (!data_corretta)));
             } catch (IllegalArgumentException ex) {
                 System.err.println("Il formato della data inserita è sbagliata");
                 data_corretta = false;
@@ -253,8 +259,8 @@ public class Cliente extends Utente implements ICliente {
         fila = scanner.nextInt();
         Ombrellone om = new Ombrellone();
         om.setNum_fila_ombrellone(fila);
-        System.out.println((char) 27 + "[31m" + "Lista ombrelloni occupati relativi alle date scelte");
-        prenotazioneSpiaggiaConnector.getOmbrelloniOccupati(start_date, end_date); //query che mostra gli ombrelloni occupati nelle date scelte
+        System.out.println((char) 27 + "[31m" + "Lista ombrelloni occupati relativi alle date scelte:");
+        prenotazioneSpiaggiaConnector.getOmbrelloniOccupati(start_date, end_date, fila); //query che mostra gli ombrelloni occupati nelle date scelte
         System.out.print((char) 27 + "[39m");
         System.out.println("Inserisci l'id dell'ombrellone che vuoi prenotare:");
         int id = scanner.nextInt();

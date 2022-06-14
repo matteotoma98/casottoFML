@@ -236,21 +236,21 @@ public class PrenotazioneSpiaggiaConnector {
             if (result5) {
                 result = true;
                 boolean prova = aggiornaOmbrelloniCliente(email, id_ombrellone);
-                if (prova) System.out.println("Tabella Clienti aggiornata");
+                // if (prova) System.out.println("Tabella Clienti aggiornata");
                 try {
                     PreparedStatement preparedStatement1 = connection.prepareStatement("UPDATE chalet set quantita_ombrelloni_disponibili = quantita_ombrelloni_disponibili-1 where quantita_ombrelloni_disponibili>0");
                     //preparedStatement.setInt(1,lettini);
                     result2 = preparedStatement1.executeUpdate() > 0;
                     if (result2) {
-                        System.out.println("Decrementazione ombrelloni effettuata!");
+                        //   System.out.println("Decrementazione ombrelloni effettuata!");
                         try {
                             PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE chalet set quantita_lettini_disponibili = quantita_lettini_disponibili-'" + lettini + "' where quantita_lettini_disponibili>0");
                             result3 = preparedStatement2.executeUpdate() > 0;
                             if (result3) {
-                                System.out.println("Decrementazione lettini effettuata!");
+                                //    System.out.println("Decrementazione lettini effettuata!");
                             } else System.err.println("errore: Decrementazione lettini NON Riuscita.");
                         } catch (Exception e) {
-                            System.out.println(" update lettini");
+                            //   System.out.println(" update lettini");
                             System.out.println(e);
                         }
                     } else System.err.println("errore: Decrementazione ombrelloni NON Riuscita.");
@@ -275,20 +275,23 @@ public class PrenotazioneSpiaggiaConnector {
         return result;
     }
 
-    public void getOmbrelloniOccupati(Date data_inizio, Date data_fine) {
+    public void getOmbrelloniOccupati(Date data_inizio, Date data_fine, int num_fila) {
         boolean result;
         int id_ombrellone = 0;
         Date data_inizio_ = null;
         Date data_fine_ = null;
+        int fila = 0;
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT p.id_ombrellone,p.data_inizio_prenotazione,p.data_fine_prenotazione FROM ombrellone o JOIN prenotazionespiaggia p on o.id_ombrellone=p.id_ombrellone where'" + data_inizio + "' BETWEEN p.data_inizio_prenotazione AND p.data_fine_prenotazione OR '" + data_fine + "'BETWEEN p.data_inizio_prenotazione AND p.data_fine_prenotazione");
+            ResultSet resultSet = statement.executeQuery("SELECT p.id_ombrellone,p.num_fila_ombrellone, p.data_inizio_prenotazione,p.data_fine_prenotazione FROM ombrellone o JOIN prenotazionespiaggia p on o.id_ombrellone=p.id_ombrellone where ('" + data_inizio + "' BETWEEN p.data_inizio_prenotazione AND p.data_fine_prenotazione) AND ('" + data_fine + "'BETWEEN p.data_inizio_prenotazione AND p.data_fine_prenotazione) AND p.num_fila_ombrellone='" + num_fila + "'");
             int lastordinazione = 0;
             while (resultSet.next()) {
                 id_ombrellone = resultSet.getInt("p.id_ombrellone");
+                fila = resultSet.getInt("p.num_fila_ombrellone");
                 data_inizio_ = resultSet.getDate("p.data_inizio_prenotazione");
                 data_fine_ = resultSet.getDate("p.data_fine_prenotazione");
                 System.out.print("Id : " + id_ombrellone + ", ");
+                System.out.print("Fila : " + fila + ", ");
                 System.out.print("Data inizio: " + data_inizio_ + ", ");
                 System.out.print("Data fine : " + data_fine_ + "; \t\n");
             }

@@ -83,7 +83,7 @@ public class SendEmail {
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
             message.setSubject("CasottoFML™");
-            message.setText("Ciao, il tuo ordine relativo è stato confermato. \nRiepilogo ordine: prodotti: " + prodotti + "\nQuantità: " + quantita_prodotti + ".\n3 Tra circa " + minuti + " minuti arriverà un'addetto spiaggia con il tuo ordine al tuo ombrellone " + id_ombrellone + ".");
+            message.setText("Ciao, il tuo ordine relativo è stato confermato. \nRiepilogo ordine: prodotti: " + prodotti + "\nQuantità: " + quantita_prodotti + ".\n Tra circa " + minuti + " minuti arriverà un'addetto spiaggia con il tuo ordine al tuo ombrellone " + id_ombrellone + ".");
             return message;
         } catch (Exception ex) {
             Logger.getLogger(SendEmail.class.getName()).log(Level.SEVERE, null, ex);
