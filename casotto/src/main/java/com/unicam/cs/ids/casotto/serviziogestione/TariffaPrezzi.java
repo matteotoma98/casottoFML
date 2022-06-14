@@ -96,14 +96,13 @@ public class TariffaPrezzi {
 
         if (((month_inizio >= 6 && month_inizio <= 8) && (month_f >= 6 && month_f <= 8))
                 && (month_inizio <= month_f)) { //manca il controllo sui giorni
-            if (month_f == 6 && month_inizio == 6) prezzo_tot_om = (num_giorni) * (prezzo_tipologia + 3);
-            // if (month_f == 6 && month_inizio == 7) prezzo
+            if (month_f == 6) prezzo_tot_om = (num_giorni) * (prezzo_tipologia + 3);
             if (month_f == 7 && month_inizio == 7) prezzo_tot_om = (num_giorni) * (prezzo_tipologia + 4);
             if (month_f == 8 && month_inizio == 8) prezzo_tot_om = (num_giorni) * (prezzo_tipologia + 5);
         }
-        if ((month_f >= 1 && month_inizio >= 1) &&
-                (month_f <= 5 && month_inizio <= 5) &&
-                (month_f >= 9 && month_inizio >= 9) && (month_f <= 12 && month_inizio <= 12))
+
+        if (((month_f >= 1 && month_f < 6) || (month_f >= 9 && month_f <= 12)) ||
+                ((month_inizio >= 1 && month_inizio < 6) || (month_inizio >= 9 && month_inizio <= 12)))
             throw new RuntimeException("Errore: in questi mesi lo chalet è chiuso.");
 
         if (fasciaOraria.equals(FasciaOraria.MATTINA) && (num_fila_ombrellone >= 1 && num_fila_ombrellone <= 3))

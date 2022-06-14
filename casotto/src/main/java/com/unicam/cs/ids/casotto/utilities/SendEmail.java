@@ -282,7 +282,7 @@ public class SendEmail {
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
             message.setSubject("CasottoFML™");
-            message.setText("Ciao " + recipient + " ti confermiamo la prenotazione dell' ombrellone" + id_ombrellone + " presso casottoFML™. Il costo della prenotazione è di: " + prezzo + " €.");
+            message.setText("Ciao " + recipient + " ti confermiamo la prenotazione dell' ombrellone " + id_ombrellone + " presso casottoFML™. Il costo della prenotazione è di: " + prezzo + " €.");
             return message;
         } catch (Exception ex) {
             Logger.getLogger(SendEmail.class.getName()).log(Level.SEVERE, null, ex);

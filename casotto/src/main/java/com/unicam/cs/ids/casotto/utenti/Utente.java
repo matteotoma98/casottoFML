@@ -193,7 +193,7 @@ public class Utente implements IUtente {
         int scelta;
         do {
             System.out.println("Scegli cosa vuoi fare: ");
-            System.out.println("1: Modifica orari attività e posti disponibili");
+            System.out.println("1: Definizione/Modifica orari attività e posti disponibili");
             System.out.println("0: Esci ");
             Scanner scanner = new Scanner(System.in);
             scelta = scanner.nextInt();
